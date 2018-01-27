@@ -9,7 +9,7 @@
 import UIKit
 
 let themeColor = UIColor.init(r: 255, g: 165, b: 0)
-let brightGray = UIColor.init(white: 0.85, alpha: 1)
+let brightGray = UIColor.init(white: 0.95, alpha: 1)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

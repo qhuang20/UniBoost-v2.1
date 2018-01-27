@@ -11,23 +11,40 @@ import LBTAComponents
 let columes: CGFloat = 5
 let sideBarWidth: CGFloat = 36
 let daysBarHeight: CGFloat = 36
+let weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri"]
+let hours = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7"]
 
 class TimetableController: DatasourceController {
-
-    lazy var daysBar: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.isScrollEnabled = false
-        cv.backgroundColor = .red
-        return cv
+    
+    let daysBar: UIStackView = {
+        var views = [UIView]()
+        for i in 0...4 {
+            let label = UILabel()
+            label.backgroundColor = brightGray
+            label.text = weekdays[i]
+            label.textAlignment = .center
+            views.append(label)
+        }
+        
+        let sv = UIStackView(arrangedSubviews: views)
+        sv.distribution = .fillEqually
+        return sv
     }()
     
-    let sideBar: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.isScrollEnabled = false
-        cv.backgroundColor = .green
-        return cv
+    let sideBar: UIStackView = {
+        var views = [UIView]()
+        for i in 0...11 {
+            let label = UILabel()
+            label.backgroundColor = brightGray
+            label.text = hours[i]
+            label.textAlignment = .center
+            views.append(label)
+        }
+        
+        let sv = UIStackView(arrangedSubviews: views)
+        sv.axis = .vertical
+        sv.distribution = .fillEqually
+        return sv
     }()
 
     override func viewDidLoad() {
@@ -50,7 +67,7 @@ class TimetableController: DatasourceController {
         view.addSubview(sideBar)
         view.addSubview(daysBar)
         
-        sideBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: sideBarWidth, heightConstant: 0)
+        sideBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: sideBarWidth, heightConstant: 0)
         daysBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: sideBar.safeAreaLayoutGuide.rightAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: daysBarHeight)
     }
     

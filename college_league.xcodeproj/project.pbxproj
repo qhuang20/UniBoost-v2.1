@@ -87,8 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				7BF3A32B201C123100689AE1 /* dayCell.swift */,
-				7BF3A2AB2019479700689AE1 /* TimetableController.swift */,
 				7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */,
+				7BF3A2AB2019479700689AE1 /* TimetableController.swift */,
 			);
 			path = TimetableController;
 			sourceTree = "<group>";
