@@ -8,14 +8,26 @@
 
 import UIKit
 
+let themeColor = UIColor.init(r: 255, g: 165, b: 0)
+let brightGray = UIColor.init(white: 0.85, alpha: 1)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+    
+        window?.rootViewController = UINavigationController(rootViewController: TimetableController())
+        
+        UINavigationBar.appearance().barTintColor = themeColor
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        
+        //UITabBar.appearance().tintColor = themeColor
+        
         return true
     }
 

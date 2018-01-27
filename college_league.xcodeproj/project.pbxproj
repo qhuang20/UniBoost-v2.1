@@ -7,21 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		67AC5CE83E4E19B804533143 /* Pods_college_league.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */; };
 		7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A2A92019479700689AE1 /* AppDelegate.swift */; };
-		7BF3A2AC2019479700689AE1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A2AB2019479700689AE1 /* ViewController.swift */; };
+		7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A2AB2019479700689AE1 /* TimetableController.swift */; };
 		7BF3A2AF2019479700689AE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BF3A2AD2019479700689AE1 /* Main.storyboard */; };
 		7BF3A2B12019479700689AE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BF3A2B02019479700689AE1 /* Assets.xcassets */; };
 		7BF3A2B42019479700689AE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BF3A2B22019479700689AE1 /* LaunchScreen.storyboard */; };
+		7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */; };
+		7BF3A32C201C123100689AE1 /* dayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A32B201C123100689AE1 /* dayCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7BF3A2A62019479700689AE1 /* college_league.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = college_league.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF3A2A92019479700689AE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7BF3A2AB2019479700689AE1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7BF3A2AB2019479700689AE1 /* TimetableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableController.swift; sourceTree = "<group>"; };
 		7BF3A2AE2019479700689AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7BF3A2B02019479700689AE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7BF3A2B32019479700689AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7BF3A2B52019479700689AE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDatasource.swift; sourceTree = "<group>"; };
+		7BF3A32B201C123100689AE1 /* dayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayCell.swift; sourceTree = "<group>"; };
+		BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_college_league.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E47EBB366827CAB5E4AB7791 /* Pods-college_league.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-college_league.debug.xcconfig"; path = "Pods/Target Support Files/Pods-college_league/Pods-college_league.debug.xcconfig"; sourceTree = "<group>"; };
+		EF9E31A5A391B46B69707FB0 /* Pods-college_league.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-college_league.release.xcconfig"; path = "Pods/Target Support Files/Pods-college_league/Pods-college_league.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +37,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67AC5CE83E4E19B804533143 /* Pods_college_league.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		54ABA28FDEE5AEAFDF1DE65A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7BF3A29D2019479700689AE1 = {
 			isa = PBXGroup;
 			children = (
 				7BF3A2A82019479700689AE1 /* college_league */,
 				7BF3A2A72019479700689AE1 /* Products */,
+				FB8931E96FC22755384000E2 /* Pods */,
+				54ABA28FDEE5AEAFDF1DE65A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +73,33 @@
 		7BF3A2A82019479700689AE1 /* college_league */ = {
 			isa = PBXGroup;
 			children = (
+				7BF3A32D201C127100689AE1 /* TimetableController */,
 				7BF3A2A92019479700689AE1 /* AppDelegate.swift */,
-				7BF3A2AB2019479700689AE1 /* ViewController.swift */,
 				7BF3A2B02019479700689AE1 /* Assets.xcassets */,
 				7BF3A2B52019479700689AE1 /* Info.plist */,
 				7BF3A2B22019479700689AE1 /* LaunchScreen.storyboard */,
 				7BF3A2AD2019479700689AE1 /* Main.storyboard */,
 			);
 			path = college_league;
+			sourceTree = "<group>";
+		};
+		7BF3A32D201C127100689AE1 /* TimetableController */ = {
+			isa = PBXGroup;
+			children = (
+				7BF3A32B201C123100689AE1 /* dayCell.swift */,
+				7BF3A2AB2019479700689AE1 /* TimetableController.swift */,
+				7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */,
+			);
+			path = TimetableController;
+			sourceTree = "<group>";
+		};
+		FB8931E96FC22755384000E2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E47EBB366827CAB5E4AB7791 /* Pods-college_league.debug.xcconfig */,
+				EF9E31A5A391B46B69707FB0 /* Pods-college_league.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +109,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7BF3A2B82019479700689AE1 /* Build configuration list for PBXNativeTarget "college_league" */;
 			buildPhases = (
+				4B9E46BBADAAB4132E5BE551 /* [CP] Check Pods Manifest.lock */,
 				7BF3A2A22019479700689AE1 /* Sources */,
 				7BF3A2A32019479700689AE1 /* Frameworks */,
 				7BF3A2A42019479700689AE1 /* Resources */,
+				86E0FDFCDF95B2E1D6CA6991 /* [CP] Embed Pods Frameworks */,
+				1ECDE6DAAFE17A8E2B8AB797 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -131,12 +172,68 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1ECDE6DAAFE17A8E2B8AB797 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-college_league/Pods-college_league-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4B9E46BBADAAB4132E5BE551 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-college_league-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		86E0FDFCDF95B2E1D6CA6991 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-college_league/Pods-college_league-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/LBTAComponents/LBTAComponents.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LBTAComponents.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-college_league/Pods-college_league-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7BF3A2A22019479700689AE1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BF3A2AC2019479700689AE1 /* ViewController.swift in Sources */,
+				7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */,
+				7BF3A32C201C123100689AE1 /* dayCell.swift in Sources */,
+				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +369,7 @@
 		};
 		7BF3A2B92019479700689AE1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E47EBB366827CAB5E4AB7791 /* Pods-college_league.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -287,6 +385,7 @@
 		};
 		7BF3A2BA2019479700689AE1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF9E31A5A391B46B69707FB0 /* Pods-college_league.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
