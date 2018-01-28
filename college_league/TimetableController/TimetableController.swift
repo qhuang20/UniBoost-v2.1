@@ -76,7 +76,7 @@ class TimetableController: DatasourceController {
         view.addSubview(hoursBar)
         view.addSubview(daysBar)
         
-        hoursBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: hoursBarWidth, heightConstant: 0)
+        hoursBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 16, leftConstant: 0, bottomConstant: 16, rightConstant: 0, widthConstant: hoursBarWidth, heightConstant: 0)
         daysBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: hoursBar.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: daysBarHeight)
     }
     

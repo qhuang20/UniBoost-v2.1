@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         window?.rootViewController = UINavigationController(rootViewController: TimetableController())
         
+        UITextField.appearance().tintColor = themeColor
+        
         UINavigationBar.appearance().barTintColor = themeColor
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)]
         UIBarButtonItem.appearance().tintColor = UIColor.black//all button
