@@ -11,11 +11,11 @@ import LBTAComponents
 class TimetableDatasource: Datasource {
     
     override func cellClasses() -> [DatasourceCell.Type] {
-        return [dayCell.self]
+        return [DayCell.self]
     }
     
     override func numberOfItems(_ section: Int) -> Int {
-        return Int(columes)
+        return weekdays.count
     }
     
     override func item(_ indexPath: IndexPath) -> Any? {//to Cell

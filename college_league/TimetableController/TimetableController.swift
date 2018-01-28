@@ -8,8 +8,7 @@
 
 import LBTAComponents
 
-let columes: CGFloat = 5
-let sideBarWidth: CGFloat = 36
+let hoursBarWidth: CGFloat = 36
 let daysBarHeight: CGFloat = 36
 let weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri"]
 let hours = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7"]
@@ -31,7 +30,7 @@ class TimetableController: DatasourceController {
         return sv
     }()
     
-    let sideBar: UIStackView = {
+    let hoursBar: UIStackView = {
         var views = [UIView]()
         for i in 0...11 {
             let label = UILabel()
@@ -50,31 +49,41 @@ class TimetableController: DatasourceController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.datasource = TimetableDatasource()
-        navigationItem.title = "TimeTable"
+        
+        configureNavigationItems()
+        
+        configureCollectionView()
 
+        setupTimeBars()
+    }
+    
+    private func configureNavigationItems() {
+        navigationItem.title = "TimeTable"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "add"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(addNewCourse))
+    }
+    
+    private func configureCollectionView() {
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0.5
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = brightGray
-
-        collectionView?.contentInset = UIEdgeInsets(top: 0, left: sideBarWidth, bottom: 0, right: 0)
-
-        setupBars()
+        
+        collectionView?.contentInset = UIEdgeInsets(top: 0, left: hoursBarWidth, bottom: 0, right: 0)
     }
     
-    private func setupBars() {
-        view.addSubview(sideBar)
+    private func setupTimeBars() {
+        view.addSubview(hoursBar)
         view.addSubview(daysBar)
         
-        sideBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: sideBarWidth, heightConstant: 0)
-        daysBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: sideBar.safeAreaLayoutGuide.rightAnchor, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: daysBarHeight)
+        hoursBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: hoursBarWidth, heightConstant: 0)
+        daysBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: hoursBar.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: daysBarHeight)
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let height = view.safeAreaLayoutGuide.layoutFrame.height
-        let width = (view.safeAreaLayoutGuide.layoutFrame.width - sideBarWidth) / columes
+        let width = (view.frame.width - hoursBarWidth) / CGFloat(weekdays.count)
         
         return CGSize(width: width, height: height)
     }

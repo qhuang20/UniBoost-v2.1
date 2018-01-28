@@ -72,12 +72,37 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4J-9H-BCf">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZoS-6O-EK8">
+                                <rect key="frame" x="0.0" y="99" width="375" height="56"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="nNn-hc-drA" id="nVJ-OL-cwx"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="h2u-LS-LEc"/>
                     </view>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="o3T-j7-FUb" id="Xsu-dA-VtO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NV2-nB-eiD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="o3T-j7-FUb">
+                    <connections>
+                        <outlet property="delegate" destination="nNn-hc-drA" id="aJv-fp-Phd"/>
+                        <outlet property="searchBar" destination="ZoS-6O-EK8" id="b5i-OC-QQ6"/>
+                        <outlet property="searchContentsController" destination="nNn-hc-drA" id="0QC-EK-UQm"/>
+                        <outlet property="searchResultsDataSource" destination="nNn-hc-drA" id="IgE-Hp-vJh"/>
+                        <outlet property="searchResultsDelegate" destination="nNn-hc-drA" id="382-r9-tDe"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="391.19999999999999" y="16.641679160419791"/>
         </scene>
