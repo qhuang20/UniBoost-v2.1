@@ -9,13 +9,7 @@
 import LBTAComponents
 
 class InfoCell: DatasourceCell, UITextFieldDelegate {
-    
-    override var datasourceItem: Any? {
-        didSet {
-
-        }
-    }
-    
+        
     let textLabel: UILabel = {
         let label = UILabel()
         label.text = "Title"
@@ -26,7 +20,7 @@ class InfoCell: DatasourceCell, UITextFieldDelegate {
     
     lazy var infoTextField: UITextField = {
         let tf = UITextField()
-        tf.font = UIFont.boldSystemFont(ofSize: 16)
+        tf.font = UIFont.systemFont(ofSize: 16)
         tf.placeholder = ""///
         tf.returnKeyType = .next
         tf.delegate = self
@@ -40,7 +34,7 @@ class InfoCell: DatasourceCell, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         infoTextField.resignFirstResponder()
-
+        
         let addCourseController = controller as! AddCourseController
         let infoTextFields = addCourseController.infoTextFields
         
@@ -69,7 +63,7 @@ class InfoCell: DatasourceCell, UITextFieldDelegate {
         
         textLabel.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: nil, topConstant: 0, leftConstant: 30, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 0)
         
-        infoTextField.anchor(topAnchor, left: textLabel.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        infoTextField.anchor(topAnchor, left: textLabel.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 26, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
 }

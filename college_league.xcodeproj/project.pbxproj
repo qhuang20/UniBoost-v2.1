@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		67AC5CE83E4E19B804533143 /* Pods_college_league.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */; };
 		7B433979201D71B800151FEE /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B433978201D71B800151FEE /* DayCell.swift */; };
+		7B43399020205A7200151FEE /* CourseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43398F20205A7200151FEE /* CourseInfo.swift */; };
 		7B64394D201D19C000FB0E18 /* Timetable+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B64394C201D19C000FB0E18 /* Timetable+handlers.swift */; };
 		7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B64394E201D2CC400FB0E18 /* AddCourseController.swift */; };
 		7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		7B433978201D71B800151FEE /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
+		7B43398F20205A7200151FEE /* CourseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfo.swift; sourceTree = "<group>"; };
 		7B64394C201D19C000FB0E18 /* Timetable+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timetable+handlers.swift"; sourceTree = "<group>"; };
 		7B64394E201D2CC400FB0E18 /* AddCourseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseController.swift; sourceTree = "<group>"; };
 		7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseDatasource.swift; sourceTree = "<group>"; };
@@ -64,8 +66,9 @@
 			isa = PBXGroup;
 			children = (
 				7B643952201D3D7600FB0E18 /* CourseInfoCells.swift */,
-				7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */,
 				7B64394E201D2CC400FB0E18 /* AddCourseController.swift */,
+				7B43398F20205A7200151FEE /* CourseInfo.swift */,
+				7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */,
 			);
 			path = AddCourseController;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B64394D201D19C000FB0E18 /* Timetable+handlers.swift in Sources */,
 				7B433979201D71B800151FEE /* DayCell.swift in Sources */,
+				7B43399020205A7200151FEE /* CourseInfo.swift in Sources */,
 				7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
