@@ -9,7 +9,9 @@
 import UIKit
 
 class CourseInfo: NSObject {
-    @objc var time: [Int]?
+    //@objc has default value for some type
+    @objc var days: [Bool]?
+    @objc var times: [Int]?
     @objc var title: String?
     @objc var place: String?
     @objc var note: String?

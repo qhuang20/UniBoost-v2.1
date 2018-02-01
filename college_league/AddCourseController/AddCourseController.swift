@@ -12,6 +12,18 @@ class AddCourseController: DatasourceController {
     
     var courseInfo: CourseInfo?
     
+    lazy var dimView: UIView = {
+        let dv = UIView()
+        dv.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        dv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideDatePicker)))
+        return dv
+    }()
+    
+    var leftTimeButton: UIButton?
+    var rightTimeButton: UIButton?
+    var bottomAnchor: NSLayoutConstraint?
+    var windowView: UIView?
+    
     lazy var datePicker: UIDatePicker = {
         let dp = UIDatePicker()
         dp.timeZone = NSTimeZone.local
@@ -21,20 +33,7 @@ class AddCourseController: DatasourceController {
         dp.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
         return dp
     }()
-    
-    @objc func datePickerValueChanged(_ datePicker: UIDatePicker){
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm a"
-        let selectedDate = dateFormatter.string(from: datePicker.date)
-        print("Selected value \(selectedDate)")
-        
-        let hours = Calendar.current.component(.hour, from: datePicker.date)
-        let minutes = Calendar.current.component(.minute, from: datePicker.date)
-        print("\(hours)  \(minutes)")
-    }
-    
-    var datePickerAnchors: [NSLayoutConstraint]?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.datasource = AddCourseDatasource()
@@ -42,10 +41,17 @@ class AddCourseController: DatasourceController {
         configureNavigationItems()
         
         courseInfo = CourseInfo()
+        courseInfo?.times = [60 * 9, 60 * 10]
         
-        view.addSubview(datePicker)
+        windowView = UIApplication.shared.keyWindow
+        windowView?.addSubview(dimView)
+        windowView?.addSubview(datePicker)
+       
+        dimView.anchor(windowView?.topAnchor, left: windowView?.leftAnchor, bottom: windowView?.bottomAnchor, right: windowView?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        datePickerAnchors = datePicker.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 200)
+        bottomAnchor = datePicker.anchorWithReturnAnchors(nil, left: windowView?.leftAnchor, bottom: windowView?.safeAreaLayoutGuide.bottomAnchor, right: windowView?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -200, rightConstant: 0, widthConstant: 0, heightConstant: 200)[1]
+        
+        dimView.isHidden = true
     }
     
     private func configureNavigationItems() {
@@ -53,11 +59,9 @@ class AddCourseController: DatasourceController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "save"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(saveCourseInfo))
     }
     
-    @objc func saveCourseInfo() {
-        
-        let keyValues = ["title": infoTextFields[0].text as Any, "place": infoTextFields[1].text as Any, "note": infoTextFields[2].text as Any]
-        courseInfo?.setValuesForKeys(keyValues)
-
+    override func viewDidDisappear(_ animated: Bool) {
+        datePicker.removeFromSuperview()
+        dimView.removeFromSuperview()
     }
     
     var infoTextFields = [UITextField]()
@@ -90,15 +94,14 @@ class AddCourseController: DatasourceController {
         return button
     }
     
-    @objc func showDatePicker(button: UIButton) {
-        button.setTitleColor(themeColor, for: .normal)
-    }
-    
     private func setupTimeButtons(cell: InfoCell) {
         cell.infoTextField.isHidden = true
         
-        let leftTimeButton = createTimeButton(title: "9:00 AM")
-        let rightTimeButton = createTimeButton(title: "10:00 AM")
+        leftTimeButton = createTimeButton(title: "9:00 AM")
+        rightTimeButton = createTimeButton(title: "10:00 AM")
+        guard let leftTimeButton = leftTimeButton else { return }
+        guard let rightTimeButton = rightTimeButton else { return }
+        
         let slashLabel = UILabel()
         slashLabel.textColor = .black
         slashLabel.text = "-"
