@@ -37,11 +37,13 @@ class AddCourseController: DatasourceController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.datasource = AddCourseDatasource()
-        collectionView?.contentInset = UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         configureNavigationItems()
         
         courseInfo = CourseInfo()
         courseInfo?.times = [60 * 9, 60 * 10]
+        courseInfo?.days = [true, false, false, false, false]
+        courseInfo?.color = UIColor.orange
         
         windowView = UIApplication.shared.keyWindow
         windowView?.addSubview(dimView)

@@ -63,8 +63,14 @@ extension AddCourseController {
         let keyValues = ["title": infoTextFields[0].text as Any, "place": infoTextFields[1].text as Any, "note": infoTextFields[2].text as Any]
         courseInfo?.setValuesForKeys(keyValues)
         
-        print(courseInfo?.times)
-        print(courseInfo?.note)
+//        print(courseInfo?.days)
+//        print(courseInfo?.times)
+//        print(courseInfo?.title)
+//        print(courseInfo?.place)
+//        print(courseInfo?.note)
+//        print(courseInfo?.color)
+        
+        
     }
     
 }
