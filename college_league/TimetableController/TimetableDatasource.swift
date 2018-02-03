@@ -10,6 +10,8 @@ import LBTAComponents
 
 class TimetableDatasource: Datasource {
     
+    var weekCourses: [[CourseInfo]] = [[], [], [], [], []]
+    
     override func cellClasses() -> [DatasourceCell.Type] {
         return [DayCell.self]
     }
@@ -19,7 +21,7 @@ class TimetableDatasource: Datasource {
     }
     
     override func item(_ indexPath: IndexPath) -> Any? {//to Cell
-        return nil//days[indexPath.item]
+        return weekCourses[indexPath.item]
     }
     
 }

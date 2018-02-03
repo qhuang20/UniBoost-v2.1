@@ -99,7 +99,7 @@ class DaysHeader: DatasourceCell {
         let addCourseController = controller as! AddCourseController
         let tag = selectedLabel.tag
        
-        addCourseController.courseInfo?.days![tag] = !isAlreadySelected
+        addCourseController.courseInfo?.days[tag] = !isAlreadySelected
         selectedLabel.textColor = isAlreadySelected ? UIColor.black : UIColor.orange
     }
     
@@ -162,7 +162,7 @@ class ColorsFooter: DatasourceCell {
         }
         
         selectedLabel.text = "✓"
-        addCourseController.courseInfo?.color = selectedLabel.backgroundColor
+        addCourseController.courseInfo?.color = selectedLabel.backgroundColor!
     }
     
     override func setupViews() {

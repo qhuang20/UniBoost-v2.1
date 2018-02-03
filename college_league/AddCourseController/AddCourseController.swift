@@ -12,6 +12,8 @@ class AddCourseController: DatasourceController {
     
     var courseInfo: CourseInfo?
     
+    weak var timetableController: TimetableController?
+    
     lazy var dimView: UIView = {
         let dv = UIView()
         dv.backgroundColor = UIColor(white: 0, alpha: 0.4)
@@ -41,9 +43,6 @@ class AddCourseController: DatasourceController {
         configureNavigationItems()
         
         courseInfo = CourseInfo()
-        courseInfo?.times = [60 * 9, 60 * 10]
-        courseInfo?.days = [true, false, false, false, false]
-        courseInfo?.color = UIColor.orange
         
         windowView = UIApplication.shared.keyWindow
         windowView?.addSubview(dimView)

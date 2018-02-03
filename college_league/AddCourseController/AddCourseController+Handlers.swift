@@ -43,15 +43,15 @@ extension AddCourseController {
         
         let hours = Calendar.current.component(.hour, from: datePicker.date)
         let minutes = Calendar.current.component(.minute, from: datePicker.date)
-        print("\(hours)  \(minutes)")
+        
         let convertedMinutes = 60 * hours + minutes
         
         if leftTimeButton?.titleColor(for: .normal) == UIColor.orange {
             leftTimeButton?.setTitle(selectedDate, for: .normal)
-            courseInfo?.times?[0] = convertedMinutes
+            courseInfo?.times[0] = convertedMinutes
         } else {
             rightTimeButton?.setTitle(selectedDate, for: .normal)
-            courseInfo?.times?[1] = convertedMinutes
+            courseInfo?.times[1] = convertedMinutes
         }
         
     }
@@ -62,15 +62,17 @@ extension AddCourseController {
         
         let keyValues = ["title": infoTextFields[0].text as Any, "place": infoTextFields[1].text as Any, "note": infoTextFields[2].text as Any]
         courseInfo?.setValuesForKeys(keyValues)
+
+        for i in 0...weekdays.count - 1 {
+            if courseInfo!.days[i] {
+                let courseInfoCopy = courseInfo?.copy() as! CourseInfo
+                let datasource = timetableController?.datasource as! TimetableDatasource
+                datasource.weekCourses[i].append(courseInfoCopy)
+            }
+        }
         
-//        print(courseInfo?.days)
-//        print(courseInfo?.times)
-//        print(courseInfo?.title)
-//        print(courseInfo?.place)
-//        print(courseInfo?.note)
-//        print(courseInfo?.color)
-        
-        
+        timetableController?.collectionView?.reloadData()
+        navigationController?.popViewController(animated: true)
     }
     
 }

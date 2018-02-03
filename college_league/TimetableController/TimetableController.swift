@@ -17,7 +17,7 @@ class TimetableController: DatasourceController {
     
     let daysBar: UIStackView = {
         var views = [UIView]()
-        for i in 0...4 {
+        for i in 0...weekdays.count - 1 {
             let label = UILabel()
             label.backgroundColor = brightGray
             label.text = weekdays[i]
@@ -43,6 +43,8 @@ class TimetableController: DatasourceController {
         let sv = UIStackView(arrangedSubviews: views)
         sv.axis = .vertical
         sv.distribution = .fillEqually
+        sv.layer.cornerRadius = 10
+        sv.clipsToBounds = true
         return sv
     }()
 
@@ -69,20 +71,20 @@ class TimetableController: DatasourceController {
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = brightGray
         
-        collectionView?.contentInset = UIEdgeInsets(top: 0, left: hoursBarWidth, bottom: 0, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: daysBarHeight, left: hoursBarWidth, bottom: 0, right: 0)
     }
     
     private func setupTimeBars() {
         view.addSubview(hoursBar)
         view.addSubview(daysBar)
         
-        hoursBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 16, leftConstant: 0, bottomConstant: 16, rightConstant: 0, widthConstant: hoursBarWidth, heightConstant: 0)
+        hoursBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 16, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: hoursBarWidth, heightConstant: 0)
         daysBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: hoursBar.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: daysBarHeight)
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let height = view.safeAreaLayoutGuide.layoutFrame.height
+        let height = view.safeAreaLayoutGuide.layoutFrame.height - daysBarHeight
         let width = (view.frame.width - hoursBarWidth) / CGFloat(weekdays.count)
         
         return CGSize(width: width, height: height)

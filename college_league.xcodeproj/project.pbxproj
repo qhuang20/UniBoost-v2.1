@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		67AC5CE83E4E19B804533143 /* Pods_college_league.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */; };
+		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
 		7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */; };
 		7B433979201D71B800151FEE /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B433978201D71B800151FEE /* DayCell.swift */; };
 		7B43399020205A7200151FEE /* CourseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43398F20205A7200151FEE /* CourseInfo.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
 		7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddCourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B433978201D71B800151FEE /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
 		7B43398F20205A7200151FEE /* CourseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfo.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 		7BF3A32D201C127100689AE1 /* TimetableController */ = {
 			isa = PBXGroup;
 			children = (
+				7B0FF8872025482D00C83BFA /* CourseView.swift */,
 				7B433978201D71B800151FEE /* DayCell.swift */,
 				7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */,
 				7BF3A2AB2019479700689AE1 /* TimetableController.swift */,
@@ -261,6 +264,7 @@
 				7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */,
 				7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */,
 				7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */,
+				7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */,
 				7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B64394D201D19C000FB0E18 /* Timetable+Handlers.swift in Sources */,
