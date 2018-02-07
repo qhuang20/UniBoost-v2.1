@@ -67,11 +67,11 @@ class TimetableController: DatasourceController {
     private func configureCollectionView() {
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0.5
+        layout.minimumLineSpacing = 0
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = brightGray
         
-        collectionView?.contentInset = UIEdgeInsets(top: daysBarHeight, left: hoursBarWidth, bottom: 0, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: daysBarHeight, left: hoursBarWidth + 1, bottom: 0, right: 0)//only can do one side (no shrink)
     }
     
     private func setupTimeBars() {
@@ -87,7 +87,7 @@ class TimetableController: DatasourceController {
         let height = view.safeAreaLayoutGuide.layoutFrame.height - daysBarHeight
         let width = (view.frame.width - hoursBarWidth) / CGFloat(weekdays.count)
         
-        return CGSize(width: width, height: height)
+        return CGSize(width: width - 0.5, height: height)
     }
 
 }

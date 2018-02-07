@@ -32,6 +32,26 @@ class AddCourseController: DatasourceController {
         dp.datePickerMode = .time
         dp.minuteInterval = 5
         dp.backgroundColor = .white
+        
+        let startHour: Int = 8
+        let endHour: Int = 20
+        let date = Date()
+        let gregorian = Calendar(identifier: Calendar.Identifier.buddhist)
+        var components = gregorian.dateComponents(([.day, .month, .year]), from: date)
+        
+        components.hour = startHour
+        components.minute = 0
+        components.second = 0
+        let startDate = gregorian.date(from: components)
+        
+        components.hour = endHour
+        components.minute = 0
+        components.second = 0
+        let endDate = gregorian.date(from: components)
+    
+        dp.minimumDate = startDate
+        dp.maximumDate = endDate
+
         dp.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
         return dp
     }()

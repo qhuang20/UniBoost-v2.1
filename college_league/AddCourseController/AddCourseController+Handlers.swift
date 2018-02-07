@@ -11,6 +11,12 @@ import UIKit
 extension AddCourseController {
     
     @objc func showDatePicker(button: UIButton) {
+        for tf in infoTextFields {
+            if tf.isFirstResponder {
+                tf.resignFirstResponder()
+            }
+        }
+        
         button.setTitleColor(.orange, for: .normal)
         bottomAnchor?.constant = 0
         dimView.isHidden = false
@@ -62,17 +68,98 @@ extension AddCourseController {
         
         let keyValues = ["title": infoTextFields[0].text as Any, "place": infoTextFields[1].text as Any, "note": infoTextFields[2].text as Any]
         courseInfo?.setValuesForKeys(keyValues)
+        
+        if courseInfo?.title.count == 0 {
+            popUpErrorView(text: "Please set a title")
+            return
+        }
+        
+        if courseInfo!.times[0] >= courseInfo!.times[1] {
+            popUpErrorView(text: "Please set a right time period")
+            return
+        }
 
+        var hasChoosenDay = false
         for i in 0...weekdays.count - 1 {
+            
             if courseInfo!.days[i] {
-                let courseInfoCopy = courseInfo?.copy() as! CourseInfo
+                hasChoosenDay = true
                 let datasource = timetableController?.datasource as! TimetableDatasource
+                
+                for exsitingCourseInfo in datasource.weekCourses[i] {
+                    let exsitingStartTime = exsitingCourseInfo.times[0]
+                    let exsitingEndTime = exsitingCourseInfo.times[1]
+                    
+                    let isValidTime: Bool = courseInfo!.times[1] <= exsitingStartTime || courseInfo!.times[0] >= exsitingEndTime
+                    if !isValidTime {
+                        popUpErrorView(text: "Overlap with existing time")
+                        return
+                    }
+                }
+                
+                let courseInfoCopy = courseInfo?.copy() as! CourseInfo
                 datasource.weekCourses[i].append(courseInfoCopy)
             }
         }
         
+        if !hasChoosenDay {
+            popUpErrorView(text: "Please choose a day")
+            return
+        }
+        
         timetableController?.collectionView?.reloadData()
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func popUpErrorView(text: String) {
+        let errorView = createErrorView(text: text, color: UIColor.orange, fontSize: 16)
+        view.addSubview(errorView)
+        errorView.anchorCenterSuperview()
+        
+        UIView.animate(withDuration: 1, delay: 1.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            
+            errorView.alpha = 0
+            
+        }, completion: { (didComplete) in
+            errorView.removeFromSuperview()
+        })
+    }
+    
+    private func createErrorView(text: String, color: UIColor, fontSize: CGFloat) -> UILabel {
+        let label = PaddingLabel()
+        label.text = text
+        label.backgroundColor = color
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
+        
+        label.textAlignment = .center
+        label.layer.cornerRadius = 10
+        label.clipsToBounds = true
+        label.textColor = .white
+        
+        return label
+    }
+    
+}
+
+class PaddingLabel: UILabel {
+    
+    var topInset: CGFloat = 5.0
+    var bottomInset: CGFloat = 5.0
+    var leftInset: CGFloat = 8.0
+    var rightInset: CGFloat = 8.0
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        get {
+            var contentSize = super.intrinsicContentSize
+            contentSize.height += topInset + bottomInset
+            contentSize.width += leftInset + rightInset
+            return contentSize
+        }
     }
     
 }

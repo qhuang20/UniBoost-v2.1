@@ -21,7 +21,7 @@ class InfoCell: DatasourceCell, UITextFieldDelegate {
     lazy var infoTextField: UITextField = {
         let tf = UITextField()
         tf.font = UIFont.systemFont(ofSize: 18)
-        tf.placeholder = ""///
+        tf.placeholder = ""
         tf.returnKeyType = .next
         tf.delegate = self
         return tf

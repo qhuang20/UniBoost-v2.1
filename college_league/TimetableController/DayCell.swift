@@ -12,14 +12,8 @@ class DayCell: DatasourceCell {
     
     override var datasourceItem: Any? {
         didSet {
-            dayCourses = datasourceItem as! [CourseInfo]
-        }
-    }
-    
-    var courseViews: [CourseView] = []
-
-    var dayCourses: [CourseInfo] = [] {
-        didSet {
+            guard let dayCourses = datasourceItem as? [CourseInfo] else { return }
+            
             //clear all the state
             for view in courseViews {
                 view.removeFromSuperview()
@@ -27,11 +21,15 @@ class DayCell: DatasourceCell {
             courseViews = []
             
             for course in dayCourses {
-                courseViews.append(CourseView(courseInfo: course))
+                let courseView = CourseView(courseInfo: course)
+                courseView.timetableController = controller as? TimetableController
+                courseViews.append(courseView)
             }
             updateUI()
         }
     }
+    
+    var courseViews: [CourseView] = []
     
     private func updateUI() {
         
@@ -47,7 +45,7 @@ class DayCell: DatasourceCell {
             //the view will render all its subviews after the view is created
             addSubview(courseView)//state changed!!!! (add to self subview list)
             
-            courseView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: courseTopDistance, leftConstant: 1, bottomConstant: 0, rightConstant: 1, widthConstant: 0, heightConstant: courseStackViewHeight)
+            courseView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: courseTopDistance, leftConstant: 1, bottomConstant: 0, rightConstant: 1, widthConstant: 0, heightConstant: courseStackViewHeight - 2)
         }
     }
     
