@@ -70,10 +70,10 @@
 			isa = PBXGroup;
 			children = (
 				7B643952201D3D7600FB0E18 /* CourseInfoCells.swift */,
+				7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */,
 				7B64394E201D2CC400FB0E18 /* AddCourseController.swift */,
 				7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */,
 				7B43398F20205A7200151FEE /* CourseInfo.swift */,
-				7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */,
 			);
 			path = AddCourseController;
 			sourceTree = "<group>";

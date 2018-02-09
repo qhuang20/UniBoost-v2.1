@@ -10,9 +10,23 @@ import LBTAComponents
 
 class AddCourseController: DatasourceController {
     
-    let courseInfo = CourseInfo()
+    var courseInfo = CourseInfo()
     
-    var courseView: CourseView?//for calling "delete" and rending
+    var courseView: CourseView? {//from Edit for calling "delete"; copy; rendering
+        didSet {//set up courseInfo
+            courseInfo = courseView?.courseInfo.copy() as! CourseInfo
+            
+            let timeTableView = courseView?.superview?.superview as! UICollectionView
+            let indexPath = timeTableView.indexPath(for: courseView?.superview as! UICollectionViewCell)
+            var boolArr = [Bool]()
+            for _ in 0...4 {
+                boolArr.append(false)
+            }
+            boolArr[indexPath!.item] = true
+            
+            courseInfo.days = boolArr
+        }
+    }
     
     weak var timetableController: TimetableController?
     
@@ -61,6 +75,9 @@ class AddCourseController: DatasourceController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.datasource = AddCourseDatasource()
+        (datasource as! AddCourseDatasource).oldCourseViewColor = courseInfo.color
+        (datasource as! AddCourseDatasource).editCourseBoolArray = courseInfo.days
+
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         configureNavigationItems()
 
@@ -102,8 +119,8 @@ class AddCourseController: DatasourceController {
         let labelText = ["Time", "Title", "Place", "Note"]
         cell.textLabel.text = labelText[indexPath.item]
         
-//        let arr = ["", courseInfo?.title, courseInfo?.place, courseInfo?.note]
-//        cell.infoTextField.text = arr[indexPath.item]
+        let arr = ["", courseView?.courseInfo.title, courseView?.courseInfo.place, courseView?.courseInfo.note]
+        cell.infoTextField.text = arr[indexPath.item]
     
         return cell
     }
@@ -123,6 +140,13 @@ class AddCourseController: DatasourceController {
         
         leftTimeButton = createTimeButton(title: "9:00 AM")
         rightTimeButton = createTimeButton(title: "10:00 AM")
+        if courseView != nil {
+            let startTime = getTimeTitle(minutes: courseInfo.times[0])
+            let endTime = getTimeTitle(minutes: courseInfo.times[1])
+            leftTimeButton?.setTitle(startTime, for: .normal)
+            rightTimeButton?.setTitle(endTime, for: .normal)
+        }
+        
         guard let leftTimeButton = leftTimeButton else { return }
         guard let rightTimeButton = rightTimeButton else { return }
         
@@ -141,6 +165,31 @@ class AddCourseController: DatasourceController {
         slashLabel.anchor(cell.topAnchor, left: leftTimeButton.rightAnchor, bottom: cell.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 40, heightConstant: 0)
         
         rightTimeButton.anchor(cell.topAnchor, left: slashLabel.rightAnchor, bottom: cell.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 90, heightConstant: 0)
+    }
+    
+    private func getTimeTitle(minutes: Int) -> String {
+
+        let hours = minutes / 60
+        let minutes = minutes % 60
+        var m = ":\(minutes)"
+        var h = "\(hours)"
+        var amOrPm = " AM"
+        
+        if 0 <= minutes && minutes <= 9 {
+            m = ":0\(minutes)"
+        }
+        
+        if 12 < hours {
+            h = "\(hours - 12)"
+        }
+        
+        if 12 <= hours {
+            amOrPm = " PM"
+        }
+
+        let time = h + m + amOrPm
+        
+        return time
     }
     
     

@@ -70,8 +70,23 @@ class InfoCell: DatasourceCell, UITextFieldDelegate {
 
 class DaysHeader: DatasourceCell {
     
+    override var datasourceItem: Any? {
+        didSet {
+            if let daysArray = datasourceItem as? [Bool] {
+                for label in views as! [UILabel] {
+                    label.textColor = UIColor.black
+                    if daysArray[label.tag] {
+                        label.textColor = UIColor.orange
+                    }
+                }
+            }
+        }
+    }
+    
+    var views = [UIView]()
+    
     lazy var daysStackView: UIStackView = {
-        var views = [UIView]()
+ 
         for i in 0...4 {
             let label = UILabel()
             label.backgroundColor = UIColor.white
@@ -116,7 +131,21 @@ class DaysHeader: DatasourceCell {
 }
 
 class ColorsFooter: DatasourceCell {
-    let colors = [UIColor(r: 255, g: 144, b: 0),
+    
+    override var datasourceItem: Any? {
+        didSet {
+            if let color = datasourceItem as? UIColor {
+                for label in labels {
+                    label.text = " "
+                    if color ==  label.backgroundColor {
+                        label.text = "✓"
+                    }
+                }
+            }
+        }
+    }
+    
+    let colors = [UIColor.orange,
                   UIColor(r: 170, g: 0, b: 0),
                   UIColor(r: 156, g: 80, b: 0),
                   UIColor(r: 0, g: 151, b: 0),

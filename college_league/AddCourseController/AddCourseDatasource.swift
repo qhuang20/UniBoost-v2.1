@@ -10,6 +10,19 @@ import LBTAComponents
 
 class AddCourseDatasource: Datasource {
     
+    var oldCourseViewColor: UIColor?
+    var editCourseBoolArray: [Bool]?
+    
+    override func headerItem(_ section: Int) -> Any? {
+        return editCourseBoolArray
+    }
+    
+    override func footerItem(_ section: Int) -> Any? {
+        return oldCourseViewColor
+    }
+    
+    
+    
     override func headerClasses() -> [DatasourceCell.Type]? {
         return [DaysHeader.self]
     }
@@ -29,7 +42,6 @@ class AddCourseDatasource: Datasource {
     }
     
     override func item(_ indexPath: IndexPath) -> Any? {//to Cell
-        
         return nil
     }
     
