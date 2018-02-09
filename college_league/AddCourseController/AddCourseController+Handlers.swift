@@ -117,15 +117,15 @@ extension AddCourseController {
                     let exsitingStartTime = exsitingCourseInfo.times[0]
                     let exsitingEndTime = exsitingCourseInfo.times[1]
 
-                    var isValidTime = courseInfo.times[1] <= exsitingStartTime || courseInfo.times[0] >= exsitingEndTime
+                    let isValidTime = courseInfo.times[1] <= exsitingStartTime || courseInfo.times[0] >= exsitingEndTime
                     
                     if isEditAction {
                         let timeTableView = courseView?.superview?.superview as! UICollectionView
                         let indexPath = timeTableView.indexPath(for: courseView?.superview as! UICollectionViewCell)
                         
-                        if indexPath?.item == weekday {
-                            isValidTime = isValidTime || courseInfo.times[0] == exsitingStartTime && courseInfo.times[1] == exsitingEndTime
-                        }
+                        let isOldCourseViewTime = exsitingStartTime == courseView?.courseInfo.times[0] && exsitingEndTime == courseView?.courseInfo.times[1]
+                        
+                        if indexPath?.item == weekday && isOldCourseViewTime { continue }
                     }
                     
                     if !isValidTime {
