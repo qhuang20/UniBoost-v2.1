@@ -81,7 +81,8 @@ class CourseView: UIView {
         let title = getTimeTitle()
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         alertController.view.tintColor = UIColor.black
-    
+        alertController.view.isOpaque = true
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive){ (alertAction) in

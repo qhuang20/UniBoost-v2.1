@@ -21,6 +21,7 @@ class TimetableController: DatasourceController {
             let label = UILabel()
             label.backgroundColor = brightGray
             label.text = weekdays[i]
+            label.font = UIFont.boldSystemFont(ofSize: 16)
             label.textAlignment = .center
             views.append(label)
         }
@@ -71,7 +72,7 @@ class TimetableController: DatasourceController {
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = brightGray
         
-        collectionView?.contentInset = UIEdgeInsets(top: daysBarHeight, left: hoursBarWidth + 1, bottom: 0, right: 0)//only can do one side (no shrink)
+        collectionView?.contentInset = UIEdgeInsets(top: daysBarHeight, left: hoursBarWidth + 2, bottom: 0, right: 0)//only can do one side (no shrink)
     }
     
     private func setupTimeBars() {
@@ -79,7 +80,7 @@ class TimetableController: DatasourceController {
         view.addSubview(daysBar)
         
         hoursBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 18, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: hoursBarWidth, heightConstant: 0)
-        daysBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: hoursBar.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: daysBarHeight)
+        daysBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: hoursBar.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 2, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: daysBarHeight)
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
