@@ -9,9 +9,9 @@
 import UIKit
 
 class CourseInfo: NSObject, NSCopying {
-
-    //@objc has default value for some type
-    @objc var days: [Bool]
+   
+    @objc var days: [Bool]//just for AddCourseController
+    
     @objc var times: [Int]
     @objc var title: String
     @objc var place: String

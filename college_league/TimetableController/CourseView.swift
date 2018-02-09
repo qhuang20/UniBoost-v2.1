@@ -90,7 +90,10 @@ class CourseView: UIView {
         }
         
         let editAction = UIAlertAction(title: "Edit", style: .default) { (alertAction) in
-            print("edit")
+            let addCourseController = AddCourseController()
+            addCourseController.timetableController = self.timetableController
+            addCourseController.courseView = self
+        self.timetableController?.navigationController?.pushViewController(addCourseController, animated: true)
         }
         
         alertController.addAction(editAction)
@@ -123,7 +126,7 @@ class CourseView: UIView {
         return title
     }
     
-    private func deleteCourseAction() {
+    public func deleteCourseAction() {
         let timetableDatasource = self.timetableController?.datasource as! TimetableDatasource
         
         guard let timeTableView = self.superview?.superview as? UICollectionView

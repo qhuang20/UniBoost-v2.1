@@ -10,7 +10,9 @@ import LBTAComponents
 
 class AddCourseController: DatasourceController {
     
-    var courseInfo: CourseInfo?
+    let courseInfo = CourseInfo()
+    
+    var courseView: CourseView?//for calling "delete" and rending
     
     weak var timetableController: TimetableController?
     
@@ -61,9 +63,7 @@ class AddCourseController: DatasourceController {
         self.datasource = AddCourseDatasource()
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         configureNavigationItems()
-        
-        courseInfo = CourseInfo()
-        
+
         windowView = UIApplication.shared.keyWindow
         windowView?.addSubview(dimView)
         windowView?.addSubview(datePicker)
@@ -101,6 +101,9 @@ class AddCourseController: DatasourceController {
         
         let labelText = ["Time", "Title", "Place", "Note"]
         cell.textLabel.text = labelText[indexPath.item]
+        
+//        let arr = ["", courseInfo?.title, courseInfo?.place, courseInfo?.note]
+//        cell.infoTextField.text = arr[indexPath.item]
     
         return cell
     }

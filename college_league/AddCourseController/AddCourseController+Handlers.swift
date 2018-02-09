@@ -54,10 +54,10 @@ extension AddCourseController {
         
         if leftTimeButton?.titleColor(for: .normal) == UIColor.orange {
             leftTimeButton?.setTitle(selectedDate, for: .normal)
-            courseInfo?.times[0] = convertedMinutes
+            courseInfo.times[0] = convertedMinutes
         } else {
             rightTimeButton?.setTitle(selectedDate, for: .normal)
-            courseInfo?.times[1] = convertedMinutes
+            courseInfo.times[1] = convertedMinutes
         }
         
     }
@@ -65,50 +65,83 @@ extension AddCourseController {
 
     
     @objc func saveCourseInfo() {//only save will pass the data to previous controller
-        
+        let timeTableDatasource = timetableController?.datasource as! TimetableDatasource
+
         let keyValues = ["title": infoTextFields[0].text as Any, "place": infoTextFields[1].text as Any, "note": infoTextFields[2].text as Any]
-        courseInfo?.setValuesForKeys(keyValues)
+        courseInfo.setValuesForKeys(keyValues)//courseInfo completed
         
-        if courseInfo?.title.count == 0 {
-            popUpErrorView(text: "Please set a title")
-            return
+        var returnValue = -1
+        
+        if courseView != nil {
+            returnValue = checkIfCourseIsValid(timetableDatasource: timeTableDatasource, isEditAction: true)
+        } else {
+            returnValue = checkIfCourseIsValid(timetableDatasource: timeTableDatasource, isEditAction: false)
         }
         
-        if courseInfo!.times[0] >= courseInfo!.times[1] {
+        if returnValue == -1 { return }
+        
+        if let courseView = courseView {//for edit
+            courseView.deleteCourseAction()
+        }
+        
+        for weekday in 0...weekdays.count - 1 {
+            if courseInfo.days[weekday] {
+                let courseInfoCopy = courseInfo.copy() as! CourseInfo
+                timeTableDatasource.weekCourses[weekday].append(courseInfoCopy)//the save
+            }
+        }
+        
+        timetableController?.collectionView?.reloadData()
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func checkIfCourseIsValid(timetableDatasource: TimetableDatasource, isEditAction: Bool) -> Int {
+        if courseInfo.title.count == 0 {
+            popUpErrorView(text: "Please set a title")
+            return -1
+        }
+        
+        if courseInfo.times[0] >= courseInfo.times[1] {
             popUpErrorView(text: "Please set a right time period")
-            return
+            return -1
         }
 
         var hasChoosenDay = false
-        for i in 0...weekdays.count - 1 {
+       
+        for weekday in 0...weekdays.count - 1 {
             
-            if courseInfo!.days[i] {
+            if courseInfo.days[weekday] {
                 hasChoosenDay = true
-                let datasource = timetableController?.datasource as! TimetableDatasource
                 
-                for exsitingCourseInfo in datasource.weekCourses[i] {
+                for exsitingCourseInfo in timetableDatasource.weekCourses[weekday] {
                     let exsitingStartTime = exsitingCourseInfo.times[0]
                     let exsitingEndTime = exsitingCourseInfo.times[1]
+
+                    var isValidTime = courseInfo.times[1] <= exsitingStartTime || courseInfo.times[0] >= exsitingEndTime
                     
-                    let isValidTime: Bool = courseInfo!.times[1] <= exsitingStartTime || courseInfo!.times[0] >= exsitingEndTime
+                    if isEditAction {
+                        let timeTableView = courseView?.superview?.superview as! UICollectionView
+                        let indexPath = timeTableView.indexPath(for: courseView?.superview as! UICollectionViewCell)
+                        
+                        if indexPath?.item == weekday {
+                            isValidTime = isValidTime || courseInfo.times[0] == exsitingStartTime && courseInfo.times[1] == exsitingEndTime
+                        }
+                    }
+                    
                     if !isValidTime {
                         popUpErrorView(text: "Overlap with existing time")
-                        return
+                        return -1
                     }
                 }
-                
-                let courseInfoCopy = courseInfo?.copy() as! CourseInfo
-                datasource.weekCourses[i].append(courseInfoCopy)
             }
         }
         
         if !hasChoosenDay {
             popUpErrorView(text: "Please choose a day")
-            return
+            return -1
         }
         
-        timetableController?.collectionView?.reloadData()
-        navigationController?.popViewController(animated: true)
+        return 1
     }
     
     private func popUpErrorView(text: String) {

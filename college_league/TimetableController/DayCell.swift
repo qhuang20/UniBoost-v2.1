@@ -45,7 +45,7 @@ class DayCell: DatasourceCell {
             //the view will render all its subviews after the view is created
             addSubview(courseView)//state changed!!!! (add to self subview list)
             
-            courseView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: courseTopDistance, leftConstant: 1, bottomConstant: 0, rightConstant: 1, widthConstant: 0, heightConstant: courseStackViewHeight - 2)
+            courseView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: courseTopDistance + 1, leftConstant: 1, bottomConstant: 0, rightConstant: 1, widthConstant: 0, heightConstant: courseStackViewHeight - 2)
         }
     }
     
