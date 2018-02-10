@@ -58,6 +58,11 @@ class TimetableController: DatasourceController {
         configureCollectionView()
 
         setupTimeBars()
+        
+        if let savedWeekCourses = (datasource as! TimetableDatasource).loadWeekCourses() {
+            
+            (datasource as! TimetableDatasource).weekCourses = savedWeekCourses
+        }
     }
     
     private func configureNavigationItems() {
@@ -90,7 +95,7 @@ class TimetableController: DatasourceController {
         
         return CGSize(width: width - 0.5, height: height)
     }
-
+    
 }
 
 

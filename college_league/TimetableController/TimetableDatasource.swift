@@ -10,7 +10,11 @@ import LBTAComponents
 
 class TimetableDatasource: Datasource {
     
-    var weekCourses: [[CourseInfo]] = [[], [], [], [], []]
+    var weekCourses: [[CourseInfo]] = [[], [], [], [], []] {
+        didSet{
+            saveWeekCourses()
+        }
+    }
     
     override func cellClasses() -> [DatasourceCell.Type] {
         return [DayCell.self]
@@ -22,6 +26,17 @@ class TimetableDatasource: Datasource {
     
     override func item(_ indexPath: IndexPath) -> Any? {//to Cell
         return weekCourses[indexPath.item]
+    }
+    
+    
+    
+    //MARK: Save and Load
+    public func saveWeekCourses() {
+        NSKeyedArchiver.archiveRootObject(weekCourses, toFile: CourseInfo.archiveURL.path)
+    }
+    
+    public func loadWeekCourses() -> [[CourseInfo]]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: CourseInfo.archiveURL.path) as?  [[CourseInfo]]
     }
     
 }
