@@ -42,7 +42,8 @@ class CourseInfo: NSObject, NSCopying, NSCoding {
     }
     
     //MARK: NSCoding
-    static let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let documentsDirectory = try! FileManager.default.url(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
+    
     static let archiveURL = documentsDirectory.appendingPathComponent("courseInfos")
     
     struct KeyName {
@@ -55,7 +56,6 @@ class CourseInfo: NSObject, NSCopying, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        
         let days = aDecoder.decodeObject(forKey: KeyName.days) as! [Bool]
         let times = aDecoder.decodeObject(forKey: KeyName.times) as! [Int]
         let title = aDecoder.decodeObject(forKey: KeyName.title) as! String

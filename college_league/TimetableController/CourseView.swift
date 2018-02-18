@@ -54,13 +54,13 @@ class CourseView: UIView {
         stackView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 2, leftConstant: 1, bottomConstant: 0, rightConstant: 1, widthConstant: 0, heightConstant: 0)//text has intrinsic size
         
         if courseInfo.title.count > 0 {
-            let titleLabel = createLabel(text: courseInfo.title, color: courseInfo.color, fontSize: 14)
-            titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+            let titleLabel = createLabel(text: courseInfo.title, color: courseInfo.color, fontSize: 12.5)
+            titleLabel.font = UIFont.systemFont(ofSize: 12.5, weight: .bold)
             stackView.addArrangedSubview(titleLabel)
         }
         
         if courseInfo.place.count > 0 {
-            let placeLabel = createLabel(text: courseInfo.place, color: courseInfo.color, fontSize: 12)
+            let placeLabel = createLabel(text: courseInfo.place, color: courseInfo.color, fontSize: 11)
             stackView.addArrangedSubview(placeLabel)
         }
 

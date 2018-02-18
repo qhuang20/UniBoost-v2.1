@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		67AC5CE83E4E19B804533143 /* Pods_college_league.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
+		7B1624632038B6DF004C0537 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B1624622038B6DF004C0537 /* GoogleService-Info.plist */; };
+		7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624642038C49B004C0537 /* Login+Handlers.swift */; };
+		7B1624672038C4AA004C0537 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624662038C4AA004C0537 /* LoginController.swift */; };
+		7B16246A2038C4B5004C0537 /* Signup+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624682038C4B5004C0537 /* Signup+Handlers.swift */; };
+		7B16246B2038C4B5004C0537 /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624692038C4B5004C0537 /* SignupController.swift */; };
+		7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B16246D2038C4EA004C0537 /* MainTabBarController.swift */; };
+		7B1624732038C555004C0537 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624702038C555004C0537 /* UserProfileHeader.swift */; };
+		7B1624742038C555004C0537 /* UserProfileController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624712038C555004C0537 /* UserProfileController+Handlers.swift */; };
+		7B1624752038C555004C0537 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624722038C555004C0537 /* UserProfileController.swift */; };
+		7B16247820392494004C0537 /* ViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B16247720392494004C0537 /* ViewController+Helper.swift */; };
 		7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */; };
 		7B433979201D71B800151FEE /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B433978201D71B800151FEE /* DayCell.swift */; };
 		7B43399020205A7200151FEE /* CourseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43398F20205A7200151FEE /* CourseInfo.swift */; };
@@ -26,6 +36,16 @@
 
 /* Begin PBXFileReference section */
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
+		7B1624622038B6DF004C0537 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7B1624642038C49B004C0537 /* Login+Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Login+Handlers.swift"; sourceTree = "<group>"; };
+		7B1624662038C4AA004C0537 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		7B1624682038C4B5004C0537 /* Signup+Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Signup+Handlers.swift"; sourceTree = "<group>"; };
+		7B1624692038C4B5004C0537 /* SignupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
+		7B16246D2038C4EA004C0537 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		7B1624702038C555004C0537 /* UserProfileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		7B1624712038C555004C0537 /* UserProfileController+Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileController+Handlers.swift"; sourceTree = "<group>"; };
+		7B1624722038C555004C0537 /* UserProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
+		7B16247720392494004C0537 /* ViewController+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Helper.swift"; sourceTree = "<group>"; };
 		7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddCourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B433978201D71B800151FEE /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
 		7B43398F20205A7200151FEE /* CourseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfo.swift; sourceTree = "<group>"; };
@@ -66,6 +86,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7B16246C2038C4BF004C0537 /* login_signup */ = {
+			isa = PBXGroup;
+			children = (
+				7B1624692038C4B5004C0537 /* SignupController.swift */,
+				7B1624682038C4B5004C0537 /* Signup+Handlers.swift */,
+				7B1624662038C4AA004C0537 /* LoginController.swift */,
+				7B1624642038C49B004C0537 /* Login+Handlers.swift */,
+			);
+			path = login_signup;
+			sourceTree = "<group>";
+		};
+		7B16246F2038C51B004C0537 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				7B16246D2038C4EA004C0537 /* MainTabBarController.swift */,
+				7BF3A2A92019479700689AE1 /* AppDelegate.swift */,
+				7B16247720392494004C0537 /* ViewController+Helper.swift */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		7B1624762038C561004C0537 /* UserProfileController */ = {
+			isa = PBXGroup;
+			children = (
+				7B1624702038C555004C0537 /* UserProfileHeader.swift */,
+				7B1624722038C555004C0537 /* UserProfileController.swift */,
+				7B1624712038C555004C0537 /* UserProfileController+Handlers.swift */,
+			);
+			path = UserProfileController;
+			sourceTree = "<group>";
+		};
 		7B643954201D3D8700FB0E18 /* AddCourseController */ = {
 			isa = PBXGroup;
 			children = (
@@ -101,9 +152,12 @@
 			children = (
 				7B643954201D3D8700FB0E18 /* AddCourseController */,
 				7BF3A32D201C127100689AE1 /* TimetableController */,
-				7BF3A2A92019479700689AE1 /* AppDelegate.swift */,
+				7B1624762038C561004C0537 /* UserProfileController */,
+				7B16246C2038C4BF004C0537 /* login_signup */,
+				7B16246F2038C51B004C0537 /* util */,
 				7BF3A2B02019479700689AE1 /* Assets.xcassets */,
 				7BF3A2B52019479700689AE1 /* Info.plist */,
+				7B1624622038B6DF004C0537 /* GoogleService-Info.plist */,
 				7BF3A2B22019479700689AE1 /* LaunchScreen.storyboard */,
 				7BF3A2AD2019479700689AE1 /* Main.storyboard */,
 			);
@@ -194,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BF3A2B42019479700689AE1 /* LaunchScreen.storyboard in Resources */,
+				7B1624632038B6DF004C0537 /* GoogleService-Info.plist in Resources */,
 				7BF3A2B12019479700689AE1 /* Assets.xcassets in Resources */,
 				7BF3A2AF2019479700689AE1 /* Main.storyboard in Resources */,
 			);
@@ -242,11 +297,19 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-college_league/Pods-college_league-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/LBTAComponents/LBTAComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LBTAComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -260,12 +323,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1624732038C555004C0537 /* UserProfileHeader.swift in Sources */,
+				7B16246A2038C4B5004C0537 /* Signup+Handlers.swift in Sources */,
 				7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */,
 				7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */,
+				7B16247820392494004C0537 /* ViewController+Helper.swift in Sources */,
+				7B16246B2038C4B5004C0537 /* SignupController.swift in Sources */,
 				7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */,
+				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
 				7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */,
+				7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */,
+				7B1624742038C555004C0537 /* UserProfileController+Handlers.swift in Sources */,
+				7B1624752038C555004C0537 /* UserProfileController.swift in Sources */,
 				7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */,
 				7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */,
+				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B64394D201D19C000FB0E18 /* Timetable+Handlers.swift in Sources */,
 				7B433979201D71B800151FEE /* DayCell.swift in Sources */,

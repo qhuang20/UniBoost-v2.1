@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Firebase
 
 let themeColor = UIColor.init(r: 255, g: 165, b: 0)
+let lightThemeColor = UIColor.init(r: 255, g: 200, b: 144)
 let brightGray = UIColor.init(white: 0.95, alpha: 1)
 
 @UIApplicationMain
@@ -17,11 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
+        FirebaseApp.configure()
+
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-    
-        window?.rootViewController = UINavigationController(rootViewController: TimetableController())
+        window?.rootViewController = MainTabBarController()
         
         UITextField.appearance().tintColor = themeColor
         
@@ -36,8 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.clear]
         barButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
         
-        //UITabBar.appearance().tintColor = themeColor
-        
+//        UITabBar.appearance().tintColor = themeColor
+    
         return true
     }
 

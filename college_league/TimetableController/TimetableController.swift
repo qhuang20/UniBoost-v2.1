@@ -73,7 +73,7 @@ class TimetableController: DatasourceController {
     private func configureCollectionView() {
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 0.01
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = brightGray
         
