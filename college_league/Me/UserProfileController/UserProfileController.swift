@@ -39,10 +39,9 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         super.viewDidLoad()
         configureCollectionVeiw()
         navigationItem.title = Auth.auth().currentUser?.uid
+        setupLogOutButton()
 
         fetchUser()
-        
-        setupLogOutButton()
     }
     
     private func setupLogOutButton() {

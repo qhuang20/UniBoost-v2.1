@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = MainTabBarController()
         
         UITextField.appearance().tintColor = themeColor
+        UITextView.appearance().tintColor = themeColor
         
         UINavigationBar.appearance().barTintColor = themeColor
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)]
@@ -36,10 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().backIndicatorImage = backImage
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
         let barButtonItemAppearance = UIBarButtonItem.appearance()
-        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.clear]
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
         barButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
-        
-//        UITabBar.appearance().tintColor = themeColor
     
         return true
     }

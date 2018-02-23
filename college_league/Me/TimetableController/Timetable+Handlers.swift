@@ -12,6 +12,7 @@ extension TimetableController {
     
     @objc func addNewCourse() {
         let addCourseController = AddCourseController()
+        addCourseController.timetableController = self
         navigationController?.pushViewController(addCourseController, animated: true)
     }
     

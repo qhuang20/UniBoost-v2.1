@@ -89,10 +89,6 @@ extension SignupController: UINavigationControllerDelegate, UIImagePickerControl
     
     @objc func handleSelectProfileImageView() {
         let imagePickerController = UIImagePickerController()
-        let barButtonItemAppearance = UIBarButtonItem.appearance()
-        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
-        barButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
-        
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = true
         

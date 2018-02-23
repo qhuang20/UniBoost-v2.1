@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		67AC5CE83E4E19B804533143 /* Pods_college_league.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */; };
+		7B0FD70B203F650200E77422 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70A203F650200E77422 /* PostController.swift */; };
+		7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
 		7B1624632038B6DF004C0537 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B1624622038B6DF004C0537 /* GoogleService-Info.plist */; };
 		7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624642038C49B004C0537 /* Login+Handlers.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B0FD70A203F650200E77422 /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
+		7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
 		7B1624622038B6DF004C0537 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7B1624642038C49B004C0537 /* Login+Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Login+Handlers.swift"; sourceTree = "<group>"; };
@@ -84,6 +88,33 @@
 				BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7B0FD708203F562800E77422 /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				7B643954201D3D8700FB0E18 /* AddCourseController */,
+				7BF3A32D201C127100689AE1 /* TimetableController */,
+				7B1624762038C561004C0537 /* UserProfileController */,
+			);
+			path = Me;
+			sourceTree = "<group>";
+		};
+		7B0FD709203F569500E77422 /* Courses */ = {
+			isa = PBXGroup;
+			children = (
+				7B0FD70E204009D500E77422 /* PostController */,
+			);
+			path = Courses;
+			sourceTree = "<group>";
+		};
+		7B0FD70E204009D500E77422 /* PostController */ = {
+			isa = PBXGroup;
+			children = (
+				7B0FD70A203F650200E77422 /* PostController.swift */,
+				7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */,
+			);
+			path = PostController;
 			sourceTree = "<group>";
 		};
 		7B16246C2038C4BF004C0537 /* login_signup */ = {
@@ -150,9 +181,8 @@
 		7BF3A2A82019479700689AE1 /* college_league */ = {
 			isa = PBXGroup;
 			children = (
-				7B643954201D3D8700FB0E18 /* AddCourseController */,
-				7BF3A32D201C127100689AE1 /* TimetableController */,
-				7B1624762038C561004C0537 /* UserProfileController */,
+				7B0FD709203F569500E77422 /* Courses */,
+				7B0FD708203F562800E77422 /* Me */,
 				7B16246C2038C4BF004C0537 /* login_signup */,
 				7B16246F2038C51B004C0537 /* util */,
 				7BF3A2B02019479700689AE1 /* Assets.xcassets */,
@@ -323,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */,
 				7B1624732038C555004C0537 /* UserProfileHeader.swift in Sources */,
 				7B16246A2038C4B5004C0537 /* Signup+Handlers.swift in Sources */,
 				7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */,
@@ -334,6 +365,7 @@
 				7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */,
 				7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */,
 				7B1624742038C555004C0537 /* UserProfileController+Handlers.swift in Sources */,
+				7B0FD70B203F650200E77422 /* PostController.swift in Sources */,
 				7B1624752038C555004C0537 /* UserProfileController.swift in Sources */,
 				7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */,
 				7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */,
