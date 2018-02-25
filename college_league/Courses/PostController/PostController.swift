@@ -24,6 +24,7 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
     lazy var postTextView: UITextView = {
         let tv = UITextView()
         tv.font = UIFont.systemFont(ofSize: 20)
+        ///tv.textDragInteraction?.isEnabled = false
         
         let bottomInset = view.safeAreaLayoutGuide.layoutFrame.height - estimatedKeyboardHeight - 125
         let contentInset = UIEdgeInsets(top: 44, left: 14, bottom: bottomInset, right: 14)
@@ -57,6 +58,11 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         button.addTarget(self, action: #selector(handlTapKeyboard), for: .touchUpInside)
         return button
     }()
+    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        return aiv
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,13 +70,14 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         setupKeyboardObservers()
         setupInputAccessoryView()
         view.backgroundColor = UIColor.white
+        navigationItem.titleView = activityIndicatorView
         postTextView.becomeFirstResponder()
         collectionView.register(PhotoSelectorCell.self, forCellWithReuseIdentifier: cellId)
-        
+
         view.addSubview(postTextView)
         view.addSubview(collectionView)
         view.addSubview(keyboardButton)
-        
+
         postTextView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         collectionViewBottomAnchor = collectionView.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: estimatedKeyboardHeight)[1]

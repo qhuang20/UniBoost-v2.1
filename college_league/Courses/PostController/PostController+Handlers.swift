@@ -8,6 +8,8 @@
 
 import UIKit
 import Photos
+import Firebase
+import Gzip
 
 extension PostController {
     
@@ -16,7 +18,7 @@ extension PostController {
         assets.removeAll()
         
         let fetchOptions = PHFetchOptions()
-        fetchOptions.fetchLimit = 1000
+        fetchOptions.fetchLimit = 99
         let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
         fetchOptions.sortDescriptors = [sortDescriptor]
         let allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
@@ -55,7 +57,56 @@ extension PostController {
     }
     
     @objc func handlePost() {
-        print("post....")
+        guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }
+        let documentAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.rtfd]
+        guard let rtfdData = try? attributedText.data(from: NSRange(location: 0, length: attributedText.length), documentAttributes: documentAttributes) else {return}
+        let optimizedRtfData: Data = try! rtfdData.gzipped(level: .bestCompression)
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.leftBarButtonItem?.isEnabled = false
+        activityIndicatorView.startAnimating()
+        
+        let filename = NSUUID().uuidString
+        Storage.storage().reference().child("posts").child(filename).putData(optimizedRtfData, metadata: nil) { (metadata, err) in
+            
+            if let err = err {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                self.navigationItem.leftBarButtonItem?.isEnabled = true
+                self.activityIndicatorView.stopAnimating()
+                print("Failed to upload post image:", err)
+                return
+            }
+            
+            guard let rtfdUrl = metadata?.downloadURL()?.absoluteString else { return }
+            print("Successfully uploaded post image:", rtfdUrl)
+            
+            self.saveToDatabaseWith(rtfdUrl: rtfdUrl)
+        }
+        
+    }
+    
+    private func saveToDatabaseWith(rtfdUrl: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let postRef = Database.database().reference().child("posts").childByAutoId()
+        let values = ["rtfdUrl": rtfdUrl, "creationDate": Date().timeIntervalSince1970] as [String : Any]
+        postRef.updateChildValues(values) { (err, ref) in
+            if let err = err {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                self.navigationItem.leftBarButtonItem?.isEnabled = true
+                self.activityIndicatorView.stopAnimating()
+                print("Failed to save post to DB", err)
+                return
+            }
+            
+            let postId = postRef.key
+            let userPostsRef = Database.database().reference().child("user_posts")
+            let childRef = userPostsRef.child(uid)
+            childRef.updateChildValues([postId: 1])
+            
+            print("Successfully saved post to DB")
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     
@@ -70,6 +121,7 @@ extension PostController {
         moveCursorToNextLine()
         postTextView.textStorage.insert(NSAttributedString(attachment: attachment), at: postTextView.selectedRange.location)
         moveCursorRightByOne()
+        postTextView.font = UIFont.systemFont(ofSize: 20)
         moveCursorToNextLine()
     }
     
