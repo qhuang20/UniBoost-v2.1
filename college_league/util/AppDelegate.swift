@@ -26,19 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = MainTabBarController()
         
-        UITextField.appearance().tintColor = themeColor
-        UITextView.appearance().tintColor = themeColor
+        UITextField.appearance().tintColor = UIColor.orange
+        UITextView.appearance().tintColor = UIColor.orange
         
         UINavigationBar.appearance().barTintColor = themeColor
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)]
         UIBarButtonItem.appearance().tintColor = UIColor.black//all button
-       
-        let backImage = UIImage(named: "back")?.withRenderingMode(.automatic)
-        UINavigationBar.appearance().backIndicatorImage = backImage
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage
-        let barButtonItemAppearance = UIBarButtonItem.appearance()
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
-        barButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .normal)
     
         return true
     }

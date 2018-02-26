@@ -50,11 +50,7 @@ extension PostController {
         }
     }
     
-    
-    
-    @objc func handleCancel() {
-        dismiss(animated: true, completion: nil)
-    }
+
     
     @objc func handlePost() {
         guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }
@@ -62,16 +58,16 @@ extension PostController {
         guard let rtfdData = try? attributedText.data(from: NSRange(location: 0, length: attributedText.length), documentAttributes: documentAttributes) else {return}
         let optimizedRtfData: Data = try! rtfdData.gzipped(level: .bestCompression)
         
+        navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.rightBarButtonItem?.isEnabled = false
-        navigationItem.leftBarButtonItem?.isEnabled = false
         activityIndicatorView.startAnimating()
         
         let filename = NSUUID().uuidString
         Storage.storage().reference().child("posts").child(filename).putData(optimizedRtfData, metadata: nil) { (metadata, err) in
             
             if let err = err {
+                self.navigationItem.setHidesBackButton(false, animated: true)
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
-                self.navigationItem.leftBarButtonItem?.isEnabled = true
                 self.activityIndicatorView.stopAnimating()
                 print("Failed to upload post image:", err)
                 return
@@ -93,7 +89,7 @@ extension PostController {
         postRef.updateChildValues(values) { (err, ref) in
             if let err = err {
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
-                self.navigationItem.leftBarButtonItem?.isEnabled = true
+                self.navigationItem.setHidesBackButton(false, animated: true)
                 self.activityIndicatorView.stopAnimating()
                 print("Failed to save post to DB", err)
                 return
@@ -163,6 +159,13 @@ extension PostController {
     }
     
     @objc func handlTapPhoto() {
+        PHPhotoLibrary.requestAuthorization({status in
+            if status == PHAuthorizationStatus.denied {
+                ///dispatch and do some uistuff...
+                return
+            }
+        })
+    
         postTextView.resignFirstResponder()
         fetchPhotos()
     }

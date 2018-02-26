@@ -24,10 +24,10 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
     lazy var postTextView: UITextView = {
         let tv = UITextView()
         tv.font = UIFont.systemFont(ofSize: 20)
-        ///tv.textDragInteraction?.isEnabled = false
+        tv.textDragInteraction?.isEnabled = false
         
         let bottomInset = view.safeAreaLayoutGuide.layoutFrame.height - estimatedKeyboardHeight - 125
-        let contentInset = UIEdgeInsets(top: 44, left: 14, bottom: bottomInset, right: 14)
+        let contentInset = UIEdgeInsets(top: 85, left: 14, bottom: bottomInset, right: 14)
         tv.textContainerInset = contentInset//add scrollView space
         return tv
     }()
@@ -92,7 +92,6 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
 
     private func setupNavigationButtons() {
         navigationController?.navigationBar.tintColor = .black
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(handlePost))
     }
     

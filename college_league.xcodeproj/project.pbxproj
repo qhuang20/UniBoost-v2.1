@@ -22,6 +22,7 @@
 		7B1624752038C555004C0537 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624722038C555004C0537 /* UserProfileController.swift */; };
 		7B16247820392494004C0537 /* ViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B16247720392494004C0537 /* ViewController+Helper.swift */; };
 		7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */; };
+		7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B331A0D2043D72F00282308 /* TitleTypeController.swift */; };
 		7B433979201D71B800151FEE /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B433978201D71B800151FEE /* DayCell.swift */; };
 		7B43399020205A7200151FEE /* CourseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43398F20205A7200151FEE /* CourseInfo.swift */; };
 		7B61057D20411A8600C5F6C3 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B61057C20411A8600C5F6C3 /* PhotoSelectorCell.swift */; };
@@ -54,6 +55,7 @@
 		7B1624722038C555004C0537 /* UserProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		7B16247720392494004C0537 /* ViewController+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Helper.swift"; sourceTree = "<group>"; };
 		7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddCourseController+Handlers.swift"; sourceTree = "<group>"; };
+		7B331A0D2043D72F00282308 /* TitleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTypeController.swift; sourceTree = "<group>"; };
 		7B433978201D71B800151FEE /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
 		7B43398F20205A7200151FEE /* CourseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfo.swift; sourceTree = "<group>"; };
 		7B61057C20411A8600C5F6C3 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				7B61057C20411A8600C5F6C3 /* PhotoSelectorCell.swift */,
 				7B0FD70A203F650200E77422 /* PostController.swift */,
 				7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */,
+				7B331A0D2043D72F00282308 /* TitleTypeController.swift */,
 			);
 			path = PostController;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B64394D201D19C000FB0E18 /* Timetable+Handlers.swift in Sources */,
+				7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */,
 				7B61057F2042110100C5F6C3 /* UIImage+Helper.swift in Sources */,
 				7B433979201D71B800151FEE /* DayCell.swift in Sources */,
 				7B43399020205A7200151FEE /* CourseInfo.swift in Sources */,

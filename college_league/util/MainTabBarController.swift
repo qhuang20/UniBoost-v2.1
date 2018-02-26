@@ -13,7 +13,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
-        let navPhotoSelectorController = UINavigationController(rootViewController: PostController())
+        let navPhotoSelectorController = UINavigationController(rootViewController: TitleTypeController())
         
         let index = viewControllers?.index(of: viewController)
         if index == 1 {
