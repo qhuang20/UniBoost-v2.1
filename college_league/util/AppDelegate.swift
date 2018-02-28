@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-let themeColor = UIColor.init(r: 255, g: 165, b: 0)
+let themeColor = UIColor.init(r: 255, g: 134, b: 50)
 let lightThemeColor = UIColor.init(r: 255, g: 200, b: 144)
 let brightGray = UIColor.init(white: 0.95, alpha: 1)
 
@@ -26,15 +26,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.rootViewController = MainTabBarController()
         
+        application.statusBarStyle = .lightContent
+        UINavigationBar.appearance().isTranslucent = false
+//        UINavigationBar.appearance().shadowImage = UIImage()
+//        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        
         UITextField.appearance().tintColor = UIColor.orange
         UITextView.appearance().tintColor = UIColor.orange
         
         UINavigationBar.appearance().barTintColor = themeColor
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)]
-        UIBarButtonItem.appearance().tintColor = UIColor.black//all button
-        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)]
+        
+        UIBarButtonItem.appearance().tintColor = UIColor.white//all button
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .normal)
-    
+        
         return true
     }
 

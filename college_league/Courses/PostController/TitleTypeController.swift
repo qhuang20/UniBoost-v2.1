@@ -110,7 +110,10 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
     
     @objc func handleNext() {
         if titleTextView.text.count > 0 {
-            navigationController?.pushViewController(PostController(), animated: true)
+            let postController = PostController()
+            postController.postTitle = titleTextView.text
+            postController.postType = selectedType
+            navigationController?.pushViewController(postController, animated: true)
         }
     }
     

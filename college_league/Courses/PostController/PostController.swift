@@ -11,6 +11,9 @@ import Photos
 
 class PostController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var postType: String?
+    var postTitle: String?
+    
     var images = [UIImage]()
     var assets = [PHAsset]()
 
