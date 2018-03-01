@@ -29,6 +29,8 @@
 		7B48C7602045AE0500768E96 /* CourseControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C75F2045AE0500768E96 /* CourseControllerCell.swift */; };
 		7B48C76220464E0600768E96 /* DiscussionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C76120464E0600768E96 /* DiscussionController.swift */; };
 		7B48C7652046606100768E96 /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C7642046606100768E96 /* SwitchBar.swift */; };
+		7B48C7672047570C00768E96 /* DiscussionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C7662047570C00768E96 /* DiscussionCell.swift */; };
+		7B48C7692047CC6E00768E96 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C7682047CC6E00768E96 /* FeedCell.swift */; };
 		7B61057D20411A8600C5F6C3 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B61057C20411A8600C5F6C3 /* PhotoSelectorCell.swift */; };
 		7B61057F2042110100C5F6C3 /* UIImage+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B61057E2042110100C5F6C3 /* UIImage+Helper.swift */; };
 		7B6105862042642C00C5F6C3 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6105852042642C00C5F6C3 /* libz.tbd */; };
@@ -66,6 +68,8 @@
 		7B48C75F2045AE0500768E96 /* CourseControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseControllerCell.swift; sourceTree = "<group>"; };
 		7B48C76120464E0600768E96 /* DiscussionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionController.swift; sourceTree = "<group>"; };
 		7B48C7642046606100768E96 /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
+		7B48C7662047570C00768E96 /* DiscussionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionCell.swift; sourceTree = "<group>"; };
+		7B48C7682047CC6E00768E96 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		7B61057C20411A8600C5F6C3 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		7B61057E2042110100C5F6C3 /* UIImage+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helper.swift"; sourceTree = "<group>"; };
 		7B6105812042598400C5F6C3 /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,8 +189,10 @@
 		7B48C76320464E2B00768E96 /* DiscussionController */ = {
 			isa = PBXGroup;
 			children = (
-				7B48C7642046606100768E96 /* SwitchBar.swift */,
+				7B48C7682047CC6E00768E96 /* FeedCell.swift */,
+				7B48C7662047570C00768E96 /* DiscussionCell.swift */,
 				7B48C76120464E0600768E96 /* DiscussionController.swift */,
+				7B48C7642046606100768E96 /* SwitchBar.swift */,
 			);
 			path = DiscussionController;
 			sourceTree = "<group>";
@@ -401,6 +407,7 @@
 				7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */,
 				7B1624732038C555004C0537 /* UserProfileHeader.swift in Sources */,
 				7B16246A2038C4B5004C0537 /* Signup+Handlers.swift in Sources */,
+				7B48C7672047570C00768E96 /* DiscussionCell.swift in Sources */,
 				7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */,
 				7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */,
 				7B48C76220464E0600768E96 /* DiscussionController.swift in Sources */,
@@ -419,6 +426,7 @@
 				7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */,
 				7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */,
 				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
+				7B48C7692047CC6E00768E96 /* FeedCell.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B64394D201D19C000FB0E18 /* Timetable+Handlers.swift in Sources */,
 				7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */,

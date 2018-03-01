@@ -8,10 +8,12 @@
 
 import UIKit
 
+let buttonColor = UIColor.lightGray
+
 class SwitchBar: UIView {
     
-    let buttonColor = UIColor.lightGray
     var sliderLefrAnchor: NSLayoutConstraint?
+    weak var discussionController: DiscussionController?
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -80,29 +82,23 @@ class SwitchBar: UIView {
     
     
     @objc func handleTapCurrent() {
+        let indexPath = IndexPath(item: 0, section: 0)
+        discussionController?.collectionView?.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+        
         currentButton.isSelected = true
         currentButton.tintColor = themeColor
         trendingButton.isSelected = false
         trendingButton.tintColor = buttonColor
-        
-        sliderLefrAnchor?.constant = 0
-
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.layoutIfNeeded()
-        }, completion: nil)
     }
     
     @objc func handleTapTrending() {
+        let indexPath = IndexPath(item: 1, section: 0)
+        discussionController?.collectionView?.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
+        
         trendingButton.isSelected = true
         trendingButton.tintColor = themeColor
         currentButton.isSelected = false
         currentButton.tintColor = buttonColor
-        
-        sliderLefrAnchor?.constant = frame.width / 2
-        
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.layoutIfNeeded()
-        }, completion: nil)
     }
    
 }

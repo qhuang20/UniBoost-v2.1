@@ -12,27 +12,46 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     let cellId = "cellId"
     
+    let switchBar = SwitchBar()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-        setupSwitchBar()
+        configureNavigationBar()
+        collectionView?.register(DiscussionCell.self, forCellWithReuseIdentifier: cellId)
+        
+        switchBar.discussionController = self
+        view.addSubview(switchBar)
+        
+        switchBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
     }
     
     private func configureCollectionVeiw() {
         collectionView?.backgroundColor = brightGray
-        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView?.isPagingEnabled = true
+        collectionView?.contentInset = UIEdgeInsets(top: 34 + 26, left: 0, bottom: 0, right: 0)
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
     }
     
-    private func setupSwitchBar() {
-        let switchBar = SwitchBar()
-        view.addSubview(switchBar)
-        
-        switchBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
+    private func configureNavigationBar() {
+        let button = UIButton(type: .custom)
+        let image = #imageLiteral(resourceName: "post").withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
+        button.tintColor = UIColor.white
+        button.setTitle("Post", for: .normal)
+        button.adjustsImageWhenHighlighted = false
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+        button.addTarget(self, action: #selector(handlePost), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
+    @objc func handlePost() {
+        let navTitleTypeController = UINavigationController(rootViewController: TitleTypeController())
+        present(navTitleTypeController, animated: true, completion: nil)
     }
     
     
@@ -43,7 +62,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = .green
+        
         return cell
     }
     
@@ -54,4 +73,32 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         return CGSize(width: width, height: height)
     }
     
+    
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        switchBar.sliderLefrAnchor?.constant = scrollView.contentOffset.x / 2
+    }
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        let index = targetContentOffset.pointee.x / view.frame.width
+        if index == 0 {
+            switchBar.currentButton.isSelected = true
+            switchBar.currentButton.tintColor = themeColor
+            switchBar.trendingButton.isSelected = false
+            switchBar.trendingButton.tintColor = buttonColor
+        } else {
+            switchBar.currentButton.isSelected = false
+            switchBar.currentButton.tintColor = buttonColor
+            switchBar.trendingButton.isSelected = true
+            switchBar.trendingButton.tintColor = themeColor
+        }
+        
+    }
+    
 }
+
+
+
+
+

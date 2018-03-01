@@ -32,6 +32,9 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
     }()
     
     var labels = [UILabel]()
+    let borderColor = UIColor.lightGray.cgColor
+    let selectedBorderColor = UIColor.orange.cgColor
+    let textColor = UIColor.lightGray
     
     lazy var typesView: UIStackView = {
         
@@ -39,13 +42,15 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
             let label = UILabel()
             label.backgroundColor = UIColor.yellow
             label.layer.cornerRadius = 12
-            label.layer.borderColor = UIColor.black.cgColor
+            label.layer.borderColor = borderColor
             label.layer.borderWidth = 2
+            label.clipsToBounds = true
             label.font = UIFont.boldSystemFont(ofSize: 18)
             label.text = postTypes[i]
+            label.textColor = textColor
             if i == 0 {
                 label.textColor = UIColor.orange
-                label.layer.borderColor = UIColor.orange.cgColor
+                label.layer.borderColor = selectedBorderColor
             }
             label.textAlignment = .center
             label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectedType)))
@@ -84,7 +89,6 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
     }
     
     private func setupNavigationButtons() {
-        navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "Add a Post"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleNext))
@@ -122,12 +126,12 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
         let isAlreadySelected = selectedLabel.textColor == UIColor.orange
 
         for label in labels{
-            label.textColor = .black
-            label.layer.borderColor = UIColor.black.cgColor
+            label.textColor = textColor
+            label.layer.borderColor = borderColor
         }
         
-        selectedLabel.textColor = isAlreadySelected ? UIColor.black : UIColor.orange
-        selectedLabel.layer.borderColor = isAlreadySelected ? UIColor.black.cgColor : UIColor.orange.cgColor
+        selectedLabel.textColor = isAlreadySelected ? textColor : UIColor.orange
+        selectedLabel.layer.borderColor = isAlreadySelected ? borderColor : selectedBorderColor
         let selectedLabelIndex = labels.index(of: selectedLabel)
         selectedType = postTypes[selectedLabelIndex!]
     }
