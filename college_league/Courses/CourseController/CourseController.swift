@@ -12,11 +12,22 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
     let cellId = "cellId"
     
+    var school: String? = "Langara College"
+    
+    var courses = [Course]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
         navigationItem.title = "Courses"
         collectionView?.register(CourseControllerCell.self, forCellWithReuseIdentifier: cellId)
+        
+        if school == nil {
+            //...
+            return
+        }
+        
+        fetchCourses()
     }
     
     private func configureCollectionVeiw() {
@@ -30,11 +41,12 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return courses.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CourseControllerCell
+        cell.course = courses[indexPath.item]
         
         return cell
     }
@@ -46,7 +58,10 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let course = courses[indexPath.item]
         let discussionController = DiscussionController(collectionViewLayout: UICollectionViewFlowLayout())
+        discussionController.course = course
+        
         navigationController?.pushViewController(discussionController, animated: true)
     }
     

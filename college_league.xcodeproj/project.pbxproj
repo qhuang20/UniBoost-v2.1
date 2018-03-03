@@ -23,6 +23,8 @@
 		7B16247820392494004C0537 /* ViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B16247720392494004C0537 /* ViewController+Helper.swift */; };
 		7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */; };
 		7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B331A0D2043D72F00282308 /* TitleTypeController.swift */; };
+		7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */; };
+		7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE8204A3ED80065CB16 /* Course.swift */; };
 		7B433979201D71B800151FEE /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B433978201D71B800151FEE /* DayCell.swift */; };
 		7B43399020205A7200151FEE /* CourseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43398F20205A7200151FEE /* CourseInfo.swift */; };
 		7B48C75E2045AB5000768E96 /* CourseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C75D2045AB5000768E96 /* CourseController.swift */; };
@@ -62,6 +64,8 @@
 		7B16247720392494004C0537 /* ViewController+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Helper.swift"; sourceTree = "<group>"; };
 		7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddCourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B331A0D2043D72F00282308 /* TitleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTypeController.swift; sourceTree = "<group>"; };
+		7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseController+Handlers.swift"; sourceTree = "<group>"; };
+		7B3ACAE8204A3ED80065CB16 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		7B433978201D71B800151FEE /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
 		7B43398F20205A7200151FEE /* CourseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfo.swift; sourceTree = "<group>"; };
 		7B48C75D2045AB5000768E96 /* CourseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseController.swift; sourceTree = "<group>"; };
@@ -177,11 +181,20 @@
 			path = UserProfileController;
 			sourceTree = "<group>";
 		};
+		7B3ACAE7204A3E970065CB16 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				7B3ACAE8204A3ED80065CB16 /* Course.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
 		7B48C75C2045AB1D00768E96 /* CourseController */ = {
 			isa = PBXGroup;
 			children = (
 				7B48C75F2045AE0500768E96 /* CourseControllerCell.swift */,
 				7B48C75D2045AB5000768E96 /* CourseController.swift */,
+				7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */,
 			);
 			path = CourseController;
 			sourceTree = "<group>";
@@ -232,6 +245,7 @@
 			children = (
 				7B0FD709203F569500E77422 /* Courses */,
 				7B0FD708203F562800E77422 /* Me */,
+				7B3ACAE7204A3E970065CB16 /* models */,
 				7B16246C2038C4BF004C0537 /* login_signup */,
 				7B16246F2038C51B004C0537 /* util */,
 				7BF3A2B02019479700689AE1 /* Assets.xcassets */,
@@ -415,6 +429,8 @@
 				7B16246B2038C4B5004C0537 /* SignupController.swift in Sources */,
 				7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */,
 				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
+				7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */,
+				7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */,
 				7B48C7602045AE0500768E96 /* CourseControllerCell.swift in Sources */,
 				7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */,
 				7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */,

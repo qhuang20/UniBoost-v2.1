@@ -14,6 +14,8 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     let switchBar = SwitchBar()
     
+    var course: Course? 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
@@ -47,11 +49,6 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         button.addTarget(self, action: #selector(handlePost), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-    }
-    
-    @objc func handlePost() {
-        let navTitleTypeController = UINavigationController(rootViewController: TitleTypeController())
-        present(navTitleTypeController, animated: true, completion: nil)
     }
     
     
@@ -94,6 +91,16 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
             switchBar.trendingButton.tintColor = themeColor
         }
         
+    }
+    
+    
+    
+    @objc func handlePost() {
+        let titleTypeController = TitleTypeController()
+        let navTitleTypeController = UINavigationController(rootViewController: titleTypeController)
+        titleTypeController.course = course
+        
+        present(navTitleTypeController, animated: true, completion: nil)
     }
     
 }

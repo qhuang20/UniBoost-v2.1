@@ -10,27 +10,34 @@ import UIKit
 
 class CourseControllerCell: UICollectionViewCell {
     
-    var courseName = "Math"
-    var courseNumber = "1127"
-    var courseDescription = "Linear Algebra and website development"
+    var course: Course? {
+        didSet {
+            setupAttributedTitle()
+        }
+    }
     
     let attributesForTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 25)]
-    let attributesForDescription = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 11), NSAttributedStringKey.foregroundColor: UIColor.lightGray]
+    let attributesForDescription = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12.5), NSAttributedStringKey.foregroundColor: UIColor.lightGray]
 
-    lazy var courseNameLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
+    private func setupAttributedTitle() {
+        guard let course = course else { return }
         
-        let attributedText = NSMutableAttributedString(string: courseName, attributes: attributesForTitle)
+        let attributedText = NSMutableAttributedString(string: course.name, attributes: attributesForTitle)
         attributedText.appendNewLine()
-        let attributedCourseNumber =  NSAttributedString(string: courseNumber, attributes: attributesForTitle)
+        let attributedCourseNumber =  NSAttributedString(string: course.number, attributes: attributesForTitle)
         attributedText.append(attributedCourseNumber)
         attributedText.appendNewLine()
         
-        let attributedCourseDescription = NSAttributedString(string: "• " + courseDescription, attributes: attributesForDescription)
+        let attributedCourseDescription = NSAttributedString(string: "• " + course.description, attributes: attributesForDescription)
         attributedText.append(attributedCourseDescription)
-
-        label.attributedText = attributedText
+        
+        courseInfoLabel.attributedText = attributedText
+    }
+   
+    lazy var courseInfoLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+     
         return label
     }()
     
@@ -40,9 +47,9 @@ class CourseControllerCell: UICollectionViewCell {
         self.clipsToBounds = true
         backgroundColor = UIColor.white
         
-        addSubview(courseNameLabel)
+        addSubview(courseInfoLabel)
         
-        courseNameLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        courseInfoLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

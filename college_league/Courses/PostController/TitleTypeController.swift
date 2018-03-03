@@ -13,7 +13,9 @@ let postTypes = ["Question", "Resource", "Book for Sale", "Other"]
 class TitleTypeController: UIViewController, UITextViewDelegate {
     
     var selectedType = postTypes[0] 
-    
+
+    var course: Course?
+
     lazy var titleTextView: UITextView = {
         let tv = UITextView()
         tv.text = " • Provide a 'Title' and a 'Type'"
@@ -113,25 +115,27 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
     }
     
     @objc func handleNext() {
-        if titleTextView.text.count > 0 {
+        if titleTextView.text.count > 0 && titleTextView.textColor == UIColor.black {
             let postController = PostController()
             postController.postTitle = titleTextView.text
             postController.postType = selectedType
+            postController.course = course
+            
             navigationController?.pushViewController(postController, animated: true)
         }
     }
     
     @objc func handleSelectedType(recognizer: UITapGestureRecognizer) {
         let selectedLabel = recognizer.view as! UILabel
-        let isAlreadySelected = selectedLabel.textColor == UIColor.orange
 
         for label in labels{
             label.textColor = textColor
             label.layer.borderColor = borderColor
         }
         
-        selectedLabel.textColor = isAlreadySelected ? textColor : UIColor.orange
-        selectedLabel.layer.borderColor = isAlreadySelected ? borderColor : selectedBorderColor
+        selectedLabel.textColor = UIColor.orange
+        selectedLabel.layer.borderColor = selectedBorderColor
+        
         let selectedLabelIndex = labels.index(of: selectedLabel)
         selectedType = postTypes[selectedLabelIndex!]
     }

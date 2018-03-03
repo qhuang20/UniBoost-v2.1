@@ -53,7 +53,7 @@ extension PostController {
 
     
     @objc func handlePost() {
-        guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }
+        guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }///
         let documentAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.rtfd]
         guard let rtfdData = try? attributedText.data(from: NSRange(location: 0, length: attributedText.length), documentAttributes: documentAttributes) else {return}
         let optimizedRtfData: Data = try! rtfdData.gzipped(level: .bestCompression)
@@ -83,9 +83,10 @@ extension PostController {
     
     private func saveToDatabaseWith(rtfdUrl: String) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let course = course else { return }
         
         let postRef = Database.database().reference().child("posts").childByAutoId()
-        let values = ["type": postType ?? "Other", "title": postTitle ?? "Unknown Title", "rtfdUrl": rtfdUrl, "creationDate": Date().timeIntervalSince1970] as [String : Any]
+        let values = ["rtfdUrl": rtfdUrl, "creationDate": Date().timeIntervalSince1970] as [String : Any]
         postRef.updateChildValues(values) { (err, ref) in
             if let err = err {
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -94,11 +95,24 @@ extension PostController {
                 print("Failed to save post to DB", err)
                 return
             }
-            
             let postId = postRef.key
+            
+            let postInfoRef = Database.database().reference().child("post_Info")
+            let postInfoChild = postInfoRef.child(postId)
+            let values = ["type": self.postType ?? "Other", "title": self.postTitle ?? " "]
+            postInfoChild.updateChildValues(values)
+            
+            
+            
             let userPostsRef = Database.database().reference().child("user_posts")
-            let childRef = userPostsRef.child(uid)
-            childRef.updateChildValues([postId: 1])
+            let userPostsChild = userPostsRef.child(uid)
+            userPostsChild.updateChildValues([postId: 1])
+            
+            
+            
+            let coursePostsRef = Database.database().reference().child("school_course_posts")
+            let coursePostsChild = coursePostsRef.child(course.school).child(course.courseId)
+            coursePostsChild.updateChildValues([postId: 1])
             
             print("Successfully saved post to DB")
             self.dismiss(animated: true, completion: nil)
