@@ -83,8 +83,11 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DiscussionCell
         cell.course = course
-        cell.discussionController = self
         
+        if indexPath.item == 0 {
+            cell.discussionController = self
+        }
+
         return cell
     }
     
@@ -99,11 +102,32 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switchBar.sliderLefrAnchor?.constant = scrollView.contentOffset.x / 2
+        
+        let index = scrollView.contentOffset.x / view.frame.width
+        
+        if index == 0 {//fix the delegate issue
+            let indexPath = IndexPath(item: Int(index), section: 0)
+            let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
+            cell?.discussionController = self
+            cell?.searchBar(searchBar!, textDidChange: "")
+            searchBar?.text = ""
+            searchBar?.resignFirstResponder()
+        
+        } else if index == 1 {
+            
+            let indexPath = IndexPath(item: Int(index), section: 0)
+            let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
+            cell?.discussionController = self
+            cell?.searchBar(searchBar!, textDidChange: "")
+            searchBar?.text = ""
+            searchBar?.resignFirstResponder()
+        }
     }
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         let index = targetContentOffset.pointee.x / view.frame.width
+        
         if index == 0 {
             switchBar.currentButton.isSelected = true
             switchBar.currentButton.tintColor = themeColor
@@ -115,7 +139,6 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
             switchBar.trendingButton.isSelected = true
             switchBar.trendingButton.tintColor = themeColor
         }
-        
     }
     
     
