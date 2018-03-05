@@ -9,21 +9,51 @@
 import UIKit
 
 class CourseController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    
-    let cellId = "cellId"
-    
+
     var school: String? = "Langara College"
-    
+
     var courses = [Course]()
+    var filteredCourses = [Course]()
+
+    let cellId = "cellId"
+    var searchBarAnchors: [NSLayoutConstraint]?
+
+    lazy var searchBar: UISearchBar = {
+        let sb = UISearchBar()
+        sb.barTintColor = .gray
+        sb.layer.cornerRadius = 10
+        sb.clipsToBounds = true
+        sb.showsCancelButton = false
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = brightGray
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 4, vertical: 9), for: UIBarMetrics.default)
+        
+        let offset = UIOffset(horizontal: 0, vertical: -3)
+        sb.searchTextPositionAdjustment = offset
+        sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
+        sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
+        sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
+        return sb
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        searchBar.placeholder = "Search Courses"
+        searchBar.delegate = self
+        
+        guard let searchBarAnchors = searchBarAnchors else { return }
+        searchBarAnchors[0].constant = 20
+        searchBarAnchors[2].constant = -20
+        animateNavigationBarLayout()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
-        navigationItem.title = "Courses"
-        collectionView?.register(CourseControllerCell.self, forCellWithReuseIdentifier: cellId)
         
-        if school == nil {
-            //...
+        navigationController?.navigationBar.addSubview(searchBar)
+        let navBar = navigationController?.navigationBar
+        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        
+        if school == nil {///...set up school in Me...
             return
         }
         
@@ -32,21 +62,41 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
     private func configureCollectionVeiw() {
         collectionView?.backgroundColor = brightGray
-        collectionView?.contentInset = UIEdgeInsets(top: 12, left: 8, bottom: 0, right: 8)
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.keyboardDismissMode = .onDrag
+        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8)
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 6
         layout.minimumInteritemSpacing = 6
+        
+        collectionView?.register(CourseControllerCell.self, forCellWithReuseIdentifier: cellId)
+    }
+    
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        searchBar.resignFirstResponder()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        
+        let course = filteredCourses[indexPath.item]
+        let discussionController = DiscussionController(collectionViewLayout: UICollectionViewFlowLayout())
+        discussionController.course = course
+        discussionController.searchBar = searchBar
+        discussionController.searchBarAnchors = searchBarAnchors
+        
+        navigationController?.pushViewController(discussionController, animated: true)
     }
     
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return courses.count
+        return filteredCourses.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CourseControllerCell
-        cell.course = courses[indexPath.item]
+        cell.course = filteredCourses[indexPath.item]
         
         return cell
     }
@@ -57,12 +107,10 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         return CGSize(width: width, height: width)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let course = courses[indexPath.item]
-        let discussionController = DiscussionController(collectionViewLayout: UICollectionViewFlowLayout())
-        discussionController.course = course
-        
-        navigationController?.pushViewController(discussionController, animated: true)
+    private func animateNavigationBarLayout() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.navigationController?.navigationBar.layoutIfNeeded()
+        }, completion: nil)
     }
     
 }

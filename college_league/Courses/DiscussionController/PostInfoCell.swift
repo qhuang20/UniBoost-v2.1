@@ -7,41 +7,41 @@
 //
 
 import UIKit
+import LBTAComponents
 
-class FeedCell: UITableViewCell {
+class PostInfoCell: UITableViewCell {
+    
+    var postInfo: PostInfo? {
+        didSet {
+            guard let postInfo = postInfo else { return }
+            let user = postInfo.user
+
+            titleLabel.text = postInfo.title
+            typeImageView.image = UIImage(named: postInfo.type)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            profileImageView.loadImage(urlString: user.profileImageUrl, completion: nil)
+        }
+    }
     
     override var selectionStyle: UITableViewCellSelectionStyle {
-        get { return UITableViewCellSelectionStyle.none }
+        get { return UITableViewCellSelectionStyle.default }
         set {}
     }
     
     let profileImageWidth: CGFloat = 36
-    let typeImageWidth: CGFloat = 30
+    let typeImageWidth: CGFloat = 25
     let padding: CGFloat = 8
     let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
     let attributesTimeCommentLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12.5), NSAttributedStringKey.foregroundColor: UIColor.gray]
     
-    enum PostType: String {
-        case book = "book"
-        case resource = "resource"
-        case question = "question"
-    }
-    
     let typeImageView: UIImageView = {
-        let image = UIImage(named: PostType.book.rawValue)
         let iv = UIImageView()
         iv.tintColor = UIColor.lightGray
-        iv.image = image?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         return iv
     }()
     
-    lazy var profileImageView: UIImageView = {
-        let image = UIImage(named: PostType.book.rawValue)
-        let iv = UIImageView()
-        iv.backgroundColor = .green
-        iv.layer.cornerRadius = profileImageWidth / 2
-        iv.clipsToBounds = true
-        iv.image = image
+    lazy var profileImageView: CachedImageView = {
+        let iv = CachedImageView(cornerRadius: profileImageWidth / 2, emptyImage: nil)
+        iv.backgroundColor = brightGray
         return iv
     }()
     
@@ -49,7 +49,7 @@ class FeedCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 22)
         label.numberOfLines = 0
-        label.text = "This is a long title ahahahhah hahaha blabal"
+        label.text = "Sample Title"
         return label
     }()
     
@@ -80,7 +80,7 @@ class FeedCell: UITableViewCell {
         
         profileImageView.anchor(titleLabel.bottomAnchor, left: marginGuide.leftAnchor, bottom: nil, right: nil, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: profileImageWidth, heightConstant: profileImageWidth)
 
-        typeImageView.anchor(titleLabel.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: typeImageWidth, heightConstant: typeImageWidth)
+        typeImageView.anchor(titleLabel.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: typeImageWidth, heightConstant: typeImageWidth + 4)
 
         postInfoLabel.anchor(titleLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }

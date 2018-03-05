@@ -85,8 +85,8 @@ extension PostController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let course = course else { return }
         
-        let postRef = Database.database().reference().child("posts").childByAutoId()
-        let values = ["rtfdUrl": rtfdUrl, "creationDate": Date().timeIntervalSince1970] as [String : Any]
+        let postRef = Database.database().reference().child("post_content").childByAutoId()
+        let values = ["rtfdUrl": rtfdUrl] as [String : Any]
         postRef.updateChildValues(values) { (err, ref) in
             if let err = err {
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -99,7 +99,7 @@ extension PostController {
             
             let postInfoRef = Database.database().reference().child("post_Info")
             let postInfoChild = postInfoRef.child(postId)
-            let values = ["type": self.postType ?? "Other", "title": self.postTitle ?? " "]
+            let values = ["uid": uid, "type": self.postType ?? "Other", "title": self.postTitle ?? "", "creationDate": Date().timeIntervalSince1970, "responds": 0, "likes": 0] as [String : Any]
             postInfoChild.updateChildValues(values)
             
             

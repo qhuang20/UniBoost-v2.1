@@ -25,6 +25,10 @@
 		7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B331A0D2043D72F00282308 /* TitleTypeController.swift */; };
 		7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */; };
 		7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE8204A3ED80065CB16 /* Course.swift */; };
+		7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAEA204B27FB0065CB16 /* User.swift */; };
+		7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAEC204B28C60065CB16 /* FirebaseUtils.swift */; };
+		7B3ACAEF204B32D20065CB16 /* DiscussionCell+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAEE204B32D20065CB16 /* DiscussionCell+Handlers.swift */; };
+		7B3ACAF1204B339D0065CB16 /* PostInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAF0204B339D0065CB16 /* PostInfo.swift */; };
 		7B433979201D71B800151FEE /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B433978201D71B800151FEE /* DayCell.swift */; };
 		7B43399020205A7200151FEE /* CourseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B43398F20205A7200151FEE /* CourseInfo.swift */; };
 		7B48C75E2045AB5000768E96 /* CourseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C75D2045AB5000768E96 /* CourseController.swift */; };
@@ -32,7 +36,7 @@
 		7B48C76220464E0600768E96 /* DiscussionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C76120464E0600768E96 /* DiscussionController.swift */; };
 		7B48C7652046606100768E96 /* SwitchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C7642046606100768E96 /* SwitchBar.swift */; };
 		7B48C7672047570C00768E96 /* DiscussionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C7662047570C00768E96 /* DiscussionCell.swift */; };
-		7B48C7692047CC6E00768E96 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C7682047CC6E00768E96 /* FeedCell.swift */; };
+		7B48C7692047CC6E00768E96 /* PostInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B48C7682047CC6E00768E96 /* PostInfoCell.swift */; };
 		7B61057D20411A8600C5F6C3 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B61057C20411A8600C5F6C3 /* PhotoSelectorCell.swift */; };
 		7B61057F2042110100C5F6C3 /* UIImage+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B61057E2042110100C5F6C3 /* UIImage+Helper.swift */; };
 		7B6105862042642C00C5F6C3 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6105852042642C00C5F6C3 /* libz.tbd */; };
@@ -66,6 +70,10 @@
 		7B331A0D2043D72F00282308 /* TitleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTypeController.swift; sourceTree = "<group>"; };
 		7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B3ACAE8204A3ED80065CB16 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		7B3ACAEA204B27FB0065CB16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7B3ACAEC204B28C60065CB16 /* FirebaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtils.swift; sourceTree = "<group>"; };
+		7B3ACAEE204B32D20065CB16 /* DiscussionCell+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiscussionCell+Handlers.swift"; sourceTree = "<group>"; };
+		7B3ACAF0204B339D0065CB16 /* PostInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfo.swift; sourceTree = "<group>"; };
 		7B433978201D71B800151FEE /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
 		7B43398F20205A7200151FEE /* CourseInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfo.swift; sourceTree = "<group>"; };
 		7B48C75D2045AB5000768E96 /* CourseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseController.swift; sourceTree = "<group>"; };
@@ -73,7 +81,7 @@
 		7B48C76120464E0600768E96 /* DiscussionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionController.swift; sourceTree = "<group>"; };
 		7B48C7642046606100768E96 /* SwitchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchBar.swift; sourceTree = "<group>"; };
 		7B48C7662047570C00768E96 /* DiscussionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionCell.swift; sourceTree = "<group>"; };
-		7B48C7682047CC6E00768E96 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		7B48C7682047CC6E00768E96 /* PostInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoCell.swift; sourceTree = "<group>"; };
 		7B61057C20411A8600C5F6C3 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		7B61057E2042110100C5F6C3 /* UIImage+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helper.swift"; sourceTree = "<group>"; };
 		7B6105812042598400C5F6C3 /* Gzip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Gzip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +171,7 @@
 		7B16246F2038C51B004C0537 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				7B3ACAEC204B28C60065CB16 /* FirebaseUtils.swift */,
 				7B16246D2038C4EA004C0537 /* MainTabBarController.swift */,
 				7BF3A2A92019479700689AE1 /* AppDelegate.swift */,
 				7B16247720392494004C0537 /* ViewController+Helper.swift */,
@@ -184,7 +193,9 @@
 		7B3ACAE7204A3E970065CB16 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				7B3ACAF0204B339D0065CB16 /* PostInfo.swift */,
 				7B3ACAE8204A3ED80065CB16 /* Course.swift */,
+				7B3ACAEA204B27FB0065CB16 /* User.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -202,8 +213,9 @@
 		7B48C76320464E2B00768E96 /* DiscussionController */ = {
 			isa = PBXGroup;
 			children = (
-				7B48C7682047CC6E00768E96 /* FeedCell.swift */,
+				7B48C7682047CC6E00768E96 /* PostInfoCell.swift */,
 				7B48C7662047570C00768E96 /* DiscussionCell.swift */,
+				7B3ACAEE204B32D20065CB16 /* DiscussionCell+Handlers.swift */,
 				7B48C76120464E0600768E96 /* DiscussionController.swift */,
 				7B48C7642046606100768E96 /* SwitchBar.swift */,
 			);
@@ -442,13 +454,17 @@
 				7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */,
 				7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */,
 				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
-				7B48C7692047CC6E00768E96 /* FeedCell.swift in Sources */,
+				7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */,
+				7B48C7692047CC6E00768E96 /* PostInfoCell.swift in Sources */,
+				7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
+				7B3ACAEF204B32D20065CB16 /* DiscussionCell+Handlers.swift in Sources */,
 				7B64394D201D19C000FB0E18 /* Timetable+Handlers.swift in Sources */,
 				7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */,
 				7B61057F2042110100C5F6C3 /* UIImage+Helper.swift in Sources */,
 				7B433979201D71B800151FEE /* DayCell.swift in Sources */,
 				7B43399020205A7200151FEE /* CourseInfo.swift in Sources */,
+				7B3ACAF1204B339D0065CB16 /* PostInfo.swift in Sources */,
 				7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */,
 				7B61057D20411A8600C5F6C3 /* PhotoSelectorCell.swift in Sources */,
 			);

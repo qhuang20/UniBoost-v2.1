@@ -28,8 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.statusBarStyle = .lightContent
         UINavigationBar.appearance().isTranslucent = false
-//        UINavigationBar.appearance().shadowImage = UIImage()
-//        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()//hide the line beneath
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         
         UITextField.appearance().tintColor = UIColor.orange
         UITextView.appearance().tintColor = UIColor.orange

@@ -13,18 +13,12 @@ extension UserProfileController {
     
     internal func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let ref = Database.database().reference().child("users").child(uid)
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
-            self.user = User(dictionary: dictionary)
+        
+        Database.fetchUserWithUID(uid: uid) { (user) in
+            self.user = user
             self.navigationItem.title = self.user?.username
             
             self.collectionView?.reloadData()
-            
-        }) { (err) in
-            print("Failed to fetch user:", err)
         }
     }
     

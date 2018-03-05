@@ -10,28 +10,50 @@ import UIKit
 
 class DiscussionController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    var course: Course?
+    var searchBar: UISearchBar?
+    var searchBarAnchors: [NSLayoutConstraint]?
+    var postBarButtonItem: UIBarButtonItem?
+
+    let switchBar = SwitchBar()
+    let switchBarHeight: CGFloat = 34
+    lazy var edgeInsetTopValue: CGFloat = switchBarHeight - 4
+    
     let cellId = "cellId"
     
-    let switchBar = SwitchBar()
-    
-    var course: Course? 
+    override func viewWillAppear(_ animated: Bool) {}//prevent weird behavior
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
         configureNavigationBar()
+        layoutSearchBar()
         collectionView?.register(DiscussionCell.self, forCellWithReuseIdentifier: cellId)
         
-        switchBar.discussionController = self
         view.addSubview(switchBar)
+        switchBar.discussionController = self
+        switchBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: switchBarHeight)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        searchBar?.resignFirstResponder()
+    }
+    
+    private func layoutSearchBar() {
+        searchBar?.placeholder = "Search Posts"
         
-        switchBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
+        guard let searchBarAnchors = searchBarAnchors else { return }
+        searchBarAnchors[0].constant = 50
+        searchBarAnchors[2].constant = -85
+        animateNavigationBarLayout()
     }
     
     private func configureCollectionVeiw() {
         collectionView?.backgroundColor = brightGray
         collectionView?.isPagingEnabled = true
-        collectionView?.contentInset = UIEdgeInsets(top: 34 + 26, left: 0, bottom: 0, right: 0)
+        collectionView?.keyboardDismissMode = .onDrag
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.contentInset = UIEdgeInsets(top: edgeInsetTopValue, left: 0, bottom: 0, right: 0)
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
@@ -48,7 +70,8 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         button.addTarget(self, action: #selector(handlePost), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        postBarButtonItem = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = postBarButtonItem
     }
     
     
@@ -58,14 +81,16 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DiscussionCell
+        cell.course = course
+        cell.discussionController = self
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.frame.width
-        let height = view.safeAreaLayoutGuide.layoutFrame.height
+        let height = view.safeAreaLayoutGuide.layoutFrame.height - edgeInsetTopValue
         
         return CGSize(width: width, height: height)
     }
@@ -101,6 +126,12 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         titleTypeController.course = course
         
         present(navTitleTypeController, animated: true, completion: nil)
+    }
+    
+    private func animateNavigationBarLayout() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.navigationController?.navigationBar.layoutIfNeeded()
+        }, completion: nil)
     }
     
 }

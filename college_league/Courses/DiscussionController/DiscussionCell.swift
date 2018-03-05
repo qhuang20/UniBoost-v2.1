@@ -10,6 +10,21 @@ import UIKit
 
 class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
     
+    weak var discussionController: DiscussionController? {
+        didSet {
+            discussionController?.searchBar?.delegate = self
+        }
+    }
+
+    var course: Course? {
+        didSet {
+            fetchPostInfos()
+        }
+    }
+    
+    var postInfos = [PostInfo]()
+    var filteredPostInfos = [PostInfo]()
+
     let cellId = "cellId"
     let cellSpacing: CGFloat = 5
     
@@ -20,7 +35,8 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         tv.delegate = self
         tv.separatorStyle = .none
         tv.rowHeight = UITableViewAutomaticDimension
-        tv.estimatedRowHeight = 150
+        tv.estimatedRowHeight = 100
+        tv.keyboardDismissMode = .onDrag
         return tv
     }()
     
@@ -28,17 +44,18 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         super.init(frame: frame)
         addSubview(tableView)
         tableView.fillSuperview()
-        tableView.register(FeedCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(PostInfoCell.self, forCellReuseIdentifier: cellId)
     }
     
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return filteredPostInfos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PostInfoCell
+        cell.postInfo = filteredPostInfos[indexPath.section]
         
         return cell
     }
