@@ -17,28 +17,37 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
 
     let cellId = "cellId"
     var searchBarAnchors: [NSLayoutConstraint]?
-
+    
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
-        sb.barTintColor = .gray
         sb.layer.cornerRadius = 10
         sb.clipsToBounds = true
         sb.showsCancelButton = false
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = brightGray
+        sb.barTintColor = UIColor.white
+        sb.returnKeyType = .done
+        sb.setImage(#imageLiteral(resourceName: "filter").withRenderingMode(.alwaysTemplate), for: UISearchBarIcon.bookmark, state: .normal)
+        let textFieldInsideSearchBar = sb.value(forKey: "searchField") as? UITextField
+        let button = textFieldInsideSearchBar?.rightView as? UIButton
+        button?.tintColor = UIColor.black
+        
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.white
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 4, vertical: 9), for: UIBarMetrics.default)
         
         let offset = UIOffset(horizontal: 0, vertical: -3)
         sb.searchTextPositionAdjustment = offset
         sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
+        sb.setPositionAdjustment(offset, for: UISearchBarIcon.bookmark)
         sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
         sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
         return sb
     }()
     
-    override func viewWillAppear(_ animated: Bool) {
-        searchBar.placeholder = "Search Courses"
+    override func viewDidAppear(_ animated: Bool) {
+        searchBar.text = ""
+        searchBar.placeholder = "Find Course"
         searchBar.delegate = self
-        
+        searchBar.showsBookmarkButton = false
+    
         guard let searchBarAnchors = searchBarAnchors else { return }
         searchBarAnchors[0].constant = 20
         searchBarAnchors[2].constant = -20

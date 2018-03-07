@@ -40,7 +40,8 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     private func layoutSearchBar() {
-        searchBar?.placeholder = "Search Posts"
+        searchBar?.placeholder = "Find Post & Classmate"
+        searchBar?.showsBookmarkButton = true
         
         guard let searchBarAnchors = searchBarAnchors else { return }
         searchBarAnchors[0].constant = 50
