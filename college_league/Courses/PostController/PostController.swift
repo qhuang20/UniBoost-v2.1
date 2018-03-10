@@ -15,20 +15,23 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
 
     var postType: String?
     var postTitle: String?
+    var thumbnailImage: UIImage?
 
     var images = [UIImage]()
     var assets = [PHAsset]()
+    var insertedImagesMap = [UIImage: UIImage]()
 
     var collectionViewBottomAnchor: NSLayoutConstraint?
     
     let cellId = "cellId"
+    let textFont: CGFloat = 18
     let estimatedKeyboardHeight: CGFloat = 271
-    let attributesWithFont = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20)]
+    lazy var attributesWithFont = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: textFont)]
     lazy var lineBreakStringForImage = NSAttributedString(string: "\n\n", attributes: attributesWithFont)
 
     lazy var postTextView: UITextView = {
         let tv = UITextView()
-        tv.font = UIFont.systemFont(ofSize: 20)
+        tv.font = UIFont.systemFont(ofSize: textFont)
         tv.textDragInteraction?.isEnabled = false
         
         let bottomInset = view.safeAreaLayoutGuide.layoutFrame.height - estimatedKeyboardHeight - 125

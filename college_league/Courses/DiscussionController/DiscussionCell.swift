@@ -15,19 +15,20 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
             discussionController?.searchBar?.delegate = self
         }
     }
- 
+    
     var course: Course? {
         didSet {
-            postInfos.removeAll()
-            fetchPostInfos()
+            filteredTypePosts.removeAll()
+            posts.removeAll()
+            fetchPosts()
         }
     }
     
-    var postInfos = [PostInfo]()
-    var filteredPostInfos = [PostInfo]()
+    var posts = [Post]()
+    var filteredPosts = [Post]()
     
     var filterType: FilterType = FilterType.all
-    var filteredTypePostInfos = [PostInfo]()
+    var filteredTypePosts = [Post]()
     
     enum FilterType: String {
         case all = "All"
@@ -110,7 +111,7 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         super.init(frame: frame)
         addSubview(tableView)
         tableView.fillSuperview()
-        tableView.register(PostInfoCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(PostCell.self, forCellReuseIdentifier: cellId)
         
         windowView = UIApplication.shared.keyWindow
         windowView?.addSubview(dimView)
@@ -129,13 +130,24 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        discussionController?.searchBar?.isHidden = true
+        discussionController?.searchBar?.resignFirstResponder()
+        
+        let navigationController = discussionController?.navigationController
+        let postContentController = PostContentController()
+        postContentController.post = filteredPosts[indexPath.section]
+        
+        navigationController?.pushViewController(postContentController, animated: true)
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return filteredPostInfos.count
+        return filteredPosts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PostInfoCell
-        cell.postInfo = filteredPostInfos[indexPath.section]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PostCell
+        cell.post = filteredPosts[indexPath.section]
         
         return cell
     }
@@ -155,7 +167,21 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return cellSpacing
     }
-
+    
+    func reload(tableView: UITableView) {//fix jumping issue
+        let contentOffset = tableView.contentOffset
+        tableView.reloadData()
+        tableView.layoutIfNeeded()
+        tableView.setContentOffset(contentOffset, animated: false)
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        if (filteredPosts.count > 0) {
+            tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: false)///fix position bug?
+        }
+    }
+    
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

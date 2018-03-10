@@ -20,8 +20,11 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     lazy var edgeInsetTopValue: CGFloat = switchBarHeight - 4
     
     let cellId = "cellId"
+    var oneTimeFlag = true
     
-    override func viewWillAppear(_ animated: Bool) {}//prevent weird behavior
+    override func viewWillAppear(_ animated: Bool) {//no super to prevent weird behavior
+        searchBar?.isHidden = false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,12 +86,13 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DiscussionCell
-        cell.course = course
+        cell.course = course//this main purpose is to clean up when reuse
         
-        if indexPath.item == 0 {
+        if oneTimeFlag {
             cell.discussionController = self
+            oneTimeFlag = false
         }
-
+        
         return cell
     }
     
@@ -101,27 +105,35 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    var previousIndex: CGFloat = 0
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {///test this!!!
         switchBar.sliderLefrAnchor?.constant = scrollView.contentOffset.x / 2
         
         let index = scrollView.contentOffset.x / view.frame.width
         
-        if index == 0 {//fix the delegate issue
+        if index == 0 && index != previousIndex {
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
             cell?.discussionController = self
-            cell?.searchBar(searchBar!, textDidChange: "")
+            if let allButton = cell?.typesView.subviews[3] as? UIButton {
+                cell?.handleFilterType(selectedButton: allButton)
+            }
             searchBar?.text = ""
             searchBar?.resignFirstResponder()
-        
-        } else if index == 1 {
+            previousIndex = index
+            
+        } else if index == 1 && index != previousIndex {
             
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
             cell?.discussionController = self
-            cell?.searchBar(searchBar!, textDidChange: "")
+            if let allButton = cell?.typesView.subviews[3] as? UIButton {
+                cell?.handleFilterType(selectedButton: allButton)
+            }
             searchBar?.text = ""
             searchBar?.resignFirstResponder()
+            previousIndex = index
         }
     }
     

@@ -11,18 +11,18 @@ import Firebase
 
 extension DiscussionCell: UISearchBarDelegate {
     
-    internal func fetchPostInfos() {
+    internal func fetchPosts() {
         guard let course = course else { return }
         let ref = Database.database().reference().child("school_course_posts").child(course.school).child(course.courseId)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
 
             dictionaries.forEach({ (key, value) in
-                Database.fetchPostInfoWithPID(pid: key, completion: { (postInfo) in
-                    self.postInfos.append(postInfo)
+                Database.fetchPostWithPID(pid: key, completion: { (post) in
+                    self.posts.append(post)
                     
-                    if self.postInfos.count == dictionaries.count {
-                        self.filteredPostInfos = self.postInfos
+                    if self.posts.count == dictionaries.count {
+                        self.filteredPosts = self.posts
                         self.tableView.reloadData()
                     }
                 })
@@ -37,31 +37,31 @@ extension DiscussionCell: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if filterType == FilterType.all {
             if searchText.isEmpty {
-                filteredPostInfos = postInfos
+                filteredPosts = posts
             } else {
-                filteredPostInfos = self.postInfos.filter { (postInfo) -> Bool in
-                    let postInfoTitle = postInfo.title
-                    let userName = postInfo.user.username
-                    let postType = postInfo.type
-                    let searchContent = postInfoTitle + userName + postType
+                filteredPosts = self.posts.filter { (post) -> Bool in
+                    let postTitle = post.title
+                    let userName = post.user.username
+                    let postType = post.type
+                    let searchContent = postTitle + userName + postType
                     return searchContent.lowercased().contains(searchText.lowercased())
                 }
             }
         } else {
             if searchText.isEmpty {
-                filteredPostInfos = filteredTypePostInfos
+                filteredPosts = filteredTypePosts
             } else {
-                filteredPostInfos = self.filteredTypePostInfos.filter { (postInfo) -> Bool in
-                    let postInfoTitle = postInfo.title
-                    let userName = postInfo.user.username
-                    let postType = postInfo.type
-                    let searchContent = postInfoTitle + userName + postType
+                filteredPosts = self.filteredTypePosts.filter { (post) -> Bool in
+                    let postTitle = post.title
+                    let userName = post.user.username
+                    let postType = post.type
+                    let searchContent = postTitle + userName + postType
                     return searchContent.lowercased().contains(searchText.lowercased())
                 }
             }
         }
         
-        self.tableView.reloadData()
+        reload(tableView: tableView)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -134,12 +134,8 @@ extension DiscussionCell: UISearchBarDelegate {
             self.searchBar(searchBar, textDidChange: "")
             
         } else {
-            
-            filteredTypePostInfos = self.postInfos.filter { (postInfo) -> Bool in
-                let postInfoTitle = postInfo.title
-                let userName = postInfo.user.username
-                let postType = postInfo.type
-                let searchContent = postInfoTitle + userName + postType
+            filteredTypePosts = self.posts.filter { (post) -> Bool in
+                let searchContent = post.type
                 return searchContent.lowercased().contains(searchText!.lowercased())
             }
             self.searchBar(searchBar, textDidChange: searchText!)

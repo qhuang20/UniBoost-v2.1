@@ -24,25 +24,30 @@ extension Database {
         }
     }
     
-    static func fetchPostInfoWithPID(pid: String, completion: @escaping (PostInfo) -> ()) {
+    static func fetchPostWithPID(pid: String, completion: @escaping (Post) -> ()) {
         
-        let ref = Database.database().reference().child("post_Info")
+        let ref = Database.database().reference().child("posts")
         ref.child(pid).observeSingleEvent(of: .value, with: { (snapshot) in
             
-            guard let postInfoDictionary = snapshot.value as? [String: Any] else { return }
+            guard let dic = snapshot.value as? [String: Any] else { return }
             
-            let uid = postInfoDictionary["uid"] as! String
+            let uid = dic["uid"] as! String
             
             fetchUserWithUID(uid: uid, completion: { (user) in
-                let postInfo = PostInfo(user: user, postId: pid, dictionary: postInfoDictionary)
+                let post = Post(user: user, postId: pid, dictionary: dic)
                
-                completion(postInfo)
+                completion(post)
             })
 
         }) { (err) in
-            print("Failed to fetch postInfo:", err)
+            print("Failed to fetch post:", err)
         }
     }
     
 }
+
+
+
+
+
 

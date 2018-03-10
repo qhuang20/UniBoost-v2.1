@@ -9,22 +9,17 @@
 import UIKit
 import LBTAComponents
 
-class PostInfoCell: UITableViewCell {
+class PostCell: UITableViewCell {
     
-    var postInfo: PostInfo? {
+    var post: Post? {
         didSet {
-            guard let postInfo = postInfo else { return }
-            let user = postInfo.user
+            guard let post = post else { return }
+            let user = post.user
 
-            titleLabel.text = postInfo.title
-            typeImageView.image = UIImage(named: postInfo.type)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+            titleLabel.text = post.title
+            typeImageView.image = UIImage(named: post.type)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             profileImageView.loadImage(urlString: user.profileImageUrl, completion: nil)
         }
-    }
-    
-    override var selectionStyle: UITableViewCellSelectionStyle {
-        get { return UITableViewCellSelectionStyle.default }
-        set {}
     }
     
     let profileImageWidth: CGFloat = 36
@@ -53,7 +48,7 @@ class PostInfoCell: UITableViewCell {
         return label
     }()
     
-    lazy var postInfoLabel: UILabel = {
+    lazy var postLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         
@@ -69,12 +64,13 @@ class PostInfoCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         let marginGuide = contentView.layoutMarginsGuide
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(profileImageView)
         contentView.addSubview(typeImageView)
-        contentView.addSubview(postInfoLabel)
+        contentView.addSubview(postLabel)
         
         titleLabel.anchor(marginGuide.topAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
@@ -82,7 +78,7 @@ class PostInfoCell: UITableViewCell {
 
         typeImageView.anchor(titleLabel.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: typeImageWidth, heightConstant: typeImageWidth + 4)
 
-        postInfoLabel.anchor(titleLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        postLabel.anchor(titleLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
