@@ -7,11 +7,27 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class PostContentController: UITableViewController {
     
-    var post: Post?
-    let cellId = "cellId"
+    var post: Post? {
+        didSet {
+            guard let postId = post?.postId else { return }
+            Database.fetchPostMessagesPID(pid: postId) { (postMessages) in
+                self.postMessages = postMessages
+            }
+        }
+    }
+    
+    var postMessages = [PostMessage]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    let headerCellId = "headerCellId"
+    let messageCellId = "messageCellId"
     let cellSpacing: CGFloat = 5
     
     override func viewDidLoad() {
@@ -19,37 +35,48 @@ class PostContentController: UITableViewController {
         tableView.backgroundColor = brightGray
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 300
-        tableView.register(PostContentCell.self, forCellReuseIdentifier: cellId)
+        tableView.estimatedRowHeight = 125
+        tableView.register(PostHeaderCell.self, forCellReuseIdentifier: headerCellId)
+        tableView.register(PostMessageCell.self, forCellReuseIdentifier: messageCellId)
     }
     
     
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return 4
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if section == 0 {
+            return postMessages.count + 1
+        }
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let index = indexPath.section
+        let topIndexPath = IndexPath(row: 0, section: 0)
+        let section = indexPath.section
+        let row = indexPath.row
        
-        if index == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PostContentCell
+        if indexPath == topIndexPath {
+            let cell = tableView.dequeueReusableCell(withIdentifier: headerCellId, for: indexPath) as! PostHeaderCell
             cell.post = post
-            cell.postContentController = self
+            return cell
+        }
+        
+        if section == 0 && row >= 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: messageCellId, for: indexPath) as! PostMessageCell
+            cell.postMessage = postMessages[row - 1]
             return cell
         }
         
         let cell = UITableViewCell()
-        
         return cell
     }
+
+
     
-
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
@@ -57,19 +84,14 @@ class PostContentController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return cellSpacing
+        return cellSpacing + 5
     }
     
 }
 
-extension UITableViewController {
-    
-    func updateRowHeight(cell: UITableViewCell) {
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
-    }
-    
-}
+
+
+
 
 
 

@@ -44,6 +44,27 @@ extension Database {
         }
     }
     
+    static func fetchPostMessagesPID(pid: String, completion: @escaping ([PostMessage]) -> ()) {
+        var postMessages = [PostMessage]()
+        
+        let ref = Database.database().reference().child("post_messages")
+        ref.child(pid).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            guard let dicArr = snapshot.value as? [[String: Any]] else { return }
+            
+            for count in 0..<dicArr.count {
+                let postMessageDic = dicArr[count]
+                let postMessage = PostMessage(dictionary: postMessageDic)
+                postMessages.append(postMessage)
+            }
+            
+            completion(postMessages)
+            
+        }) { (err) in
+            print("Failed to fetch post:", err)
+        }
+    }
+    
 }
 
 

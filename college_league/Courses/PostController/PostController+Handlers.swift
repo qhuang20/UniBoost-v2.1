@@ -9,7 +9,6 @@
 import UIKit
 import Photos
 import Firebase
-import Gzip
 
 extension PostController {
     
@@ -50,123 +49,101 @@ extension PostController {
         }
     }
     
+
     
-    
-    private func getHQImagesDictionary() -> [String: UIImage] {
-        var imagesDic = [String: UIImage]()
+    private func getPartsDictionary() -> [Int: Any] {
+        var partsDic = [Int: Any]()
         var count = 0
-        let exsitingImages = postTextView.getImages()
+        let parts = postTextView.getParts()
         
-        exsitingImages.forEach { (image) in
-            if count == 0 {
-                thumbnailImage = image
-            }
-            
-            if let highQualityImage = insertedImagesMap[image] {
-                imagesDic[String(count)] = highQualityImage
-                count = count + 1
-            }
+        parts.forEach { (object) in
+            if let image = object as? UIImage { partsDic[count] = image }
+            if let string = object as? String { partsDic[count] = string }
+            count = count + 1
         }
         
-        return imagesDic
+        return partsDic
     }
     
     @objc func handlePost() {
         guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }///
-        let documentAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.rtfd]
-        guard let rtfdData = try? attributedText.data(from: NSRange(location: 0, length: attributedText.length), documentAttributes: documentAttributes) else {return}
-       
         //dismiss(animated: true, completion: nil)///
-        
-        navigationItem.setHidesBackButton(true, animated: true)
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        activityIndicatorView.startAnimating()
-        
-        let optimizedRtfData: Data = try! rtfdData.gzipped(level: .bestCompression)
-        let filename = NSUUID().uuidString
-        let storageRef = Storage.storage().reference().child("posts").child(filename)
-        storageRef.putData(optimizedRtfData, metadata: nil) { (metadata, err) in
 
-            if let err = err {
-                self.navigationItem.setHidesBackButton(false, animated: true)
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
-                self.activityIndicatorView.stopAnimating()
-                print("Failed to upload rtfd data:", err)
-                return
-            }
-
-            guard let rtfdUrl = metadata?.downloadURL()?.absoluteString else { return }
-            print("Successfully uploaded post rtfd data")
-            
-            self.uploadImagesToStorage(rtfdUrl: rtfdUrl)
-        }
+        let partsDic = getPartsDictionary()
+        uploadImagesToStorage(partsDic: partsDic)
     }
     
-    private func uploadImagesToStorage(rtfdUrl: String) {
-        var imageUrlsDic = [String: String]()
-        let imagesDic = self.getHQImagesDictionary()
+    private func uploadImagesToStorage(partsDic: [Int: Any]) {
+        var values = [String: [String: Any]]()
         
-        imagesDic.forEach({ (count, image) in
-            let newImage = image.resizeImageTo(width: 600)
-            guard let uploadData = UIImageJPEGRepresentation(newImage!, 1) else { return }
-            let filename = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child("post_images").child(filename)
-            
-            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, err) in
-                if let err = err {
-                    print("Failed to upload post image:", err)
-                    return
-                }
+        partsDic.forEach({ (count, object) in
+            if let image = object as? UIImage {
+                let thumbnailImage = image.resizeImageTo(width: postTextView.frame.width - 38)
+                let imageHeight = thumbnailImage!.size.height
+                let highQualityImage = image
+                guard let thumbnailData = UIImageJPEGRepresentation(thumbnailImage!, 0.5) else { return }
+                guard let highQualityImageData = UIImageJPEGRepresentation(highQualityImage, 0.8) else { return }
                 
-                guard let imageUrl = metadata?.downloadURL()?.absoluteString else { return }
-                imageUrlsDic[count] = imageUrl
-                
-                if imageUrlsDic.count == imagesDic.count {
-                    print("Successfully uploaded all post images")
-                    self.uploadThumbnailImageToStorage(rtfdUrl: rtfdUrl, imageUrlsDic: imageUrlsDic)
+                let filename = NSUUID().uuidString
+                let storageRef = Storage.storage().reference().child("post_images")
+                storageRef.child(filename).putData(thumbnailData, metadata: nil, completion: { (metadata, err) in
+                    if let err = err {
+                        print("Failed to upload post thumbnail image:", err)
+                        return
+                    }
+                    
+                    guard let thumbnailUrl = metadata?.downloadURL()?.absoluteString else { return }
+                    if count == 0 || count == 1 {
+                        self.thumbnailImageUrl = thumbnailUrl
+                    }
+                    
+                    let filename = NSUUID().uuidString
+                    storageRef.child(filename).putData(highQualityImageData, metadata: metadata, completion: { (metadata, err) in
+                        if let err = err {
+                            print("Failed to upload post HQImage:", err)
+                            return
+                        }
+                        
+                        guard let highQualityImageUrl = metadata?.downloadURL()?.absoluteString else { return }
+                        values[String(count)] = ["imageUrl": highQualityImageUrl, "thumbnailUrl": thumbnailUrl, "imageHeight": imageHeight]
+                        
+                        if values.count == partsDic.count {
+                            print("Successfully uploaded all post messages")
+                            self.saveToDatabaseWith(properties: values)
+                        }
+                    })
+                })
+            } else {
+                values[String(count)] = ["text": object as! String]
+                if values.count == partsDic.count {
+                    print("Successfully uploaded all post messages")
+                    self.saveToDatabaseWith(properties: values)
                 }
-            })
+            }
         })
-        
-        if imagesDic.count == 0 {
-            self.saveToDatabaseWith(rtfdUrl: rtfdUrl)
-        }
-    }
-    
-    private func uploadThumbnailImageToStorage(rtfdUrl: String, imageUrlsDic: [String: String]) {
-        guard let thumbnailImage = thumbnailImage else { return }
-        guard let uploadData = UIImageJPEGRepresentation(thumbnailImage, 1) else { return }
-        let filename = NSUUID().uuidString
-        let storageRef = Storage.storage().reference().child("post_thumbnail").child(filename)
-        
-        storageRef.putData(uploadData, metadata: nil) { (metadata, err) in
-            if let err = err {
-                print("Failed to upload post thumbnail:", err)
-                return
-            }
-            
-            guard let imageUrl = metadata?.downloadURL()?.absoluteString else { return }
-            print("Successfully uploaded post thumbnail")
-            
-            self.saveToDatabaseWith(rtfdUrl: rtfdUrl, imageUrlsDic: imageUrlsDic, thumbnailUrl: imageUrl)
-        }
     }
 
-    private func saveToDatabaseWith(rtfdUrl: String, imageUrlsDic: [String: String] = [:], thumbnailUrl: String = "") {
+    private func saveToDatabaseWith(properties: [String: Any]) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let course = course else { return }
+        let thumbnailProperty = ["thumbnailImageUrl": thumbnailImageUrl]
         
+        var values: [String: Any] = ["uid": uid, "type": self.postType ?? "Other", "title": self.postTitle ?? "", "creationDate": Date().timeIntervalSince1970, "comments": 0, "likes": 0] as [String : Any]
+        thumbnailProperty.forEach({values[$0] = $1})
+
         let postRef = Database.database().reference().child("posts").childByAutoId()
-        let values = ["thumbnailUrl": thumbnailUrl, "rtfdUrl": rtfdUrl, "imageUrls": imageUrlsDic, "uid": uid, "type": self.postType ?? "Other", "title": self.postTitle ?? "", "creationDate": Date().timeIntervalSince1970, "comments": 0, "likes": 0] as [String : Any]
         postRef.updateChildValues(values) { (err, ref) in
             if let err = err {
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
-                self.navigationItem.setHidesBackButton(false, animated: true)
-                self.activityIndicatorView.stopAnimating()
                 print("Failed to save post to DB", err)
                 return
             }
             let postId = postRef.key
+            
+            let postMessagesRef = Database.database().reference().child("post_messages")
+            let postMessagesChild = postMessagesRef.child(postId)
+            postMessagesChild.updateChildValues(properties)
+            
+            
             
             let userPostsRef = Database.database().reference().child("user_posts")
             let userPostsChild = userPostsRef.child(uid)
@@ -187,10 +164,11 @@ extension PostController {
     
     internal func insertImage(image: UIImage) {
         let goalWidth = postTextView.frame.width - 38
-        let newImage = image.resizeImageTo(width: goalWidth)
+        let goalHeight = goalWidth * (image.size.height / image.size.width)
+        let newImage = image.resizeImageTo(width: 600)
         let attachment = NSTextAttachment()
         attachment.image = newImage
-        insertedImagesMap[newImage!] = image
+        attachment.bounds = CGRect(x: 0, y: 0, width: goalWidth, height: goalHeight)
         
         moveCursorToNextLine()
         postTextView.textStorage.insert(NSAttributedString(attachment: attachment), at: postTextView.selectedRange.location)

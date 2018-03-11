@@ -45,8 +45,11 @@
 		7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */; };
 		7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B643952201D3D7600FB0E18 /* CourseInfoCells.swift */; };
 		7B93C612204F92F000419B33 /* PostContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C611204F92F000419B33 /* PostContentController.swift */; };
-		7B93C614204FB16300419B33 /* PostContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C613204FB16300419B33 /* PostContentCell.swift */; };
+		7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C613204FB16300419B33 /* PostHeaderCell.swift */; };
 		7BF2E4D220538542004D4DBE /* UITextView+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */; };
+		7BF2E4D620545F4F004D4DBE /* PostMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D520545F4F004D4DBE /* PostMessage.swift */; };
+		7BF2E4D8205461DE004D4DBE /* PostMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */; };
+		7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D9205470E9004D4DBE /* UITableViewController+Helper.swift */; };
 		7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A2A92019479700689AE1 /* AppDelegate.swift */; };
 		7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A2AB2019479700689AE1 /* TimetableController.swift */; };
 		7BF3A2AF2019479700689AE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BF3A2AD2019479700689AE1 /* Main.storyboard */; };
@@ -94,8 +97,11 @@
 		7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseDatasource.swift; sourceTree = "<group>"; };
 		7B643952201D3D7600FB0E18 /* CourseInfoCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfoCells.swift; sourceTree = "<group>"; };
 		7B93C611204F92F000419B33 /* PostContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContentController.swift; sourceTree = "<group>"; };
-		7B93C613204FB16300419B33 /* PostContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContentCell.swift; sourceTree = "<group>"; };
+		7B93C613204FB16300419B33 /* PostHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderCell.swift; sourceTree = "<group>"; };
 		7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Helper.swift"; sourceTree = "<group>"; };
+		7BF2E4D520545F4F004D4DBE /* PostMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessage.swift; sourceTree = "<group>"; };
+		7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageCell.swift; sourceTree = "<group>"; };
+		7BF2E4D9205470E9004D4DBE /* UITableViewController+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Helper.swift"; sourceTree = "<group>"; };
 		7BF3A2A62019479700689AE1 /* college_league.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = college_league.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF3A2A92019479700689AE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7BF3A2AB2019479700689AE1 /* TimetableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableController.swift; sourceTree = "<group>"; };
@@ -183,6 +189,7 @@
 				7BF3A2A92019479700689AE1 /* AppDelegate.swift */,
 				7B16247720392494004C0537 /* ViewController+Helper.swift */,
 				7B61057E2042110100C5F6C3 /* UIImage+Helper.swift */,
+				7BF2E4D9205470E9004D4DBE /* UITableViewController+Helper.swift */,
 				7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */,
 			);
 			path = util;
@@ -201,6 +208,7 @@
 		7B3ACAE7204A3E970065CB16 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				7BF2E4D520545F4F004D4DBE /* PostMessage.swift */,
 				7B3ACAF0204B339D0065CB16 /* Post.swift */,
 				7B3ACAE8204A3ED80065CB16 /* Course.swift */,
 				7B3ACAEA204B27FB0065CB16 /* User.swift */,
@@ -245,7 +253,8 @@
 		7B93C610204F92B700419B33 /* PostContentController */ = {
 			isa = PBXGroup;
 			children = (
-				7B93C613204FB16300419B33 /* PostContentCell.swift */,
+				7B93C613204FB16300419B33 /* PostHeaderCell.swift */,
+				7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */,
 				7B93C611204F92F000419B33 /* PostContentController.swift */,
 			);
 			path = PostContentController;
@@ -447,6 +456,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BF2E4D620545F4F004D4DBE /* PostMessage.swift in Sources */,
 				7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */,
 				7B1624732038C555004C0537 /* UserProfileHeader.swift in Sources */,
 				7B16246A2038C4B5004C0537 /* Signup+Handlers.swift in Sources */,
@@ -457,9 +467,11 @@
 				7B48C76220464E0600768E96 /* DiscussionController.swift in Sources */,
 				7B16247820392494004C0537 /* ViewController+Helper.swift in Sources */,
 				7B16246B2038C4B5004C0537 /* SignupController.swift in Sources */,
-				7B93C614204FB16300419B33 /* PostContentCell.swift in Sources */,
+				7BF2E4D8205461DE004D4DBE /* PostMessageCell.swift in Sources */,
+				7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */,
 				7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */,
 				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
+				7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */,
 				7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */,
 				7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */,
 				7B48C7602045AE0500768E96 /* CourseControllerCell.swift in Sources */,

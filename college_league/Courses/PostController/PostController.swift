@@ -15,11 +15,10 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
 
     var postType: String?
     var postTitle: String?
-    var thumbnailImage: UIImage?
+    var thumbnailImageUrl: String?
 
     var images = [UIImage]()
     var assets = [PHAsset]()
-    var insertedImagesMap = [UIImage: UIImage]()
 
     var collectionViewBottomAnchor: NSLayoutConstraint?
     
@@ -66,11 +65,6 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         button.addTarget(self, action: #selector(handlTapKeyboard), for: .touchUpInside)
         return button
     }()
-    
-    let activityIndicatorView: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        return aiv
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +72,6 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         setupKeyboardObservers()
         setupInputAccessoryView()
         view.backgroundColor = UIColor.white
-        navigationItem.titleView = activityIndicatorView
         postTextView.becomeFirstResponder()
         collectionView.register(PhotoSelectorCell.self, forCellWithReuseIdentifier: cellId)
 
