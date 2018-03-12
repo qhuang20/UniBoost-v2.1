@@ -57,8 +57,12 @@ extension PostController {
         let parts = postTextView.getParts()
         
         parts.forEach { (object) in
-            if let image = object as? UIImage { partsDic[count] = image }
-            if let string = object as? String { partsDic[count] = string }
+            if let image = object as? UIImage {
+                partsDic[count] = image
+            }
+            if let string = object as? String {
+                partsDic[count] = string
+            }
             count = count + 1
         }
         
@@ -75,6 +79,8 @@ extension PostController {
     
     private func uploadImagesToStorage(partsDic: [Int: Any]) {
         var values = [String: [String: Any]]()
+        var postCellThumbnailProperties = [String: Any]()
+        var minCount = 10
         
         partsDic.forEach({ (count, object) in
             if let image = object as? UIImage {
@@ -83,8 +89,6 @@ extension PostController {
                 let highQualityImage = image
                 guard let thumbnailData = UIImageJPEGRepresentation(thumbnailImage!, 0.5) else { return }
                 guard let highQualityImageData = UIImageJPEGRepresentation(highQualityImage, 0.8) else { return }
-                
-                var postCellThumbnailProperties = [String: Any]()
                 
                 let filename = NSUUID().uuidString
                 let storageRef = Storage.storage().reference().child("post_images")
@@ -95,8 +99,10 @@ extension PostController {
                     }
                     
                     guard let thumbnailUrl = metadata?.downloadURL()?.absoluteString else { return }
-                    if count == 0 || count == 1 {
+                
+                    if count < minCount {
                         postCellThumbnailProperties = ["thumbnailImageUrl": thumbnailUrl, "thumbnailImageHeight": imageHeight]
+                        minCount = count
                     }
                     
                     let filename = NSUUID().uuidString
@@ -119,7 +125,7 @@ extension PostController {
                 values[String(count)] = ["text": object as! String]
                 if values.count == partsDic.count {
                     print("Successfully uploaded all post messages")
-                    self.saveToDatabaseWith(properties: values, postCellThumbnailProperties: [:])
+                    self.saveToDatabaseWith(properties: values, postCellThumbnailProperties: postCellThumbnailProperties)
                 }
             }
         })

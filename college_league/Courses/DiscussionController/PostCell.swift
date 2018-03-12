@@ -37,7 +37,23 @@ class PostCell: UITableViewCell {
             } else {
                 thumbnailImageViewHeightAnchor?.constant = 0
             }
+            
+            setupAttributedCaption()
         }
+    }
+    
+    private func setupAttributedCaption() {
+        guard let post = self.post else { return }
+        
+        let attributedText = NSMutableAttributedString(string: "\(post.user.username): A big boss in the world", attributes: attributesForUserInfo)
+
+        attributedText.appendNewLine()
+        
+        let timeAgoDisplay = post.creationDate.timeAgoDisplay()
+        attributedText.append(NSAttributedString(string: "\(timeAgoDisplay) • 10 comments • 12000 likes", attributes: attributesTimeCommentLike))
+        
+        attributedText.setLineSpacing(8)
+        postLabel.attributedText = attributedText
     }
     
     var thumbnailImageViewHeightAnchor: NSLayoutConstraint?
@@ -46,7 +62,7 @@ class PostCell: UITableViewCell {
     let typeImageWidth: CGFloat = 25
     let padding: CGFloat = 16
     let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
-    let attributesTimeCommentLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12.5), NSAttributedStringKey.foregroundColor: UIColor.gray]
+    let attributesTimeCommentLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 13.5), NSAttributedStringKey.foregroundColor: UIColor.gray]
     
     let typeImageView: UIImageView = {
         let iv = UIImageView()
@@ -71,14 +87,6 @@ class PostCell: UITableViewCell {
     lazy var postLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        
-        let attributedText = NSMutableAttributedString(string: "Jeff, is a big boss in the world", attributes: attributesForUserInfo)
-        attributedText.setLineSpacing(8)
-        let attributedOtherInfo = NSAttributedString(string: "Mar 28, 2017 • 10 comments, 12000 likes", attributes: attributesTimeCommentLike)
-        attributedText.appendNewLine()
-        attributedText.append(attributedOtherInfo)
-
-        label.attributedText = attributedText
         return label
     }()
     

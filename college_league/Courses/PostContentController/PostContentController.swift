@@ -14,7 +14,7 @@ class PostContentController: UITableViewController {
     var post: Post? {
         didSet {
             guard let postId = post?.postId else { return }
-            Database.fetchPostMessagesPID(pid: postId) { (postMessages) in
+            Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
                 self.postMessages = postMessages
             }
         }

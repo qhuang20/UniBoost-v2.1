@@ -44,7 +44,7 @@ extension Database {
         }
     }
     
-    static func fetchPostMessagesPID(pid: String, completion: @escaping ([PostMessage]) -> ()) {
+    static func fetchPostMessagesWithPID(pid: String, completion: @escaping ([PostMessage]) -> ()) {
         var postMessages = [PostMessage]()
         
         let ref = Database.database().reference().child("post_messages")

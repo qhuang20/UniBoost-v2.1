@@ -21,6 +21,7 @@
 		7B1624742038C555004C0537 /* UserProfileController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624712038C555004C0537 /* UserProfileController+Handlers.swift */; };
 		7B1624752038C555004C0537 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624722038C555004C0537 /* UserProfileController.swift */; };
 		7B16247820392494004C0537 /* ViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B16247720392494004C0537 /* ViewController+Helper.swift */; };
+		7B167669205651AA003D4E01 /* Date+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B167668205651AA003D4E01 /* Date+Helper.swift */; };
 		7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */; };
 		7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B331A0D2043D72F00282308 /* TitleTypeController.swift */; };
 		7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */; };
@@ -72,6 +73,7 @@
 		7B1624712038C555004C0537 /* UserProfileController+Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileController+Handlers.swift"; sourceTree = "<group>"; };
 		7B1624722038C555004C0537 /* UserProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		7B16247720392494004C0537 /* ViewController+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Helper.swift"; sourceTree = "<group>"; };
+		7B167668205651AA003D4E01 /* Date+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Helper.swift"; sourceTree = "<group>"; };
 		7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddCourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B331A0D2043D72F00282308 /* TitleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTypeController.swift; sourceTree = "<group>"; };
 		7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseController+Handlers.swift"; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				7B61057E2042110100C5F6C3 /* UIImage+Helper.swift */,
 				7BF2E4D9205470E9004D4DBE /* UITableViewController+Helper.swift */,
 				7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */,
+				7B167668205651AA003D4E01 /* Date+Helper.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				7B93C612204F92F000419B33 /* PostContentController.swift in Sources */,
 				7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */,
 				7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */,
+				7B167669205651AA003D4E01 /* Date+Helper.swift in Sources */,
 				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
 				7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */,
 				7B48C7692047CC6E00768E96 /* PostCell.swift in Sources */,

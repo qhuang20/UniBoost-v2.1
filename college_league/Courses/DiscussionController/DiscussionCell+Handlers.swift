@@ -23,6 +23,11 @@ extension DiscussionCell: UISearchBarDelegate {
                     
                     if self.posts.count == dictionaries.count {
                         self.filteredPosts = self.posts
+                        
+                        self.filteredPosts.sort(by: { (p1, p2) -> Bool in
+                            return p1.creationDate.compare(p2.creationDate) == .orderedDescending
+                        })
+                        
                         self.tableView.reloadData()
                     }
                 })

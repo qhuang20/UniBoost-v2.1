@@ -33,8 +33,8 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         tv.textDragInteraction?.isEnabled = false
         
         let bottomInset = view.safeAreaLayoutGuide.layoutFrame.height - estimatedKeyboardHeight - 125
-        let contentInset = UIEdgeInsets(top: 85, left: 14, bottom: bottomInset, right: 14)
-        tv.textContainerInset = contentInset//add scrollView space
+        let textContainerInset = UIEdgeInsets(top: 85, left: 14, bottom: bottomInset, right: 14)
+        tv.textContainerInset = textContainerInset//add scrollView space
         return tv
     }()
     
