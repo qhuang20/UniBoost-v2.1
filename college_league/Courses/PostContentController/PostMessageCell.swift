@@ -29,7 +29,7 @@ class PostMessageCell: UITableViewCell {
                 
             } else {
                 
-                postTextViewHeightAnchor?.constant = estimateHeightFor(text: postMessage.text ?? "") + 20
+                postTextViewHeightAnchor?.constant = estimateHeightFor(text: postMessage.text ?? "") + 18
                 thumbnailImageViewHeightAnchor?.constant = 0
                 postTextView.text = postMessage.text
 
@@ -50,7 +50,6 @@ class PostMessageCell: UITableViewCell {
         tv.isSelectable = false
         tv.isEditable = false
         tv.text = "Sample Sample Sample"
-        tv.backgroundColor = UIColor.yellow
         return tv
     }()
     
@@ -78,7 +77,7 @@ class PostMessageCell: UITableViewCell {
         contentView.addSubview(postTextView)
         thumbnailImageView.addSubview(activityIndicatorView)
         
-        thumbnailImageViewHeightAnchor = thumbnailImageView.anchorWithReturnAnchors(contentView.topAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.1)[3]
+        thumbnailImageViewHeightAnchor = thumbnailImageView.anchorWithReturnAnchors(contentView.topAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 0.1)[3]
         postTextViewHeightAnchor = postTextView.anchorWithReturnAnchors(thumbnailImageView.bottomAnchor, left: marginGuide.leftAnchor, bottom: contentView.bottomAnchor, right: marginGuide.rightAnchor, topConstant: 0, leftConstant: -4, bottomConstant: 0, rightConstant: -4, widthConstant: 0, heightConstant: 0.1)[4]
         activityIndicatorView.anchorCenterSuperview()
     }

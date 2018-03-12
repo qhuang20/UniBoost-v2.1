@@ -15,7 +15,6 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
 
     var postType: String?
     var postTitle: String?
-    var thumbnailImageUrl: String?
 
     var images = [UIImage]()
     var assets = [PHAsset]()

@@ -84,6 +84,8 @@ extension PostController {
                 guard let thumbnailData = UIImageJPEGRepresentation(thumbnailImage!, 0.5) else { return }
                 guard let highQualityImageData = UIImageJPEGRepresentation(highQualityImage, 0.8) else { return }
                 
+                var postCellThumbnailProperties = [String: Any]()
+                
                 let filename = NSUUID().uuidString
                 let storageRef = Storage.storage().reference().child("post_images")
                 storageRef.child(filename).putData(thumbnailData, metadata: nil, completion: { (metadata, err) in
@@ -94,7 +96,7 @@ extension PostController {
                     
                     guard let thumbnailUrl = metadata?.downloadURL()?.absoluteString else { return }
                     if count == 0 || count == 1 {
-                        self.thumbnailImageUrl = thumbnailUrl
+                        postCellThumbnailProperties = ["thumbnailImageUrl": thumbnailUrl, "thumbnailImageHeight": imageHeight]
                     }
                     
                     let filename = NSUUID().uuidString
@@ -109,7 +111,7 @@ extension PostController {
                         
                         if values.count == partsDic.count {
                             print("Successfully uploaded all post messages")
-                            self.saveToDatabaseWith(properties: values)
+                            self.saveToDatabaseWith(properties: values, postCellThumbnailProperties: postCellThumbnailProperties)
                         }
                     })
                 })
@@ -117,20 +119,19 @@ extension PostController {
                 values[String(count)] = ["text": object as! String]
                 if values.count == partsDic.count {
                     print("Successfully uploaded all post messages")
-                    self.saveToDatabaseWith(properties: values)
+                    self.saveToDatabaseWith(properties: values, postCellThumbnailProperties: [:])
                 }
             }
         })
     }
 
-    private func saveToDatabaseWith(properties: [String: Any]) {
+    private func saveToDatabaseWith(properties: [String: Any], postCellThumbnailProperties: [String: Any]) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let course = course else { return }
-        let thumbnailProperty = ["thumbnailImageUrl": thumbnailImageUrl]
         
         var values: [String: Any] = ["uid": uid, "type": self.postType ?? "Other", "title": self.postTitle ?? "", "creationDate": Date().timeIntervalSince1970, "comments": 0, "likes": 0] as [String : Any]
-        thumbnailProperty.forEach({values[$0] = $1})
-
+        postCellThumbnailProperties.forEach({values[$0] = $1})
+        
         let postRef = Database.database().reference().child("posts").childByAutoId()
         postRef.updateChildValues(values) { (err, ref) in
             if let err = err {

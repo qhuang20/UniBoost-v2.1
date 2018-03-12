@@ -6,7 +6,7 @@
 //  Copyright © 2018 Qichen Huang. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Post {
     
@@ -16,6 +16,7 @@ struct Post {
     let title: String
     let type: String
     var thumbnailImageUrl: String?
+    var thumbnailImageHeight: CGFloat?
     
     init(user: User, postId: String, dictionary: [String: Any]) {
         self.user = user
@@ -23,6 +24,7 @@ struct Post {
         self.title = dictionary["title"] as? String ?? ""
         self.type = dictionary["type"] as? String ?? ""
         self.thumbnailImageUrl = dictionary["thumbnailImageUrl"] as? String
+        self.thumbnailImageHeight = dictionary["thumbnailImageHeight"] as? CGFloat
     }
     
 }
