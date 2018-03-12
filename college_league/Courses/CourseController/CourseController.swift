@@ -83,21 +83,18 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
     
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+    func didSelectCellAt(indexPath: IndexPath) {
         searchBar.resignFirstResponder()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        
+
         let course = filteredCourses[indexPath.item]
         let discussionController = DiscussionController(collectionViewLayout: UICollectionViewFlowLayout())
         discussionController.course = course
         discussionController.searchBar = searchBar
         discussionController.searchBarAnchors = searchBarAnchors
-        
+
         navigationController?.pushViewController(discussionController, animated: true)
     }
-    
-    
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filteredCourses.count
@@ -106,6 +103,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CourseControllerCell
         cell.course = filteredCourses[indexPath.item]
+        cell.courseController = self
         
         return cell
     }

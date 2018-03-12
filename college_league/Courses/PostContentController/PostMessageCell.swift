@@ -54,7 +54,7 @@ class PostMessageCell: UITableViewCell {
     }()
     
     lazy var thumbnailImageView: CachedImageView = {
-        let imageView = CachedImageView(cornerRadius: 8, tapCallback: {
+        let imageView = CachedImageView(cornerRadius: 4, tapCallback: {
             print("tap")
         })
         imageView.contentMode = .scaleAspectFill

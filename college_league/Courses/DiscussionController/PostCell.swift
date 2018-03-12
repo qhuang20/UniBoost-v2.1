@@ -91,7 +91,7 @@ class PostCell: UITableViewCell {
     }()
     
     let thumbnailImageView: CachedImageView = {
-        let imageView = CachedImageView(cornerRadius: 8, emptyImage: nil)
+        let imageView = CachedImageView(cornerRadius: 4, emptyImage: nil)
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = brightGray
         return imageView
