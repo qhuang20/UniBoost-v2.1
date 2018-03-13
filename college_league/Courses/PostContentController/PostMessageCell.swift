@@ -47,7 +47,7 @@ class PostMessageCell: UITableViewCell {
         let tv = UITextView()
         tv.font = UIFont.systemFont(ofSize: 18)
         tv.isScrollEnabled = false
-        tv.isSelectable = false
+        tv.isSelectable = true
         tv.isEditable = false
         tv.text = "Sample Sample Sample"
         return tv

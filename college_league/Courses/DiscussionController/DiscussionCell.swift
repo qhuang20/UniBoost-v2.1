@@ -107,8 +107,18 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         return sv
     }()
     
+    lazy var refreshControl: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        rc.tintColor = themeColor
+        return rc
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        tableView.backgroundView = refreshControl
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
+        
         addSubview(tableView)
         tableView.fillSuperview()
         tableView.register(PostCell.self, forCellReuseIdentifier: cellId)
@@ -126,6 +136,7 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     deinit {
         dimView.removeFromSuperview()
         typesView.removeFromSuperview()
+        NotificationCenter.default.removeObserver(self)
     }
     
     
@@ -147,7 +158,9 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PostCell
-        cell.post = filteredPosts[indexPath.section]
+        if filteredPosts.count > indexPath.section {
+            cell.post = filteredPosts[indexPath.section]
+        }
         
         return cell
     }

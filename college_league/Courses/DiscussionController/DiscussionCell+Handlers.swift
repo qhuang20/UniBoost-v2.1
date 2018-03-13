@@ -15,6 +15,8 @@ extension DiscussionCell: UISearchBarDelegate {
         guard let course = course else { return }
         let ref = Database.database().reference().child("school_course_posts").child(course.school).child(course.courseId)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            self.refreshControl.endRefreshing()
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
 
             dictionaries.forEach({ (key, value) in
@@ -35,6 +37,11 @@ extension DiscussionCell: UISearchBarDelegate {
         }) { (err) in
             print("Failed to fetch course posts:", err)
         }
+    }
+    
+    @objc func handleRefresh() {
+        posts.removeAll()
+        fetchPosts()
     }
     
     

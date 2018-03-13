@@ -164,6 +164,8 @@ extension PostController {
             
             print("Yeeeeeaaaaaahhhhhh, Successfully saved post to DB")
             self.dismiss(animated: true, completion: nil)
+            
+            NotificationCenter.default.post(name: PostController.updateFeedNotificationName, object: nil)
         }
     }
     
@@ -230,7 +232,7 @@ extension PostController {
         })
     
         postTextView.resignFirstResponder()
-        fetchPhotos()
+        fetchPhotos()///what if PHPhotoLibrary has changed
     }
     
     @objc func handlTapKeyboard() {

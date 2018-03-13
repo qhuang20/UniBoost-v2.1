@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import LBTAComponents
 
 class UserProfileHeader: UICollectionViewCell {
     
@@ -19,27 +20,11 @@ class UserProfileHeader: UICollectionViewCell {
     
     private func setupProfileImage() {
         guard let profileImageUrl = user?.profileImageUrl else { return }
-        guard let url = URL(string: profileImageUrl) else { return }
-        ///
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-            
-            if let err = err {
-                print("Failed to fetch profile image:", err)
-                return
-            }
-            
-            guard let data = data else { return }
-            let image = UIImage(data: data)
-            
-            DispatchQueue.main.async {
-                self.profileImageView.image = image
-            }
-            
-        }.resume()
+        profileImageView.loadImage(urlString: profileImageUrl)
     }
     
-    let profileImageView: UIImageView = {
-        let iv = UIImageView()
+    let profileImageView: CachedImageView = {
+        let iv = CachedImageView()
         iv.contentMode = .scaleAspectFill
         iv.backgroundColor = UIColor.lightGray
         iv.layer.cornerRadius = 80 / 2

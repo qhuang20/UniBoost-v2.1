@@ -11,6 +11,8 @@ import Photos
 
 class PostController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    static let updateFeedNotificationName = NSNotification.Name(rawValue: "UpdateFeed")
+    
     var course: Course? 
 
     var postType: String?
