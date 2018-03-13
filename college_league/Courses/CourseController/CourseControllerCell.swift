@@ -14,6 +14,7 @@ class CourseControllerCell: UICollectionViewCell {
     
     var course: Course? {
         didSet {
+            setupEmptyStyle()
             setupAttributedTitle()
             setupAddEmptyButton()
         }
@@ -61,7 +62,6 @@ class CourseControllerCell: UICollectionViewCell {
         self.clipsToBounds = true
         backgroundColor = UIColor.white
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapCell)))
-        setupEmptyStyle()
         
         addSubview(courseInfoLabel)
         addSubview(addButton)
@@ -91,6 +91,11 @@ class CourseControllerCell: UICollectionViewCell {
                 
                 print("Successfully unSelect course:", courseId)
                 self.setupEmptyStyle()
+                if self.courseController?.viewOptionButton?.isSelected == true {
+                    guard let indexPath = self.courseController?.collectionView?.indexPath(for: self) else { return }
+                    self.courseController?.filteredCourses.remove(at: indexPath.item)
+                    self.courseController?.collectionView?.reloadData()
+                }
             })
         } else {
             

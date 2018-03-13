@@ -13,10 +13,12 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     var school: String? = "Langara College"
 
     var courses = [Course]()
+    var followingCourses = [Course]()
     var filteredCourses = [Course]()
 
     let cellId = "cellId"
     var searchBarAnchors: [NSLayoutConstraint]?
+    var viewOptionButton: UIButton?
     
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
@@ -50,17 +52,19 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
         guard let searchBarAnchors = searchBarAnchors else { return }
         searchBarAnchors[0].constant = 20
-        searchBarAnchors[2].constant = -20
+        searchBarAnchors[2].constant = -60
         animateNavigationBarLayout()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
+        configureNavigationBar()
         
-        navigationController?.navigationBar.addSubview(searchBar)
         let navBar = navigationController?.navigationBar
-        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        navBar?.addSubview(searchBar)
+        
+        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 60, widthConstant: 0, heightConstant: 0)
         
         if school == nil {///...set up school in Me...
             return
@@ -79,6 +83,21 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         layout.minimumInteritemSpacing = 6
         
         collectionView?.register(CourseControllerCell.self, forCellWithReuseIdentifier: cellId)
+    }
+    
+    private func configureNavigationBar() {
+        let button = UIButton(type: .custom)
+        viewOptionButton = button
+        let image = #imageLiteral(resourceName: "eye").withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
+        let selectedImage = #imageLiteral(resourceName: "eye_selected").withRenderingMode(.alwaysTemplate)
+        button.setImage(selectedImage, for: .selected)
+        button.tintColor = UIColor.white
+        button.adjustsImageWhenHighlighted = false
+        button.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 34, heightConstant: 30)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -2)
+        button.addTarget(self, action: #selector(handleViewOption), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
     
@@ -121,6 +140,10 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
 }
+
+
+
+
 
 
 
