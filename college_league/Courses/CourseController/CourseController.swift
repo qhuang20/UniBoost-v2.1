@@ -49,7 +49,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         searchBar.placeholder = "Find Course"
         searchBar.delegate = self
         searchBar.showsBookmarkButton = false
-    
+        
         guard let searchBarAnchors = searchBarAnchors else { return }
         searchBarAnchors[0].constant = 20
         searchBarAnchors[2].constant = -60

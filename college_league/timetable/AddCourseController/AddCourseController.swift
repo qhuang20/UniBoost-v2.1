@@ -81,7 +81,7 @@ class AddCourseController: DatasourceController {
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         configureNavigationItems()
 
-        windowView = UIApplication.shared.keyWindow
+        windowView = UIApplication.shared.windows.last
         windowView?.addSubview(dimView)
         windowView?.addSubview(datePicker)
        
@@ -95,6 +95,8 @@ class AddCourseController: DatasourceController {
     private func configureNavigationItems() {
         navigationItem.title = "AddCourse"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "save"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(saveCourseInfo))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleCanel))
     }
     
     override func viewDidDisappear(_ animated: Bool) {

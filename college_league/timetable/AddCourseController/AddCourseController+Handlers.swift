@@ -92,7 +92,11 @@ extension AddCourseController {
         }
         
         timetableController?.collectionView?.reloadData()
-        navigationController?.popViewController(animated: true)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func handleCanel() {
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     private func checkIfCourseIsValid(timetableDatasource: TimetableDatasource, isEditAction: Bool) -> Int {

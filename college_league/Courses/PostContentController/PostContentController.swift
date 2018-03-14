@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseDatabase
+import AMScrollingNavbar
 
 class PostContentController: UITableViewController {
     
@@ -30,8 +31,18 @@ class PostContentController: UITableViewController {
     let messageCellId = "messageCellId"
     let cellSpacing: CGFloat = 5
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.showNavbar(animated: true)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.followScrollView(tableView, delay: 20, followers: [tabBarController!.tabBar])
+        }
         tableView.backgroundColor = brightGray
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -49,7 +60,7 @@ class PostContentController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return postMessages.count + 1
+            return postMessages.count + 1 + 1
         }
         return 2
     }

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AMScrollingNavbar
 
 class MainTabBarController: UITabBarController {
 
@@ -29,7 +30,7 @@ class MainTabBarController: UITabBarController {
     
     public func setupViewControllers() {
     
-        let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: UserProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         let requestNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "request"), selectedImage: #imageLiteral(resourceName: "request_selected"))
         
@@ -57,8 +58,8 @@ class MainTabBarController: UITabBarController {
         tabBar.layer.addSublayer(topBorder)//or try addSubview
     }
     
-    private func templateNavController(unselectedImage: UIImage, selectedImage: UIImage, rootViewController: UIViewController = UIViewController()) -> UINavigationController {
-        let navController = UINavigationController(rootViewController: rootViewController)
+    private func templateNavController(unselectedImage: UIImage, selectedImage: UIImage, rootViewController: UIViewController = UIViewController()) -> ScrollingNavigationController {
+        let navController = ScrollingNavigationController(rootViewController: rootViewController)
         navController.tabBarItem.image = unselectedImage
         navController.tabBarItem.selectedImage = selectedImage
         navController.title = nil

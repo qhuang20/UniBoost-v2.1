@@ -47,6 +47,9 @@
 		7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B643952201D3D7600FB0E18 /* CourseInfoCells.swift */; };
 		7B93C612204F92F000419B33 /* PostContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C611204F92F000419B33 /* PostContentController.swift */; };
 		7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C613204FB16300419B33 /* PostHeaderCell.swift */; };
+		7B9717172058DBB400B6F781 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717162058DBB400B6F781 /* HomeController.swift */; };
+		7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */; };
+		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
 		7BF2E4D220538542004D4DBE /* UITextView+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */; };
 		7BF2E4D620545F4F004D4DBE /* PostMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D520545F4F004D4DBE /* PostMessage.swift */; };
 		7BF2E4D8205461DE004D4DBE /* PostMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */; };
@@ -100,6 +103,9 @@
 		7B643952201D3D7600FB0E18 /* CourseInfoCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfoCells.swift; sourceTree = "<group>"; };
 		7B93C611204F92F000419B33 /* PostContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContentController.swift; sourceTree = "<group>"; };
 		7B93C613204FB16300419B33 /* PostHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderCell.swift; sourceTree = "<group>"; };
+		7B9717162058DBB400B6F781 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
+		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
 		7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Helper.swift"; sourceTree = "<group>"; };
 		7BF2E4D520545F4F004D4DBE /* PostMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessage.swift; sourceTree = "<group>"; };
 		7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageCell.swift; sourceTree = "<group>"; };
@@ -143,8 +149,6 @@
 		7B0FD708203F562800E77422 /* Me */ = {
 			isa = PBXGroup;
 			children = (
-				7B643954201D3D8700FB0E18 /* AddCourseController */,
-				7BF3A32D201C127100689AE1 /* TimetableController */,
 				7B1624762038C561004C0537 /* UserProfileController */,
 			);
 			path = Me;
@@ -263,6 +267,28 @@
 			path = PostContentController;
 			sourceTree = "<group>";
 		};
+		7B9717142058DB4600B6F781 /* TimetableController */ = {
+			isa = PBXGroup;
+			children = (
+				7B433978201D71B800151FEE /* DayCell.swift */,
+				7B0FF8872025482D00C83BFA /* CourseView.swift */,
+				7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */,
+				7BF3A2AB2019479700689AE1 /* TimetableController.swift */,
+				7B64394C201D19C000FB0E18 /* Timetable+Handlers.swift */,
+				7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */,
+				7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */,
+			);
+			path = TimetableController;
+			sourceTree = "<group>";
+		};
+		7B9717152058DB8C00B6F781 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7B9717162058DBB400B6F781 /* HomeController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		7BF3A29D2019479700689AE1 = {
 			isa = PBXGroup;
 			children = (
@@ -284,9 +310,11 @@
 		7BF3A2A82019479700689AE1 /* college_league */ = {
 			isa = PBXGroup;
 			children = (
-				7B0FD709203F569500E77422 /* Courses */,
 				7B0FD708203F562800E77422 /* Me */,
+				7B0FD709203F569500E77422 /* Courses */,
+				7B9717152058DB8C00B6F781 /* Home */,
 				7B3ACAE7204A3E970065CB16 /* models */,
+				7BF3A32D201C127100689AE1 /* timetable */,
 				7B16246C2038C4BF004C0537 /* login_signup */,
 				7B16246F2038C51B004C0537 /* util */,
 				7BF3A2B02019479700689AE1 /* Assets.xcassets */,
@@ -298,16 +326,13 @@
 			path = college_league;
 			sourceTree = "<group>";
 		};
-		7BF3A32D201C127100689AE1 /* TimetableController */ = {
+		7BF3A32D201C127100689AE1 /* timetable */ = {
 			isa = PBXGroup;
 			children = (
-				7B0FF8872025482D00C83BFA /* CourseView.swift */,
-				7B433978201D71B800151FEE /* DayCell.swift */,
-				7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */,
-				7BF3A2AB2019479700689AE1 /* TimetableController.swift */,
-				7B64394C201D19C000FB0E18 /* Timetable+Handlers.swift */,
+				7B643954201D3D8700FB0E18 /* AddCourseController */,
+				7B9717142058DB4600B6F781 /* TimetableController */,
 			);
-			path = TimetableController;
+			path = timetable;
 			sourceTree = "<group>";
 		};
 		FB8931E96FC22755384000E2 /* Pods */ = {
@@ -431,6 +456,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-college_league/Pods-college_league-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AMScrollingNavbar/AMScrollingNavbar.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GzipSwift/Gzip.framework",
@@ -440,6 +466,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AMScrollingNavbar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gzip.framework",
@@ -473,6 +500,7 @@
 				7BF2E4D8205461DE004D4DBE /* PostMessageCell.swift in Sources */,
 				7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */,
 				7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */,
+				7B9717172058DBB400B6F781 /* HomeController.swift in Sources */,
 				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
 				7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */,
 				7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */,
@@ -490,6 +518,8 @@
 				7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */,
 				7B167669205651AA003D4E01 /* Date+Helper.swift in Sources */,
 				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
+				7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */,
+				7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */,
 				7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */,
 				7B48C7692047CC6E00768E96 /* PostCell.swift in Sources */,
 				7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */,

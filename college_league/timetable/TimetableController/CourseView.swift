@@ -94,7 +94,8 @@ class CourseView: UIView {
             let addCourseController = AddCourseController()
             addCourseController.timetableController = self.timetableController
             addCourseController.courseView = self
-        self.timetableController?.navigationController?.pushViewController(addCourseController, animated: true)
+            let nav = UINavigationController(rootViewController: addCourseController)
+            self.timetableController?.present(nav, animated: true, completion: nil)
         }
         
         alertController.addAction(editAction)
