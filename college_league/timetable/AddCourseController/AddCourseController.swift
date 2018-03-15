@@ -40,7 +40,6 @@ class AddCourseController: DatasourceController {
     var leftTimeButton: UIButton?
     var rightTimeButton: UIButton?
     var bottomAnchor: NSLayoutConstraint?
-    var windowView: UIView?
     
     lazy var datePicker: UIDatePicker = {
         let dp = UIDatePicker()
@@ -81,13 +80,12 @@ class AddCourseController: DatasourceController {
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         configureNavigationItems()
 
-        windowView = UIApplication.shared.windows.last
-        windowView?.addSubview(dimView)
-        windowView?.addSubview(datePicker)
+        view?.addSubview(dimView)
+        view?.addSubview(datePicker)
        
-        dimView.anchor(windowView?.topAnchor, left: windowView?.leftAnchor, bottom: windowView?.bottomAnchor, right: windowView?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        dimView.anchor(view?.topAnchor, left: view?.leftAnchor, bottom: view?.bottomAnchor, right: view?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        bottomAnchor = datePicker.anchorWithReturnAnchors(nil, left: windowView?.leftAnchor, bottom: windowView?.safeAreaLayoutGuide.bottomAnchor, right: windowView?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -200, rightConstant: 0, widthConstant: 0, heightConstant: 200)[1]
+        bottomAnchor = datePicker.anchorWithReturnAnchors(nil, left: view?.leftAnchor, bottom: view?.safeAreaLayoutGuide.bottomAnchor, right: view?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -200, rightConstant: 0, widthConstant: 0, heightConstant: 200)[1]
         
         dimView.isHidden = true
     }
@@ -99,10 +97,7 @@ class AddCourseController: DatasourceController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleCanel))
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        datePicker.removeFromSuperview()
-        dimView.removeFromSuperview()
-    }
+    
     
     var infoTextFields = [UITextField]()
     

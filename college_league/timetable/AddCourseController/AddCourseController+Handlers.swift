@@ -20,10 +20,11 @@ extension AddCourseController {
         button.setTitleColor(.orange, for: .normal)
         bottomAnchor?.constant = 0
         dimView.isHidden = false
+        navigationController?.navigationBar.alpha = 0.5
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             
-            self.windowView?.layoutIfNeeded()
+            self.view?.layoutIfNeeded()
             
         }, completion: nil)
     }
@@ -34,10 +35,11 @@ extension AddCourseController {
         
         bottomAnchor?.constant = 200
         dimView.isHidden = true
+        navigationController?.navigationBar.alpha = 1
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             
-            self.windowView?.layoutIfNeeded()
+            self.view?.layoutIfNeeded()
             
         }, completion: nil)
     }
@@ -91,11 +93,18 @@ extension AddCourseController {
             }
         }
         
+        infoTextFields.forEach { (tf) in
+            tf.resignFirstResponder()
+        }
+        
         timetableController?.collectionView?.reloadData()
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func handleCanel() {
+        infoTextFields.forEach { (tf) in
+            tf.resignFirstResponder()
+        }
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     

@@ -41,7 +41,7 @@ class PostContentController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let navigationController = navigationController as? ScrollingNavigationController {
-            navigationController.followScrollView(tableView, delay: 20, followers: [tabBarController!.tabBar])
+            navigationController.followScrollView(tableView, delay: 10, followers: [tabBarController!.tabBar])
         }
         tableView.backgroundColor = brightGray
         tableView.separatorStyle = .none
@@ -54,15 +54,15 @@ class PostContentController: UITableViewController {
     
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 6
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return postMessages.count + 1 + 1
+            return postMessages.count + 1
         }
-        return 2
+        return 5 + 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -76,7 +76,7 @@ class PostContentController: UITableViewController {
             return cell
         }
         
-        if section == 0 && row >= 1 {
+        if section == 0 && 1 <= row {
             let cell = tableView.dequeueReusableCell(withIdentifier: messageCellId, for: indexPath) as! PostMessageCell
             cell.postMessage = postMessages[row - 1]
             return cell
@@ -84,6 +84,12 @@ class PostContentController: UITableViewController {
         
         let cell = UITableViewCell()
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == 0 { return PostFooterView() }
+       
+        return UIView()
     }
 
 
@@ -96,6 +102,10 @@ class PostContentController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return cellSpacing + 5
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 44
     }
     
 }

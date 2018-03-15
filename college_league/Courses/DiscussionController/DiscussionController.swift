@@ -33,6 +33,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         collectionView?.register(DiscussionCell.self, forCellWithReuseIdentifier: cellId)
         
         view.addSubview(switchBar)
+        switchBar.discussionController = self
         switchBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: switchBarHeight)
     }
     

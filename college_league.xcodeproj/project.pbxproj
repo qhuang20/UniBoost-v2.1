@@ -50,6 +50,7 @@
 		7B9717172058DBB400B6F781 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717162058DBB400B6F781 /* HomeController.swift */; };
 		7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */; };
 		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
+		7B97171D205A005700B6F781 /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171C205A005700B6F781 /* PostFooterView.swift */; };
 		7BF2E4D220538542004D4DBE /* UITextView+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */; };
 		7BF2E4D620545F4F004D4DBE /* PostMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D520545F4F004D4DBE /* PostMessage.swift */; };
 		7BF2E4D8205461DE004D4DBE /* PostMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */; };
@@ -106,6 +107,7 @@
 		7B9717162058DBB400B6F781 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
 		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
+		7B97171C205A005700B6F781 /* PostFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterView.swift; sourceTree = "<group>"; };
 		7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Helper.swift"; sourceTree = "<group>"; };
 		7BF2E4D520545F4F004D4DBE /* PostMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessage.swift; sourceTree = "<group>"; };
 		7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageCell.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			children = (
 				7B93C613204FB16300419B33 /* PostHeaderCell.swift */,
 				7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */,
+				7B97171C205A005700B6F781 /* PostFooterView.swift */,
 				7B93C611204F92F000419B33 /* PostContentController.swift */,
 			);
 			path = PostContentController;
@@ -501,6 +504,7 @@
 				7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */,
 				7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */,
 				7B9717172058DBB400B6F781 /* HomeController.swift in Sources */,
+				7B97171D205A005700B6F781 /* PostFooterView.swift in Sources */,
 				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
 				7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */,
 				7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */,

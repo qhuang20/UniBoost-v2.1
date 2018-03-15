@@ -14,6 +14,15 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     var user: User?
     
     let cellId = "cellId"
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureCollectionVeiw()
+        setupLogOutButton()
+        setupPostButton()
+
+        fetchUser()
+    }
     
     private func configureCollectionVeiw() {
         collectionView?.backgroundColor = .white
@@ -24,24 +33,24 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureCollectionVeiw()
-        setupLogOutButton()
-
-        fetchUser()
-    }
     
     private func setupLogOutButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain, target: self, action: #selector(handleLogOut))
+    }
+    
+    private func setupPostButton() {
+        let button = UIButton(type: .custom)
+        let image = #imageLiteral(resourceName: "post").withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
+        button.tintColor = UIColor.white
+        button.adjustsImageWhenHighlighted = false
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
     
     
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerId", for: indexPath) as! UserProfileHeader
-        
         header.user = self.user
         
         return header
@@ -59,7 +68,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        
         cell.backgroundColor = .purple
         
         return cell
