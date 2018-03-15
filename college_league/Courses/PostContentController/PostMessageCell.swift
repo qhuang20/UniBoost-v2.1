@@ -53,7 +53,7 @@ class PostMessageCell: UITableViewCell {
         return tv
     }()
     
-    lazy var thumbnailImageView: CachedImageView = {
+    lazy var thumbnailImageView: CachedImageView = {///
         let imageView = CachedImageView(cornerRadius: 4, tapCallback: {
             print("tap")
         })

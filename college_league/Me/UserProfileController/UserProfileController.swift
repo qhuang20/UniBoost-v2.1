@@ -12,6 +12,7 @@ import Firebase
 class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var user: User?
+    var posts = [Post]()
     
     let cellId = "cellId"
 
@@ -21,17 +22,17 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         setupLogOutButton()
         setupPostButton()
 
-        fetchUser()
+        fetchUserAndUserPosts()
     }
     
     private func configureCollectionVeiw() {
-        collectionView?.backgroundColor = .white
+        collectionView?.backgroundColor = UIColor.white
+        collectionView?.showsVerticalScrollIndicator = false
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 1
-        layout.minimumInteritemSpacing = 1
         
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(UserPostCell.self, forCellWithReuseIdentifier: cellId)
     }
     
     private func setupLogOutButton() {
@@ -63,19 +64,25 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return posts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = .purple
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserPostCell
+        cell.post = posts[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.width - 2) / 3
-        return CGSize(width: width, height: width)
+        var height: CGFloat = 105
+        let width = view.frame.width
+        
+        if let imageHeight = posts[indexPath.item].thumbnailImageHeight {
+            if imageHeight > 376 { height += 376 }
+            else { height += imageHeight }
+        }
+
+        return CGSize(width: width, height: height)
     }
     
 }

@@ -51,7 +51,7 @@ class PostFooterView: UIView {
         addSubview(likeButton)
 
         respondButton.anchorCenterSuperview()
-        respondButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 112, heightConstant: 0)
+        respondButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 175, heightConstant: 0)
         
         bookmarkButton.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 22, widthConstant: buttonHeight, heightConstant: buttonHeight)
         bookmarkButton.anchorCenterYToSuperview()

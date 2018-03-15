@@ -23,6 +23,7 @@ class UserProfileHeader: UICollectionViewCell {
         profileImageView.loadImage(urlString: profileImageUrl)
     }
     
+    let superBrightGray = UIColor.init(white: 0.96, alpha: 0.6)
     let numberAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)]
     let labelAttributes = [NSAttributedStringKey.foregroundColor: UIColor.lightGray, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
     
@@ -86,23 +87,37 @@ class UserProfileHeader: UICollectionViewCell {
         return button
     }()
     
-    let postsButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
-        return button
-    }()
-    
-    let responseButton: UIButton = {
+    lazy var postsButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "list"), for: .normal)
-        button.tintColor = UIColor(white: 0, alpha: 0.2)
+        button.setTitle("posts", for: .normal)
+        button.tintColor = UIColor.lightGray
+        button.imageEdgeInsets = UIEdgeInsets(top: 2.5, left: 0, bottom: 1, right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
+        button.backgroundColor = superBrightGray
         return button
     }()
     
-    let bookmarkButton: UIButton = {
+    lazy var responseButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "response"), for: .normal)
+        button.setTitle("response", for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 4.6, left: 4, bottom: 4.6, right: 4)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 8)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = UIColor.lightGray
+        button.backgroundColor = superBrightGray
+        return button
+    }()
+    
+    lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "ribbon"), for: .normal)
-        button.tintColor = UIColor(white: 0, alpha: 0.2)
+        button.setTitle("bookmarks", for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 8, left: 0, bottom: 6 , right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
+        button.tintColor = UIColor.lightGray
+        button.backgroundColor = superBrightGray
         return button
     }()
     
@@ -123,16 +138,15 @@ class UserProfileHeader: UICollectionViewCell {
         userInfoLabel.anchor(profileImageView.bottomAnchor, left: leftAnchor, bottom: postsButton.topAnchor, right: rightAnchor, topConstant: 4, leftConstant: 12, bottomConstant: 0, rightConstant: 12, widthConstant: 0, heightConstant: 0)
     }
     
-    fileprivate func setupUserStatsView() {
+    private func setupUserStatsView() {
         let stackView = UIStackView(arrangedSubviews: [pointsLabel, followersLabel, followingLabel])
         stackView.distribution = .fillEqually
         
         addSubview(stackView)
-        
         stackView.anchor(topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 12, bottomConstant: 0, rightConstant: 12, widthConstant: 0, heightConstant: 50)
     }
     
-    fileprivate func setupBottomToolbar() {
+    private func setupBottomToolbar() {
         let topDividerView = UIView()
         topDividerView.backgroundColor = UIColor.lightGray
         let bottomDividerView = UIView()
@@ -146,11 +160,11 @@ class UserProfileHeader: UICollectionViewCell {
         addSubview(topDividerView)
         addSubview(bottomDividerView)
         
-        stackView.anchor(nil, left: leftAnchor, bottom: self.bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        stackView.anchor(nil, left: leftAnchor, bottom: self.bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 36)
         
-        topDividerView.anchor(stackView.topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
+        topDividerView.anchor(stackView.topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.2)
         
-        bottomDividerView.anchor(stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
+        bottomDividerView.anchor(stackView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.2)
     }
     
     required init?(coder aDecoder: NSCoder) {
