@@ -95,7 +95,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         button.tintColor = UIColor.white
         button.adjustsImageWhenHighlighted = false
         button.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 34, heightConstant: 30)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -2)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 2)
         button.addTarget(self, action: #selector(handleViewOption), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }

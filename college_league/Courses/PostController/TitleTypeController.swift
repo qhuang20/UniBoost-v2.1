@@ -23,7 +23,7 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
         tv.isScrollEnabled = false
         tv.backgroundColor = .white
         tv.textColor = UIColor.lightGray
-        tv.font = UIFont.boldSystemFont(ofSize: 25)
+        tv.font = UIFont.boldSystemFont(ofSize: 20)
         return tv
     }()
     

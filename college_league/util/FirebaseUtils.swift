@@ -65,7 +65,54 @@ extension Database {
         }
     }
     
+    
+    
+    static func fetchResponseWithRID(rid: String, completion: @escaping (Response) -> ()) {
+        
+        let ref = Database.database().reference().child("response")
+        ref.child(rid).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            guard let dic = snapshot.value as? [String: Any] else { return }
+            
+            let uid = dic["uid"] as! String
+            
+            fetchUserWithUID(uid: uid, completion: { (user) in
+                let response = Response(user: user, responseId: rid, dictionary: dic)
+                
+                completion(response)
+            })
+            
+        }) { (err) in
+            print("Failed to fetch post:", err)
+        }
+    }
+    
+    static func fetchResponseMessagesWithRID(rid: String, completion: @escaping ([ResponseMessage]) -> ()) {
+        var responseMessages = [ResponseMessage]()
+        
+        let ref = Database.database().reference().child("response_messages")
+        ref.child(rid).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            guard let dicArr = snapshot.value as? [[String: Any]] else { return }
+            
+            for count in 0..<dicArr.count {
+                let responseMessageDic = dicArr[count]
+                let responseMessage = ResponseMessage(dictionary: responseMessageDic)
+                responseMessages.append(responseMessage)
+            }
+            
+            completion(responseMessages)
+            
+        }) { (err) in
+            print("Failed to fetch post:", err)
+        }
+    }
+    
 }
+
+
+
+
 
 
 

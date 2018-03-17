@@ -52,6 +52,12 @@
 		7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */; };
 		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
 		7B97171D205A005700B6F781 /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171C205A005700B6F781 /* PostFooterView.swift */; };
+		7BD659F1205B8F41004ACC7E /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F0205B8F41004ACC7E /* Response.swift */; };
+		7BD659F4205B9488004ACC7E /* ResponseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F3205B9488004ACC7E /* ResponseController.swift */; };
+		7BD659F6205C4D90004ACC7E /* ResponseFoonterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */; };
+		7BD659F8205C9A38004ACC7E /* ResponseHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F7205C9A38004ACC7E /* ResponseHeaderCell.swift */; };
+		7BD659FA205C9DB8004ACC7E /* ResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F9205C9DB8004ACC7E /* ResponseMessage.swift */; };
+		7BD659FC205CA50C004ACC7E /* ResponseMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659FB205CA50C004ACC7E /* ResponseMessageCell.swift */; };
 		7BF2E4D220538542004D4DBE /* UITextView+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */; };
 		7BF2E4D620545F4F004D4DBE /* PostMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D520545F4F004D4DBE /* PostMessage.swift */; };
 		7BF2E4D8205461DE004D4DBE /* PostMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */; };
@@ -110,6 +116,12 @@
 		7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
 		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
 		7B97171C205A005700B6F781 /* PostFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterView.swift; sourceTree = "<group>"; };
+		7BD659F0205B8F41004ACC7E /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		7BD659F3205B9488004ACC7E /* ResponseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseController.swift; sourceTree = "<group>"; };
+		7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseFoonterView.swift; sourceTree = "<group>"; };
+		7BD659F7205C9A38004ACC7E /* ResponseHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseHeaderCell.swift; sourceTree = "<group>"; };
+		7BD659F9205C9DB8004ACC7E /* ResponseMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseMessage.swift; sourceTree = "<group>"; };
+		7BD659FB205CA50C004ACC7E /* ResponseMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseMessageCell.swift; sourceTree = "<group>"; };
 		7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Helper.swift"; sourceTree = "<group>"; };
 		7BF2E4D520545F4F004D4DBE /* PostMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessage.swift; sourceTree = "<group>"; };
 		7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageCell.swift; sourceTree = "<group>"; };
@@ -220,8 +232,10 @@
 		7B3ACAE7204A3E970065CB16 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				7BF2E4D520545F4F004D4DBE /* PostMessage.swift */,
 				7B3ACAF0204B339D0065CB16 /* Post.swift */,
+				7BF2E4D520545F4F004D4DBE /* PostMessage.swift */,
+				7BD659F0205B8F41004ACC7E /* Response.swift */,
+				7BD659F9205C9DB8004ACC7E /* ResponseMessage.swift */,
 				7B3ACAE8204A3ED80065CB16 /* Course.swift */,
 				7B3ACAEA204B27FB0065CB16 /* User.swift */,
 			);
@@ -265,9 +279,13 @@
 		7B93C610204F92B700419B33 /* PostContentController */ = {
 			isa = PBXGroup;
 			children = (
+				7BD659F7205C9A38004ACC7E /* ResponseHeaderCell.swift */,
+				7BD659FB205CA50C004ACC7E /* ResponseMessageCell.swift */,
+				7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */,
 				7B93C613204FB16300419B33 /* PostHeaderCell.swift */,
 				7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */,
 				7B97171C205A005700B6F781 /* PostFooterView.swift */,
+				7BD659F3205B9488004ACC7E /* ResponseController.swift */,
 				7B93C611204F92F000419B33 /* PostContentController.swift */,
 			);
 			path = PostContentController;
@@ -492,9 +510,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BD659FA205C9DB8004ACC7E /* ResponseMessage.swift in Sources */,
 				7BF2E4D620545F4F004D4DBE /* PostMessage.swift in Sources */,
 				7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */,
 				7B1624732038C555004C0537 /* UserProfileHeader.swift in Sources */,
+				7BD659F6205C4D90004ACC7E /* ResponseFoonterView.swift in Sources */,
 				7B16246A2038C4B5004C0537 /* Signup+Handlers.swift in Sources */,
 				7B48C7672047570C00768E96 /* DiscussionCell.swift in Sources */,
 				7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */,
@@ -512,10 +532,12 @@
 				7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */,
 				7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */,
 				7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */,
+				7BD659FC205CA50C004ACC7E /* ResponseMessageCell.swift in Sources */,
 				7B48C7602045AE0500768E96 /* CourseControllerCell.swift in Sources */,
 				7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */,
 				7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */,
 				7B1624742038C555004C0537 /* UserProfileController+Handlers.swift in Sources */,
+				7BD659F1205B8F41004ACC7E /* Response.swift in Sources */,
 				7B48C7652046606100768E96 /* SwitchBar.swift in Sources */,
 				7B48C75E2045AB5000768E96 /* CourseController.swift in Sources */,
 				7B0FD70B203F650200E77422 /* PostController.swift in Sources */,
@@ -523,6 +545,7 @@
 				7B93C612204F92F000419B33 /* PostContentController.swift in Sources */,
 				7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */,
 				7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */,
+				7BD659F4205B9488004ACC7E /* ResponseController.swift in Sources */,
 				7B167669205651AA003D4E01 /* Date+Helper.swift in Sources */,
 				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
 				7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */,
@@ -532,6 +555,7 @@
 				7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B3ACAEF204B32D20065CB16 /* DiscussionCell+Handlers.swift in Sources */,
+				7BD659F8205C9A38004ACC7E /* ResponseHeaderCell.swift in Sources */,
 				7B64394D201D19C000FB0E18 /* Timetable+Handlers.swift in Sources */,
 				7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */,
 				7B61057F2042110100C5F6C3 /* UIImage+Helper.swift in Sources */,

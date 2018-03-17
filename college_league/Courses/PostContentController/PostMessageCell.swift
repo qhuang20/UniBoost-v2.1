@@ -82,7 +82,7 @@ class PostMessageCell: UITableViewCell {
         activityIndicatorView.anchorCenterSuperview()
     }
     
-    private func estimateHeightFor(text: String) -> CGFloat {
+    internal func estimateHeightFor(text: String) -> CGFloat {
         let size = CGSize(width: 374, height: 1000)///
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)], context: nil)

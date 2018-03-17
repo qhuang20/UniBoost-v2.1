@@ -91,7 +91,7 @@ class TimetableController: DatasourceController {
     private func configureCollectionView() {
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = -0.1
         layout.minimumInteritemSpacing = 0
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = themeColor
@@ -102,8 +102,8 @@ class TimetableController: DatasourceController {
         view.addSubview(hoursBar)
         view.addSubview(daysBar)
         
-        hoursBar.anchor(navbar.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 18, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: hoursBarWidth, heightConstant: 0)
         daysBar.anchor(navbar.bottomAnchor, left: hoursBar.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 2, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: daysBarHeight)
+        hoursBar.anchor(daysBar.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: -16, leftConstant: 0, bottomConstant: 16, rightConstant: 0, widthConstant: hoursBarWidth, heightConstant: 0)
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -111,7 +111,7 @@ class TimetableController: DatasourceController {
         let height = view.safeAreaLayoutGuide.layoutFrame.height - daysBarHeight - navbarHeight
         let width = (view.frame.width - hoursBarWidth) / CGFloat(weekdays.count)
         
-        return CGSize(width: width + 0.1, height: height)
+        return CGSize(width: width - 0.4, height: height)
     }
     
 }

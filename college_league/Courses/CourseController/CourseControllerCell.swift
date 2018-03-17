@@ -22,8 +22,8 @@ class CourseControllerCell: UICollectionViewCell {
     
     weak var courseController: CourseController?
     
-    let attributesForTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 22)]
-    let attributesForDescription = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12.5), NSAttributedStringKey.foregroundColor: UIColor.lightGray]
+    let attributesForTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20.5)]
+    let attributesForDescription = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 11.5), NSAttributedStringKey.foregroundColor: UIColor.lightGray]
 
     private func setupAttributedTitle() {
         guard let course = course else { return }

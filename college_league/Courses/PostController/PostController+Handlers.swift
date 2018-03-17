@@ -51,7 +51,7 @@ extension PostController {
     
 
     
-    private func getPartsDictionary() -> [Int: Any] {
+    internal func getPartsDictionary() -> [Int: Any] {
         var partsDic = [Int: Any]()
         var count = 0
         let parts = postTextView.getParts()
@@ -87,7 +87,7 @@ extension PostController {
                 let thumbnailImage = image.resizeImageTo(width: postTextView.frame.width - 38)
                 let imageHeight = thumbnailImage!.size.height
                 let highQualityImage = image
-                guard let thumbnailData = UIImageJPEGRepresentation(thumbnailImage!, 0.5) else { return }
+                guard let thumbnailData = UIImageJPEGRepresentation(thumbnailImage!, 0.8) else { return }
                 guard let highQualityImageData = UIImageJPEGRepresentation(highQualityImage, 0.8) else { return }
                 
                 let filename = NSUUID().uuidString
@@ -135,7 +135,7 @@ extension PostController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let course = course else { return }
         
-        var values: [String: Any] = ["uid": uid, "type": self.postType ?? "Other", "title": self.postTitle ?? "", "creationDate": Date().timeIntervalSince1970, "comments": 0, "likes": 0] as [String : Any]
+        var values: [String: Any] = ["uid": uid, "type": self.postType ?? "Other", "title": self.postTitle ?? "", "creationDate": Date().timeIntervalSince1970, "response": 0, "likes": 0] as [String : Any]
         postCellThumbnailProperties.forEach({values[$0] = $1})
         
         let postRef = Database.database().reference().child("posts").childByAutoId()

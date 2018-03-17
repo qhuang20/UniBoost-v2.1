@@ -38,7 +38,7 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     }
 
     let cellId = "cellId"
-    let cellSpacing: CGFloat = 3
+    let cellSpacing: CGFloat = 1.5
     
     lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: UITableViewStyle.plain)

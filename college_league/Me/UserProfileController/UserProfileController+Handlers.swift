@@ -12,7 +12,7 @@ import Firebase
 extension UserProfileController {
     
     internal func fetchUserAndUserPosts() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let uid = userId ?? (Auth.auth().currentUser?.uid ?? "")
         
         Database.fetchUserWithUID(uid: uid) { (user) in
             self.user = user
@@ -22,12 +22,12 @@ extension UserProfileController {
             self.fetchUserPosts()
         }
     }
-    
+     
     private func fetchUserPosts() {
         guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("user_posts").child(uid)
         
-        ref.observe(.childAdded, with: { (snapshot) in
+        ref.observe(.childAdded, with: { (snapshot) in///
             let postId = snapshot.key
             Database.fetchPostWithPID(pid: postId, completion: { (post) in
                 self.posts.insert(post, at: 0)

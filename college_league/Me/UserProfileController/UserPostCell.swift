@@ -24,7 +24,7 @@ class UserPostCell: UICollectionViewCell {
             
             if let thumbnailImageUrl = post.thumbnailImageUrl {
                 let imageHeight = post.thumbnailImageHeight!
-                if imageHeight > 376 {
+                if imageHeight > 250 {
                     thumbnailImageView.contentMode = .scaleAspectFit
                     thumbnailImageView.backgroundColor = UIColor.white
                 } else {
@@ -49,7 +49,7 @@ class UserPostCell: UICollectionViewCell {
         attributedText.appendNewLine()
         
         let timeAgoDisplay = post.creationDate.timeAgoDisplay()
-        attributedText.append(NSAttributedString(string: "\(timeAgoDisplay) • 10 comments • 12000 likes", attributes: attributesTimeCommentLike))
+        attributedText.append(NSAttributedString(string: "\(timeAgoDisplay) • 10 response • 12000 likes", attributes: attributesTimeResponseLike))
         
         attributedText.setLineSpacing(8)
         postLabel.attributedText = attributedText
@@ -57,9 +57,10 @@ class UserPostCell: UICollectionViewCell {
     
     let profileImageWidth: CGFloat = 36
     let typeImageWidth: CGFloat = 25
-    let padding: CGFloat = 16
+    let padding: CGFloat = 8
+    let cellSpacing: CGFloat = 1
     let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
-    let attributesTimeCommentLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 13.5), NSAttributedStringKey.foregroundColor: UIColor.gray]
+    let attributesTimeResponseLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.gray]
     
     let typeImageView: UIImageView = {
         let iv = UIImageView()
@@ -112,16 +113,18 @@ class UserPostCell: UICollectionViewCell {
         addSubview(separatorLineView)
         
         titleLabel.anchor(marginGuide.topAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: 0, leftConstant: 4, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: UILayoutConstraintAxis.vertical)
         
         thumbnailImageView.anchor(titleLabel.bottomAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        profileImageView.anchor(thumbnailImageView.bottomAnchor, left: marginGuide.leftAnchor, bottom: nil, right: nil, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: profileImageWidth, heightConstant: profileImageWidth)
+        profileImageView.anchor(thumbnailImageView.bottomAnchor, left: marginGuide.leftAnchor, bottom: nil, right: nil, topConstant: padding, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: profileImageWidth, heightConstant: profileImageWidth)
         
-        typeImageView.anchor(thumbnailImageView.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: typeImageWidth, heightConstant: typeImageWidth + 4)
+        typeImageView.anchor(thumbnailImageView.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: padding, widthConstant: typeImageWidth, heightConstant: typeImageWidth + 4)
         
         postLabel.anchor(thumbnailImageView.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        postLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: UILayoutConstraintAxis.vertical)
         
-        separatorLineView.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 3)
+        separatorLineView.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: cellSpacing)
     }
     
     required init?(coder aDecoder: NSCoder) {

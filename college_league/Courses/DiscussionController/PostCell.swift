@@ -23,8 +23,8 @@ class PostCell: UITableViewCell {
             if let thumbnailImageUrl = post.thumbnailImageUrl {
                 let imageHeight = post.thumbnailImageHeight!
                 
-                if imageHeight > 376 {
-                    thumbnailImageViewHeightAnchor?.constant = 376
+                if imageHeight > 250 {
+                    thumbnailImageViewHeightAnchor?.constant = 250
                     thumbnailImageView.contentMode = .scaleAspectFit
                     thumbnailImageView.backgroundColor = UIColor.white
                 } else {
@@ -50,7 +50,7 @@ class PostCell: UITableViewCell {
         attributedText.appendNewLine()
         
         let timeAgoDisplay = post.creationDate.timeAgoDisplay()
-        attributedText.append(NSAttributedString(string: "\(timeAgoDisplay) • 10 comments • 12000 likes", attributes: attributesTimeCommentLike))
+        attributedText.append(NSAttributedString(string: "\(timeAgoDisplay) • 10 response • 12000 likes", attributes: attributesTimeResponseLike))
         
         attributedText.setLineSpacing(8)
         postLabel.attributedText = attributedText
@@ -58,11 +58,11 @@ class PostCell: UITableViewCell {
     
     var thumbnailImageViewHeightAnchor: NSLayoutConstraint?
     
-    let profileImageWidth: CGFloat = 36
+    let profileImageWidth: CGFloat = 40
     let typeImageWidth: CGFloat = 25
-    let padding: CGFloat = 16
-    let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
-    let attributesTimeCommentLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 13.5), NSAttributedStringKey.foregroundColor: UIColor.gray]
+    let padding: CGFloat = 8
+    let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)]
+    let attributesTimeResponseLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.gray]
     
     let typeImageView: UIImageView = {
         let iv = UIImageView()

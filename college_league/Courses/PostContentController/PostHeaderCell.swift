@@ -12,6 +12,8 @@ import Firebase
 
 class PostHeaderCell: UITableViewCell {
     
+    weak var postContentController: PostContentController?
+    
     var post: Post? {
         didSet {
             guard let post = post else { return }
@@ -20,14 +22,30 @@ class PostHeaderCell: UITableViewCell {
             titleLabel.text = post.title
             typeImageView.image = UIImage(named: post.type)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             profileImageView.loadImage(urlString: user.profileImageUrl, completion: nil)
+            
+            setupAttributedCaption()
         }
     }
     
-    let profileImageWidth: CGFloat = 36
+    private func setupAttributedCaption() {
+        guard let post = self.post else { return }
+        
+        let attributedText = NSMutableAttributedString(string: "\(post.user.username): A big boss in the world", attributes: attributesForUserInfo)
+        
+        attributedText.appendNewLine()
+        
+        let timeAgoDisplay = post.creationDate.timeAgoDisplay()
+        attributedText.append(NSAttributedString(string: "\(timeAgoDisplay) • 10 response • 12000 likes", attributes: attributesTimeResponseLike))
+        
+        attributedText.setLineSpacing(8)
+        postInfoLabel.attributedText = attributedText
+    }
+    
+    let profileImageWidth: CGFloat = 44
     let typeImageWidth: CGFloat = 25
     let padding: CGFloat = 8
     let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
-    let attributesTimeCommentLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12.5), NSAttributedStringKey.foregroundColor: UIColor.gray]
+    let attributesTimeResponseLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.gray]
     
     let typeImageView: UIImageView = {
         let iv = UIImageView()
@@ -36,7 +54,9 @@ class PostHeaderCell: UITableViewCell {
     }()
     
     lazy var profileImageView: CachedImageView = {
-        let iv = CachedImageView(cornerRadius: profileImageWidth / 2, emptyImage: nil)
+        let iv = CachedImageView(cornerRadius: profileImageWidth / 2)
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleGotoUserProfile)))
+        iv.isUserInteractionEnabled = true
         iv.backgroundColor = brightGray
         return iv
     }()
@@ -49,17 +69,11 @@ class PostHeaderCell: UITableViewCell {
         return label
     }()
     
-    lazy var postLabel: UILabel = {
+    lazy var postInfoLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        
-        let attributedText = NSMutableAttributedString(string: "Jeff, is a big boss in the world", attributes: attributesForUserInfo)
-        attributedText.setLineSpacing(8)
-        let attributedOtherInfo = NSAttributedString(string: "Mar 28, 2017 • 10 comments, 12000 likes", attributes: attributesTimeCommentLike)
-        attributedText.appendNewLine()
-        attributedText.append(attributedOtherInfo)
-        
-        label.attributedText = attributedText
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleGotoUserProfile)))
+        label.isUserInteractionEnabled = true
         return label
     }()
 
@@ -73,7 +87,7 @@ class PostHeaderCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(profileImageView)
         contentView.addSubview(typeImageView)
-        contentView.addSubview(postLabel)
+        contentView.addSubview(postInfoLabel)
         
         titleLabel.anchor(marginGuide.topAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
@@ -81,11 +95,21 @@ class PostHeaderCell: UITableViewCell {
         
         typeImageView.anchor(titleLabel.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding + 16, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: typeImageWidth, heightConstant: typeImageWidth + 4)
         
-        postLabel.anchor(titleLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding + 16, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        postInfoLabel.anchor(titleLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding + 16, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
+    @objc func handleGotoUserProfile() {
+        guard let post = post else { return }
+        let user = post.user
+        let userProfileController = UserProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        userProfileController.userId = user.uid
+        postContentController?.navigationController?.pushViewController(userProfileController, animated: true)
     }
     
 }

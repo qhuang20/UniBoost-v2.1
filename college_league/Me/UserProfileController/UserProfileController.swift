@@ -11,6 +11,8 @@ import Firebase
 
 class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    var userId: String?
+    
     var user: User?
     var posts = [Post]()
     
@@ -19,8 +21,11 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
-        setupLogOutButton()
-        setupPostButton()
+        
+        if userId == nil {
+            setupLogOutButton()
+            setupPostButton()
+        }
 
         fetchUserAndUserPosts()
     }
@@ -74,15 +79,35 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var height: CGFloat = 105
+        var height: CGFloat = 50 + 28//userInfo
         let width = view.frame.width
         
         if let imageHeight = posts[indexPath.item].thumbnailImageHeight {
-            if imageHeight > 376 { height += 376 }
+            if imageHeight > 250 { height += 250 }
             else { height += imageHeight }
         }
+        
+        let postTitleHeight = estimateHeightForPostTitle(text: posts[indexPath.item].title)
+        height += postTitleHeight
 
         return CGSize(width: width, height: height)
+    }
+    
+    private func estimateHeightForPostTitle(text: String) -> CGFloat {
+        let attributesForPostTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 22)]
+        let size = CGSize(width: view.frame.width - 20, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForPostTitle, context: nil)
+        return rect.height
+    }
+    
+    private func estimateHeightForUserInfo(text: String) -> CGFloat {///
+        let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
+        UIFont.boldSystemFont(ofSize: 22)
+        let size = CGSize(width: view.frame.width - 93, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForUserInfo, context: nil)
+        return rect.height
     }
     
 }
