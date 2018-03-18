@@ -15,12 +15,32 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     var user: User?
     var posts = [Post]()
+    var isFinishedPaging = false
+    var isPaging = true
     
     let cellId = "cellId"
+    
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        return aiv
+    }()
+    
+    lazy var refreshControl: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        rc.tintColor = themeColor
+        return rc
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
+        collectionView?.backgroundView = refreshControl
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
+        
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.anchor(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 40, heightConstant: 40)
+        activityIndicatorView.anchorCenterXToSuperview()
         
         if userId == nil {
             setupLogOutButton()
@@ -29,6 +49,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
 
         fetchUserAndUserPosts()
     }
+    
+    deinit { NotificationCenter.default.removeObserver(self) }
     
     private func configureCollectionVeiw() {
         collectionView?.backgroundColor = UIColor.white
@@ -73,8 +95,18 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if indexPath.item == self.posts.count - 1 && !isFinishedPaging && !isPaging {
+            activityIndicatorView.startAnimating()
+            paginatePosts()
+        }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserPostCell
-        cell.post = posts[indexPath.item]
+        
+        if posts.count > indexPath.item {
+            cell.post = posts[indexPath.item]
+        }
+        
         return cell
     }
     
