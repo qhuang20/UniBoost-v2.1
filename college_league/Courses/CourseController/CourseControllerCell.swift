@@ -16,7 +16,7 @@ class CourseControllerCell: UICollectionViewCell {
         didSet {
             setupEmptyStyle()
             setupAttributedTitle()
-            setupAddEmptyButton()
+            course?.hasFollowed == true ? setupAddedStyle() : setupEmptyStyle()
         }
     }
     
@@ -80,34 +80,25 @@ class CourseControllerCell: UICollectionViewCell {
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         guard let school = course?.school else { return }
         guard let courseId = course?.courseId else { return }
+        guard let indexPath = self.courseController?.collectionView?.indexPath(for: self) else { return }
         let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school)
         
-        if addButton.titleLabel?.text == "✓" {
-            ref.child(courseId).removeValue(completionBlock: { (err, ref) in
-                if let err = err {
-                    print("Failed to unSelect course:", err)
-                    return
-                }
-                
-                print("Successfully unSelect course:", courseId)
+        let values = [courseId: course?.hasFollowed == true ? 0 : 1]
+        ref.updateChildValues(values) { (err, ref) in
+            print("Successfully edited the course: ", courseId)
+            
+            self.course?.hasFollowed = !(self.course!.hasFollowed)
+            let i = self.courseController?.courses.index(of: self.course!)//Equatable
+            self.courseController?.courses[i!] = self.course!
+            
+            if self.course?.hasFollowed == true {
+                self.setupAddedStyle()
+            } else {
                 self.setupEmptyStyle()
                 if self.courseController?.viewOptionButton?.isSelected == true {
-                    guard let indexPath = self.courseController?.collectionView?.indexPath(for: self) else { return }
                     self.courseController?.filteredCourses.remove(at: indexPath.item)
                     self.courseController?.collectionView?.reloadData()
                 }
-            })
-        } else {
-            
-            let values = [courseId: 1]
-            ref.updateChildValues(values) { (err, ref) in
-                if let err = err {
-                    print("Failed to add course:", err)
-                    return
-                }
-                
-                print("Successfully add course: ", courseId)
-                self.setupAddStyle()
             }
         }
     }
@@ -117,7 +108,7 @@ class CourseControllerCell: UICollectionViewCell {
         courseController?.didSelectCellAt(indexPath: indexPath)
     }
     
-    private func setupAddStyle() {
+    private func setupAddedStyle() {
         addButton.setTitle("✓", for: .normal)
         addButton.setTitleColor(UIColor.white, for: .normal)
         addButton.backgroundColor = themeColor
@@ -126,23 +117,6 @@ class CourseControllerCell: UICollectionViewCell {
     private func setupEmptyStyle() {
         addButton.setTitle(" ", for: .normal)
         addButton.backgroundColor = UIColor.white
-    }
-    
-    private func setupAddEmptyButton() {
-        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
-        guard let school = course?.school else { return }
-        guard let courseId = course?.courseId else { return }
-        let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school).child(courseId)
-
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            if let isAdded = snapshot.value as? Int, isAdded == 1 {
-                self.setupAddStyle()
-            } else {
-                self.setupEmptyStyle()
-            }
-        }, withCancel: { (err) in
-            print("Failed to check if added:", err)
-        })
     }
     
 }

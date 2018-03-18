@@ -36,6 +36,7 @@ extension LoginController {
                 return
             }
             print("Successfully logged back in with user:", user?.uid ?? "")
+            self.passwordTextField.resignFirstResponder()
             
             
             

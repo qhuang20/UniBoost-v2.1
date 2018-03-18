@@ -13,6 +13,7 @@ extension CourseController: UISearchBarDelegate {
     
     internal func fetchCourses() {
         guard let school = school else { return }
+        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("school_courses").child(school)
         
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -21,60 +22,40 @@ extension CourseController: UISearchBarDelegate {
             
             dictionaries.forEach({ (key, value) in
                 guard let dictionary = value as? [String: Any] else { return }
-                let course = Course(school: school, courseId: key, dictionary: dictionary)
-                self.courses.append(course)
+                var course = Course(school: school, courseId: key, dictionary: dictionary)
+                
+                let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school).child(key)
+                ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let value = snapshot.value as? Int, value == 1 {
+                        course.hasFollowed = true
+                    }
+                    
+                    self.courses.append(course)
+                    
+                    if self.courses.count == dictionaries.count {
+                        self.courses.sort(by: { (c1, c2) -> Bool in ///
+                            let c1Name = c1.name + c1.number
+                            let c2Name = c2.name + c2.number
+                            return c1Name.compare(c2Name) == .orderedDescending
+                        })
+                        
+                        self.filteredCourses = self.courses
+                        self.collectionView?.reloadData()
+                    }
+                })
             })
-            
-            self.courses.sort(by: { (c1, c2) -> Bool in ///also go fix discussionCell
-                let c1Name = c1.name + c1.number
-                let c2Name = c2.name + c2.number
-                return c1Name.compare(c2Name) == .orderedDescending
-            })
-            
-            self.filteredCourses = self.courses
-            self.collectionView?.reloadData()
-            
         }) { (err) in
             print("Failed to fetch courses:", err)
         }
     }
     
     private func fetchFollowingCourses() {
-        var followingCourseIds = [String]()
-
-        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
-        guard let school = school else { return }
-        let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school)
+        self.followingCourses = self.courses.filter({ (course) -> Bool in
+            return course.hasFollowed == true
+        })
         
-        ref.observeSingleEvent(of: .value) { (snapshot) in
-            guard let dictionaries = snapshot.value as? [String: Any] else {
-                print("no followings")///
-                self.viewOptionButton?.isSelected = false
-                self.viewOptionButton?.isEnabled = true
-                return
-            }
-            
-            dictionaries.forEach({ (key, value) in
-                let courseId = key
-                followingCourseIds.append(courseId)
-            })
-            
-            self.followingCourses = self.courses.filter({ (course) -> Bool in
-                var isMatch = false
-                
-                followingCourseIds.forEach({ (followingCourseId) in
-                    if followingCourseId == course.courseId {
-                        isMatch = true
-                        return
-                    }
-                })
-                return isMatch
-            })
-
-            self.filteredCourses = self.followingCourses
-            self.collectionView?.reloadData()
-            self.viewOptionButton?.isEnabled = true
-        }
+        self.filteredCourses = self.followingCourses
+        self.collectionView?.reloadData()
     }
     
     @objc func handleViewOption() {
@@ -91,6 +72,7 @@ extension CourseController: UISearchBarDelegate {
             viewOptionButton?.isSelected = true
             viewOptionButton?.isEnabled = false
             fetchFollowingCourses()
+            viewOptionButton?.isEnabled = true
         }
     }
     

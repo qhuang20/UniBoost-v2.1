@@ -11,6 +11,7 @@ import UIKit
 class ResponseFoonterView: UIView {
     
     weak var postContentController: PostContentController?
+    var response: Response?
     
     let buttonHeight: CGFloat = 32
     
@@ -31,7 +32,7 @@ class ResponseFoonterView: UIView {
         return label
     }()
     
-    let commentButton: UIButton = {
+    lazy var commentButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysTemplate), for: .normal)
         button.setImage(#imageLiteral(resourceName: "comment_selected").withRenderingMode(.alwaysTemplate), for: .selected)
@@ -48,7 +49,7 @@ class ResponseFoonterView: UIView {
         addSubview(likeButton)
         addSubview(likesLabel)
         
-        commentButton.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 22, widthConstant: buttonHeight - 2, heightConstant: buttonHeight + 4)
+        commentButton.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 28, widthConstant: buttonHeight - 2, heightConstant: buttonHeight + 4)
         commentButton.anchorCenterYToSuperview()
         
         likeButton.anchor(nil, left: leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 22, bottomConstant: 0, rightConstant: 0, widthConstant: buttonHeight, heightConstant: buttonHeight)
@@ -65,7 +66,9 @@ class ResponseFoonterView: UIView {
     
     
     @objc func handleComment() {
-        print("hhhh")
+        let commentsController = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
+        commentsController.response = response
+        postContentController?.navigationController?.pushViewController(commentsController, animated: true)
     }
     
 }

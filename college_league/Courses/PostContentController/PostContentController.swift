@@ -89,6 +89,7 @@ class PostContentController: UITableViewController {
         if section >= 1 && row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: responseHeaderCellId, for: indexPath) as! ResponseHeaderCell
             cell.response = responseArr[section - 1]
+            cell.postContentController = self
             return cell
         }
         
@@ -111,6 +112,9 @@ class PostContentController: UITableViewController {
         }
         
         let responseFooter = ResponseFoonterView()
+        let response = responseArr[section - 1]
+        responseFooter.postContentController = self
+        responseFooter.response = response
         return responseFooter
     }
 

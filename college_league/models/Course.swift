@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct Course {
+struct Course: Equatable {
+
+    var hasFollowed = false
     
     let school: String
     let courseId: String
@@ -24,4 +26,11 @@ struct Course {
         self.number = dictionary["number"] as? String ?? ""
     }
     
+    static func ==(lhs: Course, rhs: Course) -> Bool {//CourseControllerCell, handleTapButton
+        return lhs.courseId == rhs.courseId
+    }
+    
 }
+
+
+

@@ -34,7 +34,7 @@ class UserProfileHeader: UICollectionViewCell {
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let isFollowing = snapshot.value as? Int, isFollowing == 1 {
-                    self.editProfileFollowButton.setTitle("Unfollow", for: .normal)
+                    self.setupUnfollowStyle()
                 } else {
                     self.setupFollowStyle()
                 }
