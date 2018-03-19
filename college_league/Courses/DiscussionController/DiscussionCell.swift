@@ -18,24 +18,14 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     
     var course: Course? {
         didSet {
-            filteredTypePosts.removeAll()
-            posts.removeAll()
-            fetchPosts()
+            handleRefresh()///
         }
     }
     
     var posts = [Post]()
     var filteredPosts = [Post]()
-    
-    var filterType: FilterType = FilterType.all
-    var filteredTypePosts = [Post]()
-    
-    enum FilterType: String {
-        case all = "All"
-        case boolForSale = "Book for Sale"
-        case question = "Question"
-        case resource = "Resource"
-    }
+    var isFinishedPaging = false
+    var isPaging = false
 
     let cellId = "cellId"
     let cellSpacing: CGFloat = 1.5
@@ -52,59 +42,9 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         return tv
     }()
     
-    var windowView: UIView?
-    var typesViewBottomAnchor: NSLayoutConstraint?
-    
-    lazy var dimView: UIView = {
-        let dv = UIView()
-        dv.backgroundColor = UIColor(white: 0, alpha: 0.4)
-        dv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideDimView)))
-        return dv
-    }()
-    
-    lazy var typesView: UIStackView = {
-        var buttons = [UIButton]()
-        
-        for type in postTypes {
-            let button = UIButton()
-            button.backgroundColor = UIColor.white
-            button.adjustsImageWhenHighlighted = false
-            let image = UIImage(named: type)?.withRenderingMode(.alwaysTemplate)
-            button.setImage(image, for: .normal)
-            button.setTitle(type, for: .normal)
-            if type == postTypes[3] {
-                button.setTitle(FilterType.all.rawValue, for: .normal)
-                button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22.5)
-                button.isSelected = true
-            }
-            
-            let space: CGFloat = -35
-            if type == postTypes[0] {
-                button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -30 + space, bottom: 0, right: 0)
-                button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20 + space, bottom: 0, right: 0)
-            } else if type == postTypes[1] {
-                button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -27 + space, bottom: 0, right: 0)
-                button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 25 + space, bottom: 0, right: 0)
-            } else if type == postTypes[2] {
-                button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5 + space, bottom: 0, right: 0)
-                button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 56 + space, bottom: 0, right: 0)
-            } else {
-                button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            }
-            
-            button.setTitleColor(themeColor, for: .selected)
-            button.setTitleColor(UIColor.lightGray, for: .normal)
-            button.tintColor = UIColor.lightGray
-            button.addTarget(self, action: #selector(handleFilterType), for: .touchUpInside)
-            buttons.append(button)
-        }
-        
-        let sv = UIStackView(arrangedSubviews: buttons)
-        sv.alignment = UIStackViewAlignment.fill
-        sv.distribution = .fillEqually
-        sv.axis = UILayoutConstraintAxis.vertical
-        sv.spacing = -5
-        return sv
+    let activityIndicatorView: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        return aiv
     }()
     
     lazy var refreshControl: UIRefreshControl = {
@@ -122,20 +62,9 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         addSubview(tableView)
         tableView.fillSuperview()
         tableView.register(PostCell.self, forCellReuseIdentifier: cellId)
-        
-        windowView = UIApplication.shared.keyWindow
-        windowView?.addSubview(dimView)
-        windowView?.addSubview(typesView)
-        
-        dimView.fillSuperview()
-        dimView.alpha = 0
-        typesViewBottomAnchor = typesView.anchorWithReturnAnchors(nil, left: windowView?.leftAnchor, bottom: windowView?.safeAreaLayoutGuide.bottomAnchor, right: windowView?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 175)[1]
-        typesViewBottomAnchor?.constant = 175
     }
     
     deinit {
-        dimView.removeFromSuperview()
-        typesView.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -157,6 +86,12 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section == self.filteredPosts.count - 1 && !isFinishedPaging && !isPaging {
+            activityIndicatorView.startAnimating()
+            paginatePosts()
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PostCell
         if filteredPosts.count > indexPath.section {
             cell.post = filteredPosts[indexPath.section]

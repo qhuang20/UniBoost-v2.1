@@ -43,7 +43,6 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     private func layoutSearchBar() {
         searchBar?.placeholder = "Find Post"
-        searchBar?.showsBookmarkButton = true
         
         guard let searchBarAnchors = searchBarAnchors else { return }
         searchBarAnchors[0].constant = 50
@@ -85,13 +84,13 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DiscussionCell
-        cell.course = course//this main purpose is to clean up when reuse
         
         if oneTimeFlag {
             cell.discussionController = self
             oneTimeFlag = false
         }
         
+        cell.course = course///this main purpose is to clean up when reuse
         return cell
     }
     
@@ -115,9 +114,6 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
             cell?.discussionController = self
-            if let allButton = cell?.typesView.subviews[3] as? UIButton {
-                cell?.handleFilterType(selectedButton: allButton)
-            }
             searchBar?.text = ""
             searchBar?.resignFirstResponder()
             previousIndex = index
@@ -127,9 +123,6 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
             cell?.discussionController = self
-            if let allButton = cell?.typesView.subviews[3] as? UIButton {
-                cell?.handleFilterType(selectedButton: allButton)
-            }
             searchBar?.text = ""
             searchBar?.resignFirstResponder()
             previousIndex = index

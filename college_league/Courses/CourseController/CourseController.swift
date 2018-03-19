@@ -27,7 +27,6 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         sb.showsCancelButton = false
         sb.barTintColor = UIColor.white
         sb.returnKeyType = .done
-        sb.setImage(#imageLiteral(resourceName: "filter").withRenderingMode(.alwaysTemplate), for: UISearchBarIcon.bookmark, state: .normal)
         let textFieldInsideSearchBar = sb.value(forKey: "searchField") as? UITextField
         let button = textFieldInsideSearchBar?.rightView as? UIButton
         button?.tintColor = UIColor.black
@@ -38,7 +37,6 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         let offset = UIOffset(horizontal: 0, vertical: -3)
         sb.searchTextPositionAdjustment = offset
         sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
-        sb.setPositionAdjustment(offset, for: UISearchBarIcon.bookmark)
         sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
         sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
         return sb
@@ -48,7 +46,6 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         searchBar.text = ""
         searchBar.placeholder = "Find Course"
         searchBar.delegate = self
-        searchBar.showsBookmarkButton = false
         
         guard let searchBarAnchors = searchBarAnchors else { return }
         searchBarAnchors[0].constant = 20

@@ -41,6 +41,10 @@ extension CourseController: UISearchBarDelegate {
                         
                         self.filteredCourses = self.courses
                         self.collectionView?.reloadData()
+                        
+                        if UserDefaults.standard.isEyeSelected() {
+                            self.handleViewOption()
+                        }
                     }
                 })
             })
@@ -64,12 +68,14 @@ extension CourseController: UISearchBarDelegate {
         
         if viewOptionButton?.isSelected == true {
             viewOptionButton?.isSelected = false
+            UserDefaults.standard.setEyeSelected(value: false)
             viewOptionButton?.isEnabled = false
             filteredCourses = courses
             collectionView?.reloadData()
             viewOptionButton?.isEnabled = true
         } else {
             viewOptionButton?.isSelected = true
+            UserDefaults.standard.setEyeSelected(value: true)
             viewOptionButton?.isEnabled = false
             fetchFollowingCourses()
             viewOptionButton?.isEnabled = true

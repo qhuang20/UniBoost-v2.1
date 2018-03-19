@@ -11,68 +11,93 @@ import Firebase
 
 extension DiscussionCell: UISearchBarDelegate {
     
-    internal func fetchPosts() {
+    internal func paginatePosts() {
+        print("start paging")
         guard let course = course else { return }
+        guard let searchBar = discussionController?.searchBar else { return }
+        isPaging = true
         let ref = Database.database().reference().child("school_course_posts").child(course.school).child(course.courseId)
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            
+        var query = ref.queryOrderedByKey()
+        let queryNum: UInt = 4
+        
+        if posts.count > 0 {
+            let value = posts.last?.postId
+            query = query.queryEnding(atValue: value)
+        }
+        
+        query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
+            self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
-            guard let dictionaries = snapshot.value as? [String: Any] else { return }
-
-            dictionaries.forEach({ (key, value) in
-                Database.fetchPostWithPID(pid: key, completion: { (post) in
+            guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+            allObjects.reverse()
+            
+            if allObjects.count == 1 { self.isFinishedPaging = true }
+            if self.posts.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
+            if allObjects.count == 0 { self.isPaging = false }
+            
+            allObjects.forEach({ (snapshot) in
+                let postId = snapshot.key
+                Database.fetchPostWithPID(pid: postId, completion: { (post) in
                     self.posts.append(post)
-                    
-                    if self.posts.count == dictionaries.count {
-                        self.posts.sort(by: { (p1, p2) -> Bool in
-                            return p1.creationDate.compare(p2.creationDate) == .orderedDescending
-                        })
-                        self.filteredPosts = self.posts
-                        
+                    if allObjects.last == snapshot {
+                        self.isPaging = false
+                        self.getFilteredPostsWith(searchText: searchBar.text ?? "")
                         self.tableView.reloadData()
                     }
                 })
             })
         }) { (err) in
-            print("Failed to fetch course posts:", err)
+            print("Failed to paginate for posts:", err)
+        }
+    }
+    
+    private func getFilteredPostsWith(searchText: String) {
+        if searchText.isEmpty {
+            filteredPosts = posts
+        } else {
+            filteredPosts = self.posts.filter { (post) -> Bool in
+                let postTitle = post.title
+                let userName = post.user.username
+                let postType = post.type
+                let searchContent = postTitle + userName + postType
+                return searchContent.lowercased().contains(searchText.lowercased())
+            }
+        }
+        
+        if filteredPosts.isEmpty {
+            if !isFinishedPaging && !isPaging {
+                paginatePosts()
+            }
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !isFinishedPaging && !isPaging {
+            paginatePosts()
+        }
+        
+        if isFinishedPaging {
+            self.getFilteredPostsWith(searchText: searchText)
+            self.tableView.reloadData()
         }
     }
     
     @objc func handleRefresh() {
-        posts.removeAll()
-        fetchPosts()
+        guard let searchBar = discussionController?.searchBar else { return }
+        if searchBar.text != "" {
+            refreshControl.endRefreshing()
+            return
+        }
+        posts.removeAll()//start over
+        self.isFinishedPaging = false
+        if !isPaging { paginatePosts() }
     }
     
+
     
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if filterType == FilterType.all {
-            if searchText.isEmpty {
-                filteredPosts = posts
-            } else {
-                filteredPosts = self.posts.filter { (post) -> Bool in
-                    let postTitle = post.title
-                    let userName = post.user.username
-                    let postType = post.type
-                    let searchContent = postTitle + userName + postType
-                    return searchContent.lowercased().contains(searchText.lowercased())
-                }
-            }
-        } else {
-            if searchText.isEmpty {
-                filteredPosts = filteredTypePosts
-            } else {
-                filteredPosts = self.filteredTypePosts.filter { (post) -> Bool in
-                    let postTitle = post.title
-                    let userName = post.user.username
-                    let postType = post.type
-                    let searchContent = postTitle + userName + postType
-                    return searchContent.lowercased().contains(searchText.lowercased())
-                }
-            }
-        }
-        
-        reload(tableView: tableView)
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchBar = discussionController?.searchBar else { return }
+        self.searchBarCancelButtonClicked(searchBar)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -100,68 +125,11 @@ extension DiscussionCell: UISearchBarDelegate {
         discussionController.searchBarAnchors?[2].constant = -85
     }
     
-    
-    
-    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        
-        dimView.alpha = 1
-        typesViewBottomAnchor?.constant = 0
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            
-            self.windowView?.layoutIfNeeded()
-            
-        }, completion: nil)
-    }
-    
-    @objc func hideDimView() {
-        dimView.alpha = 0
-        typesViewBottomAnchor?.constant = 175
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            
-            self.windowView?.layoutIfNeeded()
-            
-        }, completion: nil)
-    }
-    
-    @objc func handleFilterType(selectedButton: UIButton) {
-        guard let searchBar = discussionController?.searchBar else { return }
-        let searchText = selectedButton.titleLabel?.text
-        filterType = DiscussionCell.FilterType(rawValue: searchText!)!
-        
-        for button in typesView.subviews as! [UIButton] {
-            if button == selectedButton {
-                button.isSelected = true
-                button.tintColor = themeColor
-                continue
-            }
-            button.isSelected = false
-            button.tintColor = UIColor.lightGray
-        }
-        
-        if searchText == FilterType.all.rawValue {
-            self.searchBar(searchBar, textDidChange: "")
-            
-        } else {
-            filteredTypePosts = self.posts.filter { (post) -> Bool in
-                let searchContent = post.type
-                return searchContent.lowercased().contains(searchText!.lowercased())
-            }
-            self.searchBar(searchBar, textDidChange: searchText!)
-        }
-        
-        hideDimView()
-        searchBar.text = ""
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchBar = discussionController?.searchBar else { return }
-        self.searchBarCancelButtonClicked(searchBar)
-    }
-    
 }
+
+
+
+
 
 
 

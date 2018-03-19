@@ -25,7 +25,7 @@ extension UserProfileController {
     }
     
     internal func paginatePosts() {
-        print("start paing")
+        print("start paging")
         isPaging = true
         guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("user_posts").child(uid)
@@ -43,8 +43,8 @@ extension UserProfileController {
             allObjects.reverse()
             
             if allObjects.count == 1 { self.isFinishedPaging = true }
-            self.collectionView?.reloadData()
             if self.posts.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
+            if allObjects.count == 0 { self.isPaging = false }
             
             allObjects.forEach({ (snapshot) in
                 let postId = snapshot.key
