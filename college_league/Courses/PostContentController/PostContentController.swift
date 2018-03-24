@@ -8,6 +8,7 @@
 
 import UIKit
 import AMScrollingNavbar
+import Firebase
 
 class PostContentController: UITableViewController {
     
@@ -127,6 +128,7 @@ class PostContentController: UITableViewController {
         if section == 0 {
             let postFooter = PostFooterView()
             postFooter.postContentController = self
+            postFooter.post = post
             return postFooter
         }
         

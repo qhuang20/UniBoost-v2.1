@@ -10,8 +10,6 @@ import UIKit
 
 struct Post {
     
-    var hasLiked = false
-    
     let user: User
     let postId: String
     

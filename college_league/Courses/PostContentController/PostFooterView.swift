@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import Firebase
 
 class PostFooterView: UIView {
     
     weak var postContentController: PostContentController?
+    
+    var post: Post? {
+        didSet {
+            checkIfPostBookmarked()
+        }
+    }
     
     let respondButtonColor = UIColor.init(r: 255, g: 244, b: 186)
     let buttonHeight: CGFloat = 32
@@ -36,12 +43,13 @@ class PostFooterView: UIView {
         return button
     }()
     
-    let bookmarkButton: UIButton = {
+    lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.setImage(#imageLiteral(resourceName: "bookmark_unselected").withRenderingMode(.alwaysTemplate), for: .normal)
         button.setImage(#imageLiteral(resourceName: "bookmark_selected").withRenderingMode(.alwaysTemplate), for: .selected)
         button.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         button.tintColor = themeColor
+        button.addTarget(self, action: #selector(handleBookmark), for: .touchUpInside)
         return button
     }()
     
@@ -66,7 +74,7 @@ class PostFooterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+
     
     @objc func handleRespond() {
         let responseController = ResponseController()
@@ -74,6 +82,52 @@ class PostFooterView: UIView {
         let postId = postContentController?.post?.postId
         responseController.postId = postId
         postContentController?.present(navTitleTypeController, animated: true, completion: nil)
+    }
+    
+    
+    
+    @objc func handleBookmark() {
+        guard let post = postContentController?.post else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let values = [post.postId: bookmarkButton.isSelected ? 0 : 1]
+        let ref = Database.database().reference().child("user_bookmarks").child(uid)
+        
+        if bookmarkButton.isSelected {
+            setupUnBookmarkedStyle()
+        } else {
+            setupBookmarkedStyle()
+        }
+        
+        ref.updateChildValues(values) { (err, ref) in
+            if let err = err {
+                print("Failed to bookmark post:", err)
+                return
+            }
+            print("Successfully bookmarked post.")
+        }
+    }
+    
+    internal func checkIfPostBookmarked() {
+        guard let post = post else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("user_bookmarks").child(uid).child(post.postId)
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if let value = snapshot.value as? Int, value == 1 {
+                self.setupBookmarkedStyle()
+            } else {
+                self.setupUnBookmarkedStyle()
+            }
+        }
+    }
+    
+    private func setupBookmarkedStyle() {
+        bookmarkButton.isSelected = true
+        bookmarkButton.tintColor = UIColor(r: 0, g: 130, b: 106)
+    }
+    
+    private func setupUnBookmarkedStyle() {
+        bookmarkButton.isSelected = false
+        bookmarkButton.tintColor = themeColor
     }
     
 }
