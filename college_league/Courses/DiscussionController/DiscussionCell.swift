@@ -97,7 +97,7 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         
         return cell
     }
-    
+
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -124,6 +124,11 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cellHeights[indexPath] = cell.frame.size.height
+        
+        guard isLoadingIndexPath(indexPath) else { return }
+        if !isFinishedPaging && !isPaging {
+            paginatePosts()
+        }
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

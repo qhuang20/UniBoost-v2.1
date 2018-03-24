@@ -86,13 +86,15 @@ extension CommentsController {
         newCommentRef = ref
         
         query.observe(.childAdded, with: { (snapshot) in
-            
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             guard let toUid = dictionary["toUid"] as? String else { return }
             
             Database.fetchUserWithUID(uid: uid, completion: { (user) in
                 Database.fetchUserWithUID(uid: toUid, completion: { (toUser) in
+                    if self.comments.count == 0 {
+                        self.firstNewCommentOneTimeFlag = true
+                    }
                     if self.firstNewCommentOneTimeFlag {
                         let comment = Comment(user: user, toUser: toUser, dictionary: dictionary)
                         self.comments.append(comment)
