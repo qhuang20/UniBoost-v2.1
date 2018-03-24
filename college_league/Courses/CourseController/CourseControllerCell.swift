@@ -76,7 +76,7 @@ class CourseControllerCell: UICollectionViewCell {
     
     
     
-    @objc func handleTapButton(button: UIButton) {
+    @objc func handleTapButton(button: UIButton) {///check logic!!!
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         guard let school = course?.school else { return }
         guard let courseId = course?.courseId else { return }

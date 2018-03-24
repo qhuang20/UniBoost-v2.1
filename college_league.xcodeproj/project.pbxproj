@@ -11,6 +11,7 @@
 		7B0ECA872065E36500D66CB7 /* TableViewLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */; };
 		7B0ECA892065E73F00D66CB7 /* CollectionViewLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */; };
 		7B0ECA8B2066275400D66CB7 /* PostContentControlle+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */; };
+		7B0ECA8D20669BF900D66CB7 /* CommentsController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8C20669BF900D66CB7 /* CommentsController+Handlers.swift */; };
 		7B0FD70B203F650200E77422 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70A203F650200E77422 /* PostController.swift */; };
 		7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
@@ -81,6 +82,7 @@
 		7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewLoadingCell.swift; sourceTree = "<group>"; };
 		7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLoadingCell.swift; sourceTree = "<group>"; };
 		7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostContentControlle+Handlers.swift"; sourceTree = "<group>"; };
+		7B0ECA8C20669BF900D66CB7 /* CommentsController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FD70A203F650200E77422 /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 			children = (
 				7B4D4E0C205DC1BD00E59BD1 /* CommentCell.swift */,
 				7B4D4E0A205DC1A100E59BD1 /* CommentsController.swift */,
+				7B0ECA8C20669BF900D66CB7 /* CommentsController+Handlers.swift */,
 			);
 			path = CommentsController;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				7B1624732038C555004C0537 /* UserProfileHeader.swift in Sources */,
 				7BD659F6205C4D90004ACC7E /* ResponseFoonterView.swift in Sources */,
 				7B16246A2038C4B5004C0537 /* Signup+Handlers.swift in Sources */,
+				7B0ECA8D20669BF900D66CB7 /* CommentsController+Handlers.swift in Sources */,
 				7B48C7672047570C00768E96 /* DiscussionCell.swift in Sources */,
 				7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */,
 				7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */,

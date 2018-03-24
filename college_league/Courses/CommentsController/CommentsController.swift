@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 class CommentsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -15,8 +14,16 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     lazy var toUser: User? = response?.user
     
     var comments = [Comment]()
+    var isFinishedPaging = false
+    var isPaging = false
+    var queryEndingValue = ""
+    var scrollToBottomOneTimeFlag = true
+    var firstNewCommentOneTimeFlag = false
+    var newCommentRef: DatabaseReference?
     
     let cellId = "cellId"
+    let loadingCellId = "loadingCellId"
+    let loadingCellHeight: CGFloat = 50
     
     lazy var commentTextField: UITextField = {
         let textField = UITextField()
@@ -59,6 +66,10 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+        
+        if newCommentRef == nil {
+            fetchNewComment()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -73,42 +84,35 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.alwaysBounceVertical = true
         collectionView?.keyboardDismissMode = .interactive
         collectionView?.register(CommentCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(CollectionViewLoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
-        fetchComments()
+        paginatePosts()
     }
     
-    private func fetchComments() {
-        guard let responseId = self.response?.responseId else { return }
-        let ref = Database.database().reference().child("response_comments").child(responseId)
-        ref.observe(.childAdded, with: { (snapshot) in
-            
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            guard let uid = dictionary["uid"] as? String else { return }
-            guard let toUid = dictionary["toUid"] as? String else { return }
-            
-            Database.fetchUserWithUID(uid: uid, completion: { (user) in
-                Database.fetchUserWithUID(uid: toUid, completion: { (toUser) in
-                    let comment = Comment(user: user, toUser: toUser, dictionary: dictionary)
-                    self.comments.append(comment)
-                    self.collectionView?.reloadData()
-                })
-            })
-        }) { (err) in
-            print("Failed to observe comments")
-        }
+    override func viewDidDisappear(_ animated: Bool) {
+        newCommentRef?.removeAllObservers()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return comments.count
+        let count = comments.count
+        return isFinishedPaging ? count : count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if isLoadingIndexPath(indexPath) {
+            return CGSize(width: view.frame.width, height: loadingCellHeight)
+        }
         
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let dummyCell = CommentCell(frame: frame)
-        dummyCell.comment = comments[indexPath.item]
+        dummyCell.comment = isFinishedPaging ? comments[indexPath.item] : comments[indexPath.item - 1]
         dummyCell.layoutIfNeeded()
         
         let targetSize = CGSize(width: view.frame.width, height: 1000)
@@ -119,40 +123,44 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if isLoadingIndexPath(indexPath) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! CollectionViewLoadingCell
+            cell.isTheEnd = isFinishedPaging
+            return cell
+        }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CommentCell
-        cell.comment = self.comments[indexPath.item]
+        cell.comment = isFinishedPaging ? comments[indexPath.item] : comments[indexPath.item - 1]
         cell.commentsController = self
         
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-
-    
-    
-    @objc func handleSend() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        guard let toUid = toUser?.uid else { return }
-        let responseId = self.response?.responseId ?? ""
-        let values = ["text": commentTextField.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid, "toUid": toUid] as [String : Any]
-        let ref = Database.database().reference().child("response_comments").child(responseId).childByAutoId()
-        commentTextField.text = nil
-        
-        ref.updateChildValues(values) { (err, ref) in
-            if let err = err {
-                print("Failed to insert comment:", err)
-                return
-            }
-            print("Successfully inserted comment.")
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offset = collectionView?.contentOffset.y
+        if offset == 0 {
+            paginatePosts()
         }
     }
     
-    @objc func handleTapNavBar() {
-        commentTextField.becomeFirstResponder()
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
-  
+    
+    
+    
+    private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
+        guard !isFinishedPaging else { return false }
+        return indexPath.item == 0
+    }
+    
+    internal func scrollToBottom() {
+        let indexPath = IndexPath(row: comments.count - 1, section: 0)
+        if !isPaging {
+            collectionView?.scrollToItem(at: indexPath, at: .top, animated: true)
+        }
+    }
+
 }
 
 
