@@ -13,12 +13,13 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     weak var discussionController: DiscussionController? {
         didSet {
             discussionController?.searchBar?.delegate = self
+            discussionController?.searchBar?.text = ""
         }
     }
     
     var course: Course? {
         didSet {
-            handleRefresh()///
+            handleRefresh()
         }
     }
     
@@ -26,6 +27,7 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     var filteredPosts = [Post]()
     var isFinishedPaging = false
     var isPaging = false
+    var queryEndingValue = ""
 
     let cellId = "cellId"
     let cellSpacing: CGFloat = 1.5
@@ -39,12 +41,8 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         tv.rowHeight = UITableViewAutomaticDimension
         tv.estimatedRowHeight = 100
         tv.keyboardDismissMode = .onDrag
+        tv.prefetchDataSource = self
         return tv
-    }()
-    
-    let activityIndicatorView: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        return aiv
     }()
     
     lazy var refreshControl: UIRefreshControl = {
@@ -82,14 +80,14 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return filteredPosts.count
+        return filteredPosts.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.section == self.filteredPosts.count - 1 && !isFinishedPaging && !isPaging {
-            activityIndicatorView.startAnimating()
-            paginatePosts()
+        if isLoadingIndexPath(indexPath) {
+            let cell = TableViewLoadingCell(style: .default, reuseIdentifier: "loading")
+            cell.isTheEnd = isFinishedPaging
+            return cell
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PostCell
@@ -118,11 +116,38 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     
     
     
+    private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
+        return indexPath.section == filteredPosts.count
+    }
+    
+    var cellHeights: [IndexPath : CGFloat] = [:]
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellHeights[indexPath] = cell.frame.size.height
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let height = cellHeights[indexPath] else { return 100 }
+        return height
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 }
+
+extension DiscussionCell : UITableViewDataSourcePrefetching {
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        let needsFetch = indexPaths.contains { $0.section >= self.filteredPosts.count }
+        if needsFetch {
+            paginatePosts()
+        }
+    }
+
+}
+
 
 
 

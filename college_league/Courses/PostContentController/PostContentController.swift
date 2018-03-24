@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseDatabase
 import AMScrollingNavbar
 
 class PostContentController: UITableViewController {
@@ -17,6 +16,9 @@ class PostContentController: UITableViewController {
     
     var responseArr = [Response]()
     var responseMessagesDic = [String: [ResponseMessage]]()
+    var isFinishedPaging = false
+    var isPaging = false
+    var queryEndingValue = ""
     
     let postHeaderCellId = "postHeaderCellId"
     let postMessageCellId = "postMessageCellId"
@@ -50,15 +52,21 @@ class PostContentController: UITableViewController {
         fetchPostMessagesResponse()
     }
     
-    deinit { NotificationCenter.default.removeObserver(self) }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return responseArr.count + 1
+        return isFinishedPaging ? responseArr.count + 1 : responseArr.count + 1 + 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let indexPath = IndexPath(row: 0, section: section)
+        if isLoadingIndexPath(indexPath) {
+            return 1
+        }
         
         if section == 0 {
             return postMessages.count + 1
@@ -69,6 +77,12 @@ class PostContentController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if isLoadingIndexPath(indexPath) {
+            let cell = TableViewLoadingCell(style: .default, reuseIdentifier: "loading")
+            cell.isTheEnd = isFinishedPaging
+            return cell
+        }
+        
         let topIndexPath = IndexPath(row: 0, section: 0)
         let section = indexPath.section
         let row = indexPath.row
@@ -105,6 +119,11 @@ class PostContentController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let indexPath = IndexPath(row: 0, section: section)
+        if isLoadingIndexPath(indexPath) {
+            return UIView()
+        }
+        
         if section == 0 {
             let postFooter = PostFooterView()
             postFooter.postContentController = self
@@ -117,8 +136,8 @@ class PostContentController: UITableViewController {
         responseFooter.response = response
         return responseFooter
     }
-
-
+    
+    
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -137,47 +156,25 @@ class PostContentController: UITableViewController {
     
     
     
-    private func fetchPostMessagesResponse() {
-        guard let postId = post?.postId else { return }
-        Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
-            self.postMessages = postMessages
-            self.tableView.reloadData()
-        }
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellHeights[indexPath] = cell.frame.size.height
         
-        fetchResponse()
-    }
-    
-    private func fetchResponse() {
-        guard let postId = post?.postId else { return }
-        let ref = Database.database().reference().child("post_response").child(postId)
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-            guard let responseDic = snapshot.value as? [String: Any] else { return }
-            
-            responseDic.forEach({ (responseId, num) in
-                Database.fetchResponseWithRID(rid: responseId, completion: { (response) in
-                    self.responseArr.append(response)
-
-                    Database.fetchResponseMessagesWithRID(rid: responseId) { (responseMessages) in
-                        self.responseMessagesDic[responseId] = responseMessages
-                        
-                        if self.responseMessagesDic.count == responseDic.count {
-                            self.responseArr.sort(by: { (p1, p2) -> Bool in
-                                return p1.creationDate.compare(p2.creationDate) == .orderedAscending///
-                            })
-                            self.tableView.reloadData()
-                        }
-                    }
-                })
-            })
-        }) { (err) in
-            print("Failed to fetch post response:", err)
+        guard isLoadingIndexPath(indexPath) else { return }
+        if !isFinishedPaging && !isPaging {
+            paginateResponse()
         }
     }
+
+    var cellHeights: [IndexPath : CGFloat] = [:]
     
-    @objc func handleUpdate() {
-        responseArr.removeAll()
-        fetchResponse()
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let height = cellHeights[indexPath] else { return 100 }
+        return height
+    }
+    
+    private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
+        guard !isFinishedPaging else { return false }
+        return indexPath.section == responseArr.count + 1
     }
     
 }

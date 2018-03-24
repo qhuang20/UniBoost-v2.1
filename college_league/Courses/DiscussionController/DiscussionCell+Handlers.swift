@@ -12,7 +12,7 @@ import Firebase
 extension DiscussionCell: UISearchBarDelegate {
     
     internal func paginatePosts() {
-        print("start paging")
+        print("\nstart paging")
         guard let course = course else { return }
         guard let searchBar = discussionController?.searchBar else { return }
         isPaging = true
@@ -21,25 +21,33 @@ extension DiscussionCell: UISearchBarDelegate {
         let queryNum: UInt = 4
         
         if posts.count > 0 {
-            let value = posts.last?.postId
-            query = query.queryEnding(atValue: value)
+            query = query.queryEnding(atValue: queryEndingValue)
         }
         
         query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
-            self.activityIndicatorView.stopAnimating()
             self.refreshControl.endRefreshing()
             guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
             allObjects.reverse()
+            var counter = 0
             
-            if allObjects.count == 1 { self.isFinishedPaging = true }
+            if allObjects.count == 1 || allObjects.count == 0 {
+                self.isFinishedPaging = true
+                self.isPaging = false
+                self.tableView.reloadData()
+            }
             if self.posts.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
-            if allObjects.count == 0 { self.isPaging = false }
+            self.queryEndingValue = allObjects.last?.key ?? ""
             
             allObjects.forEach({ (snapshot) in
                 let postId = snapshot.key
+                print(postId)
+                
                 Database.fetchPostWithPID(pid: postId, completion: { (post) in
                     self.posts.append(post)
-                    if allObjects.last == snapshot {
+                    print("inside:   ", post.postId)
+                    
+                    counter = counter + 1
+                    if allObjects.count == counter {
                         self.isPaging = false
                         self.getFilteredPostsWith(searchText: searchBar.text ?? "")
                         self.tableView.reloadData()
@@ -83,14 +91,10 @@ extension DiscussionCell: UISearchBarDelegate {
     }
     
     @objc func handleRefresh() {
-        guard let searchBar = discussionController?.searchBar else { return }
-        if searchBar.text != "" {
-            refreshControl.endRefreshing()
-            return
-        }
+        if isPaging { return }
         posts.removeAll()//start over
         self.isFinishedPaging = false
-        if !isPaging { paginatePosts() }
+        paginatePosts()
     }
     
 

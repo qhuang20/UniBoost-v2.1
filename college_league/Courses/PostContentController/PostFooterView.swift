@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class PostFooterView: UIView {
     
     weak var postContentController: PostContentController?

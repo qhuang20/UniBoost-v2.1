@@ -20,7 +20,7 @@ class CollectionViewLoadingCell: UICollectionViewCell {
         }
     }
     
-    var activityIndicator: UIActivityIndicatorView = {
+    let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.activityIndicatorViewStyle = .gray
         indicator.hidesWhenStopped = true

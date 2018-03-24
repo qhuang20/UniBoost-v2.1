@@ -10,6 +10,7 @@
 		67AC5CE83E4E19B804533143 /* Pods_college_league.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */; };
 		7B0ECA872065E36500D66CB7 /* TableViewLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */; };
 		7B0ECA892065E73F00D66CB7 /* CollectionViewLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */; };
+		7B0ECA8B2066275400D66CB7 /* PostContentControlle+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */; };
 		7B0FD70B203F650200E77422 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70A203F650200E77422 /* PostController.swift */; };
 		7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
@@ -79,6 +80,7 @@
 /* Begin PBXFileReference section */
 		7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewLoadingCell.swift; sourceTree = "<group>"; };
 		7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLoadingCell.swift; sourceTree = "<group>"; };
+		7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostContentControlle+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FD70A203F650200E77422 /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				7BF2E4D7205461DE004D4DBE /* PostMessageCell.swift */,
 				7B97171C205A005700B6F781 /* PostFooterView.swift */,
 				7B93C611204F92F000419B33 /* PostContentController.swift */,
+				7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */,
 			);
 			path = PostContentController;
 			sourceTree = "<group>";
@@ -565,6 +568,7 @@
 				7B97171D205A005700B6F781 /* PostFooterView.swift in Sources */,
 				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
 				7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */,
+				7B0ECA8B2066275400D66CB7 /* PostContentControlle+Handlers.swift in Sources */,
 				7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */,
 				7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */,
 				7BD659FC205CA50C004ACC7E /* ResponseMessageCell.swift in Sources */,
