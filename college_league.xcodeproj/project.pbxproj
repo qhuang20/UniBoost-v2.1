@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		67AC5CE83E4E19B804533143 /* Pods_college_league.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */; };
+		7B0ECA872065E36500D66CB7 /* TableViewLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */; };
+		7B0ECA892065E73F00D66CB7 /* CollectionViewLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */; };
 		7B0FD70B203F650200E77422 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70A203F650200E77422 /* PostController.swift */; };
 		7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
@@ -75,6 +77,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewLoadingCell.swift; sourceTree = "<group>"; };
+		7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLoadingCell.swift; sourceTree = "<group>"; };
 		7B0FD70A203F650200E77422 /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
@@ -224,6 +228,8 @@
 				7BF2E4D9205470E9004D4DBE /* UITableViewController+Helper.swift */,
 				7BF2E4D120538542004D4DBE /* UITextView+Helper.swift */,
 				7BB2ABF1205F2CD70086F3EB /* UserDefaults+Helpers.swift */,
+				7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */,
+				7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */,
 				7B167668205651AA003D4E01 /* Date+Helper.swift */,
 			);
 			path = util;
@@ -568,7 +574,9 @@
 				7B1624742038C555004C0537 /* UserProfileController+Handlers.swift in Sources */,
 				7BD659F1205B8F41004ACC7E /* Response.swift in Sources */,
 				7B48C7652046606100768E96 /* SwitchBar.swift in Sources */,
+				7B0ECA872065E36500D66CB7 /* TableViewLoadingCell.swift in Sources */,
 				7B48C75E2045AB5000768E96 /* CourseController.swift in Sources */,
+				7B0ECA892065E73F00D66CB7 /* CollectionViewLoadingCell.swift in Sources */,
 				7B0FD70B203F650200E77422 /* PostController.swift in Sources */,
 				7B1624752038C555004C0537 /* UserProfileController.swift in Sources */,
 				7B93C612204F92F000419B33 /* PostContentController.swift in Sources */,

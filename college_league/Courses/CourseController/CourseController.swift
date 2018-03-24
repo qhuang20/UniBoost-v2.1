@@ -15,8 +15,12 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     var courses = [Course]()
     var followingCourses = [Course]()
     var filteredCourses = [Course]()
+    var isFinishedPaging = false
+    var isPaging = true
+    var queryEndingValue = ""
 
     let cellId = "cellId"
+    let loadingCellId = "loadingCellId"
     var searchBarAnchors: [NSLayoutConstraint]?
     var viewOptionButton: UIButton?
     
@@ -67,7 +71,8 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
             return
         }
         
-        fetchCourses()
+        paginateCourses()
+        fetchFollowingCourses()
     }
     
     private func configureCollectionVeiw() {
@@ -80,6 +85,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         layout.minimumInteritemSpacing = 6
         
         collectionView?.register(CourseControllerCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(CollectionViewLoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
     }
     
     private func configureNavigationBar() {
@@ -113,21 +119,40 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filteredCourses.count
+        let count = filteredCourses.count
+        return isFinishedPaging ? count : count + 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if isLoadingIndexPath(indexPath) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! CollectionViewLoadingCell
+            cell.isTheEnd = isFinishedPaging
+            return cell
+        }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! CourseControllerCell
         cell.course = filteredCourses[indexPath.item]
         cell.courseController = self
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-     
         let width = (view.frame.width - 12 - 16) / 3
         return CGSize(width: width, height: width)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard isLoadingIndexPath(indexPath) else { return }
+        if !isFinishedPaging && !isPaging {
+            paginateCourses()
+        }
+    }
+    
+    
+    
+    private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
+        guard !isFinishedPaging else { return false }
+        return indexPath.item == filteredCourses.count
     }
     
     private func animateNavigationBarLayout() {

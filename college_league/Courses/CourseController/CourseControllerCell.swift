@@ -88,16 +88,23 @@ class CourseControllerCell: UICollectionViewCell {
             print("Successfully edited the course: ", courseId)
             
             self.course?.hasFollowed = !(self.course!.hasFollowed)
-            let i = self.courseController?.courses.index(of: self.course!)//Equatable
-            self.courseController?.courses[i!] = self.course!
+            if let i = self.courseController?.courses.index(of: self.course!) {//Equatable
+                self.courseController?.courses[i] = self.course!
+            }
             
-            if self.course?.hasFollowed == true {
+            if self.course?.hasFollowed == true {///fix UI reaction speed, also fix others
                 self.setupAddedStyle()
+                self.courseController?.followingCourses.append(self.course!)
             } else {
                 self.setupEmptyStyle()
                 if self.courseController?.viewOptionButton?.isSelected == true {
+                    self.courseController?.followingCourses.remove(at: indexPath.item)
                     self.courseController?.filteredCourses.remove(at: indexPath.item)
                     self.courseController?.collectionView?.reloadData()
+                } else {
+                    if let j = self.courseController?.followingCourses.index(of: self.course!) {
+                        self.courseController?.followingCourses.remove(at: j)
+                    }
                 }
             }
         }

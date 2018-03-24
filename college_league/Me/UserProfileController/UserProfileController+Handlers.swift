@@ -25,34 +25,45 @@ extension UserProfileController {
     }
     
     internal func paginatePosts() {
-        print("start paging")
+        print("\nstart paging")
         isPaging = true
         guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("user_posts").child(uid)
         var query = ref.queryOrderedByKey()
-        let queryNum: UInt = 4
+        let queryNum: UInt = 6
         
         if posts.count > 0 {
-            let value = posts.last?.postId
-            query = query.queryEnding(atValue: value)
+            query = query.queryEnding(atValue: queryEndingValue)
         }
         
         query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
-            self.activityIndicatorView.stopAnimating()
             guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
             allObjects.reverse()
+            var counter = 0
             
-            if allObjects.count == 1 { self.isFinishedPaging = true }
+            if allObjects.count == 1 || allObjects.count == 0 {
+                self.isFinishedPaging = true
+                self.isPaging = false
+                self.collectionView?.reloadData()
+            }
             if self.posts.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
-            if allObjects.count == 0 { self.isPaging = false }
+            self.queryEndingValue = allObjects.last?.key ?? ""
             
             allObjects.forEach({ (snapshot) in
                 let postId = snapshot.key
+                print(postId)
+                
                 Database.fetchPostWithPID(pid: postId, completion: { (post) in
                     self.posts.append(post)
-                    if allObjects.last == snapshot {
-                        self.collectionView?.reloadData()
+                    print("inside:   ", post.postId)
+                    
+                    counter = counter + 1
+                    if allObjects.count == counter {
                         self.isPaging = false
+                        self.posts.sort(by: { (p1, p2) -> Bool in
+                            return p1.creationDate.compare(p2.creationDate) == ComparisonResult.orderedDescending
+                        })
+                        self.collectionView?.reloadData()
                     }
                 })
             })
@@ -62,6 +73,7 @@ extension UserProfileController {
     }
     
     @objc func handleRefresh() {
+        if isPaging { return }
         posts.removeAll()
         self.isFinishedPaging = false
         fetchUserAndUserPosts()

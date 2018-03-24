@@ -10,81 +10,104 @@ import UIKit
 import Firebase
 
 extension CourseController: UISearchBarDelegate {
-    
-    internal func fetchCourses() {
+   
+    internal func paginateCourses() {
+        print("\nstart paging")
+        isPaging = true
         guard let school = school else { return }
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("school_courses").child(school)
+        var query = ref.queryOrderedByKey()
+        let queryNum: UInt = 9
         
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+        if courses.count > 0 {
+            query = query.queryEnding(atValue: queryEndingValue)
+        }
+        
+        query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+            allObjects.reverse()
+            var counter = 0
             
-            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            if allObjects.count == 1 || allObjects.count == 0 {
+                self.isFinishedPaging = true
+                self.isPaging = false
+                self.collectionView?.reloadData()
+            }
+            if self.courses.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
+            self.queryEndingValue = allObjects.last?.key ?? ""
             
-            dictionaries.forEach({ (key, value) in
-                guard let dictionary = value as? [String: Any] else { return }
-                var course = Course(school: school, courseId: key, dictionary: dictionary)
+            allObjects.forEach({ (snapshot) in
+                let courseId = snapshot.key
+                print(courseId)
                 
-                let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school).child(key)
+                guard let dictionary = snapshot.value as? [String: Any] else { return }
+                var course = Course(school: school, courseId: courseId, dictionary: dictionary)
+                let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school).child(courseId)
                 ref.observeSingleEvent(of: .value, with: { (snapshot) in
                     if let value = snapshot.value as? Int, value == 1 {
                         course.hasFollowed = true
                     }
-                    
                     self.courses.append(course)
+                    print("inside:   ", course.courseId)
                     
-                    if self.courses.count == dictionaries.count {
-                        self.courses.sort(by: { (c1, c2) -> Bool in ///
-                            let c1Name = c1.name + c1.number
-                            let c2Name = c2.name + c2.number
-                            return c1Name.compare(c2Name) == .orderedDescending
-                        })
-                        
-                        self.filteredCourses = self.courses
+                    counter = counter + 1
+                    if allObjects.count == counter {
+                        self.isPaging = false
+                        self.getFilteredCoursesWith(searchText: self.searchBar.text ?? "")
                         self.collectionView?.reloadData()
-                        
+                    }
+                })
+            })
+        }) { (err) in
+            print("Failed to paginate for posts:", err)
+        }
+    }
+    
+    internal func fetchFollowingCourses() {
+        guard let school = school else { return }
+        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let coursesDic = snapshot.value as? [String: Any] else { return }
+            var counter = 0
+            
+            coursesDic.forEach({ (courseId, value) in
+                let ref = Database.database().reference().child("school_courses").child(school).child(courseId)
+                ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                    guard let dictionary = snapshot.value as? [String: Any] else { return }
+                    
+                    if let value = value as? Int, value == 1 {
+                        var course = Course(school: school, courseId: courseId, dictionary: dictionary)
+                        course.hasFollowed = true
+                        self.followingCourses.append(course)
+                    }
+                    
+                    counter = counter + 1
+                    if counter == coursesDic.count {
                         if UserDefaults.standard.isEyeSelected() {
                             self.handleViewOption()
                         }
                     }
                 })
             })
-        }) { (err) in
-            print("Failed to fetch courses:", err)
-        }
-    }
-    
-    private func fetchFollowingCourses() {
-        self.followingCourses = self.courses.filter({ (course) -> Bool in
-            return course.hasFollowed == true
         })
-        
-        self.filteredCourses = self.followingCourses
-        self.collectionView?.reloadData()
-    }
-    
-    @objc func handleViewOption() {
-        if courses.count == 0 { return }
-        searchBar.text = nil
-        
-        if viewOptionButton?.isSelected == true {
-            viewOptionButton?.isSelected = false
-            UserDefaults.standard.setEyeSelected(value: false)
-            viewOptionButton?.isEnabled = false
-            filteredCourses = courses
-            collectionView?.reloadData()
-            viewOptionButton?.isEnabled = true
-        } else {
-            viewOptionButton?.isSelected = true
-            UserDefaults.standard.setEyeSelected(value: true)
-            viewOptionButton?.isEnabled = false
-            fetchFollowingCourses()
-            viewOptionButton?.isEnabled = true
-        }
     }
     
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !isFinishedPaging && !isPaging {
+            paginateCourses()
+        }
+        
+        if isFinishedPaging {
+            self.getFilteredCoursesWith(searchText: searchText)
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    private func getFilteredCoursesWith(searchText: String) {
         if viewOptionButton?.isSelected == false {
             if searchText.isEmpty {
                 filteredCourses = courses
@@ -105,8 +128,38 @@ extension CourseController: UISearchBarDelegate {
             }
         }
         
-        self.collectionView?.reloadData()
+        if filteredCourses.isEmpty {
+            if !isFinishedPaging && !isPaging {
+                paginateCourses()
+            }
+        }
     }
+    
+    
+    
+    @objc func handleViewOption() {
+        searchBar.text = nil
+        
+        if viewOptionButton?.isSelected == true {
+            viewOptionButton?.isSelected = false
+            UserDefaults.standard.setEyeSelected(value: false)
+            viewOptionButton?.isEnabled = false
+            isFinishedPaging = false
+            filteredCourses = courses
+            collectionView?.reloadData()
+            viewOptionButton?.isEnabled = true
+        } else {
+            viewOptionButton?.isSelected = true
+            UserDefaults.standard.setEyeSelected(value: true)
+            viewOptionButton?.isEnabled = false
+            isFinishedPaging = true
+            filteredCourses = followingCourses
+            collectionView?.reloadData()
+            viewOptionButton?.isEnabled = true
+        }
+    }
+    
+    
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)

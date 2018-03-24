@@ -116,18 +116,6 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         return cellSpacing
     }
     
-    func reload(tableView: UITableView) {//fix jumping issue
-        let contentOffset = tableView.contentOffset
-        tableView.reloadData()
-        tableView.layoutIfNeeded()
-        tableView.setContentOffset(contentOffset, animated: false)
-        
-        let indexPath = IndexPath(row: 0, section: 0)
-        if (filteredPosts.count > 0) {
-            tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: false)///fix position bug?
-        }
-    }
-    
     
     
     required init?(coder aDecoder: NSCoder) {

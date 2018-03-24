@@ -17,13 +17,10 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     var posts = [Post]()
     var isFinishedPaging = false
     var isPaging = true
+    var queryEndingValue = ""
     
     let cellId = "cellId"
-    
-    let activityIndicatorView: UIActivityIndicatorView = {
-        let aiv = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        return aiv
-    }()
+    let loadingCellId = "loadingCellId"
     
     lazy var refreshControl: UIRefreshControl = {
         let rc = UIRefreshControl()
@@ -38,10 +35,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.backgroundView = refreshControl
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
         
-        view.addSubview(activityIndicatorView)
-        activityIndicatorView.anchor(nil, left: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 40, heightConstant: 40)
-        activityIndicatorView.anchorCenterXToSuperview()
-        
         if userId == nil {
             setupLogOutButton()
             setupPostButton()
@@ -50,7 +43,9 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         fetchUserAndUserPosts()
     }
     
-    deinit { NotificationCenter.default.removeObserver(self) }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     private func configureCollectionVeiw() {
         collectionView?.backgroundColor = UIColor.white
@@ -60,6 +55,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
         collectionView?.register(UserPostCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(CollectionViewLoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
     }
     
     private func setupLogOutButton() {
@@ -91,14 +87,15 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return posts.count
+        let count = posts.count
+        return isFinishedPaging ? count : count + 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if indexPath.item == self.posts.count - 1 && !isFinishedPaging && !isPaging {
-            activityIndicatorView.startAnimating()
-            paginatePosts()
+        if isLoadingIndexPath(indexPath) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! CollectionViewLoadingCell
+            cell.isTheEnd = isFinishedPaging
+            return cell
         }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserPostCell
@@ -114,6 +111,10 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         var height: CGFloat = 50 + 28//userInfo
         let width = view.frame.width
         
+        if isLoadingIndexPath(indexPath) {
+            return CGSize(width: width, height: 100)
+        }
+        
         if let imageHeight = posts[indexPath.item].thumbnailImageHeight {
             if imageHeight > 250 { height += 250 }
             else { height += imageHeight }
@@ -123,6 +124,20 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         height += postTitleHeight
 
         return CGSize(width: width, height: height)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard isLoadingIndexPath(indexPath) else { return }
+        if !isFinishedPaging && !isPaging {
+            paginatePosts()
+        }
+    }
+
+    
+    
+    private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
+        guard !isFinishedPaging else { return false }
+        return indexPath.row == posts.count
     }
     
     private func estimateHeightForPostTitle(text: String) -> CGFloat {
