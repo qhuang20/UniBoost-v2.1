@@ -93,6 +93,7 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidDisappear(_ animated: Bool) {
         newCommentRef?.removeAllObservers()
+        newCommentRef = nil
     }
     
     deinit {
@@ -139,7 +140,7 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let offset = collectionView?.contentOffset.y
-        if offset == 0 {
+        if offset == 0 && !isFinishedPaging && !isPaging {
             paginatePosts()
         }
     }

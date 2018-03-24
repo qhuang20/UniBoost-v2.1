@@ -141,7 +141,7 @@ extension DiscussionCell : UITableViewDataSourcePrefetching {
 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let needsFetch = indexPaths.contains { $0.section >= self.filteredPosts.count }
-        if needsFetch {
+        if needsFetch && !isFinishedPaging && !isPaging {
             paginatePosts()
         }
     }
