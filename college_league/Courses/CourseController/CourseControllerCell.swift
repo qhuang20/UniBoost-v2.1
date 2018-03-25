@@ -14,7 +14,6 @@ class CourseControllerCell: UICollectionViewCell {
     
     var course: Course? {
         didSet {
-            setupEmptyStyle()
             setupAttributedTitle()
             course?.hasFollowed == true ? setupAddedStyle() : setupEmptyStyle()
         }
@@ -52,6 +51,11 @@ class CourseControllerCell: UICollectionViewCell {
         button.layer.cornerRadius = 4
         button.layer.borderColor = themeColor.cgColor
         button.layer.borderWidth = 1.5
+        button.setTitle(" ", for: .normal)
+        button.setTitle("✓", for: .selected)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitleColor(UIColor.white, for: .selected)
+        button.backgroundColor = UIColor.white
         button.addTarget(self, action: #selector(handleTapButton), for: .touchUpInside)
         return button
     }()
@@ -76,48 +80,54 @@ class CourseControllerCell: UICollectionViewCell {
     
     
     
-    @objc func handleTapButton(button: UIButton) {///check logic!!!
+    @objc func handleTapButton(button: UIButton) {
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         guard let school = course?.school else { return }
         guard let courseId = course?.courseId else { return }
         guard let indexPath = self.courseController?.collectionView?.indexPath(for: self) else { return }
+        let i = self.courseController?.courses.index(of: self.course!)
         let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school)
+        self.course?.hasFollowed = !self.course!.hasFollowed
         
-        let values = [courseId: course?.hasFollowed == true ? 0 : 1]
-        ref.updateChildValues(values) { (err, ref) in
-            print("Successfully edited the course: ", courseId)
+        self.courseController?.filteredCourses[indexPath.item].hasFollowed = addButton.isSelected
+        let values = [courseId: course?.hasFollowed == true ? 1 : 0]
+        
+        
+        
+        if addButton.isSelected {
+            if i != nil { self.courseController?.courses[i!].hasFollowed = true }
+            self.courseController?.followingCourses.append(self.course!)
             
-            self.course?.hasFollowed = !(self.course!.hasFollowed)///
-            if let i = self.courseController?.courses.index(of: self.course!) {//Equatable
-                self.courseController?.courses[i] = self.course!
-            }
+        } else {
+            if i != nil { self.courseController?.courses[i!].hasFollowed = false }
             
-            if self.course?.hasFollowed == true {///fix UI reaction speed
-                self.setupAddedStyle()
-                self.courseController?.followingCourses.append(self.course!)
+            if self.courseController?.viewOptionButton?.isSelected == true {
+                self.courseController?.followingCourses.remove(at: indexPath.item)
+                self.courseController?.filteredCourses.remove(at: indexPath.item)
+                self.courseController?.collectionView?.reloadData()
             } else {
-                self.setupEmptyStyle()
-                if self.courseController?.viewOptionButton?.isSelected == true {
-                    self.courseController?.followingCourses.remove(at: indexPath.item)
-                    self.courseController?.filteredCourses.remove(at: indexPath.item)
-                    self.courseController?.collectionView?.reloadData()
-                } else {
-                    if let j = self.courseController?.followingCourses.index(of: self.course!) {
-                        self.courseController?.followingCourses.remove(at: j)
-                    }
+                if let j = self.courseController?.followingCourses.index(of: self.course!) {
+                    self.courseController?.followingCourses.remove(at: j)
                 }
             }
+        }
+        
+        ref.updateChildValues(values) { (err, ref) in
+            if let err = err {
+                print("Failed to edited the course:", err)
+                return
+            }
+            print("Successfully edited the course: ", courseId)
         }
     }
     
     private func setupAddedStyle() {
-        addButton.setTitle("✓", for: .normal)
-        addButton.setTitleColor(UIColor.white, for: .normal)
+        addButton.isSelected = true
         addButton.backgroundColor = themeColor
     }
     
     private func setupEmptyStyle() {
-        addButton.setTitle(" ", for: .normal)
+        addButton.isSelected = false
         addButton.backgroundColor = UIColor.white
     }
     
