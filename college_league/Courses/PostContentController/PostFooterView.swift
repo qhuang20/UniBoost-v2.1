@@ -16,6 +16,7 @@ class PostFooterView: UIView {
     var post: Post? {
         didSet {
             checkIfPostBookmarked()
+            checkIfPostLiked()
         }
     }
     
@@ -40,6 +41,7 @@ class PostFooterView: UIView {
         button.setImage(#imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysTemplate), for: UIControlState.normal)
         button.setImage(#imageLiteral(resourceName: "like_selected").withRenderingMode(.alwaysTemplate), for: .selected)
         button.tintColor = themeColor
+        button.addTarget(self, action: #selector(handleLikePost), for: .touchUpInside)
         return button
     }()
     
@@ -107,7 +109,7 @@ class PostFooterView: UIView {
         }
     }
     
-    internal func checkIfPostBookmarked() {
+    private func checkIfPostBookmarked() {
         guard let post = post else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("user_bookmarks").child(uid).child(post.postId)
@@ -130,6 +132,51 @@ class PostFooterView: UIView {
         bookmarkButton.tintColor = themeColor
     }
     
+    
+    
+    private func checkIfPostLiked() {
+        guard let post = post else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("user_likedPosts").child(uid).child(post.postId)
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if let value = snapshot.value as? Int, value == 1 {
+                self.setupLikedStyle()
+            } else {
+                self.setupUnLikedStyle()
+            }
+        }
+    }
+    
+    @objc func handleLikePost() {
+        guard let post = postContentController?.post else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let values = [post.postId: likeButton.isSelected ? 0 : 1]
+        let ref = Database.database().reference().child("user_likedPosts").child(uid)
+        
+        if likeButton.isSelected {
+            setupUnLikedStyle()
+        } else {
+            setupLikedStyle()
+        }
+        
+        ref.updateChildValues(values) { (err, ref) in
+            if let err = err {
+                print("Failed to bookmark post:", err)
+                return
+            }
+            print("Successfully bookmarked post.")
+        }
+    }
+    
+    private func setupLikedStyle() {
+        likeButton.isSelected = true
+        likeButton.tintColor = UIColor.red
+    }
+    
+    private func setupUnLikedStyle() {
+        likeButton.isSelected = false
+        likeButton.tintColor = themeColor
+    }
 }
 
 

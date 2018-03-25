@@ -15,7 +15,6 @@ extension PostContentController {
         guard let postId = post?.postId else { return }
         Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
             self.postMessages = postMessages
-            self.tableView.reloadData()
         }
         
         paginateResponse()

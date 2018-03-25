@@ -95,7 +95,7 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(CollectionViewLoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         self.extendedLayoutIncludesOpaqueBars = true
-      
+
         paginateComments()
     }
     
