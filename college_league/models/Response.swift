@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct Response {
-    
+struct Response: Equatable {
+
     var hasLiked = false
     
     let user: User
@@ -22,6 +22,10 @@ struct Response {
         
         let secondsFrom1970 = dictionary["creationDate"] as? Double ?? 0
         self.creationDate = Date(timeIntervalSince1970: secondsFrom1970)
+    }
+    
+    static func ==(lhs: Response, rhs: Response) -> Bool {
+        return lhs.responseId == rhs.responseId
     }
     
 }

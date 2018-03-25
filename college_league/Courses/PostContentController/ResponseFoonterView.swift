@@ -7,19 +7,27 @@
 //
 
 import UIKit
+import Firebase
 
 class ResponseFoonterView: UIView {
     
     weak var postContentController: PostContentController?
-    var response: Response?
+    
+    var response: Response? {
+        didSet {
+            guard let response = response else { return }
+            response.hasLiked ? setupLikedStyle() : setupUnLikedStyle()
+        }
+    }
     
     let buttonHeight: CGFloat = 32
     
-    let likeButton: UIButton = {
+    lazy var likeButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
         button.setImage(#imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysTemplate), for: UIControlState.normal)
         button.setImage(#imageLiteral(resourceName: "like_selected").withRenderingMode(.alwaysTemplate), for: .selected)
         button.tintColor = themeColor
+        button.addTarget(self, action: #selector(handleLikeResponse), for: .touchUpInside)
         return button
     }()
     
@@ -69,6 +77,42 @@ class ResponseFoonterView: UIView {
         let commentsController = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
         commentsController.response = response
         postContentController?.navigationController?.pushViewController(commentsController, animated: true)
+    }
+    
+    
+    
+    @objc func handleLikeResponse() {
+        guard let response = response else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let values = [response.responseId: likeButton.isSelected ? 0 : 1]
+        let ref = Database.database().reference().child("user_likedResponse").child(uid)
+        guard let i = postContentController?.responseArr.index(of: response) else {return}
+        
+        if likeButton.isSelected {
+            setupUnLikedStyle()
+            postContentController?.responseArr[i].hasLiked = false
+        } else {
+            setupLikedStyle()
+            postContentController?.responseArr[i].hasLiked = true
+        }
+        
+        ref.updateChildValues(values) { (err, ref) in
+            if let err = err {
+                print("Failed to like post:", err)
+                return
+            }
+            print("Successfully liked post.")
+        }
+    }
+    
+    private func setupLikedStyle() {
+        likeButton.isSelected = true
+        likeButton.tintColor = UIColor.red
+    }
+    
+    private func setupUnLikedStyle() {
+        likeButton.isSelected = false
+        likeButton.tintColor = themeColor
     }
     
 }

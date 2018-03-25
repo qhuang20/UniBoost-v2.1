@@ -161,10 +161,10 @@ class PostFooterView: UIView {
         
         ref.updateChildValues(values) { (err, ref) in
             if let err = err {
-                print("Failed to bookmark post:", err)
+                print("Failed to liked post:", err)
                 return
             }
-            print("Successfully bookmarked post.")
+            print("Successfully liked post.")
         }
     }
     

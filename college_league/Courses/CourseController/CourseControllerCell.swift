@@ -87,7 +87,7 @@ class CourseControllerCell: UICollectionViewCell {
         ref.updateChildValues(values) { (err, ref) in
             print("Successfully edited the course: ", courseId)
             
-            self.course?.hasFollowed = !(self.course!.hasFollowed)
+            self.course?.hasFollowed = !(self.course!.hasFollowed)///
             if let i = self.courseController?.courses.index(of: self.course!) {//Equatable
                 self.courseController?.courses[i] = self.course!
             }
@@ -110,11 +110,6 @@ class CourseControllerCell: UICollectionViewCell {
         }
     }
     
-    @objc func handleTapCell() {
-        guard let indexPath = courseController?.collectionView?.indexPath(for: self) else { return }
-        courseController?.didSelectCellAt(indexPath: indexPath)
-    }
-    
     private func setupAddedStyle() {
         addButton.setTitle("✓", for: .normal)
         addButton.setTitleColor(UIColor.white, for: .normal)
@@ -124,6 +119,13 @@ class CourseControllerCell: UICollectionViewCell {
     private func setupEmptyStyle() {
         addButton.setTitle(" ", for: .normal)
         addButton.backgroundColor = UIColor.white
+    }
+    
+    
+    
+    @objc func handleTapCell() {
+        guard let indexPath = courseController?.collectionView?.indexPath(for: self) else { return }
+        courseController?.didSelectCellAt(indexPath: indexPath)
     }
     
 }

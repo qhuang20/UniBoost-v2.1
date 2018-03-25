@@ -23,6 +23,7 @@ extension PostContentController {
     internal func paginateResponse() {
         print("\nstart paging")
         guard let postId = post?.postId else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("post_response").child(postId)
         isPaging = true
         var query = ref.queryOrderedByKey()
@@ -50,18 +51,25 @@ extension PostContentController {
                 print(responseId)
                 
                 Database.fetchResponseWithRID(rid: responseId, completion: { (response) in
-                    self.responseArr.append(response)
-                    print("inside:   ", response.responseId)
-                    
-                    Database.fetchResponseMessagesWithRID(rid: responseId) { (responseMessages) in
-                        self.responseMessagesDic[responseId] = responseMessages
-                        
-                        counter = counter + 1
-                        if allObjects.count == counter {
-                            self.isPaging = false
-                            self.tableView.reloadData()
+                    let ref = Database.database().reference().child("user_likedResponse").child(uid).child(responseId)
+                    ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                        var response = response
+                        if let value = snapshot.value as? Int, value == 1 {
+                            response.hasLiked = true
                         }
-                    }
+                        self.responseArr.append(response)
+                        print("inside:   ", response.responseId)
+                        
+                        Database.fetchResponseMessagesWithRID(rid: responseId) { (responseMessages) in
+                            self.responseMessagesDic[responseId] = responseMessages
+                            
+                            counter = counter + 1
+                            if allObjects.count == counter {
+                                self.isPaging = false
+                                self.tableView.reloadData()
+                            }
+                        }
+                    })
                 })
             })
         }) { (err) in
