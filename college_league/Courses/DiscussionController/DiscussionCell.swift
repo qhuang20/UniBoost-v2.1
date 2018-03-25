@@ -73,7 +73,7 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         discussionController?.searchBar?.resignFirstResponder()
         
         let navigationController = discussionController?.navigationController
-        let postContentController = PostContentController()
+        let postContentController = PostContentController(style: UITableViewStyle.grouped)
         postContentController.post = filteredPosts[indexPath.section]
         
         navigationController?.pushViewController(postContentController, animated: true)

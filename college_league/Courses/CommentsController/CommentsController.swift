@@ -26,27 +26,34 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     let loadingCellId = "loadingCellId"
     let loadingCellHeight: CGFloat = 50
     
-    lazy var commentTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "@\(response?.user.username ?? "")"
-        return textField
+    lazy var commentTextView: CommentInputTextView = {
+        let textView = CommentInputTextView()
+        textView.placeholderLabel.text = "@\(response?.user.username ?? "")"
+        textView.isScrollEnabled = false
+        textView.font = UIFont.systemFont(ofSize: 18)
+        return textView
     }()
     
-    lazy var containerView: UIView = {
-        let containerView = UIView()
-        containerView.backgroundColor = .white
-        containerView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
-        
+    lazy var sendButton: UIButton = {
         let sendButton = UIButton(type: .system)
         sendButton.setTitle("Send", for: .normal)
         sendButton.setTitleColor(themeColor, for: .normal)
-        sendButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        sendButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
-        containerView.addSubview(sendButton)
-        sendButton.anchor(containerView.topAnchor, left: nil, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 12, widthConstant: 50, heightConstant: 0)
+        return sendButton
+    }()
+    
+    lazy var containerView: CustomInputAccessoryView = {
+        let containerView = CustomInputAccessoryView()
+        containerView.backgroundColor = .white
+        containerView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        containerView.autoresizingMask = UIViewAutoresizing.flexibleHeight
         
-        containerView.addSubview(self.commentTextField)
-        self.commentTextField.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: sendButton.leftAnchor, topConstant: 0, leftConstant: 12, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        containerView.addSubview(sendButton)
+        sendButton.anchor(containerView.topAnchor, left: nil, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 12, widthConstant: 50, heightConstant: 0)
+        
+        containerView.addSubview(self.commentTextView)
+        self.commentTextView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: sendButton.leftAnchor, topConstant: 8, leftConstant: 12, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         let lineSeparatorView = UIView()
         lineSeparatorView.backgroundColor = UIColor(r: 230, g: 230, b: 230)
@@ -87,8 +94,9 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(CommentCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(CollectionViewLoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        
-        paginatePosts()
+        self.extendedLayoutIncludesOpaqueBars = true
+      
+        paginateComments()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -138,18 +146,18 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
         return cell
     }
     
-    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let offset = collectionView?.contentOffset.y
-        if offset == 0 && !isFinishedPaging && !isPaging {
-            paginatePosts()
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     
+
     
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let offset = collectionView?.contentOffset.y else { return }
+        if offset <= 0 && !isFinishedPaging && !isPaging {
+            paginateComments()
+        }
+    }
     
     private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
         guard !isFinishedPaging else { return false }

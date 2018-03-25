@@ -92,7 +92,7 @@ class CourseControllerCell: UICollectionViewCell {
                 self.courseController?.courses[i] = self.course!
             }
             
-            if self.course?.hasFollowed == true {///fix UI reaction speed, also fix others
+            if self.course?.hasFollowed == true {///fix UI reaction speed
                 self.setupAddedStyle()
                 self.courseController?.followingCourses.append(self.course!)
             } else {

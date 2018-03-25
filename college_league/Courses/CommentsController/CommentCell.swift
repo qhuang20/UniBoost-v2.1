@@ -73,9 +73,9 @@ class CommentCell: UICollectionViewCell {
     
     
     @objc func handleReply() {
-        commentsController?.commentTextField.placeholder = "@\(comment?.user.username ?? "")"
+        commentsController?.commentTextView.placeholderLabel.text = "@\(comment?.user.username ?? "")"
         commentsController?.toUser = comment?.user
-        commentsController?.commentTextField.becomeFirstResponder()
+        commentsController?.commentTextView.becomeFirstResponder()
     }
     
 }

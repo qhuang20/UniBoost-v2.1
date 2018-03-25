@@ -11,7 +11,7 @@ import Firebase
 
 extension CommentsController {
     
-    internal func paginatePosts() {
+    internal func paginateComments() {
         print("\nstart paging")
         isPaging = true
         guard let responseId = self.response?.responseId else { return }
@@ -61,7 +61,7 @@ extension CommentsController {
                             if self.scrollToBottomOneTimeFlag {
                                 self.scrollToBottom()
                                 if allObjects.count < queryNum {
-                                    self.paginatePosts()
+                                    self.paginateComments()
                                 }
                             } else {
                                 let indexPath = IndexPath(row: allObjects.count + 1, section: 0)
@@ -118,13 +118,14 @@ extension CommentsController {
     
     
     @objc func handleSend() {
-        guard let text = commentTextField.text, text.count > 0 else { return }
+        guard let text = commentTextView.text, text.count > 0 else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let toUid = toUser?.uid else { return }
         let responseId = self.response?.responseId ?? ""
-        let values = ["text": commentTextField.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid, "toUid": toUid] as [String : Any]
+        let values = ["text": commentTextView.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid, "toUid": toUid] as [String : Any]
         let ref = Database.database().reference().child("response_comments").child(responseId).childByAutoId()
-        commentTextField.text = nil
+        commentTextView.text = nil
+        commentTextView.showPlaceholderLabel()
         
         ref.updateChildValues(values) { (err, ref) in
             if let err = err {
@@ -137,7 +138,7 @@ extension CommentsController {
     
     @objc func handleKeyboardDidShow(_ notification: Notification) {
         let keyboardFrameHeight = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue.height
-        if comments.count > 0 && keyboardFrameHeight > 55 {
+        if comments.count > 0 && keyboardFrameHeight > 125 {
             scrollToBottom()
         }
     }

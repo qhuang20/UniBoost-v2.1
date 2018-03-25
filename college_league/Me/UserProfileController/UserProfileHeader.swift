@@ -63,7 +63,7 @@ class UserProfileHeader: UICollectionViewCell {
                 }
                 
                 print("Successfully unfollowed user:", self.user?.username ?? "")
-                self.setupFollowStyle()
+                self.setupFollowStyle()///move to front
             })
         } else {
             //follow
@@ -76,7 +76,7 @@ class UserProfileHeader: UICollectionViewCell {
                 }
                 
                 print("Successfully followed user: ", self.user?.username ?? "")
-                self.setupUnfollowStyle()
+                self.setupUnfollowStyle()///move
             }
         }
     }

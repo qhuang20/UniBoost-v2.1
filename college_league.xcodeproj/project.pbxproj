@@ -12,6 +12,8 @@
 		7B0ECA892065E73F00D66CB7 /* CollectionViewLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */; };
 		7B0ECA8B2066275400D66CB7 /* PostContentControlle+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */; };
 		7B0ECA8D20669BF900D66CB7 /* CommentsController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8C20669BF900D66CB7 /* CommentsController+Handlers.swift */; };
+		7B0ECA8F2067624F00D66CB7 /* CustomInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8E2067624F00D66CB7 /* CustomInputAccessoryView.swift */; };
+		7B0ECA912067792E00D66CB7 /* CommentInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA902067792E00D66CB7 /* CommentInputTextView.swift */; };
 		7B0FD70B203F650200E77422 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70A203F650200E77422 /* PostController.swift */; };
 		7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
@@ -83,6 +85,8 @@
 		7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLoadingCell.swift; sourceTree = "<group>"; };
 		7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostContentControlle+Handlers.swift"; sourceTree = "<group>"; };
 		7B0ECA8C20669BF900D66CB7 /* CommentsController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsController+Handlers.swift"; sourceTree = "<group>"; };
+		7B0ECA8E2067624F00D66CB7 /* CustomInputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputAccessoryView.swift; sourceTree = "<group>"; };
+		7B0ECA902067792E00D66CB7 /* CommentInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputTextView.swift; sourceTree = "<group>"; };
 		7B0FD70A203F650200E77422 /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 				7BB2ABF1205F2CD70086F3EB /* UserDefaults+Helpers.swift */,
 				7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */,
 				7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */,
+				7B0ECA8E2067624F00D66CB7 /* CustomInputAccessoryView.swift */,
+				7B0ECA902067792E00D66CB7 /* CommentInputTextView.swift */,
 				7B167668205651AA003D4E01 /* Date+Helper.swift */,
 			);
 			path = util;
@@ -561,6 +567,7 @@
 				7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */,
 				7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */,
 				7BF2E4D220538542004D4DBE /* UITextView+Helper.swift in Sources */,
+				7B0ECA8F2067624F00D66CB7 /* CustomInputAccessoryView.swift in Sources */,
 				7B48C76220464E0600768E96 /* DiscussionController.swift in Sources */,
 				7B4D4E0F205DC20300E59BD1 /* Comment.swift in Sources */,
 				7B16247820392494004C0537 /* UIViewController+Helper.swift in Sources */,
@@ -599,6 +606,7 @@
 				7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */,
 				7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */,
 				7B48C7692047CC6E00768E96 /* PostCell.swift in Sources */,
+				7B0ECA912067792E00D66CB7 /* CommentInputTextView.swift in Sources */,
 				7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B3ACAEF204B32D20065CB16 /* DiscussionCell+Handlers.swift in Sources */,
