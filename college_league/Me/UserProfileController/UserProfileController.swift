@@ -149,7 +149,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     private func estimateHeightForUserInfo(text: String) -> CGFloat {///
-        let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
         UIFont.boldSystemFont(ofSize: 22)
         let size = CGSize(width: view.frame.width - 93, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)

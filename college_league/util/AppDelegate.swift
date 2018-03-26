@@ -13,6 +13,10 @@ let themeColor = UIColor.init(r: 255, g: 134, b: 50)
 let lightThemeColor = UIColor.init(r: 255, g: 200, b: 144)
 let brightGray = UIColor.init(white: 0.95, alpha: 1)
 
+let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.black]
+let attributesTimeResponseLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.gray]
+let attributesForTime = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.gray]
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

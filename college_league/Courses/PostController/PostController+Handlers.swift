@@ -85,9 +85,9 @@ extension PostController {
         partsDic.forEach({ (count, object) in
             if let image = object as? UIImage {
                 let thumbnailImage = image.resizeImageTo(width: postTextView.frame.width - 38)
-                let imageHeight = thumbnailImage!.size.height
+                let imageHeight = thumbnailImage!.size.height//or calculate by ratio
                 let highQualityImage = image
-                guard let thumbnailData = UIImageJPEGRepresentation(thumbnailImage!, 0.8) else { return }
+                guard let thumbnailData = UIImageJPEGRepresentation(thumbnailImage!, 1) else { return }
                 guard let highQualityImageData = UIImageJPEGRepresentation(highQualityImage, 0.8) else { return }
                 
                 let filename = NSUUID().uuidString

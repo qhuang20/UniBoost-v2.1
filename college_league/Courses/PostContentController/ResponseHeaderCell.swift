@@ -40,8 +40,6 @@ class ResponseHeaderCell: UITableViewCell {
     
     let profileImageWidth: CGFloat = 44
     let padding: CGFloat = 8
-    let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
-    let attributesForTime = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.gray]
     
     lazy var profileImageView: CachedImageView = {
         let iv = CachedImageView(cornerRadius: profileImageWidth / 2)
@@ -68,7 +66,7 @@ class ResponseHeaderCell: UITableViewCell {
         contentView.addSubview(responseInfoLabel)
         
         profileImageView.anchor(marginGuide.topAnchor, left: marginGuide.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: profileImageWidth, heightConstant: profileImageWidth)
-        responseInfoLabel.anchor(marginGuide.topAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: marginGuide.rightAnchor, topConstant: 0, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        responseInfoLabel.anchor(marginGuide.topAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: marginGuide.rightAnchor, topConstant: 3, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

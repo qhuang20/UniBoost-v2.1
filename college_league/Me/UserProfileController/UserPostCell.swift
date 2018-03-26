@@ -59,8 +59,6 @@ class UserPostCell: UICollectionViewCell {
     let typeImageWidth: CGFloat = 25
     let padding: CGFloat = 8
     let cellSpacing: CGFloat = 1
-    let attributesForUserInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16)]
-    let attributesTimeResponseLike = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12), NSAttributedStringKey.foregroundColor: UIColor.gray]
     
     let typeImageView: UIImageView = {
         let iv = UIImageView()
