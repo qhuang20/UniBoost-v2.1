@@ -29,7 +29,7 @@ class ResponseController: PostController {
     
     override func handlePost() {
         guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }
-        //dismiss(animated: true, completion: nil)///
+        dismiss(animated: true, completion: nil)
         
         let partsDic = getPartsDictionary()
         uploadImagesToStorage(partsDic: partsDic)
@@ -112,8 +112,6 @@ class ResponseController: PostController {
             postResponseRef.updateChildValues([responseId: 1])
             
             print("Yeeeeeaaaaaahhhhhh, Successfully saved response to DB")
-            self.dismiss(animated: true, completion: nil)
-            
             NotificationCenter.default.post(name: ResponseController.updateResponseNotificationName, object: nil)
         }
     }
