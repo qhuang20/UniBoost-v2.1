@@ -50,7 +50,8 @@ class PostCell: UITableViewCell {
         attributedText.appendNewLine()
         
         let timeAgoDisplay = post.creationDate.timeAgoDisplay()
-        attributedText.append(NSAttributedString(string: "\(timeAgoDisplay) • 10 response • 12000 likes", attributes: attributesTimeResponseLike))
+        let responseCount = post.response
+        attributedText.append(NSAttributedString(string: "\(timeAgoDisplay) • \(responseCount) response • 12000 likes", attributes: attributesTimeResponseLike))
         
         attributedText.setLineSpacing(8)
         postLabel.attributedText = attributedText

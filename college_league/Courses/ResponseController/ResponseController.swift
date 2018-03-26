@@ -14,6 +14,7 @@ class ResponseController: PostController {
     var postId: String?
     
     static let updateResponseNotificationName = NSNotification.Name(rawValue: "UpdateResponse")
+    static let updateResponseCountName = NSNotification.Name(rawValue: "UpdateResponseCount")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +28,34 @@ class ResponseController: PostController {
     
     
     
+    private func changeResponseCount() {///
+        guard let postId = postId else { return }
+        let ref = Database.database().reference().child("posts").child(postId).child("response")
+        
+        ref.runTransactionBlock({ (currentData) -> TransactionResult in
+            let currentValue = currentData.value as? Int ?? 0
+            currentData.value = currentValue + 1
+            
+            return TransactionResult.success(withValue: currentData)
+        }) { (err, committed, snapshot) in
+            if let error = err {
+                print("Failed to increase response count", error)
+                return
+            }
+            print("Successfully increased reponse count")
+            
+            let userInfo = ["postId": postId, "add": true] as [String : Any]
+            NotificationCenter.default.post(name: ResponseController.updateResponseCountName, object: nil, userInfo: userInfo)
+        }
+    }
+    
     override func handlePost() {
         guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }
         dismiss(animated: true, completion: nil)
         
         let partsDic = getPartsDictionary()
         uploadImagesToStorage(partsDic: partsDic)
+        changeResponseCount()
     }
     
     private func uploadImagesToStorage(partsDic: [Int: Any]) {

@@ -86,6 +86,15 @@ extension PostContentController {
         paginateResponse()
     }
     
+    @objc func updateResponseCount(notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let addFlag = userInfo["add"] as? Bool else { return }
+        guard let oldResponseCount = post?.response else { return }
+        
+        self.post?.response = addFlag ? oldResponseCount + 1 : oldResponseCount - 1
+        self.tableView.reloadData()
+    }
+    
 }
 
 

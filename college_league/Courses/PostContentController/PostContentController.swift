@@ -49,6 +49,8 @@ class PostContentController: UITableViewController {
         tableView.register(ResponseMessageCell.self, forCellReuseIdentifier: responseMessageCellId)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleUpdate), name: ResponseController.updateResponseNotificationName, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateResponseCount), name: ResponseController.updateResponseCountName, object: nil)
 
         fetchPostMessagesResponse()
     }
@@ -60,7 +62,7 @@ class PostContentController: UITableViewController {
     
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return isFinishedPaging ? responseArr.count + 1 : responseArr.count + 1 + 1
+        return responseArr.count + 1 + 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,6 +83,7 @@ class PostContentController: UITableViewController {
         if isLoadingIndexPath(indexPath) {
             let cell = TableViewLoadingCell(style: .default, reuseIdentifier: "loading")
             cell.isTheEnd = isFinishedPaging
+            cell.theEndLabel.text = "no more response"
             return cell
         }
         
@@ -175,7 +178,6 @@ class PostContentController: UITableViewController {
     }
     
     private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
-        guard !isFinishedPaging else { return false }
         return indexPath.section == responseArr.count + 1
     }
     

@@ -18,6 +18,8 @@ struct Post {
     var thumbnailImageUrl: String?
     var thumbnailImageHeight: CGFloat?
     let creationDate: Date
+    let likes: Int
+    var response: Int
     
     init(user: User, postId: String, dictionary: [String: Any]) {
         self.user = user
@@ -29,6 +31,8 @@ struct Post {
         self.thumbnailImageHeight = dictionary["thumbnailImageHeight"] as? CGFloat
         let secondsFrom1970 = dictionary["creationDate"] as? Double ?? 0
         self.creationDate = Date(timeIntervalSince1970: secondsFrom1970)
+        self.likes = dictionary["likes"] as? Int ?? 0
+        self.response = dictionary["response"] as? Int ?? 0
     }
     
 }

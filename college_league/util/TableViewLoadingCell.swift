@@ -33,6 +33,7 @@ class TableViewLoadingCell : UITableViewCell {
         let label = UILabel()
         label.text = "Ops, Reach The End"
         label.textColor = UIColor.gray
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .center
         return label
     }()
@@ -49,7 +50,7 @@ class TableViewLoadingCell : UITableViewCell {
         contentView.addSubview(activityIndicator)
         contentView.addSubview(theEndLabel)
         
-        activityIndicator.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: theEndLabel.topAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        activityIndicator.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: theEndLabel.topAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 30)
         theEndLabel.anchor(activityIndicator.bottomAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: 0, heightConstant: 30)
     }
     
