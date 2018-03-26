@@ -17,7 +17,8 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     var filteredCourses = [Course]()
     var isFinishedPaging = false
     var isPaging = true
-    var queryEndingValue = ""
+    var queryEndingValue = 0
+    var queryEndingChildKey = ""
 
     let cellId = "cellId"
     let loadingCellId = "loadingCellId"

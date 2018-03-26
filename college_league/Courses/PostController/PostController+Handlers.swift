@@ -69,12 +69,33 @@ extension PostController {
         return partsDic
     }
     
+    private func addPostsCount() {
+        guard let course = course else { return }
+        let school = course.school
+        let courseId = course.courseId
+        let ref = Database.database().reference().child("school_courses").child(school).child(courseId).child("postsCount")
+        
+        ref.runTransactionBlock({ (currentData) -> TransactionResult in
+            let currentValue = currentData.value as? Int ?? 0
+            currentData.value = currentValue + 1
+            
+            return TransactionResult.success(withValue: currentData)
+        }) { (err, committed, snapshot) in
+            if let error = err {
+                print("Failed to increase post count", error)
+                return
+            }
+            print("Successfully increased post count")
+        }
+    }
+    
     @objc func handlePost() {
         guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }///
-        //dismiss(animated: true, completion: nil)///
+        dismiss(animated: true, completion: nil)
 
         let partsDic = getPartsDictionary()
         uploadImagesToStorage(partsDic: partsDic)
+        addPostsCount()
     }
     
     private func uploadImagesToStorage(partsDic: [Int: Any]) {
@@ -163,8 +184,6 @@ extension PostController {
             coursePostsChild.updateChildValues([postId: 1])
             
             print("Yeeeeeaaaaaahhhhhh, Successfully saved post to DB")
-            self.dismiss(animated: true, completion: nil)
-            
             NotificationCenter.default.post(name: PostController.updateFeedNotificationName, object: nil)
         }
     }

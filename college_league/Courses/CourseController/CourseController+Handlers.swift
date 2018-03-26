@@ -17,11 +17,11 @@ extension CourseController: UISearchBarDelegate {
         guard let school = school else { return }
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("school_courses").child(school)
-        var query = ref.queryOrderedByKey()
+        var query = ref.queryOrdered(byChild: "postsCount")//ref.queryOrderedByKey()
         let queryNum: UInt = 9
         
         if courses.count > 0 {
-            query = query.queryEnding(atValue: queryEndingValue)
+            query = query.queryEnding(atValue: queryEndingValue, childKey: queryEndingChildKey)
         }
         
         query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -35,7 +35,10 @@ extension CourseController: UISearchBarDelegate {
                 self.collectionView?.reloadData()
             }
             if self.courses.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
-            self.queryEndingValue = allObjects.last?.key ?? ""
+            let lastSnapshot = allObjects.last
+            guard let dictionary = lastSnapshot?.value as? [String: Any] else { return }
+            self.queryEndingValue = dictionary["postsCount"] as? Int ?? 0
+            self.queryEndingChildKey = lastSnapshot?.key ?? ""
             
             allObjects.forEach({ (snapshot) in
                 let courseId = snapshot.key

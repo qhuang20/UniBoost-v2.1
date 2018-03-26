@@ -91,6 +91,10 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewWillDisappear(animated)
         postTextView.resignFirstResponder()
     }
+    
+    deinit {
+        print("deinit")
+    }
 
     private func setupNavigationButtons() {
         navigationController?.navigationBar.tintColor = .black
