@@ -11,12 +11,17 @@ import Firebase
 
 extension PostContentController {
     
-    internal func fetchPostMessagesResponse() {
+    internal func fetchPostAndResponse() {
         guard let postId = post?.postId else { return }
-        Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
-            self.postMessages = postMessages
+        Database.fetchPostWithPID(pid: postId) { (post) in
+            self.post = post
+            
+            Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
+                self.postMessages = postMessages
+                self.tableView.reloadData()
+            }
         }
-        
+
         paginateResponse()
     }
     

@@ -15,7 +15,7 @@ class PostFooterView: UIView {
     
     var post: Post? {
         didSet {
-            checkIfPostBookmarked()
+            checkIfPostBookmarked()///
             checkIfPostLiked()
         }
     }

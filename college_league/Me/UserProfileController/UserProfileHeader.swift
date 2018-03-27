@@ -18,7 +18,7 @@ class UserProfileHeader: UICollectionViewCell {
             profileImageView.loadImage(urlString: profileImageUrl)
             userInfoLabel.text = user?.username
             
-            setupEditFollowButton()
+            setupEditFollowButton()///
         }
     }
     
@@ -149,7 +149,7 @@ class UserProfileHeader: UICollectionViewCell {
     }()
     
     lazy var editProfileFollowButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setTitle("Edit Profile", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
