@@ -12,7 +12,7 @@ import Firebase
 
 class PostContentController: UITableViewController {
     
-    var post: Post?
+    var post: Post?///fetch it again
     var postMessages = [PostMessage]()
     
     var responseArr = [Response]()
@@ -51,6 +51,8 @@ class PostContentController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleUpdate), name: ResponseController.updateResponseNotificationName, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateResponseCount), name: ResponseController.updateResponseCountName, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updatePostLikesCount), name: PostFooterView.updatePostLikesCountName, object: nil)
 
         fetchPostMessagesResponse()
     }

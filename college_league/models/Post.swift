@@ -18,7 +18,7 @@ struct Post {
     var thumbnailImageUrl: String?
     var thumbnailImageHeight: CGFloat?
     let creationDate: Date
-    let likes: Int
+    var likes: Int
     var response: Int
     
     init(user: User, postId: String, dictionary: [String: Any]) {

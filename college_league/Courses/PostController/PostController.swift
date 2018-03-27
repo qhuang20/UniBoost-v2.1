@@ -93,7 +93,7 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     deinit {
-        print("deinit")
+//        print("deinit")
     }
 
     private func setupNavigationButtons() {

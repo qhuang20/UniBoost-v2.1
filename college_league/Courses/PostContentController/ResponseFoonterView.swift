@@ -16,7 +16,9 @@ class ResponseFoonterView: UIView {
     var response: Response? {
         didSet {
             guard let response = response else { return }
+            let likes = response.likes
             response.hasLiked ? setupLikedStyle() : setupUnLikedStyle()
+            likesLabel.text = "\(likes) likes"
         }
     }
     
@@ -89,12 +91,13 @@ class ResponseFoonterView: UIView {
         guard let i = postContentController?.responseArr.index(of: response) else {return}
         
         if likeButton.isSelected {
-            setupUnLikedStyle()
+            self.response?.hasLiked = false
             postContentController?.responseArr[i].hasLiked = false
         } else {
-            setupLikedStyle()
+            self.response?.hasLiked = true
             postContentController?.responseArr[i].hasLiked = true
         }
+        changeResponseLikesCount()
         
         ref.updateChildValues(values) { (err, ref) in
             if let err = err {
@@ -113,6 +116,32 @@ class ResponseFoonterView: UIView {
     private func setupUnLikedStyle() {
         likeButton.isSelected = false
         likeButton.tintColor = themeColor
+    }
+    
+    private func changeResponseLikesCount() {
+        guard let responseId = response?.responseId else { return }
+        let ref = Database.database().reference().child("response").child(responseId).child("likes")
+        let isSelected = self.likeButton.isSelected
+        
+        if let i = self.postContentController?.responseArr.index(of: self.response!) {
+            let oldLikes = self.response?.likes ?? 0
+            self.postContentController?.responseArr[i].likes = isSelected ? oldLikes + 1 : oldLikes - 1
+            self.response?.likes = isSelected ? oldLikes + 1 : oldLikes - 1
+        }
+        
+        ref.runTransactionBlock({ (currentData) -> TransactionResult in
+            
+            let currentValue = currentData.value as? Int ?? 0
+            currentData.value = isSelected ? currentValue + 1 : currentValue - 1
+            
+            return TransactionResult.success(withValue: currentData)
+        }) { (err, committed, snapshot) in
+            if let error = err {
+                print("Failed to increase response likes count", error)
+                return
+            }
+            print("Successfully increased response likes count")
+        }
     }
     
 }

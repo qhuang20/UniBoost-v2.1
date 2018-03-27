@@ -92,7 +92,17 @@ extension PostContentController {
         guard let oldResponseCount = post?.response else { return }
         
         self.post?.response = addFlag ? oldResponseCount + 1 : oldResponseCount - 1
-        self.tableView.reloadData()
+        //handleUpdate will be called later to reload data
+    }
+    
+    @objc func updatePostLikesCount(notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let addFlag = userInfo["liked"] as? Bool else { return }
+        guard let oldPostLikesCount = post?.likes else { return }
+        let topIndexPath = IndexPath(row: 0, section: 0)
+        
+        self.post?.likes = addFlag ? oldPostLikesCount + 1 : oldPostLikesCount - 1
+        tableView.reloadRows(at: [topIndexPath], with: .none)
     }
     
 }

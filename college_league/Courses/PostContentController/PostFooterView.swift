@@ -20,6 +20,8 @@ class PostFooterView: UIView {
         }
     }
     
+    static let updatePostLikesCountName = NSNotification.Name(rawValue: "updatePostLikesCount")
+    
     let respondButtonColor = UIColor.init(r: 255, g: 244, b: 186)
     let buttonHeight: CGFloat = 32
     
@@ -158,6 +160,7 @@ class PostFooterView: UIView {
         } else {
             setupLikedStyle()
         }
+        changePostLikesCount()
         
         ref.updateChildValues(values) { (err, ref) in
             if let err = err {
@@ -177,6 +180,30 @@ class PostFooterView: UIView {
         likeButton.isSelected = false
         likeButton.tintColor = themeColor
     }
+    
+    private func changePostLikesCount() {
+        guard let postId = post?.postId else { return }
+        let ref = Database.database().reference().child("posts").child(postId).child("likes")
+        let isSelected = self.likeButton.isSelected
+        
+        let userInfo = ["postId": postId, "liked": isSelected] as [String : Any]
+        NotificationCenter.default.post(name: PostFooterView.updatePostLikesCountName, object: nil, userInfo: userInfo)
+        
+        ref.runTransactionBlock({ (currentData) -> TransactionResult in
+            
+            let currentValue = currentData.value as? Int ?? 0
+            currentData.value = isSelected ? currentValue + 1 : currentValue - 1
+            
+            return TransactionResult.success(withValue: currentData)
+        }) { (err, committed, snapshot) in
+            if let error = err {
+                print("Failed to increase post likes count", error)
+                return
+            }
+            print("Successfully increased post likes count")
+        }
+    }
+    
 }
 
 
