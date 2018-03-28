@@ -23,6 +23,9 @@ class UserProfileHeader: UICollectionViewCell {
             
             profileImageView.loadImage(urlString: profileImageUrl)
             userInfoLabel.text = user.username
+            likesLabel.attributedText = setupAttributedString(number: user.likes, text: "likes")
+            followersLabel.attributedText = setupAttributedString(number: user.followers, text: "followers")
+            followingLabel.attributedText = setupAttributedString(number: user.following, text: "following")
             
             if userId == currentLoggedInUserId {
                 setupEditProfileStyle()
@@ -32,73 +35,19 @@ class UserProfileHeader: UICollectionViewCell {
         }
     }
     
-    @objc func handleEditProfileOrFollow() {
-        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
-        guard let userId = user?.uid else { return }
-        
-        if editProfileFollowButton.titleLabel?.text == "Edit Profile" {
-            //edit profile
-            return
-        }
-        
-        if editProfileFollowButton.titleLabel?.text == "Unfollow" {//unfollow
-            user?.hasFollowed = false
-            userProfileController?.user?.hasFollowed = false
-            
-            let ref = Database.database().reference().child("user_following").child(currentLoggedInUserId).child(userId)
-            ref.removeValue(completionBlock: { (err, ref) in
-                if let err = err {
-                    print("Failed to unfollow user:", err)
-                    return
-                }
-                
-                print("Successfully unfollowed user:", self.user?.username ?? "")
-            })
-        } else {//follow
-            user?.hasFollowed = true
-            userProfileController?.user?.hasFollowed = true
-            
-            let ref = Database.database().reference().child("user_following").child(currentLoggedInUserId)
-            let values = [userId: 1]
-            ref.updateChildValues(values) { (err, ref) in
-                if let err = err {
-                    print("Failed to follow user:", err)
-                    return
-                }
-                
-                print("Successfully followed user: ", self.user?.username ?? "")
-                self.setupUnfollowStyle()///move
-            }
-        }
+    private func setupAttributedString(number: Int, text: String) -> NSAttributedString {
+        let attributedText = NSMutableAttributedString(string: "\(number)\n", attributes: numberAttributes)
+        attributedText.append(NSAttributedString(string: text, attributes: labelAttributes))
+        return attributedText
     }
-    
-    private func setupFollowStyle() {
-        self.editProfileFollowButton.setTitle("Follow", for: .normal)
-        self.editProfileFollowButton.backgroundColor = themeColor
-        self.editProfileFollowButton.setTitleColor(.white, for: .normal)
-    }
-    
-    private func setupUnfollowStyle() {
-        self.editProfileFollowButton.setTitle("Unfollow", for: .normal)
-        self.editProfileFollowButton.backgroundColor = .white
-        self.editProfileFollowButton.setTitleColor(.black, for: .normal)
-    }
-    
-    private func setupEditProfileStyle() {
-        self.editProfileFollowButton.setTitle("Edit Profile", for: .normal)
-        self.editProfileFollowButton.setTitleColor(.black, for: .normal)
-        self.editProfileFollowButton.backgroundColor = .white
-    }
-    
-    
-    
+
     let superBrightGray = UIColor.init(white: 0.96, alpha: 0.6)
     let numberAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)]
     let labelAttributes = [NSAttributedStringKey.foregroundColor: UIColor.lightGray, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]
     
     let userInfoLabel: UILabel = {
         let label = UILabel()
-        label.text = "username"
+        label.text = "username: bla bla bla"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -114,7 +63,7 @@ class UserProfileHeader: UICollectionViewCell {
     
     lazy var likesLabel: UILabel = {
         let label = UILabel()
-        let attributedText = NSMutableAttributedString(string: "11\n", attributes: numberAttributes)
+        let attributedText = NSMutableAttributedString(string: "0\n", attributes: numberAttributes)
         attributedText.append(NSAttributedString(string: "likes", attributes: labelAttributes))
         label.attributedText = attributedText
         
@@ -243,4 +192,114 @@ class UserProfileHeader: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
+    @objc func handleEditProfileOrFollow() {
+        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
+        guard let userId = user?.uid else { return }
+        
+        if editProfileFollowButton.titleLabel?.text == "Edit Profile" {
+            //edit profile
+            return
+        }
+        
+        if editProfileFollowButton.titleLabel?.text == "Unfollow" {//unfollow
+            user?.hasFollowed = false
+            userProfileController?.user?.hasFollowed = false
+            changeFollowersCountForUser(isFollowed: false)
+            changeFollowingCountForUser(isFollowed: false)
+            let followers = user?.followers ?? 0
+            user?.followers = followers - 1
+            userProfileController?.user?.followers = followers - 1
+            
+            let ref = Database.database().reference().child("user_following").child(currentLoggedInUserId).child(userId)
+            ref.removeValue(completionBlock: { (err, ref) in
+                if let err = err {
+                    print("Failed to unfollow user:", err)
+                    return
+                }
+                print("Successfully unfollowed user:", self.user?.username ?? "")
+            })
+        } else {//follow
+            user?.hasFollowed = true
+            userProfileController?.user?.hasFollowed = true
+            changeFollowersCountForUser(isFollowed: true)
+            changeFollowingCountForUser(isFollowed: true)
+            let followers = user?.followers ?? 0
+            user?.followers = followers + 1
+            userProfileController?.user?.followers = followers + 1
+            
+            let ref = Database.database().reference().child("user_following").child(currentLoggedInUserId)
+            let values = [userId: 1]
+            ref.updateChildValues(values) { (err, ref) in
+                if let err = err {
+                    print("Failed to follow user:", err)
+                    return
+                }
+                print("Successfully followed user: ", self.user?.username ?? "")
+            }
+        }
+    }
+    
+    private func setupFollowStyle() {
+        self.editProfileFollowButton.setTitle("Follow", for: .normal)
+        self.editProfileFollowButton.backgroundColor = themeColor
+        self.editProfileFollowButton.setTitleColor(.white, for: .normal)
+    }
+    
+    private func setupUnfollowStyle() {
+        self.editProfileFollowButton.setTitle("Unfollow", for: .normal)
+        self.editProfileFollowButton.backgroundColor = .white
+        self.editProfileFollowButton.setTitleColor(.black, for: .normal)
+    }
+    
+    private func setupEditProfileStyle() {
+        self.editProfileFollowButton.setTitle("Edit Profile", for: .normal)
+        self.editProfileFollowButton.setTitleColor(.black, for: .normal)
+        self.editProfileFollowButton.backgroundColor = .white
+    }
+    
+    private func changeFollowersCountForUser(isFollowed: Bool) {
+        guard let userId = user?.uid else { return }
+        let ref = Database.database().reference().child("users").child(userId).child("followers")
+        
+        ref.runTransactionBlock({ (currentData) -> TransactionResult in
+            
+            let currentValue = currentData.value as? Int ?? 0
+            currentData.value = isFollowed ? currentValue + 1 : currentValue - 1
+            
+            return TransactionResult.success(withValue: currentData)
+        }) { (err, committed, snapshot) in
+            if let error = err {
+                print("Failed to increase user followers count", error)
+                return
+            }
+            print("Successfully increased user followers count")
+        }
+    }
+    
+    private func changeFollowingCountForUser(isFollowed: Bool) {
+        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("users").child(currentLoggedInUserId).child("following")
+        
+        ref.runTransactionBlock({ (currentData) -> TransactionResult in
+            
+            let currentValue = currentData.value as? Int ?? 0
+            currentData.value = isFollowed ? currentValue + 1 : currentValue - 1
+            
+            return TransactionResult.success(withValue: currentData)
+        }) { (err, committed, snapshot) in
+            if let error = err {
+                print("Failed to increase user following count", error)
+                return
+            }
+            print("Successfully increased user following count")
+        }
+    }
+    
 }
+
+
+
+
+

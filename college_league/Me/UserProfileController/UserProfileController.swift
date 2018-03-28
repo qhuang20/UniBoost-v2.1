@@ -33,6 +33,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         super.viewDidLoad()
         configureCollectionVeiw()
         collectionView?.backgroundView = refreshControl
+        collectionView?.alwaysBounceVertical = true
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
         
         if userId == nil {

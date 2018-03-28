@@ -59,7 +59,7 @@ extension SignupController: UINavigationControllerDelegate, UIImagePickerControl
             
             
                 guard let uid = user?.uid else { return }
-                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl]
+                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "likes": 0, "followers": 0, "following": 0] as [String : Any]
                 let values = [uid: dictionaryValues]
             
                 self.updateUsersValuesToDatabase(values: values)

@@ -9,17 +9,24 @@
 import Foundation
 
 struct User {
-    
+    //"likes": 0, "followers": 0, "following": 0
     var hasFollowed: Bool = false
     
     let uid: String
     let username: String
     let profileImageUrl: String
     
+    var likes = 0
+    var followers = 0
+    var following = 0
+    
     init(uid: String, dictionary: [String: Any]) {
         self.uid = uid
         self.username = dictionary["username"] as? String ?? ""
         self.profileImageUrl = dictionary["profileImageUrl"]  as? String ?? ""
+        self.likes = dictionary["likes"] as? Int ?? 0
+        self.followers = dictionary["followers"] as? Int ?? 0
+        self.following = dictionary["following"] as? Int ?? 0
     }
     
 }

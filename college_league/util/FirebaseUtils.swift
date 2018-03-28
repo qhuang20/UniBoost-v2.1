@@ -14,7 +14,7 @@ extension Database {
         
         let ref = Database.database().reference().child("users")
         ref.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            
+            print(snapshot)
             guard let userDictionary = snapshot.value as? [String: Any] else { return }
             let user = User(uid: uid, dictionary: userDictionary)
             completion(user)
