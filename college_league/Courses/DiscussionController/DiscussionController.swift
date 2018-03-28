@@ -111,7 +111,9 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     
-    ///add previevois search text
+    
+    var firstPreviousSearchText: String = ""
+    var secondPreviousSearchText: String = ""
     var previousIndex: CGFloat = 0
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -124,7 +126,8 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
             cell?.discussionController = self
-            searchBar?.text = ""
+            secondPreviousSearchText = searchBar?.text ?? ""
+            searchBar?.text = firstPreviousSearchText
             searchBar?.resignFirstResponder()
             previousIndex = index
             
@@ -133,7 +136,8 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
             cell?.discussionController = self
-            searchBar?.text = ""
+            firstPreviousSearchText = searchBar?.text ?? ""
+            searchBar?.text = secondPreviousSearchText
             searchBar?.resignFirstResponder()
             previousIndex = index
         }

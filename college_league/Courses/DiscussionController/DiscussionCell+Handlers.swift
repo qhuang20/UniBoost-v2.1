@@ -94,6 +94,7 @@ extension DiscussionCell: UISearchBarDelegate {
     
     @objc func handleRefresh() {
         if isPaging { return }
+        discussionController?.searchBar?.text  = ""
         let topIndexPath = IndexPath(row: 0, section: 0)
         tableView.scrollToRow(at: topIndexPath, at: .top, animated: false)
         posts.removeAll()//start over
@@ -101,7 +102,7 @@ extension DiscussionCell: UISearchBarDelegate {
         paginatePosts()
     }
     
-
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchBar = discussionController?.searchBar else { return }
