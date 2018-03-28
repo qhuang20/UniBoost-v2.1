@@ -11,10 +11,10 @@ import Firebase
 
 extension DiscussionCell: UISearchBarDelegate {
     
-    internal func paginatePosts() {
+    @objc func paginatePosts() {//to allow override for TrendingCell
         print("\nstart paging")
         guard let course = course else { return }
-        guard let searchBar = discussionController?.searchBar else { return }
+        let searchBar = discussionController?.searchBar
         isPaging = true
         let ref = Database.database().reference().child("school_course_posts").child(course.school).child(course.courseId)
         var query = ref.queryOrderedByKey()
@@ -43,13 +43,15 @@ extension DiscussionCell: UISearchBarDelegate {
                 print(postId)
                 
                 Database.fetchPostWithPID(pid: postId, completion: { (post) in
+                    var post = post
+                    post.course = self.course
                     self.posts.append(post)
                     print("inside:   ", post.postId)
                     
                     counter = counter + 1
                     if allObjects.count == counter {
                         self.isPaging = false
-                        self.getFilteredPostsWith(searchText: searchBar.text ?? "")
+                        self.getFilteredPostsWith(searchText: searchBar?.text ?? "")
                         self.tableView.reloadData()
                     }
                 })
@@ -59,7 +61,7 @@ extension DiscussionCell: UISearchBarDelegate {
         }
     }
     
-    private func getFilteredPostsWith(searchText: String) {
+    internal func getFilteredPostsWith(searchText: String) {
         if searchText.isEmpty {
             filteredPosts = posts
         } else {
@@ -92,6 +94,8 @@ extension DiscussionCell: UISearchBarDelegate {
     
     @objc func handleRefresh() {
         if isPaging { return }
+        let topIndexPath = IndexPath(row: 0, section: 0)
+        tableView.scrollToRow(at: topIndexPath, at: .top, animated: false)
         posts.removeAll()//start over
         self.isFinishedPaging = false
         paginatePosts()

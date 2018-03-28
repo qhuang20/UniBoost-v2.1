@@ -10,6 +10,8 @@ import Foundation
 
 struct User {
     
+    var hasFollowed: Bool = false
+    
     let uid: String
     let username: String
     let profileImageUrl: String

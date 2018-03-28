@@ -12,35 +12,23 @@ import LBTAComponents
 
 class UserProfileHeader: UICollectionViewCell {
     
+    weak var userProfileController: UserProfileController?
+    
     var user: User? {
         didSet {
-            guard let profileImageUrl = user?.profileImageUrl else { return }
-            profileImageView.loadImage(urlString: profileImageUrl)
-            userInfoLabel.text = user?.username
+            guard let user = user else { return }
+            guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
+            let profileImageUrl = user.profileImageUrl
+            let userId = user.uid
             
-            setupEditFollowButton()///
-        }
-    }
-    
-    private func setupEditFollowButton() {
-        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
-        guard let userId = user?.uid else { return }
-        
-        if currentLoggedInUserId == userId {
-            //edit profile
-        } else {
-            //check if following
-            let ref = Database.database().reference().child("user_following").child(currentLoggedInUserId).child(userId)
-            ref.observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                if let isFollowing = snapshot.value as? Int, isFollowing == 1 {
-                    self.setupUnfollowStyle()
-                } else {
-                    self.setupFollowStyle()
-                }
-            }, withCancel: { (err) in
-                print("Failed to check if following:", err)
-            })
+            profileImageView.loadImage(urlString: profileImageUrl)
+            userInfoLabel.text = user.username
+            
+            if userId == currentLoggedInUserId {
+                setupEditProfileStyle()
+            } else {
+                user.hasFollowed ? setupUnfollowStyle() : setupFollowStyle()
+            }
         }
     }
     
@@ -53,8 +41,10 @@ class UserProfileHeader: UICollectionViewCell {
             return
         }
         
-        if editProfileFollowButton.titleLabel?.text == "Unfollow" {
-            //unfollow
+        if editProfileFollowButton.titleLabel?.text == "Unfollow" {//unfollow
+            user?.hasFollowed = false
+            userProfileController?.user?.hasFollowed = false
+            
             let ref = Database.database().reference().child("user_following").child(currentLoggedInUserId).child(userId)
             ref.removeValue(completionBlock: { (err, ref) in
                 if let err = err {
@@ -63,10 +53,11 @@ class UserProfileHeader: UICollectionViewCell {
                 }
                 
                 print("Successfully unfollowed user:", self.user?.username ?? "")
-                self.setupFollowStyle()///move to front
             })
-        } else {
-            //follow
+        } else {//follow
+            user?.hasFollowed = true
+            userProfileController?.user?.hasFollowed = true
+            
             let ref = Database.database().reference().child("user_following").child(currentLoggedInUserId)
             let values = [userId: 1]
             ref.updateChildValues(values) { (err, ref) in
@@ -93,6 +84,12 @@ class UserProfileHeader: UICollectionViewCell {
         self.editProfileFollowButton.setTitleColor(.black, for: .normal)
     }
     
+    private func setupEditProfileStyle() {
+        self.editProfileFollowButton.setTitle("Edit Profile", for: .normal)
+        self.editProfileFollowButton.setTitleColor(.black, for: .normal)
+        self.editProfileFollowButton.backgroundColor = .white
+    }
+    
     
     
     let superBrightGray = UIColor.init(white: 0.96, alpha: 0.6)
@@ -106,7 +103,7 @@ class UserProfileHeader: UICollectionViewCell {
         return label
     }()
     
-    let profileImageView: CachedImageView = {///
+    let profileImageView: CachedImageView = {
         let iv = CachedImageView()
         iv.contentMode = .scaleAspectFill
         iv.backgroundColor = UIColor.lightGray
@@ -115,10 +112,10 @@ class UserProfileHeader: UICollectionViewCell {
         return iv
     }()
     
-    lazy var pointsLabel: UILabel = {
+    lazy var likesLabel: UILabel = {
         let label = UILabel()
         let attributedText = NSMutableAttributedString(string: "11\n", attributes: numberAttributes)
-        attributedText.append(NSAttributedString(string: "points", attributes: labelAttributes))
+        attributedText.append(NSAttributedString(string: "likes", attributes: labelAttributes))
         label.attributedText = attributedText
         
         label.textAlignment = .center
@@ -150,8 +147,6 @@ class UserProfileHeader: UICollectionViewCell {
     
     lazy var editProfileFollowButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Edit Profile", for: .normal)
-        button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.layer.borderColor = UIColor(white: 0, alpha: 0.2).cgColor
         button.layer.borderWidth = 1
@@ -208,7 +203,7 @@ class UserProfileHeader: UICollectionViewCell {
         
         setupUserStatsView()
 
-        editProfileFollowButton.anchor(pointsLabel.bottomAnchor, left: pointsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, topConstant: 0, leftConstant: 20.5, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 32)
+        editProfileFollowButton.anchor(likesLabel.bottomAnchor, left: likesLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, topConstant: 0, leftConstant: 20.5, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 32)
         
         setupBottomToolbar()
         
@@ -216,7 +211,7 @@ class UserProfileHeader: UICollectionViewCell {
     }
     
     private func setupUserStatsView() {
-        let stackView = UIStackView(arrangedSubviews: [pointsLabel, followersLabel, followingLabel])
+        let stackView = UIStackView(arrangedSubviews: [likesLabel, followersLabel, followingLabel])
         stackView.distribution = .fillEqually
         
         addSubview(stackView)

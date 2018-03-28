@@ -19,7 +19,7 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     
     var course: Course? {
         didSet {
-            handleRefresh()
+            paginatePosts()
         }
     }
     
@@ -55,11 +55,11 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     override init(frame: CGRect) {
         super.init(frame: frame)
         tableView.backgroundView = refreshControl
+        tableView.register(PostCell.self, forCellReuseIdentifier: cellId)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
         
         addSubview(tableView)
         tableView.fillSuperview()
-        tableView.register(PostCell.self, forCellReuseIdentifier: cellId)
     }
     
     deinit {

@@ -10,8 +10,12 @@ import UIKit
 
 struct Post {
     
+    var hasBookmarked: Bool = false
+    var hasLiked: Bool = false
+    
     let user: User
     let postId: String
+    var course: Course?
     
     let title: String
     let type: String

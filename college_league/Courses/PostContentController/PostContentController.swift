@@ -43,6 +43,7 @@ class PostContentController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 125
+        tableView.prefetchDataSource = self
         tableView.register(PostHeaderCell.self, forCellReuseIdentifier: postHeaderCellId)
         tableView.register(PostMessageCell.self, forCellReuseIdentifier: postMessageCellId)
         tableView.register(ResponseHeaderCell.self, forCellReuseIdentifier: responseHeaderCellId)
@@ -78,7 +79,11 @@ class PostContentController: UITableViewController {
         }
         
         let responseId = responseArr[section - 1].responseId
-        return responseMessagesDic[responseId]!.count + 1
+        if let count = responseMessagesDic[responseId]?.count {
+            return count + 1
+        }
+        
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -181,6 +186,17 @@ class PostContentController: UITableViewController {
     
     private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
         return indexPath.section == responseArr.count + 1
+    }
+    
+}
+
+extension PostContentController : UITableViewDataSourcePrefetching {
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        let needsFetch = indexPaths.contains { $0.section >= self.responseArr.count }
+        if needsFetch && !isFinishedPaging && !isPaging {
+            paginateResponse()
+        }
     }
     
 }

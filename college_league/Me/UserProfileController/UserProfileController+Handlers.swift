@@ -12,13 +12,22 @@ import Firebase
 extension UserProfileController {
     
     internal func fetchUserAndUserPosts() {
+        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         let uid = userId ?? (Auth.auth().currentUser?.uid ?? "")
+        let userFollowingRef = Database.database().reference().child("user_following").child(currentLoggedInUserId).child(uid)
         
         Database.fetchUserWithUID(uid: uid) { (user) in
             self.refreshControl.endRefreshing()
             self.user = user
             self.navigationItem.title = self.user?.username
-            self.collectionView?.reloadData()
+            
+            userFollowingRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let isFollowing = snapshot.value as? Int, isFollowing == 1 {
+                    self.user?.hasFollowed = true
+                }
+                
+                self.collectionView?.reloadData()
+            })
             
             self.paginatePosts()
         }

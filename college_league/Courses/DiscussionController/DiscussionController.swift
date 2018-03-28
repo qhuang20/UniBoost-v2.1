@@ -20,6 +20,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     lazy var edgeInsetTopValue: CGFloat = switchBarHeight - 4
     
     let cellId = "cellId"
+    let trendingCellId = "trendingCellId"
     var oneTimeFlag = true
     
     override func viewDidAppear(_ animated: Bool) { searchBar?.isHidden = false }
@@ -31,6 +32,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         configureNavigationBar()
         layoutSearchBar()
         collectionView?.register(DiscussionCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(TrendingCell.self, forCellWithReuseIdentifier: trendingCellId)
         
         view.addSubview(switchBar)
         switchBar.discussionController = self
@@ -83,14 +85,21 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DiscussionCell
+        var cellIdentifier = cellId
+        
+        if indexPath.item == 1 {
+            cellIdentifier = trendingCellId
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! DiscussionCell
+        
+        cell.course = course
         
         if oneTimeFlag {
             cell.discussionController = self
             oneTimeFlag = false
         }
         
-        cell.course = course///this main purpose is to clean up when reuse
         return cell
     }
     
@@ -102,14 +111,15 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     
-    
+    ///add previevois search text
     var previousIndex: CGFloat = 0
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {///test this!!!
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switchBar.sliderLefrAnchor?.constant = scrollView.contentOffset.x / 2
         
         let index = scrollView.contentOffset.x / view.frame.width
         
+        //cellForItemAt won't get called every time if the cell is not reused
         if index == 0 && index != previousIndex {
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell

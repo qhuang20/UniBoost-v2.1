@@ -13,12 +13,31 @@ extension PostContentController {
     
     internal func fetchPostAndResponse() {
         guard let postId = post?.postId else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let userBookmarksRef = Database.database().reference().child("user_bookmarks").child(uid).child(postId)
+        let userLikedPostsRef = Database.database().reference().child("user_likedPosts").child(uid).child(postId)
+        
         Database.fetchPostWithPID(pid: postId) { (post) in
+            let course = self.post?.course
             self.post = post
+            self.post?.course = course
             
-            Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
-                self.postMessages = postMessages
-                self.tableView.reloadData()
+            userBookmarksRef.observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int, value == 1 {
+                    self.post?.hasBookmarked = true
+                }
+                
+                userLikedPostsRef.observeSingleEvent(of: .value) { (snapshot) in
+                    if let value = snapshot.value as? Int, value == 1 {
+                        self.post?.hasLiked = true
+                    }
+                    
+                    Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
+                        self.postMessages = postMessages
+                        
+                        self.tableView.reloadData()
+                    }
+                }
             }
         }
 

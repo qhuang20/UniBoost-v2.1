@@ -15,8 +15,9 @@ class PostFooterView: UIView {
     
     var post: Post? {
         didSet {
-            checkIfPostBookmarked()///
-            checkIfPostLiked()
+            guard let post = post else { return }
+            post.hasLiked ? setupLikedStyle() : setupUnLikedStyle()
+            post.hasBookmarked ? setupBookmarkedStyle() : setupUnBookmarkedStyle()
         }
     }
     
@@ -97,9 +98,11 @@ class PostFooterView: UIView {
         let ref = Database.database().reference().child("user_bookmarks").child(uid)
         
         if bookmarkButton.isSelected {
-            setupUnBookmarkedStyle()
+            self.post?.hasBookmarked = false
+            postContentController?.post?.hasBookmarked = false
         } else {
-            setupBookmarkedStyle()
+            self.post?.hasBookmarked = true
+            postContentController?.post?.hasBookmarked = true
         }
         
         ref.updateChildValues(values) { (err, ref) in
@@ -108,19 +111,6 @@ class PostFooterView: UIView {
                 return
             }
             print("Successfully bookmarked post.")
-        }
-    }
-    
-    private func checkIfPostBookmarked() {
-        guard let post = post else { return }
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let ref = Database.database().reference().child("user_bookmarks").child(uid).child(post.postId)
-        ref.observeSingleEvent(of: .value) { (snapshot) in
-            if let value = snapshot.value as? Int, value == 1 {
-                self.setupBookmarkedStyle()
-            } else {
-                self.setupUnBookmarkedStyle()
-            }
         }
     }
     
@@ -136,19 +126,6 @@ class PostFooterView: UIView {
     
     
     
-    private func checkIfPostLiked() {
-        guard let post = post else { return }
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let ref = Database.database().reference().child("user_likedPosts").child(uid).child(post.postId)
-        ref.observeSingleEvent(of: .value) { (snapshot) in
-            if let value = snapshot.value as? Int, value == 1 {
-                self.setupLikedStyle()
-            } else {
-                self.setupUnLikedStyle()
-            }
-        }
-    }
-    
     @objc func handleLikePost() {
         guard let post = postContentController?.post else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -156,11 +133,14 @@ class PostFooterView: UIView {
         let ref = Database.database().reference().child("user_likedPosts").child(uid)
         
         if likeButton.isSelected {
-            setupUnLikedStyle()
+            self.post?.hasLiked = false
+            postContentController?.post?.hasLiked = false
         } else {
-            setupLikedStyle()
+            self.post?.hasLiked = true
+            postContentController?.post?.hasLiked = true
         }
         changePostLikesCount()
+        changePostLikesCountForTrendingCell()
         
         ref.updateChildValues(values) { (err, ref) in
             if let err = err {
@@ -201,6 +181,26 @@ class PostFooterView: UIView {
                 return
             }
             print("Successfully increased post likes count")
+        }
+    }
+    
+    private func changePostLikesCountForTrendingCell() {
+        guard let course = post?.course else { return }
+        guard let postId = post?.postId else { return }
+        let ref = Database.database().reference().child("school_course_posts").child(course.school).child(course.courseId).child(postId)
+        
+        ref.runTransactionBlock({ (currentData) -> TransactionResult in
+            
+            let currentValue = currentData.value as? Int ?? 0
+            currentData.value = currentValue + 1
+            
+            return TransactionResult.success(withValue: currentData)
+        }) { (err, committed, snapshot) in
+            if let error = err {
+                print("Failed to increase post likes count for TrendingCell", error)
+                return
+            }
+            print("Successfully increased post likes count for TrendingCell")
         }
     }
     
