@@ -11,24 +11,26 @@ import LBTAComponents
 
 class EditProfileController: UIViewController, UITextViewDelegate {
    
-    let words = ["Photo", "Name", "Bio:"]
+    let words = ["School", "Choose Skills", "Photo", "Name", "Bio:"]
     let wordsLimitForBio = 150
     
     lazy var leftStackView: UIStackView = {
         var labels = [UILabel]()
  
-        for i in 0...2 {
+        for i in 0...4 {
             let label = UILabel()
             let separatorLineView: UIView = {
                 let lineView = UIView()
                 lineView.backgroundColor = UIColor(white: 0, alpha: 0.2)
                 return lineView
             }()
+            if i == 0 {
+                separatorLineView.isHidden = true
+            }
             label.addSubview(separatorLineView)
             separatorLineView.anchor(label.topAnchor, left: label.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 600, heightConstant: 0.5)
             
             label.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
-            label.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
             label.text = words[i]
             label.textAlignment = .left
             label.backgroundColor = UIColor.white
@@ -41,6 +43,30 @@ class EditProfileController: UIViewController, UITextViewDelegate {
         sv.axis = UILayoutConstraintAxis.vertical
         sv.spacing = 0
         return sv
+    }()
+    
+    let schoolLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Langara"
+        label.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
+        return label
+    }()
+    
+    lazy var rightArrowButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "rightArrow"), for: .normal)
+        button.tintColor = UIColor.gray
+        return button
+    }()
+    
+    lazy var rightArrowButtonHolder: UIView = {
+        let v = UIView()
+        v.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        v.backgroundColor = UIColor.white
+        v.addSubview(rightArrowButton)
+        rightArrowButton.anchor(nil, left: nil, bottom: nil, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
+        rightArrowButton.anchorCenterYToSuperview()
+        return v
     }()
     
     let profileImageView: CachedImageView = {
@@ -69,7 +95,7 @@ class EditProfileController: UIViewController, UITextViewDelegate {
     }()
     
     lazy var rightStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [imageViewHolder, nameTextField])
+        let sv = UIStackView(arrangedSubviews: [schoolLabel, rightArrowButtonHolder, imageViewHolder, nameTextField])
         sv.distribution = .fill
         sv.alignment = .fill
         sv.axis = UILayoutConstraintAxis.vertical
@@ -79,7 +105,7 @@ class EditProfileController: UIViewController, UITextViewDelegate {
     
     lazy var bioTextView: CustomInputTextView = {
         let textView = CustomInputTextView()
-        textView.placeholderLabel.text = "Say somthing about yourself ..."
+        textView.placeholderLabel.text = "Say somthing about myself ..."
         textView.placeholderLabel.font = UIFont.systemFont(ofSize: 15)
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.isScrollEnabled = false
@@ -106,7 +132,7 @@ class EditProfileController: UIViewController, UITextViewDelegate {
         view.addSubview(leftStackView)
         view.addSubview(bioTextView)
         
-        leftStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 75, heightConstant: 0)
+        leftStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 0)
         
         rightStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
