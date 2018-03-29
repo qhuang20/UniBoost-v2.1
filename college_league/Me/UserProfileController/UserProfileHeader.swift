@@ -23,6 +23,10 @@ class UserProfileHeader: UICollectionViewCell {
             
             profileImageView.loadImage(urlString: profileImageUrl)
             userInfoLabel.text = user.username
+            if let bio = user.bio {
+                userInfoLabel.text = user.username + ": " + bio
+            }
+            
             likesLabel.attributedText = setupAttributedString(number: user.likes, text: "likes")
             followersLabel.attributedText = setupAttributedString(number: user.followers, text: "followers")
             followingLabel.attributedText = setupAttributedString(number: user.following, text: "following")
@@ -48,7 +52,7 @@ class UserProfileHeader: UICollectionViewCell {
     let userInfoLabel: UILabel = {
         let label = UILabel()
         label.text = "username: bla bla bla"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
@@ -156,7 +160,7 @@ class UserProfileHeader: UICollectionViewCell {
         
         setupBottomToolbar()
         
-        userInfoLabel.anchor(profileImageView.bottomAnchor, left: leftAnchor, bottom: postsButton.topAnchor, right: rightAnchor, topConstant: 4, leftConstant: 12, bottomConstant: 0, rightConstant: 12, widthConstant: 0, heightConstant: 0)
+        userInfoLabel.anchor(profileImageView.bottomAnchor, left: leftAnchor, bottom: postsButton.topAnchor, right: rightAnchor, topConstant: 4, leftConstant: 18, bottomConstant: 0, rightConstant: 18, widthConstant: 0, heightConstant: 0)
     }
     
     private func setupUserStatsView() {
@@ -199,7 +203,8 @@ class UserProfileHeader: UICollectionViewCell {
         guard let userId = user?.uid else { return }
         
         if editProfileFollowButton.titleLabel?.text == "Edit Profile" {
-            //edit profile
+            let navEditProfileController = UINavigationController(rootViewController: EditProfileController())
+            userProfileController?.present(navEditProfileController, animated: true, completion: nil)
             return
         }
         

@@ -142,6 +142,7 @@ extension CourseController: UISearchBarDelegate {
     
     @objc func handleViewOption() {
         searchBar.text = nil
+        pleaseAddCourseLabel.isHidden = true
         
         if viewOptionButton?.isSelected == true {
             viewOptionButton?.isSelected = false
@@ -157,6 +158,9 @@ extension CourseController: UISearchBarDelegate {
             viewOptionButton?.isEnabled = false
             isFinishedPaging = true
             filteredCourses = followingCourses
+            if followingCourses.count == 0 {
+                pleaseAddCourseLabel.isHidden = false
+            }
             collectionView?.reloadData()
             viewOptionButton?.isEnabled = true
         }

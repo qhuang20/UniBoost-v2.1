@@ -26,6 +26,14 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     var viewOptionButton: UIButton?
     var previousSearchText = ""
     
+    let pleaseAddCourseLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Please Add Some Courses"
+        label.textColor = UIColor.gray
+        label.textAlignment = .center
+        return label
+    }()
+    
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
         sb.layer.cornerRadius = 10
@@ -68,9 +76,12 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         configureCollectionVeiw()
         configureNavigationBar()
         
+        view.addSubview(pleaseAddCourseLabel)
+        pleaseAddCourseLabel.anchor(view?.safeAreaLayoutGuide.topAnchor, left: view?.leftAnchor, bottom: nil, right: view?.rightAnchor, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
+        pleaseAddCourseLabel.isHidden = true
+        
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
-        
         searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 60, widthConstant: 0, heightConstant: 0)
         
         if school == nil {///...set up school in Me...

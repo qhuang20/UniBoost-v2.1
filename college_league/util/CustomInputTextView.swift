@@ -1,5 +1,5 @@
 //
-//  CommentInputTextView.swift
+//  CustomInputTextView.swift
 //  college_league
 //
 //  Created by Qichen Huang on 2018-03-24.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommentInputTextView: UITextView {
+class CustomInputTextView: UITextView {
     
     let placeholderLabel: UILabel = {
         let label = UILabel()

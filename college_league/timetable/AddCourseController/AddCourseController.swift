@@ -91,7 +91,7 @@ class AddCourseController: DatasourceController {
     }
     
     private func configureNavigationItems() {
-        navigationItem.title = "AddCourse"
+        navigationItem.title = "Add Course"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "save"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(saveCourseInfo))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleCanel))

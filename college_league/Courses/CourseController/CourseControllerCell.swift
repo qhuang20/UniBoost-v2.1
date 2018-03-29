@@ -22,7 +22,7 @@ class CourseControllerCell: UICollectionViewCell {
     weak var courseController: CourseController?
     
     let attributesForTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20.5)]
-    let attributesForDescription = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 11.5), NSAttributedStringKey.foregroundColor: UIColor.lightGray]
+    let attributesForCourseInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 11.5), NSAttributedStringKey.foregroundColor: UIColor.lightGray]
 
     private func setupAttributedTitle() {
         guard let course = course else { return }
@@ -33,8 +33,8 @@ class CourseControllerCell: UICollectionViewCell {
         attributedText.append(attributedCourseNumber)
         attributedText.appendNewLine()
         
-        let attributedCourseDescription = NSAttributedString(string: "• " + course.description, attributes: attributesForDescription)
-        attributedText.append(attributedCourseDescription)
+        let attributedCourseInfo = NSAttributedString(string: "• " + course.description, attributes: attributesForCourseInfo)
+        attributedText.append(attributedCourseInfo)
         
         courseInfoLabel.attributedText = attributedText
     }

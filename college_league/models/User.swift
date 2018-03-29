@@ -9,12 +9,14 @@
 import Foundation
 
 struct User {
-    //"likes": 0, "followers": 0, "following": 0
+
     var hasFollowed: Bool = false
     
     let uid: String
     let username: String
     let profileImageUrl: String
+    var bio: String?
+    var school: String?
     
     var likes = 0
     var followers = 0
@@ -27,7 +29,18 @@ struct User {
         self.likes = dictionary["likes"] as? Int ?? 0
         self.followers = dictionary["followers"] as? Int ?? 0
         self.following = dictionary["following"] as? Int ?? 0
+        if let bio = dictionary["bio"] as? String, bio.count > 0 {
+            self.bio = bio
+        }
+        if let school = dictionary["school"] as? String {
+            self.school = school
+        }
     }
     
 }
+
+
+
+
+
 

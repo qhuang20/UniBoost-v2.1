@@ -13,7 +13,7 @@
 		7B0ECA8B2066275400D66CB7 /* PostContentControlle+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */; };
 		7B0ECA8D20669BF900D66CB7 /* CommentsController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8C20669BF900D66CB7 /* CommentsController+Handlers.swift */; };
 		7B0ECA8F2067624F00D66CB7 /* CustomInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA8E2067624F00D66CB7 /* CustomInputAccessoryView.swift */; };
-		7B0ECA912067792E00D66CB7 /* CommentInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA902067792E00D66CB7 /* CommentInputTextView.swift */; };
+		7B0ECA912067792E00D66CB7 /* CustomInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0ECA902067792E00D66CB7 /* CustomInputTextView.swift */; };
 		7B0FD70B203F650200E77422 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70A203F650200E77422 /* PostController.swift */; };
 		7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
@@ -79,6 +79,8 @@
 		7BF3A2B42019479700689AE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BF3A2B22019479700689AE1 /* LaunchScreen.storyboard */; };
 		7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */; };
 		7BF7AC00206B405A00920057 /* TrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7ABFF206B405A00920057 /* TrendingCell.swift */; };
+		7BF7AC04206C6D0800920057 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC03206C6D0800920057 /* SettingsController.swift */; };
+		7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC06206C8FF800920057 /* EditProfileController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,7 +89,7 @@
 		7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostContentControlle+Handlers.swift"; sourceTree = "<group>"; };
 		7B0ECA8C20669BF900D66CB7 /* CommentsController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommentsController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0ECA8E2067624F00D66CB7 /* CustomInputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputAccessoryView.swift; sourceTree = "<group>"; };
-		7B0ECA902067792E00D66CB7 /* CommentInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputTextView.swift; sourceTree = "<group>"; };
+		7B0ECA902067792E00D66CB7 /* CustomInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputTextView.swift; sourceTree = "<group>"; };
 		7B0FD70A203F650200E77422 /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
@@ -156,6 +158,8 @@
 		7BF3A2B52019479700689AE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDatasource.swift; sourceTree = "<group>"; };
 		7BF7ABFF206B405A00920057 /* TrendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCell.swift; sourceTree = "<group>"; };
+		7BF7AC03206C6D0800920057 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		7BF7AC06206C8FF800920057 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_college_league.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E47EBB366827CAB5E4AB7791 /* Pods-college_league.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-college_league.debug.xcconfig"; path = "Pods/Target Support Files/Pods-college_league/Pods-college_league.debug.xcconfig"; sourceTree = "<group>"; };
 		EF9E31A5A391B46B69707FB0 /* Pods-college_league.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-college_league.release.xcconfig"; path = "Pods/Target Support Files/Pods-college_league/Pods-college_league.release.xcconfig"; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 		7B0FD708203F562800E77422 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				7BF7AC02206C6C8A00920057 /* SettingsController */,
+				7BF7AC05206C8FE700920057 /* EditProfileController */,
 				7B1624762038C561004C0537 /* UserProfileController */,
 			);
 			path = Me;
@@ -241,7 +247,7 @@
 				7B0ECA862065E36500D66CB7 /* TableViewLoadingCell.swift */,
 				7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */,
 				7B0ECA8E2067624F00D66CB7 /* CustomInputAccessoryView.swift */,
-				7B0ECA902067792E00D66CB7 /* CommentInputTextView.swift */,
+				7B0ECA902067792E00D66CB7 /* CustomInputTextView.swift */,
 				7B167668205651AA003D4E01 /* Date+Helper.swift */,
 			);
 			path = util;
@@ -406,6 +412,22 @@
 				7B9717142058DB4600B6F781 /* TimetableController */,
 			);
 			path = timetable;
+			sourceTree = "<group>";
+		};
+		7BF7AC02206C6C8A00920057 /* SettingsController */ = {
+			isa = PBXGroup;
+			children = (
+				7BF7AC03206C6D0800920057 /* SettingsController.swift */,
+			);
+			path = SettingsController;
+			sourceTree = "<group>";
+		};
+		7BF7AC05206C8FE700920057 /* EditProfileController */ = {
+			isa = PBXGroup;
+			children = (
+				7BF7AC06206C8FF800920057 /* EditProfileController.swift */,
+			);
+			path = EditProfileController;
 			sourceTree = "<group>";
 		};
 		FB8931E96FC22755384000E2 /* Pods */ = {
@@ -609,8 +631,9 @@
 				7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */,
 				7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */,
 				7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */,
+				7BF7AC04206C6D0800920057 /* SettingsController.swift in Sources */,
 				7B48C7692047CC6E00768E96 /* PostCell.swift in Sources */,
-				7B0ECA912067792E00D66CB7 /* CommentInputTextView.swift in Sources */,
+				7B0ECA912067792E00D66CB7 /* CustomInputTextView.swift in Sources */,
 				7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B3ACAEF204B32D20065CB16 /* DiscussionCell+Handlers.swift in Sources */,
@@ -623,6 +646,7 @@
 				7B43399020205A7200151FEE /* CourseInfo.swift in Sources */,
 				7B3ACAF1204B339D0065CB16 /* Post.swift in Sources */,
 				7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */,
+				7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */,
 				7B61057D20411A8600C5F6C3 /* PhotoSelectorCell.swift in Sources */,
 				7BB2ABF2205F2CD70086F3EB /* UserDefaults+Helpers.swift in Sources */,
 			);

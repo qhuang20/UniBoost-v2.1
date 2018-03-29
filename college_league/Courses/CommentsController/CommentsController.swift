@@ -26,8 +26,8 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     let loadingCellId = "loadingCellId"
     let loadingCellHeight: CGFloat = 50
     
-    lazy var commentTextView: CommentInputTextView = {
-        let textView = CommentInputTextView()
+    lazy var commentTextView: CustomInputTextView = {
+        let textView = CustomInputTextView()
         textView.placeholderLabel.text = "@\(response?.user.username ?? "")"
         textView.isScrollEnabled = false
         textView.font = UIFont.systemFont(ofSize: 18)

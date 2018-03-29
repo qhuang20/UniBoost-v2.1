@@ -87,7 +87,7 @@ extension UserProfileController {
         self.isFinishedPaging = false
         fetchUserAndUserPosts()
     }
-
+    
     
     
     @objc func handleLogOut() {

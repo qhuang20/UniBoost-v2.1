@@ -102,9 +102,7 @@ extension AddCourseController {
     }
     
     @objc func handleCanel() {
-        infoTextFields.forEach { (tf) in
-            tf.resignFirstResponder()
-        }
+        view.endEditing(true)
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
