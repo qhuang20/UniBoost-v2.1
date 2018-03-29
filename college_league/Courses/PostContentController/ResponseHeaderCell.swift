@@ -26,8 +26,12 @@ class ResponseHeaderCell: UITableViewCell {
     
     private func setupAttributedCaption() {
         guard let response = self.response else { return }
+        let userBio = response.user.bio ?? ""
         
-        let attributedText = NSMutableAttributedString(string: "\(response.user.username): A big boss, hhhhhh", attributes: attributesForUserInfo)
+        var attributedText = NSMutableAttributedString(string: "\(response.user.username)", attributes: attributesForUserInfo)
+        if userBio.count > 0 {
+            attributedText = NSMutableAttributedString(string: "\(response.user.username): \(userBio)", attributes: attributesForUserInfo)
+        }
         
         attributedText.appendNewLine()
         

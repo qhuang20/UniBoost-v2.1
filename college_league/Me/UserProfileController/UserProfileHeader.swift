@@ -22,6 +22,7 @@ class UserProfileHeader: UICollectionViewCell {
             let userId = user.uid
             
             profileImageView.loadImage(urlString: profileImageUrl)
+            
             userInfoLabel.text = user.username
             if let bio = user.bio {
                 userInfoLabel.text = user.username + ": " + bio
@@ -51,8 +52,8 @@ class UserProfileHeader: UICollectionViewCell {
     
     let userInfoLabel: UILabel = {
         let label = UILabel()
-        label.text = "username: bla bla bla"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
@@ -203,7 +204,9 @@ class UserProfileHeader: UICollectionViewCell {
         guard let userId = user?.uid else { return }
         
         if editProfileFollowButton.titleLabel?.text == "Edit Profile" {
-            let navEditProfileController = UINavigationController(rootViewController: EditProfileController())
+            let editProfileController = EditProfileController()
+            editProfileController.user = user
+            let navEditProfileController = UINavigationController(rootViewController: editProfileController)
             userProfileController?.present(navEditProfileController, animated: true, completion: nil)
             return
         }

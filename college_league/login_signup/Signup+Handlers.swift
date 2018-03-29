@@ -26,6 +26,7 @@ extension SignupController: UINavigationControllerDelegate, UIImagePickerControl
     
     
     @objc func handleSignUp() {
+        view.endEditing(true)
         guard let email = emailTextField.text, email.count > 0 else { return }
         guard let username = usernameTextField.text, username.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }

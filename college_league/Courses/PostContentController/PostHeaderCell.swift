@@ -29,8 +29,12 @@ class PostHeaderCell: UITableViewCell {
     
     private func setupAttributedCaption() {
         guard let post = self.post else { return }
+        let userBio = post.user.bio ?? ""
         
-        let attributedText = NSMutableAttributedString(string: "\(post.user.username): A big boss in the world", attributes: attributesForUserInfo)
+        var attributedText = NSMutableAttributedString(string: "\(post.user.username)", attributes: attributesForUserInfo)
+        if userBio.count > 0 {
+            attributedText = NSMutableAttributedString(string: "\(post.user.username): \(userBio)", attributes: attributesForUserInfo)
+        }
         
         attributedText.appendNewLine()
         
@@ -95,7 +99,7 @@ class PostHeaderCell: UITableViewCell {
         
         typeImageView.anchor(titleLabel.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding + 16, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: typeImageWidth, heightConstant: typeImageWidth + 4)
         
-        postInfoLabel.anchor(titleLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding + 16, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        postInfoLabel.anchor(titleLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding + 16, leftConstant: padding, bottomConstant: 0, rightConstant: padding, widthConstant: 0, heightConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

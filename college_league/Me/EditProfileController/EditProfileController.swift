@@ -9,10 +9,12 @@
 import UIKit
 import LBTAComponents
 
-class EditProfileController: UIViewController, UITextViewDelegate {
+class EditProfileController: UIViewController {
    
-    let words = ["School", "Choose Skills", "Photo", "Name", "Bio:"]
-    let wordsLimitForBio = 150
+    var user: User?
+    
+    let words = ["School", "Choose Skills", "Edit Photo", "Edit Name", "Bio:"]
+    let wordsLimitForBio = 65
     
     lazy var leftStackView: UIStackView = {
         var labels = [UILabel]()
@@ -48,8 +50,26 @@ class EditProfileController: UIViewController, UITextViewDelegate {
     let schoolLabel: UILabel = {
         let label = UILabel()
         label.text = "Langara"
-        label.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
         return label
+    }()
+    
+    lazy var schoolLabelHolder: UIView = {
+        let v = UIView()
+        let rightArrowButton = UIButton(type: .system)
+        rightArrowButton.setImage(#imageLiteral(resourceName: "rightArrow"), for: .normal)
+        rightArrowButton.tintColor = UIColor.gray
+        
+        v.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        v.backgroundColor = UIColor.white
+        v.addSubview(rightArrowButton)
+        v.addSubview(schoolLabel)
+        
+        rightArrowButton.anchor(nil, left: nil, bottom: nil, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
+        rightArrowButton.anchorCenterYToSuperview()
+        
+        schoolLabel.anchor(nil, left: v.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        schoolLabel.anchorCenterYToSuperview()
+        return v
     }()
     
     lazy var rightArrowButton: UIButton = {
@@ -69,7 +89,7 @@ class EditProfileController: UIViewController, UITextViewDelegate {
         return v
     }()
     
-    let profileImageView: CachedImageView = {
+    lazy var profileImageView: CachedImageView = {
         let iv = CachedImageView()
         iv.contentMode = .scaleAspectFill
         iv.backgroundColor = brightGray
@@ -83,11 +103,14 @@ class EditProfileController: UIViewController, UITextViewDelegate {
         v.addSubview(profileImageView)
         profileImageView.anchor(nil, left: v.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 40, heightConstant: 40)
         profileImageView.anchorCenterYToSuperview()
+        
+        v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         return v
     }()
     
     let nameTextField: UITextField = {
         let tf = UITextField()
+        tf.placeholder = "Name"
         tf.font = UIFont.systemFont(ofSize: 18)
         tf.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
         tf.backgroundColor = UIColor.white
@@ -95,7 +118,7 @@ class EditProfileController: UIViewController, UITextViewDelegate {
     }()
     
     lazy var rightStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [schoolLabel, rightArrowButtonHolder, imageViewHolder, nameTextField])
+        let sv = UIStackView(arrangedSubviews: [schoolLabelHolder, rightArrowButtonHolder, imageViewHolder, nameTextField])
         sv.distribution = .fill
         sv.alignment = .fill
         sv.axis = UILayoutConstraintAxis.vertical
@@ -111,12 +134,12 @@ class EditProfileController: UIViewController, UITextViewDelegate {
         textView.isScrollEnabled = false
         textView.backgroundColor = UIColor(white: 0, alpha: 0.05)
         textView.delegate = self
+        textView.returnKeyType = .done
         return textView
     }()
     
-    let textCountLabel: UILabel = {
+    lazy var textCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "150"
         label.textColor = UIColor.gray
         label.font = UIFont.systemFont(ofSize: 14)
         return label
@@ -134,9 +157,11 @@ class EditProfileController: UIViewController, UITextViewDelegate {
         
         leftStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 0)
         
-        rightStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        rightStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 20, leftConstant: 50, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         bioTextView.anchor(leftStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 22, bottomConstant: 0, rightConstant: 25, widthConstant: 0, heightConstant: 0)
+        
+        setupUserInfo()
     }
     
     private func configureNavigationItems() {
@@ -155,19 +180,16 @@ class EditProfileController: UIViewController, UITextViewDelegate {
         bioTextView.inputAccessoryView = inputContainerView
     }
     
-    
-    
-    @objc func handleCanel() {
-        view.endEditing(true)
-        self.presentingViewController?.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func handleSave() {
-        print("save")
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        textCountLabel.text = "\(wordsLimitForBio - textView.text.count)"
+    private func setupUserInfo() {
+        guard let user = user else { return }
+        schoolLabel.text = user.school
+        nameTextField.text = user.username
+        bioTextView.text = user.bio
+        if bioTextView.text.count > 0 {
+            bioTextView.placeholderLabel.isHidden = true
+        }
+        textCountLabel.text = "\(wordsLimitForBio - bioTextView.text.count)"
+        profileImageView.loadImage(urlString: user.profileImageUrl)
     }
     
 }
