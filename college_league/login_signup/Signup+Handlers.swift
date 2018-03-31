@@ -31,6 +31,9 @@ extension SignupController: UINavigationControllerDelegate, UIImagePickerControl
         guard let username = usernameTextField.text, username.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
         guard let image = self.profileImageView.image else { return }
+        let saveButton = navigationItem.rightBarButtonItem
+        saveButton?.tintColor = brightGray
+        saveButton?.isEnabled = false
   
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
            

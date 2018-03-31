@@ -13,8 +13,8 @@ class EditProfileController: UIViewController {
    
     var user: User?
     
-    let words = ["School", "Choose Skills", "Edit Photo", "Edit Name", "Bio:"]
-    let wordsLimitForBio = 65
+    let words = ["My School", "My Skills", "Edit Photo", "Edit Name", "Bio:"]
+    let wordsLimitForBio = 50
     
     lazy var leftStackView: UIStackView = {
         var labels = [UILabel]()
@@ -47,9 +47,10 @@ class EditProfileController: UIViewController {
         return sv
     }()
     
-    let schoolLabel: UILabel = {
+    lazy var schoolLabel: UILabel = {
         let label = UILabel()
         label.text = "Langara"
+        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -58,6 +59,7 @@ class EditProfileController: UIViewController {
         let rightArrowButton = UIButton(type: .system)
         rightArrowButton.setImage(#imageLiteral(resourceName: "rightArrow"), for: .normal)
         rightArrowButton.tintColor = UIColor.gray
+        rightArrowButton.addTarget(self, action: #selector(handleSetSchool), for: .touchUpInside)
         
         v.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
         v.backgroundColor = UIColor.white
@@ -69,6 +71,8 @@ class EditProfileController: UIViewController {
         
         schoolLabel.anchor(nil, left: v.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
         schoolLabel.anchorCenterYToSuperview()
+        
+        v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSetSchool)))
         return v
     }()
     

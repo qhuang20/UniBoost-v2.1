@@ -93,7 +93,13 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
     private func setupNavigationButtons() {
         navigationItem.title = "Add a Post"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleNext))
+        
+        let button = UIButton(type: .custom)
+        button.setTitle("Next", for: .normal)
+        button.tintColor = UIColor.white
+        button.adjustsImageWhenHighlighted = false//fix the darken
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
     private func moveCursorToHead() {

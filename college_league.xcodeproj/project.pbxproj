@@ -82,6 +82,7 @@
 		7BF7AC04206C6D0800920057 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC03206C6D0800920057 /* SettingsController.swift */; };
 		7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC06206C8FF800920057 /* EditProfileController.swift */; };
 		7BF7AC09206D5A2600920057 /* EditProfileController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC08206D5A2600920057 /* EditProfileController+Handlers.swift */; };
+		7BF7AC0C206EFB7300920057 /* SetSchoolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC0B206EFB7300920057 /* SetSchoolController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +163,7 @@
 		7BF7AC03206C6D0800920057 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		7BF7AC06206C8FF800920057 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		7BF7AC08206D5A2600920057 /* EditProfileController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditProfileController+Handlers.swift"; sourceTree = "<group>"; };
+		7BF7AC0B206EFB7300920057 /* SetSchoolController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSchoolController.swift; sourceTree = "<group>"; };
 		BF4AC56B2EBA93C961DE8EF2 /* Pods_college_league.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_college_league.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E47EBB366827CAB5E4AB7791 /* Pods-college_league.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-college_league.debug.xcconfig"; path = "Pods/Target Support Files/Pods-college_league/Pods-college_league.debug.xcconfig"; sourceTree = "<group>"; };
 		EF9E31A5A391B46B69707FB0 /* Pods-college_league.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-college_league.release.xcconfig"; path = "Pods/Target Support Files/Pods-college_league/Pods-college_league.release.xcconfig"; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				7BF7AC02206C6C8A00920057 /* SettingsController */,
+				7BF7AC0A206EFB4200920057 /* SetSchoolController */,
 				7BF7AC05206C8FE700920057 /* EditProfileController */,
 				7B1624762038C561004C0537 /* UserProfileController */,
 			);
@@ -433,6 +436,14 @@
 			path = EditProfileController;
 			sourceTree = "<group>";
 		};
+		7BF7AC0A206EFB4200920057 /* SetSchoolController */ = {
+			isa = PBXGroup;
+			children = (
+				7BF7AC0B206EFB7300920057 /* SetSchoolController.swift */,
+			);
+			path = SetSchoolController;
+			sourceTree = "<group>";
+		};
 		FB8931E96FC22755384000E2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -650,6 +661,7 @@
 				7B3ACAF1204B339D0065CB16 /* Post.swift in Sources */,
 				7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */,
 				7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */,
+				7BF7AC0C206EFB7300920057 /* SetSchoolController.swift in Sources */,
 				7B61057D20411A8600C5F6C3 /* PhotoSelectorCell.swift in Sources */,
 				7BB2ABF2205F2CD70086F3EB /* UserDefaults+Helpers.swift in Sources */,
 				7BF7AC09206D5A2600920057 /* EditProfileController+Handlers.swift in Sources */,

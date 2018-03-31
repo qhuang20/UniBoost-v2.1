@@ -57,22 +57,18 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
         })
     }
     
-    
-    
     @objc func handleCanel() {
         view.endEditing(true)
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        textCountLabel.text = "\(wordsLimitForBio - textView.text.count)"
-    }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if (text == "\n") {
-            textView.resignFirstResponder()
-        }
-        return true
+    
+    @objc func handleSetSchool() {
+        let setSchoolController = SetSchoolController()
+        setSchoolController.modalPresentationStyle = .overFullScreen
+        setSchoolController.modalTransitionStyle = .crossDissolve
+        present(setSchoolController, animated: true, completion: nil)
     }
     
     
@@ -96,6 +92,19 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    func textViewDidChange(_ textView: UITextView) {
+        textCountLabel.text = "\(wordsLimitForBio - textView.text.count)"
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            textView.resignFirstResponder()
+        }
+        return true
     }
     
 }
