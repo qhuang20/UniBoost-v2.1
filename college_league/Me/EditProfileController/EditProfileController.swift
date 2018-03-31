@@ -186,7 +186,8 @@ class EditProfileController: UIViewController {
     
     private func setupUserInfo() {
         guard let user = user else { return }
-        schoolLabel.text = user.school
+        let school = UserDefaults.standard.getSchool()
+        schoolLabel.text = school
         nameTextField.text = user.username
         bioTextView.text = user.bio
         if bioTextView.text.count > 0 {

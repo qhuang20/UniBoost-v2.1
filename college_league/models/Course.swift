@@ -17,6 +17,7 @@ struct Course: Equatable {
     let description: String
     let name: String
     let number: String
+    let postsCount: Int
     
     init(school: String, courseId: String, dictionary: [String: Any]) {
         self.school = school
@@ -24,6 +25,7 @@ struct Course: Equatable {
         self.description = dictionary["description"] as? String ?? ""
         self.name = dictionary["name"] as? String ?? ""
         self.number = dictionary["number"] as? String ?? ""
+        self.postsCount = dictionary["postsCount"] as? Int ?? 0
     }
     
     static func ==(lhs: Course, rhs: Course) -> Bool {//CourseControllerCell, handleTapButton

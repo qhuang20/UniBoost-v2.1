@@ -84,7 +84,9 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         navBar?.addSubview(searchBar)
         searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 60, widthConstant: 0, heightConstant: 0)
         
+        school = UserDefaults.standard.getSchool()
         if school == nil {///...set up school in Me...
+            isFinishedPaging = true
             return
         }
         

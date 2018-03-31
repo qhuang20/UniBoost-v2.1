@@ -58,6 +58,9 @@ extension CourseController: UISearchBarDelegate {
                     if allObjects.count == counter {
                         self.isPaging = false
                         self.getFilteredCoursesWith(searchText: self.searchBar.text ?? "")
+                        self.courses.sort(by: { (c1, c2) -> Bool in
+                            c1.postsCount > c2.postsCount
+                        })
                         self.collectionView?.reloadData()
                     }
                 })

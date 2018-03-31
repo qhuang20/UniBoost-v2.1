@@ -12,7 +12,20 @@ extension UserDefaults {
     
     enum UserDefaultsKeys: String {
         case isEyeSelected
+        case schoolName
     }
+    
+    
+    
+    func setSchool(value: String?) {
+        set(value, forKey: UserDefaultsKeys.schoolName.rawValue)
+    }
+    
+    func getSchool() -> String? {
+        return string(forKey: UserDefaultsKeys.schoolName.rawValue)
+    }
+    
+    
     
     func setEyeSelected(value: Bool) {
         set(value, forKey: UserDefaultsKeys.isEyeSelected.rawValue)

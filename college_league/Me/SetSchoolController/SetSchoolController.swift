@@ -11,7 +11,10 @@ import Firebase
 
 class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
     
-    let schools = ["lang", "usb", "ccc"]
+    weak var editProfileController: EditProfileController?
+    
+    var schools = [String]()
+    var filteredSchools = [String]()
    
     let cellId = "cellId"
     let searchController = UISearchController(searchResultsController: nil)
@@ -33,6 +36,12 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
         searchController.searchBar.barTintColor = themeColor
         tableView.tableHeaderView = searchController.searchBar
         definesPresentationContext = true
+        
+        fetchShools()
+    }
+    
+    deinit {
+        print("deinit")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,29 +54,34 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return schools.count
+        return filteredSchools.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         
-        let school = schools[indexPath.row]
+        let school = filteredSchools[indexPath.row]
         cell.textLabel!.text = school
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        editProfileController?.schoolLabel.text = filteredSchools[indexPath.item]
+        self.presentingViewController?.dismiss(animated: false, completion: nil)
     }
     
     
     
     func updateSearchResults(for searchController: UISearchController) {
-//        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
-//            filteredNFLTeams = unfilteredNFLTeams.filter { team in
-//                return team.lowercased().contains(searchText.lowercased())
-//            }
-//            
-//        } else {
-//            filteredNFLTeams = unfilteredNFLTeams
-//        }
-//        tableView.reloadData()
+        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+            filteredSchools = schools.filter { school in
+                return school.lowercased().contains(searchText.lowercased())
+            }
+            
+        } else {
+            filteredSchools = schools
+        }
+        tableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -76,6 +90,27 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     
     func didPresentSearchController(_ searchController: UISearchController) {
         searchController.searchBar.becomeFirstResponder()
+    }
+    
+    
+    
+    private func fetchShools() {
+        let ref = Database.database().reference().child("schools")
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+            var counter = 0
+            
+            allObjects.forEach({ (snapshot) in
+                let school = snapshot.key
+                self.schools.append(school)
+                
+                counter = counter + 1
+                if allObjects.count == counter {
+                    self.filteredSchools = self.schools
+                    self.tableView.reloadData()
+                }
+            })
+        }
     }
     
 }

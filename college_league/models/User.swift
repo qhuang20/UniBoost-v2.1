@@ -16,7 +16,7 @@ struct User {
     let username: String
     let profileImageUrl: String
     var bio: String?
-    var school: String?
+//    var school: String?
     
     var likes = 0
     var followers = 0
@@ -32,9 +32,9 @@ struct User {
         if let bio = dictionary["bio"] as? String, bio.count > 0 {
             self.bio = bio
         }
-        if let school = dictionary["school"] as? String {
-            self.school = school
-        }
+//        if let school = dictionary["school"] as? String {
+//            self.school = school
+//        }
     }
     
 }

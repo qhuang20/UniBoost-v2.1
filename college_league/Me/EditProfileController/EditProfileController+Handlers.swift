@@ -51,6 +51,8 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
             
             
             guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
+            let school = self.schoolLabel.text
+            UserDefaults.standard.setSchool(value: school)
             mainTabBarController.setupViewControllers()
             
             self.dismiss(animated: true, completion: nil)
@@ -66,6 +68,7 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
     
     @objc func handleSetSchool() {
         let setSchoolController = SetSchoolController()
+        setSchoolController.editProfileController = self
         setSchoolController.modalPresentationStyle = .overFullScreen
         setSchoolController.modalTransitionStyle = .crossDissolve
         present(setSchoolController, animated: true, completion: nil)
