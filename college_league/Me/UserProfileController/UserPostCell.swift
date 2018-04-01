@@ -25,7 +25,7 @@ class UserPostCell: UICollectionViewCell {
             if let thumbnailImageUrl = post.thumbnailImageUrl {
                 let imageHeight = post.thumbnailImageHeight!
                 if imageHeight > 250 {
-                    thumbnailImageView.contentMode = .scaleAspectFit
+                    thumbnailImageView.contentMode = .scaleAspectFill
                     thumbnailImageView.backgroundColor = UIColor.white
                 } else {
                     thumbnailImageView.contentMode = .scaleAspectFill

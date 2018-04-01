@@ -37,14 +37,14 @@ class MainTabBarController: UITabBarController {
         let courseNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "course"), selectedImage: #imageLiteral(resourceName: "course_selected"), rootViewController:
             CourseController(collectionViewLayout: UICollectionViewFlowLayout()))
         
-        let messageNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "message"), selectedImage: #imageLiteral(resourceName: "message_selected"))
+        let notificationNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "noti_unselected"), selectedImage: #imageLiteral(resourceName: "noti_selected"))
         
         let userProfileNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "profile_unselected"), selectedImage: #imageLiteral(resourceName: "profile_selected"), rootViewController: UserProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         viewControllers = [homeNavController,
                            requestNavController,
                            courseNavController,
-                           messageNavController,
+                           notificationNavController,
                            userProfileNavController]
     }
     
