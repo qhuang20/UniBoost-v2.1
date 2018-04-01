@@ -24,7 +24,7 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     
     let cellId = "cellId"
     let loadingCellId = "loadingCellId"
-    let loadingCellHeight: CGFloat = 50
+    let loadingCellHeight: CGFloat = 25
     
     lazy var commentTextView: CustomInputTextView = {
         let textView = CustomInputTextView()

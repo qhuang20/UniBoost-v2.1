@@ -51,7 +51,7 @@ class CommentCell: UICollectionViewCell {
         let iv = CachedImageView()
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = .blue
+        iv.backgroundColor = brightGray
         return iv
     }()
     

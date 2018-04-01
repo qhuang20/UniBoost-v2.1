@@ -33,6 +33,7 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search School"
+        searchController.searchBar.setShowsCancelButton(true, animated: false)
         searchController.searchBar.barTintColor = themeColor
         tableView.tableHeaderView = searchController.searchBar
         definesPresentationContext = true
@@ -67,7 +68,8 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         editProfileController?.schoolLabel.text = filteredSchools[indexPath.item]
-        self.presentingViewController?.dismiss(animated: false, completion: nil)
+        searchController.isActive = false
+        searchBarCancelButtonClicked(searchController.searchBar)
     }
     
     
@@ -85,7 +87,11 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.presentingViewController?.dismiss(animated: false, completion: nil)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.alpha = 0
+        }) { (_) in
+            self.presentingViewController?.dismiss(animated: false, completion: nil)
+        }
     }
     
     func didPresentSearchController(_ searchController: UISearchController) {

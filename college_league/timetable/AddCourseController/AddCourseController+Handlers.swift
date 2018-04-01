@@ -23,7 +23,8 @@ extension AddCourseController {
         navigationController?.navigationBar.alpha = 0.5
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            
+            button.setTitleColor(.orange, for: .normal)
+
             self.view?.layoutIfNeeded()
             
         }, completion: nil)
