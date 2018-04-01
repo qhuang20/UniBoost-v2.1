@@ -34,7 +34,6 @@ extension PostContentController {
                     
                     Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
                         self.postMessages = postMessages
-                        
                         self.tableView.reloadData()
                     }
                 }

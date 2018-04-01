@@ -27,6 +27,12 @@ class PostContentController: UITableViewController {
     let responseMessageCellId = "responseMessageCellId"
     let cellSpacing: CGFloat = 5
     
+    let loadingView: UIView = {
+        let dv = UIView()
+        dv.backgroundColor = UIColor.white
+        return dv
+    }()
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let navigationController = navigationController as? ScrollingNavigationController {
@@ -36,9 +42,33 @@ class PostContentController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.white
+        view.addSubview(loadingView)
+        loadingView.fillSuperview()
+        loadingView.anchorCenterSuperview()
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.followScrollView(tableView, delay: 10, followers: [tabBarController!.tabBar])
         }
+        configureTableView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUpdate), name: ResponseController.updateResponseNotificationName, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateResponseCount), name: ResponseController.updateResponseCountName, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updatePostLikesCount), name: PostFooterView.updatePostLikesCountName, object: nil)
+        
+        fetchPostAndResponse()
+        
+        UIView.animate(withDuration: 0.5) {
+            self.loadingView.alpha = 0
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func configureTableView() {
         tableView.backgroundColor = brightGray
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -48,18 +78,6 @@ class PostContentController: UITableViewController {
         tableView.register(PostMessageCell.self, forCellReuseIdentifier: postMessageCellId)
         tableView.register(ResponseHeaderCell.self, forCellReuseIdentifier: responseHeaderCellId)
         tableView.register(ResponseMessageCell.self, forCellReuseIdentifier: responseMessageCellId)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleUpdate), name: ResponseController.updateResponseNotificationName, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updateResponseCount), name: ResponseController.updateResponseCountName, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updatePostLikesCount), name: PostFooterView.updatePostLikesCountName, object: nil)
-
-        fetchPostAndResponse()
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     
