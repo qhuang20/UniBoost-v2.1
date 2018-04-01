@@ -16,7 +16,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     var user: User?
     var posts = [Post]()
     var isFinishedPaging = false
-    var isPaging = true
+    var isPaging = true//fetchUserAndUserPosts
     var queryEndingValue = ""
     
     let cellId = "cellId"
@@ -32,8 +32,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
-        collectionView?.backgroundView = refreshControl
-        collectionView?.alwaysBounceVertical = true
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
         
         if userId == nil {
@@ -49,6 +47,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     private func configureCollectionVeiw() {
+        collectionView?.backgroundView = refreshControl
+        collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = UIColor.white
         collectionView?.showsVerticalScrollIndicator = false
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
@@ -150,8 +150,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         return rect.height
     }
     
-    private func estimateHeightForUserInfo(text: String) -> CGFloat {///
-        UIFont.boldSystemFont(ofSize: 22)
+    private func estimateHeightForUserInfo(text: String) -> CGFloat {
         let size = CGSize(width: view.frame.width - 93, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForUserInfo, context: nil)

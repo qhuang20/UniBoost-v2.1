@@ -15,7 +15,7 @@ struct Post {
     
     let user: User
     let postId: String
-    var course: Course?
+    var course: Course?//changePostLikesCountForTrendingCell
     
     let title: String
     let type: String

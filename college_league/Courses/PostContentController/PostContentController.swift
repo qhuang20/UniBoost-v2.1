@@ -18,7 +18,7 @@ class PostContentController: UITableViewController {
     var responseArr = [Response]()
     var responseMessagesDic = [String: [ResponseMessage]]()
     var isFinishedPaging = false
-    var isPaging = false
+    var isPaging = true//fetchPostAndResponse
     var queryEndingValue = ""
     
     let postHeaderCellId = "postHeaderCellId"

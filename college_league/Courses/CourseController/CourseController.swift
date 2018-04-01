@@ -16,7 +16,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     var followingCourses = [Course]()
     var filteredCourses = [Course]()
     var isFinishedPaging = false
-    var isPaging = true
+    var isPaging = false
     var queryEndingValue = 0
     var queryEndingChildKey = ""
 

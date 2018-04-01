@@ -54,6 +54,8 @@
 		7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B64394E201D2CC400FB0E18 /* AddCourseController.swift */; };
 		7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */; };
 		7B643953201D3D7600FB0E18 /* CourseInfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B643952201D3D7600FB0E18 /* CourseInfoCells.swift */; };
+		7B69E0E4207140520023D857 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B69E0E3207140520023D857 /* HomePostCell.swift */; };
+		7B69E0E6207140B80023D857 /* HomeController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B69E0E5207140B80023D857 /* HomeController+Handlers.swift */; };
 		7B7CCDC1205A684C004EB1E3 /* UserPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7CCDC0205A684C004EB1E3 /* UserPostCell.swift */; };
 		7B93C612204F92F000419B33 /* PostContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C611204F92F000419B33 /* PostContentController.swift */; };
 		7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C613204FB16300419B33 /* PostHeaderCell.swift */; };
@@ -133,6 +135,8 @@
 		7B64394E201D2CC400FB0E18 /* AddCourseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseController.swift; sourceTree = "<group>"; };
 		7B643950201D3D0700FB0E18 /* AddCourseDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseDatasource.swift; sourceTree = "<group>"; };
 		7B643952201D3D7600FB0E18 /* CourseInfoCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInfoCells.swift; sourceTree = "<group>"; };
+		7B69E0E3207140520023D857 /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
+		7B69E0E5207140B80023D857 /* HomeController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeController+Handlers.swift"; sourceTree = "<group>"; };
 		7B7CCDC0205A684C004EB1E3 /* UserPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostCell.swift; sourceTree = "<group>"; };
 		7B93C611204F92F000419B33 /* PostContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContentController.swift; sourceTree = "<group>"; };
 		7B93C613204FB16300419B33 /* PostHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderCell.swift; sourceTree = "<group>"; };
@@ -368,7 +372,9 @@
 		7B9717152058DB8C00B6F781 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				7B69E0E3207140520023D857 /* HomePostCell.swift */,
 				7B9717162058DBB400B6F781 /* HomeController.swift */,
+				7B69E0E5207140B80023D857 /* HomeController+Handlers.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -628,6 +634,7 @@
 				7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */,
 				7B1624742038C555004C0537 /* UserProfileController+Handlers.swift in Sources */,
 				7BD659F1205B8F41004ACC7E /* Response.swift in Sources */,
+				7B69E0E4207140520023D857 /* HomePostCell.swift in Sources */,
 				7B48C7652046606100768E96 /* SwitchBar.swift in Sources */,
 				7B0ECA872065E36500D66CB7 /* TableViewLoadingCell.swift in Sources */,
 				7B48C75E2045AB5000768E96 /* CourseController.swift in Sources */,
@@ -659,6 +666,7 @@
 				7B7CCDC1205A684C004EB1E3 /* UserPostCell.swift in Sources */,
 				7B43399020205A7200151FEE /* CourseInfo.swift in Sources */,
 				7B3ACAF1204B339D0065CB16 /* Post.swift in Sources */,
+				7B69E0E6207140B80023D857 /* HomeController+Handlers.swift in Sources */,
 				7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */,
 				7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */,
 				7BF7AC0C206EFB7300920057 /* SetSchoolController.swift in Sources */,
