@@ -33,7 +33,6 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search School"
-        searchController.searchBar.setShowsCancelButton(true, animated: false)
         searchController.searchBar.barTintColor = themeColor
         tableView.tableHeaderView = searchController.searchBar///tableHeaderView
         definesPresentationContext = true
@@ -47,8 +46,11 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     
     override func viewDidAppear(_ animated: Bool) {
         searchController.isActive = true
+        searchController.searchBar.setShowsCancelButton(true, animated: true)
         searchController.searchBar.becomeFirstResponder()
     }
+    
+    
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
