@@ -35,7 +35,7 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
         searchController.searchBar.placeholder = "Search School"
         searchController.searchBar.setShowsCancelButton(true, animated: false)
         searchController.searchBar.barTintColor = themeColor
-        tableView.tableHeaderView = searchController.searchBar
+        tableView.tableHeaderView = searchController.searchBar///tableHeaderView
         definesPresentationContext = true
         
         fetchShools()
