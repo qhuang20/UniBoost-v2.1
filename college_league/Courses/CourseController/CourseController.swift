@@ -87,6 +87,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         school = UserDefaults.standard.getSchool()
         if school == nil {///...set up school in Me...
             isFinishedPaging = true
+            self.collectionView?.reloadData()
             return
         }
         
