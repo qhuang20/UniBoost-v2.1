@@ -14,8 +14,16 @@ class CourseControllerCell: UICollectionViewCell {
     
     var course: Course? {
         didSet {
+            guard let course = course else { return }
             setupAttributedTitle()
-            course?.hasFollowed == true ? setupAddedStyle() : setupEmptyStyle()
+            course.hasFollowed == true ? setupAddedStyle() : setupEmptyStyle()
+            
+            self.layer.borderWidth = 2
+            if course.postsCount > 0 {
+                self.layer.borderColor = UIColor(r: 255, g: 200, b: 0).cgColor
+            } else {
+                self.layer.borderColor = UIColor.clear.cgColor
+            }
         }
     }
     
@@ -71,7 +79,7 @@ class CourseControllerCell: UICollectionViewCell {
         addSubview(addButton)
         
         courseInfoLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
-        addButton.anchor(topAnchor, left: nil, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 4, widthConstant: 28, heightConstant: 28)
+        addButton.anchor(topAnchor, left: nil, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 6, widthConstant: 28, heightConstant: 28)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -46,7 +46,6 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     
     override func viewDidAppear(_ animated: Bool) {
         searchController.isActive = true
-        searchController.searchBar.setShowsCancelButton(true, animated: true)
         searchController.searchBar.becomeFirstResponder()
     }
     
