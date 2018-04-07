@@ -136,6 +136,8 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
         if isLoadingIndexPath(indexPath) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! CollectionViewLoadingCell
             cell.isTheEnd = isFinishedPaging
+            cell.activityIndicator.isHidden = true
+            cell.pullToRefreshLabel.isHidden = false
             return cell
         }
         
@@ -154,8 +156,13 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let offset = collectionView?.contentOffset.y else { return }
+        let indexPath = IndexPath(row: 0, section: 0)
+        let loadingCell = collectionView?.cellForItem(at: indexPath) as? CollectionViewLoadingCell
+        
         if offset <= 0 && !isFinishedPaging && !isPaging {
             paginateComments()
+            loadingCell?.activityIndicator.isHidden = false
+            loadingCell?.pullToRefreshLabel.isHidden = true
         }
     }
     

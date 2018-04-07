@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import LBTAComponents
 
 extension HomeController {
     
@@ -82,6 +83,8 @@ extension HomeController {
             Database.fetchPostWithPID(pid: postId, completion: { (post) in
                 self.posts.append(post)
                 print("inside:   ", post.postId)
+                let dummyImageView = CachedImageView()//preload image
+                dummyImageView.loadImage(urlString: post.thumbnailImageUrl ?? "")
                 
                 counter = counter + 1
                 if subPostIds.count == counter {

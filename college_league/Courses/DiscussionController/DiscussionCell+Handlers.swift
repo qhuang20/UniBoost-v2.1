@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import LBTAComponents
 
 extension DiscussionCell: UISearchBarDelegate {
     
@@ -47,6 +48,8 @@ extension DiscussionCell: UISearchBarDelegate {
                     post.course = self.course
                     self.posts.append(post)
                     print("inside:   ", post.postId)
+                    let dummyImageView = CachedImageView()//preload image
+                    dummyImageView.loadImage(urlString: post.thumbnailImageUrl ?? "")
                     
                     counter = counter + 1
                     if allObjects.count == counter {

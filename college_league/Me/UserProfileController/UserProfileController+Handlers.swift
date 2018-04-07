@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import LBTAComponents
 
 extension UserProfileController {
     
@@ -65,6 +66,8 @@ extension UserProfileController {
                 Database.fetchPostWithPID(pid: postId, completion: { (post) in
                     self.posts.append(post)
                     print("inside:   ", post.postId)
+                    let dummyImageView = CachedImageView()//preload image
+                    dummyImageView.loadImage(urlString: post.thumbnailImageUrl ?? "")
                     
                     counter = counter + 1
                     if allObjects.count == counter {

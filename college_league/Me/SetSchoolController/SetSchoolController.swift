@@ -36,6 +36,8 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
         searchController.searchBar.barTintColor = themeColor
         tableView.tableHeaderView = searchController.searchBar///tableHeaderView
         definesPresentationContext = true
+        searchController.searchBar.showsCancelButton = true
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: 0), for: UIBarMetrics.default)
         
         fetchShools()
     }

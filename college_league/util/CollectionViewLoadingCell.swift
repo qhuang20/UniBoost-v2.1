@@ -20,6 +20,16 @@ class CollectionViewLoadingCell: UICollectionViewCell {
         }
     }
     
+    let pullToRefreshLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Pull to Refresh"
+        label.textColor = UIColor.lightGray
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.isHidden = true
+        return label
+    }()
+    
     let activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.activityIndicatorViewStyle = .gray
@@ -39,8 +49,11 @@ class CollectionViewLoadingCell: UICollectionViewCell {
     
     private func setupSubviews() {
         addSubview(activityIndicator)
+        addSubview(pullToRefreshLabel)
         
         activityIndicator.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        
+        pullToRefreshLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
     }
 
     required init?(coder aDecoder: NSCoder) {
