@@ -22,10 +22,10 @@ class CollectionViewLoadingCell: UICollectionViewCell {
     
     let pullToRefreshLabel: UILabel = {
         let label = UILabel()
-        label.text = "Pull to Refresh"
+        label.text = "Pull to Load More"
         label.textColor = UIColor.lightGray
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 13.5)
         label.isHidden = true
         return label
     }()

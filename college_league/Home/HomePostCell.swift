@@ -14,7 +14,7 @@ class HomePostCell: UICollectionViewCell {
     var post: Post? {
         didSet {
             thumbnailImageView.image = nil
-            thumbnailImageView.backgroundColor = UIColor.white
+            thumbnailImageView.backgroundColor = brightGray
             guard let post = post else { return }
             let user = post.user
             
@@ -26,10 +26,8 @@ class HomePostCell: UICollectionViewCell {
                 let imageHeight = post.thumbnailImageHeight!
                 if imageHeight > 370 {
                     thumbnailImageView.contentMode = .scaleAspectFit
-                    thumbnailImageView.backgroundColor = UIColor.white
                 } else {
                     thumbnailImageView.contentMode = .scaleAspectFill
-                    thumbnailImageView.backgroundColor = brightGray
                 }
                 thumbnailImageView.loadImage(urlString: thumbnailImageUrl, completion: nil)
             } else {

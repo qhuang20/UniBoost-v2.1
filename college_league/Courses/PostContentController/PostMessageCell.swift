@@ -14,6 +14,7 @@ class PostMessageCell: UITableViewCell {
     var postMessage: PostMessage? {
         didSet {
             guard let postMessage = postMessage else { return }
+            thumbnailImageView.backgroundColor = brightGray
             
             if let thumbnailImageUrl = postMessage.thumbnailUrl {
                 postTextViewHeightAnchor?.constant = 0

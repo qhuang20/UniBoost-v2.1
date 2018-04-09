@@ -91,7 +91,6 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
             return
         }
         
-        paginateCourses()
         fetchFollowingCourses()
     }
     

@@ -12,6 +12,7 @@ class ResponseMessageCell: PostMessageCell {
     var responseMessage: ResponseMessage? {
         didSet {
             guard let responseMessage = responseMessage else { return }
+            thumbnailImageView.backgroundColor = brightGray
             
             if let thumbnailImageUrl = responseMessage.thumbnailUrl {
                 postTextViewHeightAnchor?.constant = 0

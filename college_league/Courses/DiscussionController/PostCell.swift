@@ -19,6 +19,7 @@ class PostCell: UITableViewCell {
             titleLabel.text = post.title
             typeImageView.image = UIImage(named: post.type)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             profileImageView.loadImage(urlString: user.profileImageUrl, completion: nil)
+            thumbnailImageView.backgroundColor = brightGray
             
             if let thumbnailImageUrl = post.thumbnailImageUrl {
                 let imageHeight = post.thumbnailImageHeight!
@@ -26,11 +27,9 @@ class PostCell: UITableViewCell {
                 if imageHeight > 250 {
                     thumbnailImageViewHeightAnchor?.constant = 250
                     thumbnailImageView.contentMode = .scaleAspectFit
-                    thumbnailImageView.backgroundColor = UIColor.white
                 } else {
                     thumbnailImageViewHeightAnchor?.constant = imageHeight
                     thumbnailImageView.contentMode = .scaleAspectFill
-                    thumbnailImageView.backgroundColor = brightGray
                 }
                 thumbnailImageView.loadImage(urlString: thumbnailImageUrl, completion: nil)
                 
