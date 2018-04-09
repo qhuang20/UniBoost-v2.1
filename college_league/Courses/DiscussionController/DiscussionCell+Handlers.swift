@@ -26,7 +26,9 @@ extension DiscussionCell: UISearchBarDelegate {
         }
         
         query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
-            self.refreshControl.endRefreshing()
+            if self.refreshControl.isRefreshing {//prevent jerky scrolling!!!!!
+                self.refreshControl.endRefreshing()
+            }
             guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
             allObjects.reverse()
             var counter = 0
@@ -55,6 +57,7 @@ extension DiscussionCell: UISearchBarDelegate {
                     if allObjects.count == counter {
                         self.isPaging = false
                         self.getFilteredPostsWith(searchText: searchBar?.text ?? "")
+                        
                         self.tableView.reloadData()
                     }
                 })

@@ -18,7 +18,9 @@ extension UserProfileController {
         let userFollowingRef = Database.database().reference().child("user_following").child(currentLoggedInUserId).child(uid)
         
         Database.fetchUserWithUID(uid: uid) { (user) in
-            self.refreshControl.endRefreshing()
+            if self.refreshControl.isRefreshing {//prevent jerky scrolling!!!!!
+                self.refreshControl.endRefreshing()
+            }
             self.user = user
             self.navigationItem.title = self.user?.username
             

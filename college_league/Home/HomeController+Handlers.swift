@@ -19,7 +19,9 @@ extension HomeController {
         let query = followingRef.queryOrderedByKey()
         
         query.observeSingleEvent(of: .value, with: { (snapshot) in//outside
-            self.refreshControl.endRefreshing()
+            if self.refreshControl.isRefreshing {//prevent jerky scrolling!!!!!
+                self.refreshControl.endRefreshing()
+            }
             guard let allObject = snapshot.children.allObjects as? [DataSnapshot] else { return }
             if allObject.count == 0 {
                 self.isFinishedPaging = true
