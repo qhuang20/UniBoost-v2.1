@@ -27,6 +27,9 @@ class UserProfileHeader: UICollectionViewCell {
             if let bio = user.bio {
                 userInfoLabel.text = user.username + ": " + bio
             }
+            if let school = user.school {
+                schoolLabel.text = school
+            }
             
             likesLabel.attributedText = setupAttributedString(number: user.likes, text: "likes")
             followersLabel.attributedText = setupAttributedString(number: user.followers, text: "followers")
@@ -146,22 +149,34 @@ class UserProfileHeader: UICollectionViewCell {
         return button
     }()
     
+    let schoolLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.textColor = UIColor.darkGray
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         postsButton.tintColor = themeColor
         addSubview(profileImageView)
         addSubview(userInfoLabel)
         addSubview(editProfileFollowButton)
+        addSubview(schoolLabel)
 
         profileImageView.anchor(topAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 12, bottomConstant: 0, rightConstant: 0, widthConstant: 80, heightConstant: 80)
         
         setupUserStatsView()
 
-        editProfileFollowButton.anchor(likesLabel.bottomAnchor, left: likesLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, topConstant: 0, leftConstant: 20.5, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 32)
+        editProfileFollowButton.anchor(followingLabel.bottomAnchor, left: followingLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 32)
+        
+        schoolLabel.anchor(likesLabel.bottomAnchor, left: likesLabel.leftAnchor, bottom: nil, right: editProfileFollowButton.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 32)
         
         setupBottomToolbar()
         
-        userInfoLabel.anchor(profileImageView.bottomAnchor, left: leftAnchor, bottom: postsButton.topAnchor, right: rightAnchor, topConstant: 4, leftConstant: 18, bottomConstant: 0, rightConstant: 18, widthConstant: 0, heightConstant: 0)
+        userInfoLabel.anchor(profileImageView.bottomAnchor, left: leftAnchor, bottom: postsButton.topAnchor, right: rightAnchor, topConstant: -8, leftConstant: 18, bottomConstant: 0, rightConstant: 18, widthConstant: 0, heightConstant: 0)
     }
     
     private func setupUserStatsView() {

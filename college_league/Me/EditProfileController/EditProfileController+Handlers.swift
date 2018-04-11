@@ -15,6 +15,7 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
         guard let username = nameTextField.text else { return }
         guard let image = self.profileImageView.image else { return }
         let bio = bioTextView.text
+        let school = self.schoolLabel.text
         let saveButton = navigationItem.rightBarButtonItem
         saveButton?.tintColor = brightGray
         saveButton?.isEnabled = false
@@ -32,8 +33,8 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
             print("Successfully uploaded profile image:", profileImageUrl)
             
             
-            
-            let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "bio": bio as Any] as [String : Any]
+           
+            let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "bio": bio as Any, "school": school as Any] as [String : Any]
             self.updateUsersValuesToDatabase(values: dictionaryValues)
         })
     }
@@ -41,18 +42,21 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
     private func updateUsersValuesToDatabase(values: [String: Any]) {
         guard let uid = user?.uid else { return }
         Database.database().reference().child("users").child(uid).updateChildValues(values, withCompletionBlock: { (err, ref) in
-            
             if let err = err {
                 print("Failed to save user info into db:", err)
                 return
             }
             print("Successfully saved user info to db")
             
+            if let school = self.schoolLabel.text {
+                UserDefaults.standard.setSchool(value: school)
+                let ref = Database.database().reference().child("school_users").child(school)
+                ref.updateChildValues([uid : 1])
+            }
+            
             
             
             guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else { return }
-            let school = self.schoolLabel.text
-            UserDefaults.standard.setSchool(value: school)
             mainTabBarController.setupViewControllers()
             
             self.dismiss(animated: true, completion: nil)
