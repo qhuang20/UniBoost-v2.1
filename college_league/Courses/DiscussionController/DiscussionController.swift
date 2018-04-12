@@ -45,11 +45,12 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     private func layoutSearchBar() {
         searchBar?.placeholder = "Find Post"
-        
         guard let searchBarAnchors = searchBarAnchors else { return }
-        searchBarAnchors[0].constant = 50
-        searchBarAnchors[2].constant = -85
-        animateNavigationBarLayout()
+
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            searchBarAnchors[0].constant = 50
+            searchBarAnchors[2].constant = -85
+        }, completion: nil)
     }
     
     private func configureCollectionVeiw() {
@@ -168,12 +169,6 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         titleTypeController.course = course
         
         present(navTitleTypeController, animated: true, completion: nil)
-    }
-    
-    private func animateNavigationBarLayout() {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.navigationController?.navigationBar.layoutIfNeeded()
-        }, completion: nil)
     }
     
 }

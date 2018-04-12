@@ -87,9 +87,12 @@ class EditProfileController: UIViewController {
         let v = UIView()
         v.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
         v.backgroundColor = UIColor.white
+        v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSetSkills)))
         v.addSubview(rightArrowButton)
+        
         rightArrowButton.anchor(nil, left: nil, bottom: nil, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
         rightArrowButton.anchorCenterYToSuperview()
+        rightArrowButton.addTarget(self, action: #selector(handleSetSkills), for: .touchUpInside)
         return v
     }()
     

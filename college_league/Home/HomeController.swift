@@ -30,11 +30,19 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
+        configureNavigationBar()
+        
+        fetchFollowingUserPostIds()
+    }
+    
+    private func configureNavigationBar() {
         navigationItem.title = "Home"
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "timetable").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(handleTimetable))
         navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         
-        fetchFollowingUserPostIds()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "add_friends").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(handleAddFriends))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.white
     }
     
     private func configureCollectionVeiw() {

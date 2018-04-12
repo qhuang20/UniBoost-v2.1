@@ -113,5 +113,12 @@ extension HomeController {
         present(timetableController, animated: true, completion: nil)
     }
     
+    @objc func handleAddFriends() {
+        print("hhhh")
+    }
+    
 }
+
+
+
 

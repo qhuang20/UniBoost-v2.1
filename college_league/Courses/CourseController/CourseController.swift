@@ -94,7 +94,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         fetchFollowingCourses()
     }
     
-    private func configureCollectionVeiw() {
+    internal func configureCollectionVeiw() {
         collectionView?.backgroundColor = brightGray
         collectionView?.alwaysBounceVertical = true
         collectionView?.keyboardDismissMode = .onDrag
@@ -107,7 +107,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView?.register(CollectionViewLoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
     }
     
-    private func configureNavigationBar() {
+    internal func configureNavigationBar() {
         let button = UIButton(type: .custom)
         viewOptionButton = button
         let image = #imageLiteral(resourceName: "eye").withRenderingMode(.alwaysTemplate)
@@ -174,7 +174,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         return indexPath.item == filteredCourses.count
     }
     
-    private func animateNavigationBarLayout() {
+    internal func animateNavigationBarLayout() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.navigationController?.navigationBar.layoutIfNeeded()
         }, completion: nil)

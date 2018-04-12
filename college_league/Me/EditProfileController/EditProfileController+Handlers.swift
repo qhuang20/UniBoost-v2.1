@@ -77,6 +77,12 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
         setSchoolController.modalTransitionStyle = .crossDissolve
         present(setSchoolController, animated: true, completion: nil)
     }
+
+    @objc func handleSetSkills() {
+        let setSkillsController = SetSkillsController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(setSkillsController, animated: true)
+    }
     
     
     

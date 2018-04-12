@@ -64,6 +64,7 @@
 		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
 		7B97171D205A005700B6F781 /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171C205A005700B6F781 /* PostFooterView.swift */; };
 		7BB2ABF2205F2CD70086F3EB /* UserDefaults+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB2ABF1205F2CD70086F3EB /* UserDefaults+Helpers.swift */; };
+		7BBD9A75207ED7D600281F21 /* SetSkillsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A74207ED7D600281F21 /* SetSkillsController.swift */; };
 		7BD659F1205B8F41004ACC7E /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F0205B8F41004ACC7E /* Response.swift */; };
 		7BD659F4205B9488004ACC7E /* ResponseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F3205B9488004ACC7E /* ResponseController.swift */; };
 		7BD659F6205C4D90004ACC7E /* ResponseFoonterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */; };
@@ -145,6 +146,7 @@
 		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
 		7B97171C205A005700B6F781 /* PostFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterView.swift; sourceTree = "<group>"; };
 		7BB2ABF1205F2CD70086F3EB /* UserDefaults+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Helpers.swift"; sourceTree = "<group>"; };
+		7BBD9A74207ED7D600281F21 /* SetSkillsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSkillsController.swift; sourceTree = "<group>"; };
 		7BD659F0205B8F41004ACC7E /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		7BD659F3205B9488004ACC7E /* ResponseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseController.swift; sourceTree = "<group>"; };
 		7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseFoonterView.swift; sourceTree = "<group>"; };
@@ -200,7 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				7BF7AC02206C6C8A00920057 /* SettingsController */,
-				7BF7AC0A206EFB4200920057 /* SetSchoolController */,
+				7BF7AC0A206EFB4200920057 /* SetSchool&Skills */,
 				7BF7AC05206C8FE700920057 /* EditProfileController */,
 				7B1624762038C561004C0537 /* UserProfileController */,
 			);
@@ -442,12 +444,13 @@
 			path = EditProfileController;
 			sourceTree = "<group>";
 		};
-		7BF7AC0A206EFB4200920057 /* SetSchoolController */ = {
+		7BF7AC0A206EFB4200920057 /* SetSchool&Skills */ = {
 			isa = PBXGroup;
 			children = (
 				7BF7AC0B206EFB7300920057 /* SetSchoolController.swift */,
+				7BBD9A74207ED7D600281F21 /* SetSkillsController.swift */,
 			);
-			path = SetSchoolController;
+			path = "SetSchool&Skills";
 			sourceTree = "<group>";
 		};
 		FB8931E96FC22755384000E2 /* Pods */ = {
@@ -603,6 +606,7 @@
 			files = (
 				7BD659FA205C9DB8004ACC7E /* ResponseMessage.swift in Sources */,
 				7BF2E4D620545F4F004D4DBE /* PostMessage.swift in Sources */,
+				7BBD9A75207ED7D600281F21 /* SetSkillsController.swift in Sources */,
 				7BF7AC00206B405A00920057 /* TrendingCell.swift in Sources */,
 				7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */,
 				7B1624732038C555004C0537 /* UserProfileHeader.swift in Sources */,
