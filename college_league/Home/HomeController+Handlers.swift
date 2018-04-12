@@ -85,6 +85,7 @@ extension HomeController {
             self.isFinishedPaging = true
             self.isPaging = false
             self.collectionView?.reloadData()
+            print("no postIds")
             return
         }
         print("\nstart paging")
