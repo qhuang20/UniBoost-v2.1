@@ -45,7 +45,7 @@ class RequestController: HomeController {
                 self.refreshControl.endRefreshing()
             }
             guard let allObject = snapshot.children.allObjects as? [DataSnapshot] else { return }
-            if allObject.count == 0 {
+            if allObject.count == 0 {///show tips...
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.collectionView?.reloadData()
@@ -62,17 +62,12 @@ class RequestController: HomeController {
                 query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in//inside
                     skillsCounter = skillsCounter + 1///////????
                     guard let postIdsDictionary = snapshot.value as? [String: Any] else {
-//                        if courseIdsDictionary.count == skillsCounter {
-
-                        self.postIds.sort(by: { (s1, s2) -> Bool in
-                            return s1.compare(s2) == ComparisonResult.orderedDescending
-                        })
-                        self.postIds.forEach({ (s) in
-                            print("sorted postIds:   ", s)
-                        })
-                        
-                        self.paginatePosts()
-//                        }
+                        if courseIdsDictionary.count == skillsCounter {
+                            self.sortPostIds()
+                            
+                            print("the last skill has no posts")
+                            self.paginatePosts()
+                        }
                         return
                     }
                     var postIdsCounter = 0
@@ -86,12 +81,7 @@ class RequestController: HomeController {
                             print("last skill postIdsCounter:   ", postIdsCounter)
                             print("skillsCounter:   ", skillsCounter)
                             
-                            self.postIds.sort(by: { (s1, s2) -> Bool in
-                                return s1.compare(s2) == ComparisonResult.orderedDescending
-                            })
-                            self.postIds.forEach({ (s) in
-                                print("sorted postIds:   ", s)
-                            })
+                            self.sortPostIds()
                             
                             self.paginatePosts()
                         }

@@ -23,7 +23,7 @@ extension HomeController {
                 self.refreshControl.endRefreshing()
             }
             guard let allObject = snapshot.children.allObjects as? [DataSnapshot] else { return }
-            if allObject.count == 0 {
+            if allObject.count == 0 {///show tips...
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.collectionView?.reloadData()
@@ -39,7 +39,15 @@ extension HomeController {
                 
                 query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in//inside
                     usersCounter = usersCounter + 1//before postIdsDictionary!! no elements
-                    guard let postIdsDictionary = snapshot.value as? [String: Any] else {return}
+                    guard let postIdsDictionary = snapshot.value as? [String: Any] else {
+                        if userIdsDictionary.count == usersCounter {
+                            self.sortPostIds()
+                            
+                            print("the last user has no posts")
+                            self.paginatePosts()
+                        }
+                        return
+                    }
                     var postIdsCounter = 0
                     
                     postIdsDictionary.forEach({ (postId, value) in
@@ -51,12 +59,7 @@ extension HomeController {
                             print("last user postIdsCounter:   ", postIdsCounter)
                             print("usersCounter:   ", usersCounter)
                             
-                            self.postIds.sort(by: { (s1, s2) -> Bool in
-                                return s1.compare(s2) == ComparisonResult.orderedDescending
-                            })
-                            self.postIds.forEach({ (s) in
-                                print("sorted postIds:   ", s)
-                            })
+                            self.sortPostIds()
                             
                             self.paginatePosts()
                         }
@@ -68,7 +71,22 @@ extension HomeController {
         }
     }
     
+    internal func sortPostIds() {
+        self.postIds.sort(by: { (s1, s2) -> Bool in
+            return s1.compare(s2) == ComparisonResult.orderedDescending
+        })
+        self.postIds.forEach({ (s) in
+            print("sorted postIds:   ", s)
+        })
+    }
+    
     @objc internal func paginatePosts() {
+        if postIds.count == 0 {///show tips...
+            self.isFinishedPaging = true
+            self.isPaging = false
+            self.collectionView?.reloadData()
+            return
+        }
         print("\nstart paging")
         let queryNum = 4
         isPaging = true
