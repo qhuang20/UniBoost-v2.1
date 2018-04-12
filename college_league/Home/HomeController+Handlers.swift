@@ -38,8 +38,8 @@ extension HomeController {
                 let queryNum: UInt = 10
                 
                 query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in//inside
+                    usersCounter = usersCounter + 1//before postIdsDictionary!! no elements
                     guard let postIdsDictionary = snapshot.value as? [String: Any] else {return}
-                    usersCounter = usersCounter + 1
                     var postIdsCounter = 0
                     
                     postIdsDictionary.forEach({ (postId, value) in
@@ -48,7 +48,7 @@ extension HomeController {
                         postIdsCounter = postIdsCounter + 1
                         
                         if postIdsDictionary.count == postIdsCounter && userIdsDictionary.count == usersCounter {
-                            print("postIdsCounter:   ", postIdsCounter)
+                            print("last user postIdsCounter:   ", postIdsCounter)
                             print("usersCounter:   ", usersCounter)
                             
                             self.postIds.sort(by: { (s1, s2) -> Bool in
@@ -68,7 +68,7 @@ extension HomeController {
         }
     }
     
-    internal func paginatePosts() {
+    @objc internal func paginatePosts() {
         print("\nstart paging")
         let queryNum = 4
         isPaging = true

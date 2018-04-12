@@ -11,7 +11,7 @@ import Firebase
 
 extension CourseController: UISearchBarDelegate {
    
-    internal func paginateCourses() {
+    @objc internal func paginateCourses() {
         print("\nstart paging")
         isPaging = true
         guard let school = school else { return }
@@ -70,7 +70,7 @@ extension CourseController: UISearchBarDelegate {
         }
     }
     
-    internal func fetchFollowingCourses() {
+    @objc internal func fetchFollowingCourses() {
         guard let school = school else { return }
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school)
@@ -113,7 +113,7 @@ extension CourseController: UISearchBarDelegate {
         }
     }
     
-    private func getFilteredCoursesWith(searchText: String) {
+    internal func getFilteredCoursesWith(searchText: String) {
         if viewOptionButton?.isSelected == false {
             if searchText.isEmpty {
                 filteredCourses = courses

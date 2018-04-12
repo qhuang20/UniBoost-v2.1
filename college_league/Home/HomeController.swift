@@ -35,7 +35,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         fetchFollowingUserPostIds()
     }
     
-    private func configureNavigationBar() {
+    internal func configureNavigationBar() {
         navigationItem.title = "Home"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "timetable").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(handleTimetable))
@@ -45,7 +45,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white
     }
     
-    private func configureCollectionVeiw() {
+    internal func configureCollectionVeiw() {
         collectionView?.backgroundView = refreshControl
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = UIColor.white

@@ -12,7 +12,7 @@ import LBTAComponents
 
 extension DiscussionCell: UISearchBarDelegate {
     
-    @objc func paginatePosts() {//to allow override for TrendingCell
+    @objc internal func paginatePosts() {//to allow override for TrendingCell
         print("\nstart paging")
         guard let course = course else { return }
         let searchBar = discussionController?.searchBar

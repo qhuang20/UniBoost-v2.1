@@ -32,7 +32,7 @@ class MainTabBarController: UITabBarController {
     
         let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "home_unselected"), selectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: HomeController(collectionViewLayout: UICollectionViewFlowLayout()))
         
-        let requestNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "request"), selectedImage: #imageLiteral(resourceName: "request_selected"))
+        let requestNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "request"), selectedImage: #imageLiteral(resourceName: "request_selected"),rootViewController: RequestController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         let courseNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "course"), selectedImage: #imageLiteral(resourceName: "course_selected"), rootViewController:
             CourseController(collectionViewLayout: UICollectionViewFlowLayout()))
