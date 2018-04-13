@@ -32,7 +32,11 @@ extension UserProfileController {
                 self.collectionView?.reloadData()
             })
             
-            self.paginatePosts()
+            if self.choice == TooBarChoice.posts {
+                self.paginatePosts()
+            } else {
+                self.paginateBookmarks()
+            }
         }
     }
     
@@ -45,7 +49,7 @@ extension UserProfileController {
         let queryNum: UInt = 6
         
         if posts.count > 0 {
-            query = query.queryEnding(atValue: queryEndingValue)
+            query = query.queryEnding(atValue: queryEndingKey)
         }
         
         query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -59,7 +63,7 @@ extension UserProfileController {
                 self.collectionView?.reloadData()
             }
             if self.posts.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
-            self.queryEndingValue = allObjects.last?.key ?? ""
+            self.queryEndingKey = allObjects.last?.key ?? ""
             
             allObjects.forEach({ (snapshot) in
                 let postId = snapshot.key
@@ -83,6 +87,56 @@ extension UserProfileController {
             })
         }) { (err) in
             print("Failed to paginate for posts:", err)
+        }
+    }
+    
+    internal func paginateBookmarks() {
+        print("\nstart paging bookmarks")
+        isPaging = true
+        guard let uid = self.user?.uid else { return }
+        let ref = Database.database().reference().child("user_bookmarks").child(uid)
+        var query = ref.queryOrderedByValue()
+        let queryNum: UInt = 6
+        
+        if posts.count > 0 {
+            query = query.queryEnding(atValue: queryEndingValue.timeIntervalSince1970, childKey: queryEndingKey)
+        }
+        
+        query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+            allObjects.reverse()
+            var counter = 0
+            
+            if allObjects.count == 1 || allObjects.count == 0 {
+                self.isFinishedPaging = true
+                self.isPaging = false
+                self.collectionView?.reloadData()
+            }
+            if self.posts.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
+            self.queryEndingKey = allObjects.last?.key ?? ""
+            let lastSnapshot = allObjects.last
+            guard let secondsFrom1970 = lastSnapshot?.value as? TimeInterval else { return }
+            self.queryEndingValue = Date(timeIntervalSince1970: secondsFrom1970)
+            
+            allObjects.forEach({ (snapshot) in
+                let postId = snapshot.key
+                print(postId)
+                
+                Database.fetchPostWithPID(pid: postId, completion: { (post) in
+                    self.posts.append(post)
+                    print("inside:   ", post.postId)
+                    let dummyImageView = CachedImageView()//preload image
+                    dummyImageView.loadImage(urlString: post.thumbnailImageUrl ?? "")
+                    
+                    counter = counter + 1
+                    if allObjects.count == counter {
+                        self.isPaging = false
+                        self.collectionView?.reloadData()
+                    }
+                })
+            })
+        }) { (err) in
+            print("Failed to paginate for bookmarks:", err)
         }
     }
     
@@ -117,4 +171,25 @@ extension UserProfileController {
         present(alertController, animated: true, completion: nil)
     }
     
+    
+    
+    internal func didChangeToolBarChoice(choice: TooBarChoice) {
+        print("new choice:   ", choice.rawValue)
+        self.choice = choice
+        posts.removeAll()
+        self.isFinishedPaging = false
+
+        if choice == TooBarChoice.posts {
+            paginatePosts()
+        } else {
+            paginateBookmarks()
+        }
+    }
+    
 }
+
+
+
+
+
+

@@ -14,7 +14,7 @@ class EditProfileController: UIViewController {
     var user: User?
     
     let words = ["My School", "My Skills", "Edit Photo", "Edit Name", "Bio:"]
-    let wordsLimitForBio = 50
+    let wordsLimitForBio = 65
     
     lazy var leftStackView: UIStackView = {
         var labels = [UILabel]()

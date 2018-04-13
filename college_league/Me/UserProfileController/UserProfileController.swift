@@ -17,10 +17,13 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     var posts = [Post]()
     var isFinishedPaging = false
     var isPaging = true//fetchUserAndUserPosts
-    var queryEndingValue = ""
+    var queryEndingKey = ""
+    var queryEndingValue: Date = Date(timeIntervalSince1970: 5000)//for Bookmarks
     
     let cellId = "cellId"
     let loadingCellId = "loadingCellId"
+    
+    var choice = TooBarChoice.posts
     
     lazy var refreshControl: UIRefreshControl = {
         let rc = UIRefreshControl()
@@ -33,6 +36,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         super.viewDidLoad()
         configureCollectionVeiw()
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostFooterView.updateProfileBookmarksNotificationName, object: nil)
         
         if userId == nil {
             setupLogOutButton()
@@ -110,12 +114,13 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var height: CGFloat = 50 + 28//userInfo
-        let width = view.frame.width
-        
         if isLoadingIndexPath(indexPath) {
-            return CGSize(width: width, height: 100)
+            return CGSize(width: view.frame.width, height: 100)
         }
+        
+        let width = view.frame.width
+        let userInfo = posts[indexPath.item].user.username + (posts[indexPath.item].user.bio ?? "")
+        var height: CGFloat = estimateHeightForUserInfo(text: userInfo) + 50 + 16
         
         if let imageHeight = posts[indexPath.item].thumbnailImageHeight {
             if imageHeight > 250 { height += 250 }
@@ -131,7 +136,11 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard isLoadingIndexPath(indexPath) else { return }
         if !isFinishedPaging && !isPaging {
-            paginatePosts()
+            if choice == TooBarChoice.posts {
+                paginatePosts()
+            } else {
+                paginateBookmarks()
+            }
         }
     }
 
@@ -144,14 +153,14 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     private func estimateHeightForPostTitle(text: String) -> CGFloat {
         let attributesForPostTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 22)]
-        let size = CGSize(width: view.frame.width - 20, height: 1000)
+        let size = CGSize(width: view.frame.width - 20 - 40, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForPostTitle, context: nil)
         return rect.height
     }
     
     private func estimateHeightForUserInfo(text: String) -> CGFloat {
-        let size = CGSize(width: view.frame.width - 93, height: 1000)
+        let size = CGSize(width: view.frame.width - 93 - 40, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForUserInfo, context: nil)
         return rect.height

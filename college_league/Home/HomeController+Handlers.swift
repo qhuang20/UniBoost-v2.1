@@ -12,7 +12,6 @@ import LBTAComponents
 
 extension HomeController {
     
-    //Note: query and children.allObjects will always get through.
     internal func fetchFollowingUserPostIds() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let followingRef = Database.database().reference().child("user_following").child(uid)

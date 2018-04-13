@@ -80,12 +80,13 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var height: CGFloat = 50 + 28//userInfo
-        let width = view.frame.width
-        
         if isLoadingIndexPath(indexPath) {
-            return CGSize(width: width, height: 100)
+            return CGSize(width: view.frame.width, height: 100)
         }
+        
+        let width = view.frame.width
+        let userInfo = posts[indexPath.item].user.username + (posts[indexPath.item].user.bio ?? "")
+        var height: CGFloat = estimateHeightForUserInfo(text: userInfo) + 50 + 16
         
         if let imageHeight = posts[indexPath.item].thumbnailImageHeight {
             if imageHeight > 370 { height += 370 }
@@ -114,19 +115,23 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     private func estimateHeightForPostTitle(text: String) -> CGFloat {
         let attributesForPostTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 22)]
-        let size = CGSize(width: view.frame.width - 20, height: 1000)
+        let size = CGSize(width: view.frame.width - 20 - 40, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForPostTitle, context: nil)
         return rect.height
     }
     
     private func estimateHeightForUserInfo(text: String) -> CGFloat {
-        let size = CGSize(width: view.frame.width - 93, height: 1000)
+        let size = CGSize(width: view.frame.width - 93 - 40, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForUserInfo, context: nil)
         return rect.height
     }
     
 }
+
+
+
+
 
 

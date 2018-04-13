@@ -33,7 +33,6 @@ class RequestController: HomeController {
     
         
     
-    //Note: query and children.allObjects will always get through.
     private func fetchUserSkillsPostIds() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let school = school else { return }

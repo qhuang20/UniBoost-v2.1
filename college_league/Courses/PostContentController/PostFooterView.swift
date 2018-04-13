@@ -13,6 +13,8 @@ class PostFooterView: UIView {
     
     weak var postContentController: PostContentController?
     
+    static let updateProfileBookmarksNotificationName = NSNotification.Name(rawValue: "UpdateProfileBookmarks")
+    
     var post: Post? {
         didSet {
             guard let post = post else { return }
@@ -94,23 +96,31 @@ class PostFooterView: UIView {
     @objc func handleBookmark() {
         guard let post = postContentController?.post else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let values = [post.postId: bookmarkButton.isSelected ? 0 : 1]
+        let values = [post.postId: Date().timeIntervalSince1970]
         let ref = Database.database().reference().child("user_bookmarks").child(uid)
         
         if bookmarkButton.isSelected {
             self.post?.hasBookmarked = false
-            postContentController?.post?.hasBookmarked = false
+            postContentController?.post?.hasBookmarked = false//isSelected changed
         } else {
             self.post?.hasBookmarked = true
             postContentController?.post?.hasBookmarked = true
         }
         
-        ref.updateChildValues(values) { (err, ref) in
-            if let err = err {
-                print("Failed to bookmark post:", err)
-                return
+        if bookmarkButton.isSelected {
+            ref.updateChildValues(values) { (err, ref) in
+                if let err = err {
+                    print("Failed to bookmark post:", err)
+                    return
+                }
+                print("Successfully bookmarked post.")
+                
+                NotificationCenter.default.post(name: PostFooterView.updateProfileBookmarksNotificationName, object: nil)
             }
-            print("Successfully bookmarked post.")
+        } else {
+            ref.child(post.postId).removeValue { (err, ref) in
+                NotificationCenter.default.post(name: PostFooterView.updateProfileBookmarksNotificationName, object: nil)
+            }
         }
     }
     

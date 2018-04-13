@@ -10,6 +10,12 @@ import UIKit
 import Firebase
 import LBTAComponents
 
+enum TooBarChoice: String {
+    case posts
+    case response
+    case bookmarks
+}
+
 class UserProfileHeader: UICollectionViewCell {
     
     weak var userProfileController: UserProfileController?
@@ -115,37 +121,40 @@ class UserProfileHeader: UICollectionViewCell {
     lazy var postsButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "list"), for: .normal)
-        button.setTitle(" posts", for: .normal)
+        button.setTitle(TooBarChoice.posts.rawValue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.tintColor = UIColor.lightGray
         button.imageEdgeInsets = UIEdgeInsets(top: 2.5, left: -2, bottom: 1, right: 2)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         button.backgroundColor = superBrightGray
+        button.addTarget(self, action: #selector(handleChangeToolBarChoice), for: .touchUpInside)
         return button
     }()
     
     lazy var responseButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "response"), for: .normal)
-        button.setTitle("response", for: .normal)
+        button.setTitle(TooBarChoice.response.rawValue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.imageEdgeInsets = UIEdgeInsets(top: 4.6, left: -4, bottom: 4.6, right: 8)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: -9.5, bottom: 0, right: 9.5)
         button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = UIColor.lightGray
         button.backgroundColor = superBrightGray
+        button.addTarget(self, action: #selector(handleChangeToolBarChoice), for: .touchUpInside)
         return button
     }()
     
     lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "ribbon"), for: .normal)
-        button.setTitle("bookmarks", for: .normal)
+        button.setTitle(TooBarChoice.bookmarks.rawValue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
         button.imageEdgeInsets = UIEdgeInsets(top: 8, left: 0, bottom: 6 , right: 0)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
         button.tintColor = UIColor.lightGray
         button.backgroundColor = superBrightGray
+        button.addTarget(self, action: #selector(handleChangeToolBarChoice), for: .touchUpInside)
         return button
     }()
     
@@ -318,6 +327,21 @@ class UserProfileHeader: UICollectionViewCell {
             }
             print("Successfully increased user following count")
         }
+    }
+    
+    
+    
+    @objc func handleChangeToolBarChoice(button: UIButton) {
+        if userProfileController?.isPaging ?? true { return }
+        if button.tintColor == themeColor { return }
+        
+        bookmarkButton.tintColor = UIColor.lightGray
+        responseButton.tintColor = UIColor.lightGray
+        postsButton.tintColor = UIColor.lightGray
+        button.tintColor = themeColor
+        
+        let choice = TooBarChoice(rawValue: button.titleLabel?.text ?? "")
+        userProfileController?.didChangeToolBarChoice(choice: choice!)
     }
     
 }
