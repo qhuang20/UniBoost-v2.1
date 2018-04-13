@@ -73,6 +73,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         button.setImage(image, for: .normal)
         button.tintColor = UIColor.white
         button.adjustsImageWhenHighlighted = false
+        button.isHidden = true///later for social part, no need for title
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
     
@@ -153,19 +154,23 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     private func estimateHeightForPostTitle(text: String) -> CGFloat {
         let attributesForPostTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 22)]
-        let size = CGSize(width: view.frame.width - 20 - 40 - 16, height: 1000)
+        let size = CGSize(width: view.frame.width - 20 - 20 - 16, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForPostTitle, context: nil)
         return rect.height
     }
     
     private func estimateHeightForUserInfo(text: String) -> CGFloat {
-        let size = CGSize(width: view.frame.width - 93 - 40 - 16, height: 1000)
+        let size = CGSize(width: view.frame.width - 93 - 20 - 16, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForUserInfo, context: nil)
         return rect.height
     }
     
 }
+
+
+
+
 
 
