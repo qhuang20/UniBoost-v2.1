@@ -23,12 +23,12 @@ extension PostContentController {
             self.post?.course = course
             
             userBookmarksRef.observeSingleEvent(of: .value) { (snapshot) in
-                if let value = snapshot.value as? Int, value == 1 {
+                if let value = snapshot.value as? Double, value > 5000 {//time
                     self.post?.hasBookmarked = true
                 }
                 
                 userLikedPostsRef.observeSingleEvent(of: .value) { (snapshot) in
-                    if let value = snapshot.value as? Int, value == 1 {
+                    if let value = snapshot.value as? Double, value == 1 {
                         self.post?.hasLiked = true
                     }
                     
@@ -115,7 +115,7 @@ extension PostContentController {
         guard let oldResponseCount = post?.response else { return }
         
         self.post?.response = addFlag ? oldResponseCount + 1 : oldResponseCount - 1
-        //handleUpdate will be called later to reload data
+        //reload data? handleUpdate will be called later to do that
     }
     
     @objc func updatePostLikesCount(notification: Notification) {

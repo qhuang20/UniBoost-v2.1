@@ -42,7 +42,7 @@ class ResponseController: PostController {
                 print("Failed to increase response count", error)
                 return
             }
-            print("Successfully increased reponse count")
+            print("Successfully increased response count")
             
             let userInfo = ["postId": postId, "add": true] as [String : Any]
             NotificationCenter.default.post(name: ResponseController.updateResponseCountName, object: nil, userInfo: userInfo)
