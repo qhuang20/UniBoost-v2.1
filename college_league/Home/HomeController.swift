@@ -128,6 +128,13 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return rect.height
     }
     
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let postContentController = PostContentController(style: UITableViewStyle.grouped)
+        postContentController.post = posts[indexPath.row]
+        navigationController?.pushViewController(postContentController, animated: true)
+    }
 }
 
 

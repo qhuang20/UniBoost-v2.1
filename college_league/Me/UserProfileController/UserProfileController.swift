@@ -212,6 +212,22 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         return rect.height
     }
     
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if choice == TooBarChoice.response {
+            let postContentController = PostContentController(style: UITableViewStyle.grouped)
+            let post = responseArr[indexPath.row].post
+            postContentController.post = post
+            navigationController?.pushViewController(postContentController, animated: true)
+            return
+        }
+        
+        let postContentController = PostContentController(style: UITableViewStyle.grouped)
+        postContentController.post = posts[indexPath.row]
+        navigationController?.pushViewController(postContentController, animated: true)
+    }
+    
 }
 
 
