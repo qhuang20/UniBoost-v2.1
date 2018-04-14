@@ -30,16 +30,18 @@ class UserPostCell: UICollectionViewCell {
                     thumbnailImageView.contentMode = .scaleAspectFill
                 }
                 thumbnailImageView.loadImage(urlString: thumbnailImageUrl, completion: nil)
+                userInfoLabelTopAnchor?.constant = 8
             } else {
                 thumbnailImageView.image = nil
-                thumbnailImageView.backgroundColor = UIColor.white
+                thumbnailImageView.backgroundColor = UIColor.clear
+                userInfoLabelTopAnchor?.constant = 16
             }
             
             setupAttributedCaption()
         }
     }
     
-    private func setupAttributedCaption() {
+    internal func setupAttributedCaption() {
         guard let post = self.post else { return }
         let userBio = post.user.bio ?? ""
         
@@ -58,6 +60,8 @@ class UserPostCell: UICollectionViewCell {
         attributedText.setLineSpacing(8)
         postLabel.attributedText = attributedText
     }
+    
+    var userInfoLabelTopAnchor: NSLayoutConstraint?
     
     let profileImageWidth: CGFloat = 36
     let typeImageWidth: CGFloat = 25
@@ -123,7 +127,7 @@ class UserPostCell: UICollectionViewCell {
         
         typeImageView.anchor(thumbnailImageView.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: padding, widthConstant: typeImageWidth, heightConstant: typeImageWidth + 4)
         
-        postLabel.anchor(thumbnailImageView.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding, leftConstant: padding, bottomConstant: 0, rightConstant: padding, widthConstant: 0, heightConstant: 0)
+        userInfoLabelTopAnchor = postLabel.anchorWithReturnAnchors(thumbnailImageView.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding, leftConstant: padding, bottomConstant: 0, rightConstant: padding, widthConstant: 0, heightConstant: 0)[0]
         postLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: UILayoutConstraintAxis.vertical)
         
         separatorLineView.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: cellSpacing)

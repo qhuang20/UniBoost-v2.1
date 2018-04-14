@@ -15,6 +15,8 @@ class ResponseController: PostController {
     
     static let updateResponseNotificationName = NSNotification.Name(rawValue: "UpdateResponse")
     static let updateResponseCountName = NSNotification.Name(rawValue: "UpdateResponseCount")
+
+    static let updateProfileResponseNotificationName = NSNotification.Name(rawValue: "UpdateProfileResponse")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,6 +140,7 @@ class ResponseController: PostController {
             
             print("Yeeeeeaaaaaahhhhhh, Successfully saved response to DB")
             NotificationCenter.default.post(name: ResponseController.updateResponseNotificationName, object: nil)
+            NotificationCenter.default.post(name: ResponseController.updateProfileResponseNotificationName, object: nil)
         }
     }
     

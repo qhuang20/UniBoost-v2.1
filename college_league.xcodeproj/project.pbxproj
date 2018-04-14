@@ -67,6 +67,7 @@
 		7BBD9A75207ED7D600281F21 /* SetSkillsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A74207ED7D600281F21 /* SetSkillsController.swift */; };
 		7BBD9A77207F0A2700281F21 /* SetSkillsControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A76207F0A2700281F21 /* SetSkillsControllerCell.swift */; };
 		7BBD9A7A207F10E700281F21 /* RequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A79207F10E700281F21 /* RequestController.swift */; };
+		7BBD9A7C2081344400281F21 /* UserPostResponseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A7B2081344400281F21 /* UserPostResponseCell.swift */; };
 		7BD659F1205B8F41004ACC7E /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F0205B8F41004ACC7E /* Response.swift */; };
 		7BD659F4205B9488004ACC7E /* ResponseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F3205B9488004ACC7E /* ResponseController.swift */; };
 		7BD659F6205C4D90004ACC7E /* ResponseFoonterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */; };
@@ -151,6 +152,7 @@
 		7BBD9A74207ED7D600281F21 /* SetSkillsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSkillsController.swift; sourceTree = "<group>"; };
 		7BBD9A76207F0A2700281F21 /* SetSkillsControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSkillsControllerCell.swift; sourceTree = "<group>"; };
 		7BBD9A79207F10E700281F21 /* RequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestController.swift; sourceTree = "<group>"; };
+		7BBD9A7B2081344400281F21 /* UserPostResponseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostResponseCell.swift; sourceTree = "<group>"; };
 		7BD659F0205B8F41004ACC7E /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		7BD659F3205B9488004ACC7E /* ResponseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseController.swift; sourceTree = "<group>"; };
 		7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseFoonterView.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			children = (
 				7B1624702038C555004C0537 /* UserProfileHeader.swift */,
 				7B7CCDC0205A684C004EB1E3 /* UserPostCell.swift */,
+				7BBD9A7B2081344400281F21 /* UserPostResponseCell.swift */,
 				7B1624722038C555004C0537 /* UserProfileController.swift */,
 				7B1624712038C555004C0537 /* UserProfileController+Handlers.swift */,
 			);
@@ -679,6 +682,7 @@
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,
 				7B3ACAEF204B32D20065CB16 /* DiscussionCell+Handlers.swift in Sources */,
 				7BD659F8205C9A38004ACC7E /* ResponseHeaderCell.swift in Sources */,
+				7BBD9A7C2081344400281F21 /* UserPostResponseCell.swift in Sources */,
 				7B64394D201D19C000FB0E18 /* Timetable+Handlers.swift in Sources */,
 				7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */,
 				7B61057F2042110100C5F6C3 /* UIImage+Helper.swift in Sources */,

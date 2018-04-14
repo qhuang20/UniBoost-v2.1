@@ -82,7 +82,7 @@ extension Database {
             })
             
         }) { (err) in
-            print("Failed to fetch post:", err)
+            print("Failed to fetch response:", err)
         }
     }
     

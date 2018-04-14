@@ -18,11 +18,12 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     var isFinishedPaging = false
     var isPaging = true//fetchUserAndUserPosts
     var queryEndingKey = ""
+    
     var queryEndingValue: Date = Date(timeIntervalSince1970: 5000)//for Bookmarks
+    var responseArr = [Response]()
     
     let cellId = "cellId"
     let loadingCellId = "loadingCellId"
-    
     var choice = TooBarChoice.posts
     
     lazy var refreshControl: UIRefreshControl = {
@@ -37,6 +38,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         configureCollectionVeiw()
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostFooterView.updateProfileBookmarksNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: ResponseController.updateProfileResponseNotificationName, object: nil)
         
         if userId == nil {
             setupLogOutButton()
@@ -59,6 +61,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         layout.minimumLineSpacing = 1
         
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerId")
+        collectionView?.register(UserPostResponseCell.self, forCellWithReuseIdentifier: "responseId")
         collectionView?.register(UserPostCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(CollectionViewLoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
     }
@@ -94,6 +97,12 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if choice == TooBarChoice.response {
+            let count = responseArr.count
+            return isFinishedPaging ? count : count + 1
+        }
+        
         let count = posts.count
         return isFinishedPaging ? count : count + 1
     }
@@ -105,18 +114,40 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
             return cell
         }
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserPostCell
+        if self.choice == TooBarChoice.response {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "responseId", for: indexPath) as! UserPostResponseCell
+            if responseArr.count > indexPath.item {
+                cell.response = responseArr[indexPath.item]
+            }
+            return cell
+        }
         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! UserPostCell
         if posts.count > indexPath.item {
             cell.post = posts[indexPath.item]
         }
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if isLoadingIndexPath(indexPath) {
             return CGSize(width: view.frame.width, height: 100)
+        }
+        
+        if self.choice == TooBarChoice.response {
+            let width = view.frame.width
+            let post = responseArr[indexPath.item].post
+            let userInfo = post!.user.username + (post!.user.bio ?? "")
+            var height: CGFloat = estimateHeightForUserInfo(text: userInfo) + 50 + 14
+            
+            let postTitleHeight = estimateHeightForPostTitle(text: post!.title)
+            height += postTitleHeight
+            
+            let response = responseArr[indexPath.item]
+            let responseUserInfo = response.user.username + (response.user.bio ?? "")
+            height += estimateHeightForResponseUserInfo(text: responseUserInfo) + 32
+            
+            return CGSize(width: width, height: height)
         }
         
         let width = view.frame.width
@@ -137,10 +168,12 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard isLoadingIndexPath(indexPath) else { return }
         if !isFinishedPaging && !isPaging {
-            if choice == TooBarChoice.posts {
-                paginatePosts()
+            if self.choice == TooBarChoice.posts {
+                self.paginatePosts()
+            } else if self.choice == TooBarChoice.bookmarks {
+                self.paginateBookmarks()
             } else {
-                paginateBookmarks()
+                self.paginateResponse()
             }
         }
     }
@@ -149,6 +182,11 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
         guard !isFinishedPaging else { return false }
+        
+        if choice == TooBarChoice.response {
+            return indexPath.row == responseArr.count
+        }
+        
         return indexPath.row == posts.count
     }
     
@@ -162,6 +200,13 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     private func estimateHeightForUserInfo(text: String) -> CGFloat {
         let size = CGSize(width: view.frame.width - 93 - 20 - 16, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForUserInfo, context: nil)
+        return rect.height
+    }
+    
+    private func estimateHeightForResponseUserInfo(text: String) -> CGFloat {//response user info
+        let size = CGSize(width: view.frame.width - 52 - 20 - 16, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let rect = NSString(string: text).boundingRect(with: size, options: options, attributes: attributesForUserInfo, context: nil)
         return rect.height

@@ -34,8 +34,10 @@ extension UserProfileController {
             
             if self.choice == TooBarChoice.posts {
                 self.paginatePosts()
-            } else {
+            } else if self.choice == TooBarChoice.bookmarks {
                 self.paginateBookmarks()
+            } else {
+                self.paginateResponse()
             }
         }
     }
@@ -140,9 +142,62 @@ extension UserProfileController {
         }
     }
     
+    internal func paginateResponse() {
+        print("\nstart paging reponse")
+        isPaging = true
+        guard let uid = self.user?.uid else { return }
+        let ref = Database.database().reference().child("user_response").child(uid)
+        var query = ref.queryOrderedByKey()
+        let queryNum: UInt = 6
+        
+        if responseArr.count > 0 {
+            query = query.queryEnding(atValue: queryEndingKey)
+        }
+        
+        query.queryLimited(toLast: queryNum).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+            allObjects.reverse()
+            var counter = 0
+            
+            if allObjects.count == 1 || allObjects.count == 0 {
+                self.isFinishedPaging = true
+                self.isPaging = false
+                self.collectionView?.reloadData()
+            }
+            if self.responseArr.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
+            self.queryEndingKey = allObjects.last?.key ?? ""
+            
+            allObjects.forEach({ (snapshot) in
+                let responseId = snapshot.key
+                print(responseId)
+                
+                Database.fetchResponseWithRID(rid: responseId, completion: { (response) in
+                    Database.fetchPostWithPID(pid: response.postId, completion: { (post) in
+                        var response = response
+                        response.post = post
+                        self.responseArr.append(response)
+                        print("inside:   ", response.responseId)
+                        
+                        counter = counter + 1
+                        if allObjects.count == counter {
+                            self.isPaging = false
+                            self.responseArr.sort(by: { (r1, r2) -> Bool in
+                                return r1.creationDate.compare(r2.creationDate) == ComparisonResult.orderedDescending
+                            })
+                            self.collectionView?.reloadData()
+                        }
+                    })
+                })
+            })//forEach ends
+        }) { (err) in
+            print("Failed to paginate for response:", err)
+        }
+    }
+    
     @objc func handleRefresh() {
         if isPaging { return }
         posts.removeAll()
+        responseArr.removeAll()
         self.isFinishedPaging = false
         fetchUserAndUserPosts()
     }
@@ -177,12 +232,15 @@ extension UserProfileController {
         print("new choice:   ", choice.rawValue)
         self.choice = choice
         posts.removeAll()
+        responseArr.removeAll()
         self.isFinishedPaging = false
 
-        if choice == TooBarChoice.posts {
-            paginatePosts()
+        if self.choice == TooBarChoice.posts {
+            self.paginatePosts()
+        } else if self.choice == TooBarChoice.bookmarks {
+            self.paginateBookmarks()
         } else {
-            paginateBookmarks()
+            self.paginateResponse()
         }
     }
     
