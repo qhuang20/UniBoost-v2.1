@@ -103,18 +103,18 @@ class PostMessageCell: UITableViewCell {
     
     
     
-    private func zoomImageView() {
+    internal func zoomImageView() {
         let configuration = ImageViewerConfiguration { config in
             config.imageView = thumbnailImageView
             
             let imageUrl = postMessage?.imageUrl ?? ""
             let highQImageView = CachedImageView(cornerRadius: 0, emptyImage: nil)
-            highQImageView.loadImage(urlString: imageUrl)
-            
+
             config.imageBlock = { imageCompletion in
-                imageCompletion(highQImageView.image)
+                highQImageView.loadImage(urlString: imageUrl, completion: {
+                    imageCompletion(highQImageView.image)
+                })
             }
-            
         }
         
         let imageViewerController = ImageViewerController(configuration: configuration)

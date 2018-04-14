@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 
-let lqImageWidth: CGFloat = 420//hq is 600
+let lqImageWidth: CGFloat = 420
+let hqImageWidth: CGFloat = 720
 
 let themeColor = UIColor.init(r: 255, g: 134, b: 50)
 let lightThemeColor = UIColor.init(r: 255, g: 200, b: 144)

@@ -125,7 +125,7 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         let index = indexPath.item
         let selectedAsset = self.assets[index]
         let imageManager = PHImageManager.default()
-        let targetSize = CGSize(width: 600, height: 600)
+        let targetSize = CGSize(width: hqImageWidth, height: hqImageWidth)
         let options = PHImageRequestOptions()
         options.isSynchronous = true
         options.deliveryMode = .highQualityFormat

@@ -195,7 +195,7 @@ extension PostController {
     internal func insertImage(image: UIImage) {
         let goalWidth = postTextView.frame.width - 38
         let goalHeight = goalWidth * (image.size.height / image.size.width)
-        let newImage = image.resizeImageTo(width: 600)
+        let newImage = image.resizeImageTo(width: hqImageWidth)
         let attachment = NSTextAttachment()
         attachment.image = newImage
         attachment.bounds = CGRect(x: 0, y: 0, width: goalWidth, height: goalHeight)
