@@ -126,6 +126,7 @@ class PostContentController: UITableViewController {
         if section == 0 && row >= 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: postMessageCellId, for: indexPath) as! PostMessageCell
             cell.postMessage = postMessages[row - 1]
+            cell.postContentController = self
             return cell
         }
         
@@ -140,6 +141,7 @@ class PostContentController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: responseMessageCellId, for: indexPath) as! ResponseMessageCell
             let responseId = responseArr[section - 1].responseId
             cell.responseMessage = responseMessagesDic[responseId]?[row - 1]
+            cell.postContentController = self
             return cell
         }
         

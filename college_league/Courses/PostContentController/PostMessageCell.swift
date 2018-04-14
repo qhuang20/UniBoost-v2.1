@@ -8,8 +8,11 @@
 
 import UIKit
 import LBTAComponents
+import SimpleImageViewer
 
 class PostMessageCell: UITableViewCell {
+    
+    weak var postContentController: PostContentController?
     
     var postMessage: PostMessage? {
         didSet {
@@ -54,9 +57,9 @@ class PostMessageCell: UITableViewCell {
         return tv
     }()
     
-    lazy var thumbnailImageView: CachedImageView = {///
-        let imageView = CachedImageView(cornerRadius: 4, tapCallback: {
-            print("tap")
+    lazy var thumbnailImageView: CachedImageView = {//or unowned, pretty much the same
+        let imageView = CachedImageView(cornerRadius: 4, tapCallback: { [weak self] in
+            self?.zoomImageView()
         })
         imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
@@ -92,6 +95,30 @@ class PostMessageCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("deinit")
+    }
+    
+    
+    
+    private func zoomImageView() {
+        let configuration = ImageViewerConfiguration { config in
+            config.imageView = thumbnailImageView
+            
+            let highQImageView = CachedImageView(cornerRadius: 0, emptyImage: nil)
+            highQImageView.image = thumbnailImageView.image
+            
+            config.imageBlock = { imageCompletion in
+                
+            }
+            
+            let imageUrl = postMessage?.imageUrl
+        }
+        
+        let imageViewerController = ImageViewerController(configuration: configuration)
+        postContentController?.present(imageViewerController, animated: true)
     }
     
 }
