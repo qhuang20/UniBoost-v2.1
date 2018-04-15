@@ -50,8 +50,8 @@ class MainTabBarController: UITabBarController {
     
     private func configureTabBar() {
         tabBar.tintColor = .orange
+        tabBar.unselectedItemTintColor = UIColor.darkGray
         tabBar.isTranslucent = false
-        tabBar.unselectedItemTintColor = UIColor.black
 
         let topBorder = CALayer()
         topBorder.frame = CGRect(x: 0, y: 0, width: 1000, height: 0.8)
