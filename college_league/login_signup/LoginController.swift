@@ -14,14 +14,16 @@ class LoginController: UIViewController {
         let topView = UIView()
         topView.backgroundColor = themeColor
         
-        let logoImageView = UIImageView(image: #imageLiteral(resourceName: "wrocket100"))
-        logoImageView.contentMode = .scaleAspectFill
-        logoImageView.image = logoImageView.image?.withRenderingMode( .alwaysTemplate)
-        logoImageView.tintColor = .white
+        let logoLabel = UILabel()
+        logoLabel.text = "UniBoost"
+        let font = UIFont(name: "Noteworthy", size: 45)
+        logoLabel.font = font
+        logoLabel.textAlignment = .center
+        logoLabel.textColor = UIColor.white
         
-        topView.addSubview(logoImageView)
-        logoImageView.anchor(topView.topAnchor, left: nil, bottom: topView.bottomAnchor, right: nil, topConstant: 20, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: 60, heightConstant: 0)
-        logoImageView.anchorCenterSuperview()
+        topView.addSubview(logoLabel)
+        logoLabel.anchor(nil, left: nil, bottom: topView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        logoLabel.anchorCenterXToSuperview()
         
         return topView
     }()

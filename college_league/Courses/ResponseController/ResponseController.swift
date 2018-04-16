@@ -36,7 +36,7 @@ class ResponseController: PostController {
         
         ref.runTransactionBlock({ (currentData) -> TransactionResult in
             let currentValue = currentData.value as? Int ?? 0
-            currentData.value = currentValue + 1
+            currentData.value = currentValue + 1///
             
             return TransactionResult.success(withValue: currentData)
         }) { (err, committed, snapshot) in

@@ -70,7 +70,8 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        editProfileController?.schoolLabel.text = filteredSchools[indexPath.item]
+        let school = filteredSchools[indexPath.item]
+        editProfileController?.schoolLabel.text = school
         searchController.isActive = false
         searchBarCancelButtonClicked(searchController.searchBar)
     }

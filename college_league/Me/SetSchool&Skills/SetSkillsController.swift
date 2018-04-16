@@ -11,6 +11,8 @@ import Firebase
 
 class SetSkillsController: CourseController {
     
+    static let addSkillNotificationName = NSNotification.Name(rawValue: "AddSkill")
+    
     override func viewDidLoad() {
         configureCollectionVeiw()
         configureNavigationBar()
@@ -24,28 +26,42 @@ class SetSkillsController: CourseController {
         searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 50, bottomConstant: 2, rightConstant: 60, widthConstant: 0, heightConstant: 0)
         
         school = UserDefaults.standard.getSchool()
-        if school == nil {///...set up school First
+        if school == nil {
             isFinishedPaging = true
             self.collectionView?.reloadData()
+            
+            navigationController?.popViewController(animated: true)
             return
         }
         
         fetchFollowingCourses()
     }
     
+    deinit {
+        print("deinit")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.searchBar.alpha = 1
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         previousSearchText = searchBar.text ?? ""
+        
+        if (self.isMovingFromParentViewController || self.isBeingDismissed) {//better than deinit
+            NotificationCenter.default.post(name: SetSkillsController.addSkillNotificationName, object: nil)
+        }
         
         UIView.animate(withDuration: 0.3, animations: {
             self.searchBar.alpha = 0
         }) { (_) in
-            self.searchBar.removeFromSuperview()
+            
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         searchBar.text = previousSearchText
-        searchBar.placeholder = "Find Course"
+        searchBar.placeholder = "Select Your Skill"
         searchBar.delegate = self
         
         guard let searchBarAnchors = searchBarAnchors else { return }

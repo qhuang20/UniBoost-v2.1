@@ -18,13 +18,21 @@ class SignupController: UIViewController {
         imageView.layer.cornerRadius = 140/2
         imageView.layer.borderColor = UIColor.orange.cgColor
         imageView.layer.borderWidth = 5
-        imageView.backgroundColor = themeColor
-        imageView.image = imageView.image?.withRenderingMode( .alwaysTemplate)
-        imageView.tintColor = .white
+        imageView.backgroundColor = brightGray
+        imageView.image = imageView.image?.withRenderingMode( .alwaysOriginal)
         imageView.isUserInteractionEnabled = true
-
+        
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         return imageView
+    }()
+    
+    let addPhotoButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "addPhotoButton").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.isUserInteractionEnabled = false
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
     }()
     
     lazy var inputStackView: UIStackView = {
@@ -107,7 +115,18 @@ class SignupController: UIViewController {
         inputStackView.anchor(profileImageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 20, leftConstant: 40, bottomConstant: 0, rightConstant: 40, widthConstant: 0, heightConstant: 200)
         
         alreadyHaveAccountButton.anchor(signUpButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        
+        
+        
+        profileImageView.addSubview(addPhotoButton)
+        addPhotoButton.anchor(nil, left: nil, bottom: profileImageView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 5, rightConstant: 0, widthConstant: 32, heightConstant: 32)
+        addPhotoButton.anchorCenterXToSuperview()
     }
 
 }
+
+
+
+
+
 

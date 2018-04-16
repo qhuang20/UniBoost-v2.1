@@ -27,10 +27,28 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return rc
     }()
     
+    lazy var getStartedButton: UIButton = {
+        let button = UIButton(type: UIButtonType.roundedRect)
+        button.backgroundColor = themeColor
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitle("Get Started", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.layer.cornerRadius = 12
+        button.clipsToBounds = true
+        button.isHidden = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
         configureNavigationBar()
+        
+        view.addSubview(getStartedButton)
+        getStartedButton.setTitle("Follow Your Friends", for: .normal)
+        
+        getStartedButton.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 200, heightConstant: 42)
+        getStartedButton.anchorCenterXToSuperview()
         
         fetchFollowingUserPostIds()
     }
@@ -60,12 +78,13 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = posts.count
-        return isFinishedPaging ? count : count + 1
+        return count + 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if isLoadingIndexPath(indexPath) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! CollectionViewLoadingCell
+            cell.theEndLabel.isHidden = false
             cell.isTheEnd = isFinishedPaging
             return cell
         }
@@ -109,7 +128,6 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     
     private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
-        guard !isFinishedPaging else { return false }
         return indexPath.row == posts.count
     }
     

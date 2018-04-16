@@ -14,6 +14,7 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureTabBar()
 
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
@@ -25,7 +26,6 @@ class MainTabBarController: UITabBarController {
         }
         
         setupViewControllers()
-        configureTabBar()
     }
     
     public func setupViewControllers() {
@@ -46,6 +46,8 @@ class MainTabBarController: UITabBarController {
                            courseNavController,
                            notificationNavController,
                            userProfileNavController]
+        
+        selectedIndex = 2
     }
     
     private func configureTabBar() {

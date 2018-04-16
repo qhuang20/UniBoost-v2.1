@@ -85,9 +85,16 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 60, widthConstant: 0, heightConstant: 0)
         
         school = UserDefaults.standard.getSchool()
-        if school == nil {///...set up school in Me...
+        if school == nil {
             isFinishedPaging = true
             self.collectionView?.reloadData()
+            
+            let window = UIApplication.shared.keyWindow
+            if window?.rootViewController as? UITabBarController != nil {
+                let tababarController = window?.rootViewController as! UITabBarController
+                tababarController.selectedIndex = 4
+            }
+            
             return
         }
         

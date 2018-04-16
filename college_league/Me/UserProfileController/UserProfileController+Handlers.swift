@@ -244,6 +244,17 @@ extension UserProfileController {
         }
     }
     
+    internal func showEditProfileController() {//when school == nil
+        let editProfileController = EditProfileController()
+        let uid = Auth.auth().currentUser?.uid ?? ""
+        
+        Database.fetchUserWithUID(uid: uid) { (user) in
+            editProfileController.user = user
+            let navEditProfileController = UINavigationController(rootViewController: editProfileController)
+            self.present(navEditProfileController, animated: true, completion: nil)
+        }
+    }
+    
 }
 
 

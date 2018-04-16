@@ -14,11 +14,23 @@ class CollectionViewLoadingCell: UICollectionViewCell {
         didSet {
             if isTheEnd {
                 activityIndicator.stopAnimating()
+                theEndLabel.isHidden = false
             } else {
                 activityIndicator.startAnimating()
+                theEndLabel.isHidden = true
             }
         }
     }
+    
+    let theEndLabel: UILabel = {
+        let label = UILabel()
+        label.text = "no more posts"
+        label.textColor = UIColor.gray
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
     
     let pullToRefreshLabel: UILabel = {
         let label = UILabel()
@@ -50,10 +62,13 @@ class CollectionViewLoadingCell: UICollectionViewCell {
     private func setupSubviews() {
         addSubview(activityIndicator)
         addSubview(pullToRefreshLabel)
+        addSubview(theEndLabel)
         
-        activityIndicator.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        activityIndicator.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        pullToRefreshLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        pullToRefreshLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        theEndLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 50)
     }
 
     required init?(coder aDecoder: NSCoder) {

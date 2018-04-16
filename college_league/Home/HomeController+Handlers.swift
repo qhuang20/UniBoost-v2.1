@@ -13,6 +13,7 @@ import LBTAComponents
 extension HomeController {
     
     internal func fetchFollowingUserPostIds() {
+        self.getStartedButton.isHidden = true
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let followingRef = Database.database().reference().child("user_following").child(uid)
         let query = followingRef.queryOrderedByKey()
@@ -22,7 +23,8 @@ extension HomeController {
                 self.refreshControl.endRefreshing()
             }
             guard let allObject = snapshot.children.allObjects as? [DataSnapshot] else { return }
-            if allObject.count == 0 {///show tips...
+            if allObject.count == 0 {
+                self.getStartedButton.isHidden = false
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.collectionView?.reloadData()
@@ -80,7 +82,7 @@ extension HomeController {
     }
     
     @objc internal func paginatePosts() {
-        if postIds.count == 0 {///show tips...
+        if postIds.count == 0 {
             self.isFinishedPaging = true
             self.isPaging = false
             self.collectionView?.reloadData()

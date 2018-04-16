@@ -48,6 +48,13 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         fetchUserAndUserPosts()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let school = UserDefaults.standard.getSchool()
+        if school == nil {
+            self.showEditProfileController()
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
