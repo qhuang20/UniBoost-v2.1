@@ -18,8 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Roe-ZV-k25">
+                                <rect key="frame" x="0.0" y="352" width="321" height="315"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UniBoost" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGA-5g-xov">
-                                <rect key="frame" x="0.0" y="140" width="375" height="253"/>
+                                <rect key="frame" x="0.0" y="114" width="375" height="253"/>
                                 <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="38"/>
                                 <color key="textColor" red="1" green="0.54335802919999998" blue="0.088596974699999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -27,10 +30,14 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="nGA-5g-xov" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="120" id="CX0-rQ-zMQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nGA-5g-xov" secondAttribute="bottom" constant="274" id="T3R-nG-LkN"/>
-                            <constraint firstItem="nGA-5g-xov" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="ixG-0b-6w0"/>
-                            <constraint firstAttribute="trailing" secondItem="nGA-5g-xov" secondAttribute="trailing" id="wev-7z-hch"/>
+                            <constraint firstItem="Roe-ZV-k25" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="332" id="4yr-Mn-kOS"/>
+                            <constraint firstItem="Roe-ZV-k25" firstAttribute="leading" secondItem="nGA-5g-xov" secondAttribute="leading" id="CU2-7g-Eo3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Roe-ZV-k25" secondAttribute="trailing" constant="54" id="GBu-EX-0yF"/>
+                            <constraint firstAttribute="trailing" secondItem="nGA-5g-xov" secondAttribute="trailing" id="UG6-z3-eM6"/>
+                            <constraint firstItem="nGA-5g-xov" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="94" id="a9Y-mP-peR"/>
+                            <constraint firstItem="Roe-ZV-k25" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="kct-36-bte"/>
+                            <constraint firstItem="nGA-5g-xov" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="tLg-E2-m8F"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nGA-5g-xov" secondAttribute="bottom" constant="300" id="uUq-t6-SM9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -40,4 +47,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo" width="1317" height="1323"/>
+    </resources>
 </document>
