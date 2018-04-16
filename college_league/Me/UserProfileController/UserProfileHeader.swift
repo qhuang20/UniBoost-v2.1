@@ -20,6 +20,8 @@ class UserProfileHeader: UICollectionViewCell {
     
     weak var userProfileController: UserProfileController?
     
+    static let updateUserFollowingNotificationName = NSNotification.Name(rawValue: "updateFollowing")
+    
     var user: User? {
         didSet {
             guard let user = user else { return }
@@ -251,6 +253,8 @@ class UserProfileHeader: UICollectionViewCell {
                     return
                 }
                 print("Successfully unfollowed user:", self.user?.username ?? "")
+                
+                NotificationCenter.default.post(name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
             })
         } else {//follow
             user?.hasFollowed = true
@@ -269,6 +273,8 @@ class UserProfileHeader: UICollectionViewCell {
                     return
                 }
                 print("Successfully followed user: ", self.user?.username ?? "")
+                
+                NotificationCenter.default.post(name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
             }
         }
     }

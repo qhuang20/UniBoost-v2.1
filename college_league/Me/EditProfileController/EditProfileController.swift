@@ -190,7 +190,8 @@ class EditProfileController: UIViewController {
     private func setupUserInfo() {
         guard let user = user else { return }
         let school = UserDefaults.standard.getSchool()
-        schoolLabel.text = school///if nil show hint:"choose your school first with animation..."
+        schoolLabel.text = school
+        ///if nil show hint:"1 choose your school first with animation. 2 after back, press save"
         nameTextField.text = user.username
         bioTextView.text = user.bio
         if bioTextView.text.count > 0 {
