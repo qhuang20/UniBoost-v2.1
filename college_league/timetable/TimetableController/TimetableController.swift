@@ -91,7 +91,7 @@ class TimetableController: DatasourceController {
     private func configureCollectionView() {
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0.0
+        layout.minimumLineSpacing = -0.1
         layout.minimumInteritemSpacing = 0.0
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = themeColor
@@ -111,7 +111,7 @@ class TimetableController: DatasourceController {
         let height = view.safeAreaLayoutGuide.layoutFrame.height - daysBarHeight - navbarHeight
         let width = (view.frame.width - hoursBarWidth) / CGFloat(weekdays.count)
         
-        return CGSize(width: width - 0.5, height: height)
+        return CGSize(width: width - 0.4, height: height)
     }
     
 }

@@ -134,7 +134,7 @@ extension HomeController {
     }
     
     @objc func handleAddFriends() {
-        print("hhhh")
+        popUpErrorView(text: "Coming Soom")
     }
     
 }

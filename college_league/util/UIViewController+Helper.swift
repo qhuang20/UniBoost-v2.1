@@ -24,7 +24,8 @@ extension UIViewController {
         view.addSubview(errorView)
         
         if topConstant == 0 {
-            errorView.anchorCenterSuperview()
+            errorView.anchorCenterXToSuperview()
+            errorView.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: (view.safeAreaLayoutGuide.layoutFrame.height / 2) - 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         } else {
             errorView.anchorCenterXToSuperview()
             errorView.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: topConstant, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)

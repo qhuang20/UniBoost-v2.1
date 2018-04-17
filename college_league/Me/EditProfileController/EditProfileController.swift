@@ -69,7 +69,7 @@ class EditProfileController: UIViewController {
         rightArrowButton.anchor(nil, left: nil, bottom: nil, right: v.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
         rightArrowButton.anchorCenterYToSuperview()
         
-        schoolLabel.anchor(nil, left: v.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        schoolLabel.anchor(nil, left: v.leftAnchor, bottom: nil, right: rightArrowButton.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
         schoolLabel.anchorCenterYToSuperview()
         
         v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSetSchool)))

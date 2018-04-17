@@ -127,7 +127,7 @@ class AddCourseController: DatasourceController {
         button.setTitle(title, for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.addTarget(self, action: #selector(showDatePicker), for: .touchUpInside)
         return button
     }
@@ -157,9 +157,9 @@ class AddCourseController: DatasourceController {
         cell.addSubview(slashLabel)
         cell.addSubview(rightTimeButton)
 
-        leftTimeButton.anchor(cell.topAnchor, left: cell.textLabel.rightAnchor, bottom: cell.bottomAnchor, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 90, heightConstant: 0)
+        leftTimeButton.anchor(cell.topAnchor, left: cell.textLabel.rightAnchor, bottom: cell.bottomAnchor, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 90, heightConstant: 0)
         
-        slashLabel.anchor(cell.topAnchor, left: leftTimeButton.rightAnchor, bottom: cell.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 40, heightConstant: 0)
+        slashLabel.anchor(cell.topAnchor, left: leftTimeButton.rightAnchor, bottom: cell.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 25, heightConstant: 0)
         
         rightTimeButton.anchor(cell.topAnchor, left: slashLabel.rightAnchor, bottom: cell.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 90, heightConstant: 0)
     }

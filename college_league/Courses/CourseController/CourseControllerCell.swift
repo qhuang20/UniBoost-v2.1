@@ -29,25 +29,36 @@ class CourseControllerCell: UICollectionViewCell {
     
     weak var courseController: CourseController?
     
-    let attributesForTitle = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20.5)]
+    let attributesForName = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20.5)]
+    let attributesForNumber = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 18)]
     let attributesForCourseInfo = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 11.5), NSAttributedStringKey.foregroundColor: UIColor.lightGray]
 
     private func setupAttributedTitle() {
         guard let course = course else { return }
         
-        let attributedText = NSMutableAttributedString(string: course.name, attributes: attributesForTitle)
-        attributedText.appendNewLine()
-        let attributedCourseNumber =  NSAttributedString(string: course.number, attributes: attributesForTitle)
-        attributedText.append(attributedCourseNumber)
-        attributedText.appendNewLine()
+        let attributedTextName = NSMutableAttributedString(string: course.name, attributes: attributesForName)
+        courseNameLabel.attributedText = attributedTextName
+        
+        let attributedCourseNumber =  NSAttributedString(string: course.number, attributes: attributesForNumber)
+        courseNumberLabel.attributedText = attributedCourseNumber
         
         let attributedCourseInfo = NSAttributedString(string: "• " + course.description, attributes: attributesForCourseInfo)
-        attributedText.append(attributedCourseInfo)
-        
-        courseInfoLabel.attributedText = attributedText
+        courseInfoLabel.attributedText = attributedCourseInfo
     }
    
-    lazy var courseInfoLabel: UILabel = {
+    let courseNameLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let courseNumberLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    let courseInfoLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         return label
@@ -75,11 +86,20 @@ class CourseControllerCell: UICollectionViewCell {
         backgroundColor = UIColor.white
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapCell)))
         
-        addSubview(courseInfoLabel)
         addSubview(addButton)
+        addSubview(courseNameLabel)
+        addSubview(courseNumberLabel)
+        addSubview(courseInfoLabel)
         
-        courseInfoLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 6, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
-        addButton.anchor(topAnchor, left: nil, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 6, widthConstant: 28, heightConstant: 28)
+        courseNameLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: addButton.leftAnchor, topConstant: 8, leftConstant: 6, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        courseNameLabel.setContentHuggingPriority(.required, for: .vertical)
+
+        courseNumberLabel.anchor(courseNameLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 6, bottomConstant: 0, rightConstant: 2, widthConstant: 0, heightConstant: 0)
+        courseNumberLabel.setContentHuggingPriority(.required, for: .vertical)
+
+        courseInfoLabel.anchor(courseNumberLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: -2, leftConstant: 6, bottomConstant: 4, rightConstant: 2, widthConstant: 0, heightConstant: 0)
+        
+        addButton.anchor(topAnchor, left: nil, bottom: nil, right: rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 5, widthConstant: 28, heightConstant: 28)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -14,6 +14,13 @@ class NotificationsController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = "Notifications"
         view.backgroundColor = brightGray
+        
+        let comingSoonLabel = UILabel()
+        comingSoonLabel.text = "Coming Soon"
+        comingSoonLabel.textColor = UIColor.lightGray
+        view.addSubview(comingSoonLabel)
+        
+        comingSoonLabel.anchorCenterSuperview()
     }
     
 }

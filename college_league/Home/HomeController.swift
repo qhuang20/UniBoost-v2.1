@@ -43,6 +43,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.viewDidLoad()
         configureCollectionVeiw()
         configureNavigationBar()
+        getStartedButton.addTarget(self, action: #selector(handleAddFriends), for: .touchUpInside)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
         

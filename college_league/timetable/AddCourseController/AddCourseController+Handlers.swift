@@ -156,34 +156,6 @@ extension AddCourseController {
         return 1
     }
     
-    private func popUpErrorView(text: String) {
-        let errorView = createErrorView(text: text, color: UIColor.orange, fontSize: 16)
-        view.addSubview(errorView)
-        errorView.anchorCenterSuperview()
-        
-        UIView.animate(withDuration: 1, delay: 1.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
-            
-            errorView.alpha = 0
-            
-        }, completion: { (didComplete) in
-            errorView.removeFromSuperview()
-        })
-    }
-    
-    private func createErrorView(text: String, color: UIColor, fontSize: CGFloat) -> UILabel {
-        let label = PaddingLabel()
-        label.text = text
-        label.backgroundColor = color
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
-        
-        label.textAlignment = .center
-        label.layer.cornerRadius = 10
-        label.clipsToBounds = true
-        label.textColor = .white
-        
-        return label
-    }
-    
 }
 
 class PaddingLabel: UILabel {
