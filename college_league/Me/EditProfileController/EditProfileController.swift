@@ -171,6 +171,10 @@ class EditProfileController: UIViewController {
         setupUserInfo()
     }
     
+    deinit {
+        print("deinit")
+    }
+    
     private func configureNavigationItems() {
         navigationItem.title = "Edit Profile"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleSave))
@@ -191,7 +195,6 @@ class EditProfileController: UIViewController {
         guard let user = user else { return }
         let school = UserDefaults.standard.getSchool()
         schoolLabel.text = school
-        ///if nil show hint:"1 choose your school first with animation. 2 after back, press save"
         nameTextField.text = user.username
         bioTextView.text = user.bio
         if bioTextView.text.count > 0 {
@@ -199,6 +202,10 @@ class EditProfileController: UIViewController {
         }
         textCountLabel.text = "\(wordsLimitForBio - bioTextView.text.count)"
         profileImageView.loadImage(urlString: user.profileImageUrl)
+        
+        if school == nil {
+            handleSetSchool()
+        }
     }
     
 }

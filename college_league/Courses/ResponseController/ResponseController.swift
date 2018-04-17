@@ -30,13 +30,13 @@ class ResponseController: PostController {
     
     
     
-    private func changeResponseCount() {///
+    private func changeResponseCount() {///change count: 1.delete response 2.delete post (course)
         guard let postId = postId else { return }
         let ref = Database.database().reference().child("posts").child(postId).child("response")
         
         ref.runTransactionBlock({ (currentData) -> TransactionResult in
             let currentValue = currentData.value as? Int ?? 0
-            currentData.value = currentValue + 1///
+            currentData.value = currentValue + 1
             
             return TransactionResult.success(withValue: currentData)
         }) { (err, committed, snapshot) in

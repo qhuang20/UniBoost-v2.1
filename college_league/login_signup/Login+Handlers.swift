@@ -28,11 +28,16 @@ extension LoginController {
     @objc func handleLogin() {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
+        self.dontHaveAccountButton.isEnabled = false
+        let indicator = getActivityIndicator()
+        view.endEditing(true)
         
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, err) in
             
             if let err = err as NSError? {
                 print("Failed to sign in with email:", err)
+                self.dontHaveAccountButton.isEnabled = true
+                indicator.stopAnimating()
                 
                 if err.code == AuthErrorCode.wrongPassword.rawValue {
                     self.popUpErrorView(text: "Wrong Password", backGroundColor: UIColor.darkGray, topConstant: 100)

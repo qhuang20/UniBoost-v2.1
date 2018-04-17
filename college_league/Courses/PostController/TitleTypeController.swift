@@ -121,6 +121,11 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
     }
     
     @objc func handleNext() {
+        if titleTextView.text.count == 0 {
+            popUpErrorView(text: "Insert a Title")
+            return
+        }
+        
         if titleTextView.text.count > 0 && titleTextView.textColor == UIColor.black {
             let postController = PostController()
             postController.postTitle = titleTextView.text

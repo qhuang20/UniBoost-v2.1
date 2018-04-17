@@ -90,9 +90,12 @@ extension PostController {
     }
     
     @objc func handlePost() {
-        guard let attributedText = postTextView.attributedText, attributedText.length > 0 else { return }///
+        guard let attributedText = postTextView.attributedText, attributedText.length > 0 else {
+            popUpErrorView(text: "Please say something 📝")
+            return
+        }
         dismiss(animated: true, completion: nil)
-
+        
         let partsDic = getPartsDictionary()
         uploadImagesToStorage(partsDic: partsDic)
         addPostsCount()
@@ -247,13 +250,15 @@ extension PostController {
     @objc func handlTapPhoto() {
         PHPhotoLibrary.requestAuthorization({status in
             if status == PHAuthorizationStatus.denied {
-                ///dispatch and do some uistuff...
+                DispatchQueue.main.async(execute: {
+                    self.popUpErrorView(text: "Please Allow us Access your Photos")
+                })
                 return
             }
         })
     
         postTextView.resignFirstResponder()
-        fetchPhotos()///what if PHPhotoLibrary has changed
+        fetchPhotos()
     }
     
     @objc func handlTapKeyboard() {

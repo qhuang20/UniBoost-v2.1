@@ -86,7 +86,7 @@ class SetSkillsController: CourseController {
     
     
     override func didSelectCellAt(indexPath: IndexPath) {
-        print("show hint")///
+        popUpErrorView(text: "Can't enter the course here")
     }
     
     

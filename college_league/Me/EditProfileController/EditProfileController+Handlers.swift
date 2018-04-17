@@ -11,7 +11,11 @@ import Firebase
 
 extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @objc func handleSave() {///check valid
+    @objc func handleSave() {
+        if nameTextField.text?.count == 0 {
+            popUpErrorView(text: "Enter Your Name")
+            return
+        }
         guard let username = nameTextField.text else { return }
         guard let image = self.profileImageView.image else { return }
         let bio = bioTextView.text
@@ -19,6 +23,9 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
         let saveButton = navigationItem.rightBarButtonItem
         saveButton?.tintColor = brightGray
         saveButton?.isEnabled = false
+        let cancelButton = navigationItem.leftBarButtonItem
+        cancelButton?.isEnabled = false
+        _ = getActivityIndicator()
         view.endEditing(true)
         
         guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }

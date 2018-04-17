@@ -85,6 +85,8 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         collectionViewBottomAnchor = collectionView.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: estimatedKeyboardHeight)[1]
         
         keyboardButton.anchor(nil, left: nil, bottom: collectionView.topAnchor, right: collectionView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 12, widthConstant: 44, heightConstant: 44)
+        
+        PHPhotoLibrary.requestAuthorization({status in })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,7 +95,7 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     deinit {
-//        print("deinit")
+        print("deinit")
     }
 
     private func setupNavigationButtons() {

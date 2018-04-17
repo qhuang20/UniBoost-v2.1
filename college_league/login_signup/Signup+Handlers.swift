@@ -34,13 +34,16 @@ extension SignupController: UINavigationControllerDelegate, UIImagePickerControl
         self.alreadyHaveAccountButton.isEnabled = false
         self.signUpButton.isEnabled = false
         self.addPhotoButton.isEnabled = false
-  
+        let indicator = getActivityIndicator()
+        view.endEditing(true)
+    
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
            
             if let err = error as NSError? {
                 self.alreadyHaveAccountButton.isEnabled = true
                 self.signUpButton.isEnabled = true
                 self.addPhotoButton.isEnabled = true
+                indicator.stopAnimating()
                 
                 if err.code == AuthErrorCode.emailAlreadyInUse.rawValue {
                     self.popUpErrorView(text: "Email Already In Use", backGroundColor: UIColor.darkGray, topConstant: 20)

@@ -83,7 +83,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         button.setImage(image, for: .normal)
         button.tintColor = UIColor.white
         button.adjustsImageWhenHighlighted = false
-        button.isHidden = true///later for social part, no need for title
+        button.isHidden = true///later for social part, replace the title (see Reddit Home)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
     
