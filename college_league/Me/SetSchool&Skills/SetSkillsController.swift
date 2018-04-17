@@ -171,13 +171,39 @@ class SetSkillsController: CourseController {
                     
                     counter = counter + 1
                     if counter == coursesDic.count {
-                        if UserDefaults.standard.isEyeSelected() {
-                            self.handleViewOption()
-                        }
+//                        if UserDefaults.standard.isEyeSelected() {
+//                            self.handleViewOption()
+//                        }
                     }
                 })
             })
         })
+    }
+    
+    
+    
+    @objc override func handleViewOption() {//override only to get rid of UserDefaults
+        searchBar.text = nil
+        pleaseAddCourseLabel.isHidden = true
+        
+        if viewOptionButton?.isSelected == true {
+            viewOptionButton?.isSelected = false
+            viewOptionButton?.isEnabled = false
+            isFinishedPaging = false
+            filteredCourses = courses
+            collectionView?.reloadData()
+            viewOptionButton?.isEnabled = true
+        } else {
+            viewOptionButton?.isSelected = true
+            viewOptionButton?.isEnabled = false
+            isFinishedPaging = true
+            filteredCourses = followingCourses
+            if followingCourses.count == 0 {
+                pleaseAddCourseLabel.isHidden = false
+            }
+            collectionView?.reloadData()
+            viewOptionButton?.isEnabled = true
+        }
     }
     
 }

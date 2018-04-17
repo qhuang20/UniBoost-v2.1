@@ -34,7 +34,7 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         tv.font = UIFont.systemFont(ofSize: textFont)
         tv.textDragInteraction?.isEnabled = false
         
-        let bottomInset = view.safeAreaLayoutGuide.layoutFrame.height - estimatedKeyboardHeight - 125
+        let bottomInset = view.safeAreaLayoutGuide.layoutFrame.height - estimatedKeyboardHeight - 165
         let textContainerInset = UIEdgeInsets(top: 85, left: 14, bottom: bottomInset, right: 14)
         tv.textContainerInset = textContainerInset//add scrollView space
         return tv

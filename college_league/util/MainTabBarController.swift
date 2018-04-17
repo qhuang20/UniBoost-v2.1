@@ -37,7 +37,7 @@ class MainTabBarController: UITabBarController {
         let courseNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "course"), selectedImage: #imageLiteral(resourceName: "course_selected"), rootViewController:
             CourseController(collectionViewLayout: UICollectionViewFlowLayout()))
         
-        let notificationNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "noti_unselected"), selectedImage: #imageLiteral(resourceName: "noti_selected"))
+        let notificationNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "noti_unselected"), selectedImage: #imageLiteral(resourceName: "noti_selected"), rootViewController: NotificationsController())
         
         let userProfileNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "profile_unselected"), selectedImage: #imageLiteral(resourceName: "profile_selected"), rootViewController: UserProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         
@@ -73,3 +73,6 @@ class MainTabBarController: UITabBarController {
     }
     
 }
+
+
+

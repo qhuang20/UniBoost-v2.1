@@ -30,6 +30,7 @@
 		7B167669205651AA003D4E01 /* Date+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B167668205651AA003D4E01 /* Date+Helper.swift */; };
 		7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */; };
 		7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B331A0D2043D72F00282308 /* TitleTypeController.swift */; };
+		7B3339F82085BF92002EA584 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3339F72085BF92002EA584 /* NotificationsController.swift */; };
 		7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */; };
 		7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE8204A3ED80065CB16 /* Course.swift */; };
 		7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAEA204B27FB0065CB16 /* User.swift */; };
@@ -114,6 +115,7 @@
 		7B167668205651AA003D4E01 /* Date+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Helper.swift"; sourceTree = "<group>"; };
 		7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddCourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B331A0D2043D72F00282308 /* TitleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTypeController.swift; sourceTree = "<group>"; };
+		7B3339F72085BF92002EA584 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
 		7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B3ACAE8204A3ED80065CB16 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		7B3ACAEA204B27FB0065CB16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -282,6 +284,14 @@
 			path = UserProfileController;
 			sourceTree = "<group>";
 		};
+		7B3339F62085BF5C002EA584 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				7B3339F72085BF92002EA584 /* NotificationsController.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		7B3ACAE7204A3E970065CB16 /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				7B0FD708203F562800E77422 /* Me */,
+				7B3339F62085BF5C002EA584 /* Notifications */,
 				7B0FD709203F569500E77422 /* Courses */,
 				7BBD9A78207F109500281F21 /* Request */,
 				7B9717152058DB8C00B6F781 /* Home */,
@@ -697,6 +708,7 @@
 				7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */,
 				7BF7AC0C206EFB7300920057 /* SetSchoolController.swift in Sources */,
 				7B61057D20411A8600C5F6C3 /* PhotoSelectorCell.swift in Sources */,
+				7B3339F82085BF92002EA584 /* NotificationsController.swift in Sources */,
 				7BB2ABF2205F2CD70086F3EB /* UserDefaults+Helpers.swift in Sources */,
 				7BF7AC09206D5A2600920057 /* EditProfileController+Handlers.swift in Sources */,
 			);

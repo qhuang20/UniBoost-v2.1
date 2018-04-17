@@ -40,10 +40,6 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: 0), for: UIBarMetrics.default)
         
         fetchShools()
-        
-        if UserDefaults.standard.getSchool() == nil {
-            popUpErrorView(text: "Select Your School")
-        }
     }
     
     deinit {
@@ -53,6 +49,10 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     override func viewDidAppear(_ animated: Bool) {
         searchController.isActive = true
         searchController.searchBar.becomeFirstResponder()
+        
+        if UserDefaults.standard.getSchool() == nil {
+            popUpErrorView(text: "Select Your School")
+        }
     }
     
     
