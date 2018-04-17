@@ -31,8 +31,17 @@ extension LoginController {
         
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, err) in
             
-            if let err = err {///
+            if let err = err as NSError? {
                 print("Failed to sign in with email:", err)
+                
+                if err.code == AuthErrorCode.wrongPassword.rawValue {
+                    self.popUpErrorView(text: "Wrong Password", backGroundColor: UIColor.darkGray, topConstant: 100)
+                } else if err.code == AuthErrorCode.userNotFound.rawValue {
+                    self.popUpErrorView(text: "Invalid Email", backGroundColor: UIColor.darkGray, topConstant: 100)
+                } else {
+                    self.popUpErrorView(text: "Try it again", backGroundColor: UIColor.darkGray, topConstant: 100)
+                }
+                
                 return
             }
             print("Successfully logged back in with user:", user?.uid ?? "")
@@ -55,3 +64,11 @@ extension LoginController {
     }
     
 }
+
+
+
+
+
+
+
+

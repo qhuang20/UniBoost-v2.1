@@ -15,6 +15,37 @@ extension UIViewController {
         self.view.endEditing(true)
     }
     
+    
+    
+    internal func popUpErrorView(text: String, backGroundColor: UIColor = UIColor.orange, topConstant: CGFloat = 330) {
+        let errorView = createErrorView(text: text, color: backGroundColor, fontSize: 16)
+        view.addSubview(errorView)
+        errorView.anchorCenterXToSuperview()
+        errorView.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: topConstant, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        UIView.animate(withDuration: 1, delay: 1.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            
+            errorView.alpha = 0
+            
+        }, completion: { (didComplete) in
+            errorView.removeFromSuperview()
+        })
+    }
+    
+    private func createErrorView(text: String, color: UIColor, fontSize: CGFloat) -> UILabel {
+        let label = PaddingLabel()
+        label.text = text
+        label.backgroundColor = color
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
+        
+        label.textAlignment = .center
+        label.layer.cornerRadius = 10
+        label.clipsToBounds = true
+        label.textColor = .white
+        
+        return label
+    }
+    
     //    func hideKeyboardWhenTappedAround() {
     //        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     //        tap.cancelsTouchesInView = false
@@ -26,3 +57,7 @@ extension UIViewController {
     //    }
     
 }
+
+
+
+

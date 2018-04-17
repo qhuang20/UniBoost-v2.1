@@ -120,7 +120,7 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func handleNext() {///text.count > 0
+    @objc func handleNext() {
         if titleTextView.text.count > 0 && titleTextView.textColor == UIColor.black {
             let postController = PostController()
             postController.postTitle = titleTextView.text

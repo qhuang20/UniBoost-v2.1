@@ -38,6 +38,9 @@ class UserProfileHeader: UICollectionViewCell {
             if let school = user.school {
                 schoolLabel.text = school
             }
+            if Auth.auth().currentUser?.uid == user.uid {
+                schoolLabel.text = UserDefaults.standard.getSchool()
+            }
             
             likesLabel.attributedText = setupAttributedString(number: user.likes, text: "likes")
             followersLabel.attributedText = setupAttributedString(number: user.followers, text: "followers")

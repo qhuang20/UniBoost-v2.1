@@ -31,16 +31,26 @@ extension SignupController: UINavigationControllerDelegate, UIImagePickerControl
         guard let username = usernameTextField.text, username.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
         guard let image = self.profileImageView.image else { return }
-        let saveButton = navigationItem.rightBarButtonItem
-        saveButton?.tintColor = brightGray
-        saveButton?.isEnabled = false
+        self.alreadyHaveAccountButton.isEnabled = false
+        self.signUpButton.isEnabled = false
+        self.addPhotoButton.isEnabled = false
   
         Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
            
-            if let err = error as NSError? {///
+            if let err = error as NSError? {
+                self.alreadyHaveAccountButton.isEnabled = true
+                self.signUpButton.isEnabled = true
+                self.addPhotoButton.isEnabled = true
+                
                 if err.code == AuthErrorCode.emailAlreadyInUse.rawValue {
-                    print("The email address is already in use by another account")
-                } else { print("Inaccurate email formatting") }
+                    self.popUpErrorView(text: "Email Already In Use", backGroundColor: UIColor.darkGray, topConstant: 20)
+                } else if err.code == AuthErrorCode.invalidEmail.rawValue {
+                    self.popUpErrorView(text: "Invalid Email", backGroundColor: UIColor.darkGray, topConstant: 20)
+                } else if err.code == AuthErrorCode.weakPassword.rawValue {
+                    self.popUpErrorView(text: "Weak Password", backGroundColor: UIColor.darkGray, topConstant: 20)
+                } else {
+                    self.popUpErrorView(text: "Weak Internet, Try it again", backGroundColor: UIColor.darkGray, topConstant: 20)
+                }
                 
                 print("Failed to create user:", err)
                 return
