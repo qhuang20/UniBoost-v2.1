@@ -121,6 +121,7 @@ class EditProfileController: UIViewController {
         tf.font = UIFont.systemFont(ofSize: 18)
         tf.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 50)
         tf.backgroundColor = UIColor.white
+        tf.autocorrectionType = .no
         return tf
     }()
     
@@ -142,6 +143,7 @@ class EditProfileController: UIViewController {
         textView.backgroundColor = UIColor(white: 0, alpha: 0.05)
         textView.delegate = self
         textView.returnKeyType = .done
+        textView.autocorrectionType = .no
         return textView
     }()
     
@@ -162,11 +164,11 @@ class EditProfileController: UIViewController {
         view.addSubview(leftStackView)
         view.addSubview(bioTextView)
         
-        leftStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 0)
+        leftStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 0)
         
-        rightStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 20, leftConstant: 50, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        rightStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 50, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        bioTextView.anchor(leftStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 22, bottomConstant: 0, rightConstant: 25, widthConstant: 0, heightConstant: 0)
+        bioTextView.anchor(leftStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: -8, leftConstant: 22, bottomConstant: 0, rightConstant: 25, widthConstant: 0, heightConstant: 0)
         
         setupUserInfo()
     }

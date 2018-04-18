@@ -50,6 +50,7 @@ class SignupController: UIViewController {
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.autocorrectionType = .no
         return tf
     }()
     
@@ -60,6 +61,7 @@ class SignupController: UIViewController {
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
         tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        tf.autocorrectionType = .no
         return tf
     }()
     
@@ -121,8 +123,15 @@ class SignupController: UIViewController {
         profileImageView.addSubview(addPhotoButton)
         addPhotoButton.anchor(nil, left: nil, bottom: profileImageView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 5, rightConstant: 0, widthConstant: 32, heightConstant: 32)
         addPhotoButton.anchorCenterXToSuperview()
+        
+        observeKeyboardShowHideNotifications()
     }
 
+    deinit {
+        print("deinit")
+        NotificationCenter.default.removeObserver(self)
+    }
+    
 }
 
 

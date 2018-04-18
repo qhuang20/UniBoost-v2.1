@@ -12,6 +12,10 @@ import Firebase
 extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @objc func handleSave() {
+        if (wordsLimitForBio - bioTextView.text.count) < 0 {
+            popUpErrorView(text: "Reach Words Limit")
+            return
+        }
         if nameTextField.text?.count == 0 {
             popUpErrorView(text: "Enter Your Name")
             return

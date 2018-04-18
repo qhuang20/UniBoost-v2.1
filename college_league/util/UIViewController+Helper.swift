@@ -67,7 +67,35 @@ extension UIViewController {
         indicator.startAnimating()
         return indicator
     }
-
+    
+    
+    
+    internal func observeKeyboardShowHideNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHide), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardHide() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y += 100
+            }
+            
+        }, completion: nil)
+    }
+    
+    @objc func keyboardShow() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= 100
+            }
+            
+        }, completion: nil)
+    }
+    
 }
 
 //    func hideKeyboardWhenTappedAround() {
