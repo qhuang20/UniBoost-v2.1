@@ -18,7 +18,7 @@ extension CourseController: UISearchBarDelegate {
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("school_courses").child(school)
         var query = ref.queryOrdered(byChild: "postsCount")
-        let queryNum: UInt = 15
+        let queryNum: UInt = 12
         
         if courses.count > 0 {
             query = query.queryEnding(atValue: queryEndingValue, childKey: queryEndingChildKey)
