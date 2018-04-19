@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 extension UIViewController {
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
