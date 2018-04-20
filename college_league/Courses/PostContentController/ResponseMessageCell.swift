@@ -53,6 +53,7 @@ class ResponseMessageCell: PostMessageCell {
             config.imageBlock = { imageCompletion in
                 highQImageView.loadImage(urlString: imageUrl, completion: {
                     imageCompletion(highQImageView.image)
+                    self.thumbnailImageView.image = highQImageView.image
                 })
             }
         }
