@@ -37,6 +37,12 @@ extension DiscussionCell: UISearchBarDelegate {
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.tableView.reloadData()
+                
+                if self.loadingView.alpha == 1 {
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.loadingView.alpha = 0
+                    })
+                }
             }
             if self.posts.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
             self.queryEndingValue = allObjects.last?.key ?? ""
@@ -57,8 +63,13 @@ extension DiscussionCell: UISearchBarDelegate {
                     if allObjects.count == counter {
                         self.isPaging = false
                         self.getFilteredPostsWith(searchText: searchBar?.text ?? "")
-                        
                         self.tableView.reloadData()
+                        
+                        if self.loadingView.alpha == 1 {
+                            UIView.animate(withDuration: 0.3, animations: {
+                                self.loadingView.alpha = 0
+                            })
+                        }
                     }
                 })
             })

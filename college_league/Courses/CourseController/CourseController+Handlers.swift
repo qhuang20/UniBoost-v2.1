@@ -62,6 +62,12 @@ extension CourseController: UISearchBarDelegate {
                             c1.postsCount > c2.postsCount
                         })
                         self.collectionView?.reloadData()
+                        
+                        if self.loadingView.alpha == 1 {
+                            UIView.animate(withDuration: 0.3, animations: {
+                                self.loadingView.alpha = 0
+                            })
+                        }
                     }
                 })
             })

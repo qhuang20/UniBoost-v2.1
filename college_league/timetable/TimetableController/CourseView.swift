@@ -14,61 +14,34 @@ class CourseView: UIView {
     
     let courseInfo: CourseInfo
     
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    let attributesForTitle = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12.5, weight: .bold)]
+    let attributesForPlace = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11, weight: .semibold)]
+    let attributesForNote = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11, weight: .semibold)]
+    
+    lazy var courseLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = courseInfo.color
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
     
     init(courseInfo: CourseInfo) {
         self.courseInfo = courseInfo
         super.init(frame: .zero)
-        setupView()
+        setupViews()
     }
     
-    let stackView: UIStackView = {
-        let sv = UIStackView()
-        sv.distribution = .fill
-        sv.alignment = .fill
-        sv.axis = .vertical
-        return sv
-    }()
-    
-    private func createLabel(text: String, color: UIColor, fontSize: CGFloat) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.backgroundColor = color
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
-    
-        label.textAlignment = .center
-        label.textColor = .white
-        
-        label.numberOfLines = 0
-        return label
-    }
-
-    private func setupView() {
+    private func setupViews() {
         self.backgroundColor = courseInfo.color
         self.layer.cornerRadius = 8
         clipsToBounds = true
 
-        addSubview(stackView)
-        stackView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 2, leftConstant: 1, bottomConstant: 0, rightConstant: 1, widthConstant: 0, heightConstant: 0)//text has intrinsic size
-        
-        if courseInfo.title.count > 0 {
-            let titleLabel = createLabel(text: courseInfo.title, color: courseInfo.color, fontSize: 12.5)
-            titleLabel.font = UIFont.systemFont(ofSize: 12.5, weight: .bold)
-            stackView.addArrangedSubview(titleLabel)
-        }
-        
-        if courseInfo.place.count > 0 {
-            let placeLabel = createLabel(text: courseInfo.place, color: courseInfo.color, fontSize: 11)
-            stackView.addArrangedSubview(placeLabel)
-        }
+        addSubview(courseLabel)
+        courseLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 2, bottomConstant: 0, rightConstant: 2, widthConstant: 0, heightConstant: 0)
+        setupAttributedText()
 
-        if courseInfo.note.count > 0 {
-            let noteLabel = createLabel(text: courseInfo.note, color: courseInfo.color, fontSize: 11)
-            stackView.addArrangedSubview(noteLabel)
-        }
-        
         let tapView = UIView()
         tapView.backgroundColor = .clear
         tapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCourseTap)))
@@ -76,6 +49,24 @@ class CourseView: UIView {
         addSubview(tapView)
         tapView.fillSuperview()
     }
+    
+    private func setupAttributedText() {
+        let attributedText = NSMutableAttributedString(string: courseInfo.title, attributes: attributesForTitle)
+
+        if courseInfo.place.count > 0 {
+            attributedText.appendNewLine()
+            attributedText.append(NSMutableAttributedString(string: courseInfo.place, attributes: attributesForPlace))
+        }
+        
+        if courseInfo.note.count > 0 {
+            attributedText.appendNewLine()
+            attributedText.append(NSMutableAttributedString(string: courseInfo.note, attributes: attributesForNote))
+        }
+        
+        courseLabel.attributedText = attributedText
+    }
+    
+    
     
     @objc func handleCourseTap(_ sender: UIView) {
         let title = getTimeTitle()
@@ -128,6 +119,8 @@ class CourseView: UIView {
         return title
     }
     
+    
+    
     public func deleteCourseAction() {
         let timetableDatasource = self.timetableController?.datasource as! TimetableDatasource
         
@@ -147,6 +140,10 @@ class CourseView: UIView {
         }
         
         self.timetableController?.collectionView?.reloadData()
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
 }

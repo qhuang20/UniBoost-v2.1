@@ -34,6 +34,8 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         return label
     }()
     
+    let loadingView = LoadingView()
+    
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
         sb.layer.cornerRadius = 10
@@ -79,6 +81,9 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         view.addSubview(pleaseAddCourseLabel)
         pleaseAddCourseLabel.anchor(view?.safeAreaLayoutGuide.topAnchor, left: view?.leftAnchor, bottom: nil, right: view?.rightAnchor, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
         pleaseAddCourseLabel.isHidden = true
+        
+        view.addSubview(loadingView)
+        loadingView.fillSuperview()
         
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)

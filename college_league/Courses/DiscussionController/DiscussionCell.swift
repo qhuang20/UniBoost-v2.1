@@ -51,6 +51,8 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         return rc
     }()
     
+    let loadingView = LoadingView()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         tableView.backgroundView = refreshControl
@@ -59,6 +61,9 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         
         addSubview(tableView)
         tableView.fillSuperview()
+        
+        addSubview(loadingView)
+        loadingView.fillSuperview()
     }
     
     deinit {

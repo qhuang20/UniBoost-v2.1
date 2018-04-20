@@ -27,11 +27,7 @@ class PostContentController: UITableViewController {
     let responseMessageCellId = "responseMessageCellId"
     let cellSpacing: CGFloat = 5
     
-    let loadingView: UIView = {
-        let dv = UIView()
-        dv.backgroundColor = UIColor.white
-        return dv
-    }()
+    let loadingView = LoadingView()
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -42,14 +38,17 @@ class PostContentController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        configureTableView()
+        
         view.addSubview(loadingView)
         loadingView.fillSuperview()
         loadingView.anchorCenterSuperview()
+        
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.followScrollView(tableView, delay: 10, followers: [tabBarController!.tabBar])
         }
-        configureTableView()
+        
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleUpdate), name: ResponseController.updateResponseNotificationName, object: nil)
         
@@ -58,10 +57,6 @@ class PostContentController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updatePostLikesCount), name: PostFooterView.updatePostLikesCountName, object: nil)
         
         fetchPostAndResponse()
-        
-        UIView.animate(withDuration: 0.5) {
-            self.loadingView.alpha = 0
-        }
     }
     
     deinit {
@@ -159,6 +154,10 @@ class PostContentController: UITableViewController {
             let postFooter = PostFooterView()
             postFooter.postContentController = self
             postFooter.post = post
+            
+            if loadingView.alpha == 1 {
+                postFooter.isHidden = true
+            }
             return postFooter
         }
         

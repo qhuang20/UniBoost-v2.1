@@ -34,6 +34,13 @@ extension PostContentController {
                     
                     Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
                         self.postMessages = postMessages
+                        
+                        if self.loadingView.alpha == 1 {
+                            UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+                                self.loadingView.alpha = 0
+                            }, completion: nil)
+                        }
+                        
                         self.tableView.reloadData()
                     }
                 }

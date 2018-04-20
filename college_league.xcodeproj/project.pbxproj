@@ -31,6 +31,7 @@
 		7B17374F20229B8000CE3CDC /* AddCourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */; };
 		7B331A0E2043D72F00282308 /* TitleTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B331A0D2043D72F00282308 /* TitleTypeController.swift */; };
 		7B3339F82085BF92002EA584 /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3339F72085BF92002EA584 /* NotificationsController.swift */; };
+		7B36E5DE2089A839004D2ACE /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B36E5DD2089A839004D2ACE /* LoadingView.swift */; };
 		7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */; };
 		7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAE8204A3ED80065CB16 /* Course.swift */; };
 		7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3ACAEA204B27FB0065CB16 /* User.swift */; };
@@ -116,6 +117,7 @@
 		7B17374E20229B8000CE3CDC /* AddCourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddCourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B331A0D2043D72F00282308 /* TitleTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTypeController.swift; sourceTree = "<group>"; };
 		7B3339F72085BF92002EA584 /* NotificationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsController.swift; sourceTree = "<group>"; };
+		7B36E5DD2089A839004D2ACE /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		7B3ACAE5204A3C810065CB16 /* CourseController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseController+Handlers.swift"; sourceTree = "<group>"; };
 		7B3ACAE8204A3ED80065CB16 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		7B3ACAEA204B27FB0065CB16 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				7B0ECA882065E73F00D66CB7 /* CollectionViewLoadingCell.swift */,
 				7B0ECA8E2067624F00D66CB7 /* CustomInputAccessoryView.swift */,
 				7B0ECA902067792E00D66CB7 /* CustomInputTextView.swift */,
+				7B36E5DD2089A839004D2ACE /* LoadingView.swift */,
 				7B167668205651AA003D4E01 /* Date+Helper.swift */,
 			);
 			path = util;
@@ -645,6 +648,7 @@
 				7B16246A2038C4B5004C0537 /* Signup+Handlers.swift in Sources */,
 				7B0ECA8D20669BF900D66CB7 /* CommentsController+Handlers.swift in Sources */,
 				7B48C7672047570C00768E96 /* DiscussionCell.swift in Sources */,
+				7B36E5DE2089A839004D2ACE /* LoadingView.swift in Sources */,
 				7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */,
 				7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */,
 				7BF2E4D220538542004D4DBE /* UITextView+Helper.swift in Sources */,

@@ -20,6 +20,12 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
             popUpErrorView(text: "Enter Your Name")
             return
         }
+        if (nameTextField.text?.count) ?? 0 > 15 {
+            popUpErrorView(text: "Your name is too long")
+            return
+        }
+        UserDefaults.standard.setEyeSelected(value: false)
+        
         guard let username = nameTextField.text else { return }
         guard let image = self.profileImageView.image else { return }
         let bio = bioTextView.text
