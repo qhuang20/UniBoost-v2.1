@@ -123,31 +123,36 @@ extension PostController {
                         print("Failed to upload post thumbnail image:", err)
                         return
                     }
-                   
                     
-                    
-                    guard let thumbnailUrl = metadata?.downloadURL()?.absoluteString else { return }
-                
-                    if count < minCount {
-                        postCellThumbnailProperties = ["thumbnailImageUrl": thumbnailUrl, "thumbnailImageHeight": imageHeight]
-                        minCount = count
+                    storageRef.child(filename).downloadURL { (url, err) in
+                        guard let thumbnailUrl = url?.absoluteString else { return }
+                        print("Successfully uploaded thumbnail image:", thumbnailUrl)
+                        
+                        if count < minCount {
+                            postCellThumbnailProperties = ["thumbnailImageUrl": thumbnailUrl, "thumbnailImageHeight": imageHeight]
+                            minCount = count
+                        }
+                        
+                        let filename = NSUUID().uuidString
+                        storageRef.child(filename).putData(highQualityImageData, metadata: metadata, completion: { (metadata, err) in
+                            if let err = err {
+                                print("Failed to upload post HQImage:", err)
+                                return
+                            }
+                            
+                            storageRef.child(filename).downloadURL(completion: { (url, error) in
+                                guard let highQualityImageUrl = url?.absoluteString else { return }
+                                print("Successfully uploaded HQ image:", highQualityImageUrl)
+                                
+                                values[String(count)] = ["imageUrl": highQualityImageUrl, "thumbnailUrl": thumbnailUrl, "imageHeight": imageHeight]
+                                
+                                if values.count == partsDic.count {
+                                    print("Successfully uploaded all post messages")
+                                    self.saveToDatabaseWith(properties: values, postCellThumbnailProperties: postCellThumbnailProperties)
+                                }
+                            })
+                        })
                     }
-                    
-                    let filename = NSUUID().uuidString
-                    storageRef.child(filename).putData(highQualityImageData, metadata: metadata, completion: { (metadata, err) in
-                        if let err = err {
-                            print("Failed to upload post HQImage:", err)
-                            return
-                        }
-                        
-                        guard let highQualityImageUrl = metadata?.downloadURL()?.absoluteString else { return }
-                        values[String(count)] = ["imageUrl": highQualityImageUrl, "thumbnailUrl": thumbnailUrl, "imageHeight": imageHeight]
-                        
-                        if values.count == partsDic.count {
-                            print("Successfully uploaded all post messages")
-                            self.saveToDatabaseWith(properties: values, postCellThumbnailProperties: postCellThumbnailProperties)
-                        }
-                    })
                 })
             } else {
                 values[String(count)] = ["text": object as! String]

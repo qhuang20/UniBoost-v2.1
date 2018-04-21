@@ -81,23 +81,30 @@ class ResponseController: PostController {
                         return
                     }
                     
-                    guard let thumbnailUrl = metadata?.downloadURL()?.absoluteString else { return }
-                    
-                    let filename = NSUUID().uuidString
-                    storageRef.child(filename).putData(highQualityImageData, metadata: metadata, completion: { (metadata, err) in
-                        if let err = err {
-                            print("Failed to upload response HQImage:", err)
-                            return
-                        }
+                    storageRef.child(filename).downloadURL { (url, err) in
+                        guard let thumbnailUrl = url?.absoluteString else { return }
+                        print("Successfully uploaded thumbnail image:", thumbnailUrl)
                         
-                        guard let highQualityImageUrl = metadata?.downloadURL()?.absoluteString else { return }
-                        values[String(count)] = ["imageUrl": highQualityImageUrl, "thumbnailUrl": thumbnailUrl, "imageHeight": imageHeight]
-                        
-                        if values.count == partsDic.count {
-                            print("Successfully uploaded all response messages")
-                            self.saveToDatabaseWith(properties: values)
-                        }
-                    })
+                        let filename = NSUUID().uuidString
+                        storageRef.child(filename).putData(highQualityImageData, metadata: metadata, completion: { (metadata, err) in
+                            if let err = err {
+                                print("Failed to upload response HQImage:", err)
+                                return
+                            }
+                            
+                            storageRef.child(filename).downloadURL(completion: { (url, error) in
+                                guard let highQualityImageUrl = url?.absoluteString else { return }
+                                print("Successfully uploaded highQ image:", highQualityImageUrl)
+                                
+                                values[String(count)] = ["imageUrl": highQualityImageUrl, "thumbnailUrl": thumbnailUrl, "imageHeight": imageHeight]
+                                
+                                if values.count == partsDic.count {
+                                    print("Successfully uploaded all response messages")
+                                    self.saveToDatabaseWith(properties: values)
+                                }
+                            })
+                        })
+                    }
                 })
             } else {
                 values[String(count)] = ["text": object as! String]

@@ -64,22 +64,23 @@ extension SignupController: UINavigationControllerDelegate, UIImagePickerControl
             
             guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
             let filename = NSUUID().uuidString
-        Storage.storage().reference().child("profile_images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
-            
+            let storageRef = Storage.storage().reference().child("profile_images").child(filename)
+            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, err) in
                 if let err = err {
                     print("Failed to upload profile image:", err)
                     return
                 }
-                guard let profileImageUrl = metadata?.downloadURL()?.absoluteString else { return }
-                print("Successfully uploaded profile image:", profileImageUrl)
             
-            
-            
-                guard let uid = user?.uid else { return }
-                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "likes": 0, "followers": 0, "following": 0] as [String : Any]
-                let values = [uid: dictionaryValues]
-            
-                self.updateUsersValuesToDatabase(values: values)
+                storageRef.downloadURL { (url, err) in
+                    guard let profileImageUrl = url?.absoluteString else { return }
+                    print("Successfully uploaded profile image:", profileImageUrl)
+                    
+                    guard let uid = user?.uid else { return }
+                    let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "likes": 0, "followers": 0, "following": 0] as [String : Any]
+                    let values = [uid: dictionaryValues]
+                    
+                    self.updateUsersValuesToDatabase(values: values)
+                }
             })
         })
     }

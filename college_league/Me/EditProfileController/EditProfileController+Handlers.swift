@@ -46,13 +46,14 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
                 print("Failed to upload profile image:", err)
                 return
             }
-            guard let profileImageUrl = metadata?.downloadURL()?.absoluteString else { return }
-            print("Successfully uploaded profile image:", profileImageUrl)
             
-            
-           
-            let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "bio": bio as Any, "school": school as Any] as [String : Any]
-            self.updateUsersValuesToDatabase(values: dictionaryValues)
+            storageRef.downloadURL { (url, err) in
+                guard let profileImageUrl = url?.absoluteString else { return }
+                print("Successfully uploaded profile image:", profileImageUrl)
+                
+                let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "bio": bio as Any, "school": school as Any] as [String : Any]
+                self.updateUsersValuesToDatabase(values: dictionaryValues)
+            }
         })
     }
     

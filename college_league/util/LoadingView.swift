@@ -32,18 +32,22 @@ class LoadingView: UIView {
         return imageView
     }()
     
+    var rocketCenterYAnchor: NSLayoutConstraint?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = brightGray
 
         addSubview(gifView)
-        gifView.anchorCenterSuperview()
+        gifView.anchorCenterXToSuperview()
         gifView.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 100)
+        rocketCenterYAnchor = gifView.centerYAnchor.constraint(equalTo: gifView.superview!.centerYAnchor, constant: 0)
+        rocketCenterYAnchor?.isActive = true
         
         addSubview(gifViewFly)
         gifViewFly.anchorCenterXToSuperview()
         gifViewFly.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 200, heightConstant: 200)
-        gifViewFly.centerYAnchor.constraint(equalTo: gifView.superview!.centerYAnchor, constant: -50).isActive = true
+        gifViewFly.centerYAnchor.constraint(equalTo: gifViewFly.superview!.centerYAnchor, constant: -50).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
