@@ -8,8 +8,60 @@
 
 import UIKit
 import Firebase
+import ImageViewer
+import LBTAComponents
 
-extension PostContentController {
+extension PostContentController: GalleryItemsDataSource, GalleryItemsDelegate, GalleryDisplacedViewsDataSource {
+    
+    func provideDisplacementItem(atIndex index: Int) -> DisplaceableView? {
+        return index < items.count ? items[index].imageView : nil
+    }
+    
+    func removeGalleryItem(at index: Int) {
+        print("remove")
+    }
+    
+    func itemCount() -> Int {
+        var counter = 0
+        
+        postMessages.forEach { (postMessage) in
+            if postMessage.imageUrl != nil {
+                counter = counter + 1
+            }
+        }
+        
+        return counter
+    }
+    
+    func provideGalleryItem(_ index: Int) -> GalleryItem {
+        return items[index].galleryItem
+    }
+    
+    func showGalleryImageViewer(_ sender: UITapGestureRecognizer) {
+
+        guard let cell = sender.view?.superview?.superview as? PostMessageCell else { return }
+        guard let imageUrl = cell.postMessage?.imageUrl else { return }
+        let displacedViewIndex = getIndexOfImageViews(imageUrl: imageUrl)
+        
+        let galleryViewController = GalleryViewController(startIndex: displacedViewIndex, itemsDataSource: self, itemsDelegate: self, displacedViewsDataSource: self, configuration: getGalleryConfiguration())
+
+        let footerView = getPageControlWith(count: items.count)
+        if items.count > 1 {
+            galleryViewController.footerView = footerView
+        }
+        
+        galleryViewController.launchedCompletion = { print("LAUNCHED") }
+        galleryViewController.closedCompletion = { print("CLOSED") }
+        galleryViewController.swipedToDismissCompletion = { print("SWIPE-DISMISSED") }
+        galleryViewController.landedPageAtIndexCompletion = { index in
+            print("LANDED AT INDEX: \(index)")
+            footerView.currentPage = index
+        }
+        
+        self.presentImageGallery(galleryViewController)
+    }
+    
+    
     
     internal func fetchPostAndResponse() {
         guard let postId = post?.postId else { return }
@@ -34,9 +86,10 @@ extension PostContentController {
                     
                     Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
                         self.postMessages = postMessages
+                        self.getDataItemsForGallery()//see down below
                         
                         if self.loadingView.alpha == 1 {
-                            UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+                            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                                 self.loadingView.alpha = 0
                             }, completion: nil)
                         }
@@ -122,7 +175,7 @@ extension PostContentController {
         guard let oldResponseCount = post?.response else { return }
         
         self.post?.response = addFlag ? oldResponseCount + 1 : oldResponseCount - 1
-        //reload data? handleUpdate will be called later to do that
+        //wanna reload data? handleUpdate will be called later to do that
     }
     
     @objc func updatePostLikesCount(notification: Notification) {
@@ -133,6 +186,101 @@ extension PostContentController {
         
         self.post?.likes = addFlag ? oldPostLikesCount + 1 : oldPostLikesCount - 1
         tableView.reloadRows(at: [topIndexPath], with: .none)
+    }
+    
+    
+    
+    private func getGalleryConfiguration() -> GalleryConfiguration {
+        
+        return [
+            GalleryConfigurationItem.deleteButtonMode(ButtonMode.none),
+            GalleryConfigurationItem.closeButtonMode(.builtIn),
+            
+            GalleryConfigurationItem.pagingMode(.standard),
+            GalleryConfigurationItem.presentationStyle(.displacement),
+            GalleryConfigurationItem.hideDecorationViewsOnLaunch(false),
+            
+            GalleryConfigurationItem.swipeToDismissMode(.vertical),
+            GalleryConfigurationItem.toggleDecorationViewsBySingleTap(false),
+            GalleryConfigurationItem.activityViewByLongPress(false),
+            
+            GalleryConfigurationItem.overlayColor(UIColor(white: 0.035, alpha: 1)),
+            GalleryConfigurationItem.overlayColorOpacity(1),
+            GalleryConfigurationItem.overlayBlurOpacity(1),
+            GalleryConfigurationItem.overlayBlurStyle(UIBlurEffectStyle.light),
+            
+            GalleryConfigurationItem.videoControlsColor(.white),
+            
+            GalleryConfigurationItem.maximumZoomScale(8),
+            GalleryConfigurationItem.swipeToDismissThresholdVelocity(500),
+            
+            GalleryConfigurationItem.doubleTapToZoomDuration(0.15),
+            
+            GalleryConfigurationItem.blurPresentDuration(0.5),
+            GalleryConfigurationItem.blurPresentDelay(0),
+            GalleryConfigurationItem.colorPresentDuration(0.25),
+            GalleryConfigurationItem.colorPresentDelay(0),
+            
+            GalleryConfigurationItem.blurDismissDuration(0.1),
+            GalleryConfigurationItem.blurDismissDelay(0.4),
+            GalleryConfigurationItem.colorDismissDuration(0.45),
+            GalleryConfigurationItem.colorDismissDelay(0),
+            
+            GalleryConfigurationItem.itemFadeDuration(0.3),
+            GalleryConfigurationItem.decorationViewsFadeDuration(0.15),
+            GalleryConfigurationItem.rotationDuration(0.15),
+            
+            GalleryConfigurationItem.displacementDuration(0.55),
+            GalleryConfigurationItem.reverseDisplacementDuration(0.25),
+            GalleryConfigurationItem.displacementTransitionStyle(.springBounce(0.7)),
+            GalleryConfigurationItem.displacementTimingCurve(.linear),
+            
+            GalleryConfigurationItem.statusBarHidden(true),
+            GalleryConfigurationItem.displacementKeepOriginalInPlace(false),
+            GalleryConfigurationItem.displacementInsetMargin(50)
+        ]
+    }
+    
+    private func getDataItemsForGallery() {
+        postMessages.forEach { (postMessage) in
+            
+            if postMessage.imageUrl != nil {
+                let imageView = CachedImageView(cornerRadius: 0)
+                let galleryItem = GalleryItem.image(fetchImageBlock: { (imageCompletion) in
+                    imageView.loadImage(urlString: postMessage.imageUrl!, completion: {
+                        imageCompletion(imageView.image)
+                    })
+                })
+                
+                items.append(DataItem(imageView: imageView, galleryItem: galleryItem))
+            }
+        }
+    }
+    
+    private func getIndexOfImageViews(imageUrl: String) -> Int {
+        var counter = 0
+        var hit = -1
+        
+        postMessages.forEach { (postMessage) in
+            if let url = postMessage.imageUrl {
+                if url == imageUrl {
+                    hit = counter
+                }
+                counter = counter + 1
+            }
+        }
+        
+        return hit
+    }
+    
+    private func getPageControlWith(count: Int) -> UIPageControl {
+        let frame = CGRect(x: 0, y: 0, width: 200, height: 24)
+        let pageControl = UIPageControl(frame: frame)
+        pageControl.numberOfPages = count
+        pageControl.currentPage = 0
+        pageControl.pageIndicatorTintColor = UIColor.white
+        pageControl.currentPageIndicatorTintColor = themeColor
+        return pageControl
     }
     
 }

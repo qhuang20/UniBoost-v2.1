@@ -9,8 +9,9 @@
 import UIKit
 import LBTAComponents
 import SimpleImageViewer
+import ImageViewer
 
-class PostMessageCell: UITableViewCell {
+class PostMessageCell: UITableViewCell { 
     
     weak var postContentController: PostContentController?
     
@@ -57,10 +58,8 @@ class PostMessageCell: UITableViewCell {
         return tv
     }()
     
-    lazy var thumbnailImageView: CachedImageView = {//or unowned, pretty much the same
-        let imageView = CachedImageView(cornerRadius: 4, tapCallback: { [weak self] in
-            self?.zoomImageView()
-        })
+    lazy var thumbnailImageView: CachedImageView = {
+        let imageView = CachedImageView(cornerRadius: 4, emptyImage: nil)
         imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
         imageView.backgroundColor = brightGray
@@ -76,6 +75,7 @@ class PostMessageCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         let marginGuide = contentView.layoutMarginsGuide
+        thumbnailImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(zoomImageView(_:))))
         
         contentView.addSubview(thumbnailImageView)
         contentView.addSubview(postTextView)
@@ -103,26 +103,15 @@ class PostMessageCell: UITableViewCell {
     
     
     
-    internal func zoomImageView() {
-        let configuration = ImageViewerConfiguration { config in
-            config.imageView = thumbnailImageView
-            
-            let imageUrl = postMessage?.imageUrl ?? ""
-            let highQImageView = CachedImageView(cornerRadius: 0, emptyImage: nil)
-
-            config.imageBlock = { imageCompletion in
-                highQImageView.loadImage(urlString: imageUrl, completion: {
-                    imageCompletion(highQImageView.image)
-                    self.thumbnailImageView.image = highQImageView.image
-                })
-            }
-        }
-        
-        let imageViewerController = ImageViewerController(configuration: configuration)
-        postContentController?.present(imageViewerController, animated: true)
+    @objc private func zoomImageView(_ sender: UITapGestureRecognizer) {
+        postContentController?.showGalleryImageViewer(sender)
     }
     
 }
+
+
+
+
 
 
 

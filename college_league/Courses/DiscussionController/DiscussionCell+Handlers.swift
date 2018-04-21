@@ -66,9 +66,9 @@ extension DiscussionCell: UISearchBarDelegate {
                         self.tableView.reloadData()
                         
                         if self.loadingView.alpha == 1 {
-                            UIView.animate(withDuration: 0.3, animations: {
+                            UIView.animate(withDuration: 0.3, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                                 self.loadingView.alpha = 0
-                            })
+                            }, completion: nil)
                         }
                     }
                 })

@@ -30,7 +30,7 @@ class ResponseController: PostController {
     
     
     
-    private func changeResponseCount() {///change count: 1.delete response 2.delete post (course)
+    private func changeResponseCount() {///change count: 1.delete response 2.delete post (in course)
         guard let postId = postId else { return }
         let ref = Database.database().reference().child("posts").child(postId).child("response")
         

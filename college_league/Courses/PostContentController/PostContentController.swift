@@ -9,8 +9,19 @@
 import UIKit
 import AMScrollingNavbar
 import Firebase
+import ImageViewer
+import LBTAComponents
+
+extension UIImageView: DisplaceableView {}
+
+struct DataItem {
+    let imageView: CachedImageView
+    let galleryItem: GalleryItem
+}
 
 class PostContentController: UITableViewController {
+    
+    var items: [DataItem] = []//ImageViewer
     
     var post: Post?
     var postMessages = [PostMessage]()
