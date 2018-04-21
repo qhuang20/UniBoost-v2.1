@@ -56,7 +56,7 @@ class PostContentController: UITableViewController {
         loadingView.anchorCenterSuperview()
         
         if let navigationController = navigationController as? ScrollingNavigationController {
-            navigationController.followScrollView(tableView, delay: 10, followers: [tabBarController!.tabBar])
+            navigationController.followScrollView(tableView, delay: 10, followers: [NavigationBarFollower(view: tabBarController!.tabBar)])
         }
         
         

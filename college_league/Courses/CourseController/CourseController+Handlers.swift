@@ -64,6 +64,9 @@ extension CourseController: UISearchBarDelegate {
                         self.collectionView?.reloadData()
                         
                         if self.loadingView.alpha == 1 {
+                            self.loadingView.gifViewFly.isHidden = false
+                            self.loadingView.gifView.isHidden = true
+                            
                             UIView.animate(withDuration: 0.3, delay: 0.8, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                                 self.loadingView.alpha = 0
                             }, completion: nil)

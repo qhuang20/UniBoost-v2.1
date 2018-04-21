@@ -123,6 +123,8 @@ extension PostController {
                         print("Failed to upload post thumbnail image:", err)
                         return
                     }
+                   
+                    
                     
                     guard let thumbnailUrl = metadata?.downloadURL()?.absoluteString else { return }
                 

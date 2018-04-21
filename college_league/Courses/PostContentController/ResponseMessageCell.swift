@@ -59,10 +59,10 @@ class ResponseMessageCell: PostMessageCell {
     @objc private func zoomImageView() {
         let configuration = ImageViewerConfiguration { config in
             config.imageView = thumbnailImageView
-
+            
             let imageUrl = responseMessage?.imageUrl ?? ""
             let highQImageView = CachedImageView(cornerRadius: 0, emptyImage: nil)
-
+                
             config.imageBlock = { imageCompletion in
                 highQImageView.loadImage(urlString: imageUrl, completion: {
                     imageCompletion(highQImageView.image)
