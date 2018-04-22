@@ -13,6 +13,7 @@ extension UserDefaults {
     enum UserDefaultsKeys: String {
         case isEyeSelected
         case schoolName
+        case isSharingHintsShowed
     }
     
     
@@ -33,6 +34,16 @@ extension UserDefaults {
     
     func isEyeSelected() -> Bool {
         return bool(forKey: UserDefaultsKeys.isEyeSelected.rawValue)
+    }
+    
+    
+    
+    func setSharingHintShowed(value: Bool) {
+        set(value, forKey: UserDefaultsKeys.isSharingHintsShowed.rawValue)
+    }
+    
+    func isSharingHintShowed() -> Bool {
+        return bool(forKey: UserDefaultsKeys.isSharingHintsShowed.rawValue)
     }
     
 }

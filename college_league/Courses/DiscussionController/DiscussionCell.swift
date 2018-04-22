@@ -51,6 +51,32 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         return rc
     }()
     
+    let sharingHintImageView: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "startSharingHint"))
+        imageView.layer.cornerRadius = 12
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    lazy var dimView: UIView = {
+        let dv = UIView()
+        dv.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        dv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideHint)))
+        return dv
+    }()
+    
+    lazy var gotItButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("Got It", for: .normal)
+        button.setTitleColor(themeColor, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
+        button.addTarget(self, action: #selector(hideHint), for: .touchUpInside)
+        button.backgroundColor = UIColor.white
+        button.layer.cornerRadius = 8
+        button.clipsToBounds = true
+        return button
+    }()
+    
     let loadingView = LoadingView()
     
     override init(frame: CGRect) {

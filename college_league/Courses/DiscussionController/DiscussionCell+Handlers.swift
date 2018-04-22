@@ -68,7 +68,12 @@ extension DiscussionCell: UISearchBarDelegate {
                         if self.loadingView.alpha == 1 {
                             UIView.animate(withDuration: 0.3, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                                 self.loadingView.alpha = 0
-                            }, completion: nil)
+                            }, completion: { (_) in
+                                if UserDefaults.standard.isSharingHintShowed() {///
+                                    self.popHintCard()
+//                                    UserDefaults.standard.setSharingHintShowed(value: true)
+                                }
+                            })
                         }
                     }
                 })
@@ -149,6 +154,36 @@ extension DiscussionCell: UISearchBarDelegate {
         guard let discussionController = discussionController else { return }
         discussionController.navigationItem.rightBarButtonItem = discussionController.postBarButtonItem
         discussionController.searchBarAnchors?[2].constant = -85
+    }
+    
+    
+    
+    private func popHintCard() {
+        let keyWindow = UIApplication.shared.keyWindow
+        keyWindow?.addSubview(self.dimView)
+        dimView.fillSuperview()
+        dimView.anchorCenterSuperview()
+        
+        dimView.addSubview(sharingHintImageView)
+        sharingHintImageView.frame = CGRect(x: 0, y: 0, width: 280, height: 280)
+        sharingHintImageView.center = CGPoint(x: self.center.x, y: self.center.y)
+        sharingHintImageView.layer.transform = CATransform3DMakeScale(0, 0, 0)
+        
+        dimView.addSubview(gotItButton)
+        gotItButton.anchorCenterXToSuperview()
+        gotItButton.anchor(sharingHintImageView.bottomAnchor, left: nil, bottom: nil, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 150, heightConstant: 40)
+        gotItButton.layer.transform = CATransform3DMakeScale(0, 0, 0)
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+           
+            self.sharingHintImageView.layer.transform = CATransform3DMakeScale(1, 1, 1)
+            self.gotItButton.layer.transform = CATransform3DMakeScale(1, 1, 1)
+            
+        }, completion: nil)
+    }
+    
+    @objc internal func hideHint() {
+        print("hide")
     }
     
 }

@@ -12,7 +12,7 @@ class SignupController: UIViewController {
 
     lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "head100")
+        imageView.image = #imageLiteral(resourceName: "profileHead")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 140/2

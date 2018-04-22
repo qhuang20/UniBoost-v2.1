@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "startSharingHint.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "wrocket100.png",
       "scale" : "2x"
     },
     {
