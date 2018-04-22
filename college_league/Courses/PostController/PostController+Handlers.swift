@@ -197,6 +197,11 @@ extension PostController {
             
             print("Yeeeeeaaaaaahhhhhh, Successfully saved post to DB")
             NotificationCenter.default.post(name: PostController.updateFeedNotificationName, object: nil)
+            
+            if course.postsCount == 0 {
+                let userInfo = ["course": course]
+                NotificationCenter.default.post(name: PostController.updateCourseColorNotificationName, object: nil, userInfo: userInfo)
+            }
         }
     }
     

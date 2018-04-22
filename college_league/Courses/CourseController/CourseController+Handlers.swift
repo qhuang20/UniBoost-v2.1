@@ -192,6 +192,33 @@ extension CourseController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
     }
+    
+    
+    
+    @objc internal func handleChangeCourseColor(notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let course = userInfo["course"] as? Course else { return }
+        
+        if let i = filteredCourses.index(of: course) {
+            let oldPostsCount = filteredCourses[i].postsCount
+            filteredCourses[i].postsCount = oldPostsCount + 1
+            self.filteredCourses.sort(by: { (c1, c2) -> Bool in
+                c1.postsCount > c2.postsCount
+            })
+        }
+        if let j = courses.index(of: course) {
+            let oldPostsCount = courses[j].postsCount
+            courses[j].postsCount = oldPostsCount + 1
+            self.courses.sort(by: { (c1, c2) -> Bool in
+                c1.postsCount > c2.postsCount
+            })
+        }
+        if let k = followingCourses.index(of: course) {
+            let oldPostsCount = followingCourses[k].postsCount
+            followingCourses[k].postsCount = oldPostsCount + 1
+        }
+        collectionView?.reloadData()
+    }
 
 }
 

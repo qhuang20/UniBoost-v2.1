@@ -11,7 +11,7 @@ import UIKit
 class CourseController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     var school: String? = "Langara College"
-
+    
     var courses = [Course]()
     var followingCourses = [Course]()
     var filteredCourses = [Course]()
@@ -99,11 +99,17 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
                 let tababarController = window?.rootViewController as! UITabBarController
                 tababarController.selectedIndex = 4
             }
-            
             return
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleChangeCourseColor), name: PostController.updateCourseColorNotificationName, object: nil)
+        
         fetchFollowingCourses()
+    }
+    
+    deinit {
+        print("deinit")
+        NotificationCenter.default.removeObserver(self)
     }
     
     internal func configureCollectionVeiw() {

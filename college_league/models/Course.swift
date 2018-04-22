@@ -17,7 +17,7 @@ struct Course: Equatable {
     let description: String
     let name: String
     let number: String
-    let postsCount: Int
+    var postsCount: Int
     
     init(school: String, courseId: String, dictionary: [String: Any]) {
         self.school = school
