@@ -134,7 +134,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     
     
-    private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
+    internal func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
         return indexPath.row == posts.count
     }
     

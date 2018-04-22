@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import LBTAComponents
 
 class RequestController: HomeController {
     
@@ -49,6 +50,24 @@ class RequestController: HomeController {
         button.isHidden = true//feels weird to have it
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if isLoadingIndexPath(indexPath) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! CollectionViewLoadingCell
+            cell.theEndLabel.isHidden = false
+            cell.theEndLabel.text = "no more questions"
+            cell.isTheEnd = isFinishedPaging
+            return cell
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePostCell
+        
+        if posts.count > indexPath.item {
+            cell.post = posts[indexPath.item]
+        }
+        
+        return cell
     }
     
     
@@ -113,6 +132,46 @@ class RequestController: HomeController {
             print("Failed to fetch following user ids:", err)
         }
     }
+    
+    @objc internal override func paginatePosts() {
+        if postIds.count == 0 {
+            self.isFinishedPaging = true
+            self.isPaging = false
+            self.collectionView?.reloadData()
+            print("no postIds")
+            return
+        }
+        print("\nstart paging")
+        let queryNum = 4
+        isPaging = true
+        var endIndex = queryStartingIndex + queryNum
+        if endIndex >= postIds.count - 1 {
+            endIndex = postIds.count - 1
+            isFinishedPaging = true
+        }
+        let subPostIds = postIds[queryStartingIndex...endIndex]
+        queryStartingIndex = endIndex + 1
+        var counter = 0
+        
+        subPostIds.forEach { (postId) in
+            Database.fetchPostWithPID(pid: postId, completion: { (post) in
+                if post.type == postTypes[0] {
+                    self.posts.append(post)
+                    print("inside:   ", post.postId)
+                    let dummyImageView = CachedImageView()//preload image
+                    dummyImageView.loadImage(urlString: post.thumbnailImageUrl ?? "")
+                }
+                
+                counter = counter + 1
+                if subPostIds.count == counter {
+                    self.isPaging = false
+                    self.collectionView?.reloadData()
+                }
+            })
+        }
+    }
+    
+    
     
     @objc override func handleRefresh() {
         if isPaging { return }
