@@ -41,6 +41,11 @@ extension DiscussionCell: UISearchBarDelegate {
                 if self.loadingView.alpha == 1 {
                     UIView.animate(withDuration: 0.3, animations: {
                         self.loadingView.alpha = 0
+                    }, completion: { (_) in
+                        if !UserDefaults.standard.isSharingHintShowed() {
+                            self.popHintCard()
+                            UserDefaults.standard.setSharingHintShowed(value: true)
+                        }
                     })
                 }
             }
@@ -69,9 +74,9 @@ extension DiscussionCell: UISearchBarDelegate {
                             UIView.animate(withDuration: 0.3, delay: 0.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                                 self.loadingView.alpha = 0
                             }, completion: { (_) in
-                                if UserDefaults.standard.isSharingHintShowed() {///
+                                if !UserDefaults.standard.isSharingHintShowed() {
                                     self.popHintCard()
-//                                    UserDefaults.standard.setSharingHintShowed(value: true)
+                                    UserDefaults.standard.setSharingHintShowed(value: true)
                                 }
                             })
                         }
@@ -183,7 +188,21 @@ extension DiscussionCell: UISearchBarDelegate {
     }
     
     @objc internal func hideHint() {
-        print("hide")
+        print("Hide Hint")
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+            
+            self.sharingHintImageView.layer.transform = CATransform3DMakeScale(0.1, 0.1, 0.1)
+            self.gotItButton.layer.transform = CATransform3DMakeScale(0.1, 0.1, 0.1)
+            
+            self.sharingHintImageView.alpha = 0
+            self.gotItButton.alpha = 0
+            
+            self.dimView.alpha = 0
+            
+        }) { (_) in
+            self.dimView.removeFromSuperview()
+        }
     }
     
 }
