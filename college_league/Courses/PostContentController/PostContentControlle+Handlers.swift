@@ -66,6 +66,8 @@ extension PostContentController: GalleryItemsDataSource, GalleryItemsDelegate, G
     internal func fetchPostAndResponse() {
         guard let postId = post?.postId else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        let posterUid = post?.user.uid ?? ""
+        let userFollowingRef = Database.database().reference().child("user_following").child(uid).child(posterUid)
         let userBookmarksRef = Database.database().reference().child("user_bookmarks").child(uid).child(postId)
         let userLikedPostsRef = Database.database().reference().child("user_likedPosts").child(uid).child(postId)
         
@@ -84,18 +86,24 @@ extension PostContentController: GalleryItemsDataSource, GalleryItemsDelegate, G
                         self.post?.hasLiked = true
                     }
                     
-                    Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
-                        self.postMessages = postMessages
-                        self.getDataItemsForGallery()//see down below
-                        
-                        if self.loadingView.alpha == 1 {
-                            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                                self.loadingView.alpha = 0
-                            }, completion: nil)
+                    userFollowingRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let isFollowing = snapshot.value as? Int, isFollowing == 1 {
+                            self.post?.user.hasFollowed = true
                         }
                         
-                        self.tableView.reloadData()
-                    }
+                        Database.fetchPostMessagesWithPID(pid: postId) { (postMessages) in
+                            self.postMessages = postMessages
+                            self.getDataItemsForGallery()//see down below
+                            
+                            if self.loadingView.alpha == 1 {
+                                UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                                    self.loadingView.alpha = 0
+                                }, completion: nil)
+                            }
+                            
+                            self.tableView.reloadData()
+                        }
+                    })
                 }
             }
         }
@@ -149,6 +157,11 @@ extension PostContentController: GalleryItemsDataSource, GalleryItemsDelegate, G
                             counter = counter + 1
                             if allObjects.count == counter {
                                 self.isPaging = false
+                                
+                                self.responseArr.sort(by: { (r1, r2) -> Bool in
+                                    return r1.creationDate.compare(r2.creationDate) == ComparisonResult.orderedAscending
+                                })
+                                
                                 self.tableView.reloadData()
                             }
                         }

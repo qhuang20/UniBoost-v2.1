@@ -234,6 +234,7 @@ extension UserProfileController {
         posts.removeAll()
         responseArr.removeAll()
         self.isFinishedPaging = false
+        collectionView?.reloadData()
 
         if self.choice == TooBarChoice.posts {
             self.paginatePosts()

@@ -13,7 +13,7 @@ struct Post {
     var hasBookmarked: Bool = false
     var hasLiked: Bool = false
     
-    let user: User
+    var user: User
     let postId: String
     var course: Course?//changePostLikesCountForTrendingCell
     
