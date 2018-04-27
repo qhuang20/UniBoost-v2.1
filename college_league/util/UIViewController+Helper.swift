@@ -12,7 +12,10 @@ extension UIViewController {
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        self.view.endEditing(true)
+        if view.isFirstResponder {//useless
+            self.view.endEditing(true)
+            print("UIViewController: endEditing")
+        }
     }
     
     

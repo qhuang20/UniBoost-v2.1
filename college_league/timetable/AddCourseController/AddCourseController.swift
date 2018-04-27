@@ -78,6 +78,7 @@ class AddCourseController: DatasourceController {
         (datasource as! AddCourseDatasource).editCourseBoolArray = courseInfo.days
 
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+        collectionView?.keyboardDismissMode = .onDrag
         configureNavigationItems()
 
         view?.addSubview(dimView)

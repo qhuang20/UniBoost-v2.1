@@ -44,7 +44,6 @@ extension DiscussionCell: UISearchBarDelegate {
                     }, completion: { (_) in
                         if !UserDefaults.standard.isSharingHintShowed() {
                             self.popHintCard()
-                            UserDefaults.standard.setSharingHintShowed(value: true)
                         }
                     })
                 }
@@ -76,7 +75,6 @@ extension DiscussionCell: UISearchBarDelegate {
                             }, completion: { (_) in
                                 if !UserDefaults.standard.isSharingHintShowed() {
                                     self.popHintCard()
-                                    UserDefaults.standard.setSharingHintShowed(value: true)
                                 }
                             })
                         }
@@ -164,11 +162,17 @@ extension DiscussionCell: UISearchBarDelegate {
     
     
     private func popHintCard() {
+        if discussionController?.navigationController?.visibleViewController?.viewIfLoaded?.window == nil  {
+            print("current view is gone")
+            return
+        }
+        UserDefaults.standard.setSharingHintShowed(value: true)
+        
         let keyWindow = UIApplication.shared.keyWindow
         keyWindow?.addSubview(self.dimView)
         dimView.fillSuperview()
         dimView.anchorCenterSuperview()
-        
+
         dimView.addSubview(sharingHintImageView)
         sharingHintImageView.frame = CGRect(x: 0, y: 0, width: 280, height: 280)
         sharingHintImageView.center = CGPoint(x: self.center.x, y: self.center.y)

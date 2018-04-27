@@ -180,6 +180,15 @@ extension CourseController: UISearchBarDelegate {
     
     
     
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        let courseSearchController = CourseSearchController(collectionViewLayout: UICollectionViewFlowLayout())
+        let navCourseSearchController = UINavigationController(rootViewController: courseSearchController)
+        navCourseSearchController.modalPresentationStyle = .overFullScreen
+        navCourseSearchController.modalTransitionStyle = .crossDissolve
+        present(navCourseSearchController, animated: true, completion: nil)
+        return false
+    }
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
     }

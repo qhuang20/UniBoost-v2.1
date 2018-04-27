@@ -37,7 +37,7 @@ class MainTabBarController: UITabBarController {
         let courseNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "course"), selectedImage: #imageLiteral(resourceName: "course_selected"), rootViewController:
             CourseController(collectionViewLayout: UICollectionViewFlowLayout()))
         
-        let notificationNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "noti_unselected"), selectedImage: #imageLiteral(resourceName: "noti_selected"), rootViewController: NotificationsController())
+        let notificationNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "message"), selectedImage: #imageLiteral(resourceName: "message_selected"), rootViewController: NotificationsController())
         
         let userProfileNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "profile_unselected"), selectedImage: #imageLiteral(resourceName: "profile_selected"), rootViewController: UserProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         
@@ -52,7 +52,7 @@ class MainTabBarController: UITabBarController {
     
     private func configureTabBar() {
         tabBar.tintColor = .orange
-        tabBar.unselectedItemTintColor = UIColor.darkGray
+        tabBar.unselectedItemTintColor = UIColor.black
         tabBar.isTranslucent = false
 
         let topBorder = CALayer()

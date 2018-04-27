@@ -63,6 +63,7 @@
 		7B7CCDC1205A684C004EB1E3 /* UserPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7CCDC0205A684C004EB1E3 /* UserPostCell.swift */; };
 		7B93C612204F92F000419B33 /* PostContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C611204F92F000419B33 /* PostContentController.swift */; };
 		7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C613204FB16300419B33 /* PostHeaderCell.swift */; };
+		7B9563AD20925767001FB2A7 /* CourseSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563AC20925767001FB2A7 /* CourseSearchController.swift */; };
 		7B9717172058DBB400B6F781 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717162058DBB400B6F781 /* HomeController.swift */; };
 		7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */; };
 		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
@@ -152,6 +153,7 @@
 		7B7CCDC0205A684C004EB1E3 /* UserPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostCell.swift; sourceTree = "<group>"; };
 		7B93C611204F92F000419B33 /* PostContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContentController.swift; sourceTree = "<group>"; };
 		7B93C613204FB16300419B33 /* PostHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderCell.swift; sourceTree = "<group>"; };
+		7B9563AC20925767001FB2A7 /* CourseSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchController.swift; sourceTree = "<group>"; };
 		7B9717162058DBB400B6F781 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
 		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				7B0FD70E204009D500E77422 /* PostController */,
 				7B93C610204F92B700419B33 /* PostContentController */,
 				7B48C76320464E2B00768E96 /* DiscussionController */,
+				7B9563AB20925743001FB2A7 /* CourseSearchController */,
 				7B48C75C2045AB1D00768E96 /* CourseController */,
 			);
 			path = Courses;
@@ -379,6 +382,14 @@
 				7B0ECA8A2066275400D66CB7 /* PostContentControlle+Handlers.swift */,
 			);
 			path = PostContentController;
+			sourceTree = "<group>";
+		};
+		7B9563AB20925743001FB2A7 /* CourseSearchController */ = {
+			isa = PBXGroup;
+			children = (
+				7B9563AC20925767001FB2A7 /* CourseSearchController.swift */,
+			);
+			path = CourseSearchController;
 			sourceTree = "<group>";
 		};
 		7B9717142058DB4600B6F781 /* TimetableController */ = {
@@ -693,6 +704,7 @@
 				7BD659F1205B8F41004ACC7E /* Response.swift in Sources */,
 				7B69E0E4207140520023D857 /* HomePostCell.swift in Sources */,
 				7B48C7652046606100768E96 /* SwitchBar.swift in Sources */,
+				7B9563AD20925767001FB2A7 /* CourseSearchController.swift in Sources */,
 				7B0ECA872065E36500D66CB7 /* TableViewLoadingCell.swift in Sources */,
 				7B48C75E2045AB5000768E96 /* CourseController.swift in Sources */,
 				7B0ECA892065E73F00D66CB7 /* CollectionViewLoadingCell.swift in Sources */,
