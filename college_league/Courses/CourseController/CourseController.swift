@@ -115,7 +115,6 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     internal func configureCollectionVeiw() {
         collectionView?.backgroundColor = brightGray
         collectionView?.alwaysBounceVertical = true
-        collectionView?.keyboardDismissMode = .onDrag
         collectionView?.contentInset = UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8)
         let layout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         layout.minimumLineSpacing = 6
@@ -187,7 +186,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
     
     
-    private func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
+    internal func isLoadingIndexPath(_ indexPath: IndexPath) -> Bool {
         guard !isFinishedPaging else { return false }
         return indexPath.item == filteredCourses.count
     }

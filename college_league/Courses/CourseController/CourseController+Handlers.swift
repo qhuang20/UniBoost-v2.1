@@ -122,7 +122,7 @@ extension CourseController: UISearchBarDelegate {
         }
     }
     
-    internal func getFilteredCoursesWith(searchText: String) {
+    @objc internal func getFilteredCoursesWith(searchText: String) {
         if viewOptionButton?.isSelected == false {
             if searchText.isEmpty {
                 filteredCourses = courses
