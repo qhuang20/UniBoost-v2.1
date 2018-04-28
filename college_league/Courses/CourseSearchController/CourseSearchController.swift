@@ -28,10 +28,17 @@ class CourseSearchController: CourseController {
         previousSearchText = searchBar.text ?? ""
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        searchBar.showsCancelButton = true
         searchBar.text = previousSearchText
         searchBar.placeholder = "Enter Course Code. eg: Engl..."
         searchBar.delegate = self
+        enableCancelButton(searchBar: searchBar)
+        
+        guard let searchBarAnchors = searchBarAnchors else { return }
+        searchBarAnchors[0].constant = 20
+        searchBarAnchors[2].constant = -20
+        animateNavigationBarLayout()
     }
     
     override func viewDidLoad() {

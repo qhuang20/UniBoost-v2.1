@@ -23,14 +23,11 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     let trendingCellId = "trendingCellId"
     var oneTimeFlag = true
     
-    override func viewDidAppear(_ animated: Bool) { searchBar?.isHidden = false }
-    override func viewWillAppear(_ animated: Bool) {}//no super to prevent weird behavior
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
         configureNavigationBar()
-        layoutSearchBar()
+        
         collectionView?.register(DiscussionCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(TrendingCell.self, forCellWithReuseIdentifier: trendingCellId)
         
@@ -43,7 +40,13 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         searchBar?.resignFirstResponder()
     }
     
+    override func viewDidAppear(_ animated: Bool) { searchBar?.isHidden = false }
+    override func viewWillAppear(_ animated: Bool) {
+        layoutSearchBar()
+    }//no super to prevent weird behavior
+    
     private func layoutSearchBar() {
+        searchBar?.showsCancelButton = false
         searchBar?.text = ""
         searchBar?.placeholder = "Find Post"
         guard let searchBarAnchors = searchBarAnchors else { return }
