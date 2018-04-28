@@ -64,6 +64,7 @@
 		7B93C612204F92F000419B33 /* PostContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C611204F92F000419B33 /* PostContentController.swift */; };
 		7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C613204FB16300419B33 /* PostHeaderCell.swift */; };
 		7B9563AD20925767001FB2A7 /* CourseSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563AC20925767001FB2A7 /* CourseSearchController.swift */; };
+		7B9563AF209436EF001FB2A7 /* CourseSearchControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563AE209436EF001FB2A7 /* CourseSearchControllerCell.swift */; };
 		7B9717172058DBB400B6F781 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717162058DBB400B6F781 /* HomeController.swift */; };
 		7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */; };
 		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
@@ -154,6 +155,7 @@
 		7B93C611204F92F000419B33 /* PostContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostContentController.swift; sourceTree = "<group>"; };
 		7B93C613204FB16300419B33 /* PostHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderCell.swift; sourceTree = "<group>"; };
 		7B9563AC20925767001FB2A7 /* CourseSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchController.swift; sourceTree = "<group>"; };
+		7B9563AE209436EF001FB2A7 /* CourseSearchControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchControllerCell.swift; sourceTree = "<group>"; };
 		7B9717162058DBB400B6F781 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
 		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 		7B9563AB20925743001FB2A7 /* CourseSearchController */ = {
 			isa = PBXGroup;
 			children = (
+				7B9563AE209436EF001FB2A7 /* CourseSearchControllerCell.swift */,
 				7B9563AC20925767001FB2A7 /* CourseSearchController.swift */,
 			);
 			path = CourseSearchController;
@@ -694,6 +697,7 @@
 				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
 				7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */,
 				7B0ECA8B2066275400D66CB7 /* PostContentControlle+Handlers.swift in Sources */,
+				7B9563AF209436EF001FB2A7 /* CourseSearchControllerCell.swift in Sources */,
 				7B3ACAE6204A3C810065CB16 /* CourseController+Handlers.swift in Sources */,
 				7B3ACAE9204A3ED80065CB16 /* Course.swift in Sources */,
 				7BD659FC205CA50C004ACC7E /* ResponseMessageCell.swift in Sources */,

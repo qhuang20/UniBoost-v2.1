@@ -11,10 +11,14 @@ import Firebase
 
 class CourseSearchController: CourseController {
     
+    weak var superCourseController: CourseController?
+    
     var courseSearchHit: String = ""
     var queryEndingCourseId: String = ""
     
     var previousSearchText = ""
+    
+    let courseSearchCellId = "courseSearchCellId"
     
     let hintLabel: UILabel = {
         let label = UILabel()
@@ -43,7 +47,10 @@ class CourseSearchController: CourseController {
     
     override func viewDidLoad() {
         configureCollectionVeiw()
+        collectionView?.register(CourseSearchControllerCell.self, forCellWithReuseIdentifier: courseSearchCellId)
         school = UserDefaults.standard.getSchool()
+        isFinishedPaging = true
+        
         searchBar.showsCancelButton = true
         searchBar.subviews.forEach { (subview) in
             if subview.isKind(of: UIButton.self) {
@@ -59,8 +66,6 @@ class CourseSearchController: CourseController {
         view.addSubview(hintLabel)
         hintLabel.anchorCenterXToSuperview()
         hintLabel.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 32, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        isFinishedPaging = true
     }
     
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -73,6 +78,20 @@ class CourseSearchController: CourseController {
         if !isFinishedPaging && !isPaging && courseSearchHit.count == 3 {
             paginateCourses()
         }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if isLoadingIndexPath(indexPath) {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: loadingCellId, for: indexPath) as! CollectionViewLoadingCell
+            cell.isTheEnd = isFinishedPaging
+            return cell
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: courseSearchCellId, for: indexPath) as! CourseSearchControllerCell
+        cell.course = filteredCourses[indexPath.item]
+        cell.courseController = self
+        cell.superCourseController = superCourseController
+        return cell
     }
     
     

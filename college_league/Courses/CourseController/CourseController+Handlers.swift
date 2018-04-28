@@ -182,6 +182,7 @@ extension CourseController: UISearchBarDelegate {
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         let courseSearchController = CourseSearchController(collectionViewLayout: UICollectionViewFlowLayout())
+        courseSearchController.superCourseController = self
         let navCourseSearchController = UINavigationController(rootViewController: courseSearchController)
         navCourseSearchController.modalPresentationStyle = .overFullScreen
         navCourseSearchController.modalTransitionStyle = .crossDissolve
