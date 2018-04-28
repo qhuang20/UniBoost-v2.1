@@ -46,8 +46,6 @@ class SetSkillsController: CourseController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        previousSearchText = searchBar.text ?? ""
-        
         if (self.isMovingFromParentViewController || self.isBeingDismissed) {//better than deinit
             NotificationCenter.default.post(name: SetSkillsController.addSkillNotificationName, object: nil)
         }
@@ -60,7 +58,6 @@ class SetSkillsController: CourseController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        searchBar.text = previousSearchText
         searchBar.placeholder = "Select Your Skill"
         searchBar.delegate = self
         

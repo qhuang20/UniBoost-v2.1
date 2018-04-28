@@ -14,6 +14,26 @@ class CourseSearchController: CourseController {
     var courseSearchHit: String = ""
     var queryEndingCourseId: String = ""
     
+    var previousSearchText = ""
+    
+    let hintLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Enter at least 3 characters"
+        label.textColor = UIColor.lightGray
+        label.isHidden = true
+        return label
+    }()
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        previousSearchText = searchBar.text ?? ""
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        searchBar.text = previousSearchText
+        searchBar.placeholder = "Enter Course Code. eg: Engl..."
+        searchBar.delegate = self
+    }
+    
     override func viewDidLoad() {
         configureCollectionVeiw()
         school = UserDefaults.standard.getSchool()
@@ -26,8 +46,12 @@ class CourseSearchController: CourseController {
         
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
-        _ = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
         searchBar.becomeFirstResponder()
+        
+        view.addSubview(hintLabel)
+        hintLabel.anchorCenterXToSuperview()
+        hintLabel.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 32, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         isFinishedPaging = true
     }
@@ -48,6 +72,9 @@ class CourseSearchController: CourseController {
     
     override func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count < 3 {
+            hintLabel.isHidden = false
+            hintLabel.text = "Enter at least 3 characters"
+            
             isFinishedPaging = true
             courses.removeAll()
             filteredCourses.removeAll()
@@ -55,6 +82,8 @@ class CourseSearchController: CourseController {
             return
         }
         if searchText.count == 3 {
+            hintLabel.isHidden = true
+            
             if courses.count == 0 {
                 let searchText = searchText.replacingOccurrences(of: " ", with: "", options: .literal, range: nil)
                 courseSearchHit = searchText.uppercased()
@@ -105,6 +134,7 @@ class CourseSearchController: CourseController {
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.collectionView?.reloadData()
+                self.showNoMatchesHintLabelIfNeeded()
             }
             if self.courses.count > 0 && allObjects.count > 0 { allObjects.removeFirst() }
             let lastSnapshot = allObjects.last
@@ -147,6 +177,19 @@ class CourseSearchController: CourseController {
         filteredCourses = self.courses.filter { (course) -> Bool in
             let courseName = course.name + course.number + course.description
             return courseName.lowercased().contains(searchText.lowercased())
+        }
+        
+        if isFinishedPaging {
+            showNoMatchesHintLabelIfNeeded()
+        }
+    }
+    
+    private func showNoMatchesHintLabelIfNeeded() {
+        if filteredCourses.count == 0 {
+            hintLabel.isHidden = false
+            hintLabel.text = "Ops, no matches, try it again"///add report an issue button later
+        } else {
+            hintLabel.isHidden = true
         }
     }
     

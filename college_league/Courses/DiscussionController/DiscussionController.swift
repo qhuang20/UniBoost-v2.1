@@ -44,6 +44,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     }
     
     private func layoutSearchBar() {
+        searchBar?.text = ""
         searchBar?.placeholder = "Find Post"
         guard let searchBarAnchors = searchBarAnchors else { return }
 

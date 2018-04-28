@@ -10,6 +10,10 @@ import UIKit
 
 struct Post {
     
+    ///Just add in postController (to database)
+    var courseId: String?//for search
+    var school: String?//for search
+    
     var hasBookmarked: Bool = false
     var hasLiked: Bool = false
     
@@ -40,3 +44,7 @@ struct Post {
     }
     
 }
+
+
+
+

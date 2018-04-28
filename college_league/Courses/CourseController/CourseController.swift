@@ -24,7 +24,6 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     let loadingCellId = "loadingCellId"
     var searchBarAnchors: [NSLayoutConstraint]?
     var viewOptionButton: UIButton?
-    var previousSearchText = ""
     
     let pleaseAddCourseLabel: UILabel = {
         let label = UILabel()
@@ -58,12 +57,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         return sb
     }()
     
-    override func viewWillDisappear(_ animated: Bool) {
-        previousSearchText = searchBar.text ?? ""
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
-        searchBar.text = previousSearchText
         searchBar.placeholder = "Find Course"
         searchBar.delegate = self
         
