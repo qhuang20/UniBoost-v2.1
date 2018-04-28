@@ -67,6 +67,22 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         button.addTarget(self, action: #selector(handlTapKeyboard), for: .touchUpInside)
         return button
     }()
+    
+    lazy var imagePickerButton: UIButton = {
+        let button = UIButton(type: .custom)
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "showImagePicker").withRenderingMode(.alwaysTemplate))
+        button.addSubview(imageView)
+        imageView.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 18, heightConstant: 18)
+        imageView.anchorCenterSuperview()
+        imageView.isUserInteractionEnabled = false
+        
+        button.layer.cornerRadius = 15
+        button.tintColor = UIColor.white
+        button.backgroundColor = UIColor.black
+        button.alpha = 0.7
+        button.addTarget(self, action: #selector(handleSelectShowImagePicker), for: .touchUpInside)
+        return button 
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,12 +96,15 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         view.addSubview(postTextView)
         view.addSubview(collectionView)
         view.addSubview(keyboardButton)
+        view.addSubview(imagePickerButton)
 
         postTextView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         collectionViewBottomAnchor = collectionView.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: estimatedKeyboardHeight)[1]
         
         keyboardButton.anchor(nil, left: nil, bottom: collectionView.topAnchor, right: collectionView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 12, widthConstant: 44, heightConstant: 44)
+        
+        imagePickerButton.anchor(nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 20, rightConstant: 20, widthConstant: 30, heightConstant: 30)
         
         PHPhotoLibrary.requestAuthorization({status in })
     }

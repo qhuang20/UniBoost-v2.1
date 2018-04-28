@@ -66,6 +66,8 @@ class CourseSearchController: CourseController {
         view.addSubview(hintLabel)
         hintLabel.anchorCenterXToSuperview()
         hintLabel.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 32, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleChangeCourseColor), name: PostController.updateCourseColorNotificationName, object: nil)
     }
     
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

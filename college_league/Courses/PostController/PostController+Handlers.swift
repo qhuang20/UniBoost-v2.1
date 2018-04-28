@@ -10,7 +10,30 @@ import UIKit
 import Photos
 import Firebase
 
-extension PostController {
+extension PostController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @objc func handleSelectShowImagePicker() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = false
+        
+        present(imagePickerController, animated: true, completion: nil)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let selectedImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            self.insertImage(image: selectedImage)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     
     internal func fetchPhotos() {
         images.removeAll()
@@ -98,7 +121,6 @@ extension PostController {
         
         let partsDic = getPartsDictionary()
         uploadImagesToStorage(partsDic: partsDic)
-        addPostsCount()
     }
     
     private func uploadImagesToStorage(partsDic: [Int: Any]) {
@@ -196,6 +218,7 @@ extension PostController {
             coursePostsChild.updateChildValues([postId: 1])
             
             print("Yeeeeeaaaaaahhhhhh, Successfully saved post to DB")
+            self.addPostsCount()
             NotificationCenter.default.post(name: PostController.updateFeedNotificationName, object: nil)
             
             if course.postsCount == 0 {
