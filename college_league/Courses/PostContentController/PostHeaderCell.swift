@@ -126,13 +126,7 @@ class PostHeaderCell: UITableViewCell {
         
         postInfoLabel.anchor(titleLabel.bottomAnchor, left: profileImageView.rightAnchor, bottom: marginGuide.bottomAnchor, right: typeImageView.leftAnchor, topConstant: padding + 16, leftConstant: padding, bottomConstant: 0, rightConstant: padding, widthConstant: 0, heightConstant: 0)
         
-        followUnfollowButton.anchor(nil, left: nil, bottom: bottomAnchor, right: marginGuide.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 4, rightConstant: -8, widthConstant: 55, heightConstant: 20)
-                
-        NotificationCenter.default.addObserver(self, selector: #selector(handleFollowButtonStyle), name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+        followUnfollowButton.anchor(nil, left: nil, bottom: bottomAnchor, right: marginGuide.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 55, heightConstant: 20)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -156,9 +150,9 @@ class PostHeaderCell: UITableViewCell {
         guard let userId = post?.user.uid else { return }
         guard let user = post?.user else { return }
         
+        checkAllUsersToUpdateFollowButton(user: user)
+        
         if followUnfollowButton.titleLabel?.text == "Unfollow" {//unfollow
-            post?.user.hasFollowed = false
-            postContentController?.post?.user.hasFollowed = false
             changeFollowersCountForUser(isFollowed: false)
             changeFollowingCountForUser(isFollowed: false)
             
@@ -171,8 +165,6 @@ class PostHeaderCell: UITableViewCell {
                 print("Successfully unfollowed user:", user.username )
             })
         } else {//follow
-            post?.user.hasFollowed = true
-            postContentController?.post?.user.hasFollowed = true
             changeFollowersCountForUser(isFollowed: true)
             changeFollowingCountForUser(isFollowed: true)
             
@@ -240,13 +232,23 @@ class PostHeaderCell: UITableViewCell {
     
     
     
-    @objc private func handleFollowButtonStyle() {
-        guard let post = post else { return }
-        let hasFollowedOldState = post.user.hasFollowed
-        self.post?.user.hasFollowed = !hasFollowedOldState
-        postContentController?.post?.user.hasFollowed = !hasFollowedOldState
+    private func checkAllUsersToUpdateFollowButton(user: User) {
+        let hasFollowedOldState = user.hasFollowed
+        let uid = user.uid
+        
+        if postContentController?.post?.user.uid == uid {
+            postContentController?.post?.user.hasFollowed = !hasFollowedOldState
+        }
+        postContentController?.responseArr.forEach({ (response) in
+            if response.user.uid == uid {
+                let i = postContentController?.responseArr.index(of: response)
+                postContentController?.responseArr[i!].user.hasFollowed = !hasFollowedOldState
+            }
+        })
+        
+        postContentController?.tableView.reloadData()
     }
-    
+
 }
 
 

@@ -12,7 +12,7 @@ struct Response: Equatable {
 
     var hasLiked = false
     
-    let user: User
+    var user: User
     let responseId: String
     let creationDate: Date
     var likes: Int

@@ -159,7 +159,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         
         let width = view.frame.width
         let userInfo = posts[indexPath.item].user.username + (posts[indexPath.item].user.bio ?? "")
-        var height: CGFloat = estimateHeightForUserInfo(text: userInfo) + 50 + 14
+        var height: CGFloat = estimateHeightForUserInfo(text: userInfo) + 50 + 4
         
         if let imageHeight = posts[indexPath.item].thumbnailImageHeight {
             if imageHeight > 250 { height += 250 }

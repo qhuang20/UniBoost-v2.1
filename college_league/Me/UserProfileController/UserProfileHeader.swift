@@ -257,7 +257,8 @@ class UserProfileHeader: UICollectionViewCell {
                 }
                 print("Successfully unfollowed user:", self.user?.username ?? "")
                 
-                NotificationCenter.default.post(name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
+                let userInfo = ["user": self.user as Any]
+                NotificationCenter.default.post(name: UserProfileHeader.updateUserFollowingNotificationName, object: nil, userInfo: userInfo)
             })
         } else {//follow
             user?.hasFollowed = true
@@ -277,7 +278,8 @@ class UserProfileHeader: UICollectionViewCell {
                 }
                 print("Successfully followed user: ", self.user?.username ?? "")
                 
-                NotificationCenter.default.post(name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
+                let userInfo = ["user": self.user as Any]
+                NotificationCenter.default.post(name: UserProfileHeader.updateUserFollowingNotificationName, object: nil, userInfo: userInfo)
             }
         }
     }

@@ -67,6 +67,8 @@ class PostContentController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updatePostLikesCount), name: PostFooterView.updatePostLikesCountName, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateFollowButtonStyle), name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
+        
         fetchPostAndResponse()
     }
     
@@ -84,6 +86,29 @@ class PostContentController: UITableViewController {
         tableView.register(PostMessageCell.self, forCellReuseIdentifier: postMessageCellId)
         tableView.register(ResponseHeaderCell.self, forCellReuseIdentifier: responseHeaderCellId)
         tableView.register(ResponseMessageCell.self, forCellReuseIdentifier: responseMessageCellId)
+    }
+    
+    @objc private func handleUpdateFollowButtonStyle(notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let user = userInfo["user"] as? User else { return }
+        checkAllUsersToUpdateFollowButton(user: user)
+    }
+    
+    private func checkAllUsersToUpdateFollowButton(user: User) {
+        let hasFollowedNewState = user.hasFollowed
+        let uid = user.uid
+        
+        if post?.user.uid == uid {
+            post?.user.hasFollowed = hasFollowedNewState
+        }
+        responseArr.forEach({ (response) in
+            if response.user.uid == uid {
+                let i = responseArr.index(of: response)
+                responseArr[i!].user.hasFollowed = hasFollowedNewState
+            }
+        })
+        
+        tableView.reloadData()
     }
     
     

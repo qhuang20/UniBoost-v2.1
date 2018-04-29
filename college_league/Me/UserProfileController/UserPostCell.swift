@@ -31,10 +31,12 @@ class UserPostCell: UICollectionViewCell {
                 }
                 thumbnailImageView.loadImage(urlString: thumbnailImageUrl, completion: nil)
                 userInfoLabelTopAnchor?.constant = 8
+                thumbnailImageViewTopAnchor?.constant = 12
             } else {
                 thumbnailImageView.image = nil
                 thumbnailImageView.backgroundColor = UIColor.clear
-                userInfoLabelTopAnchor?.constant = 16
+                userInfoLabelTopAnchor?.constant = 0
+                thumbnailImageViewTopAnchor?.constant = 0
             }
             
             setupAttributedCaption()
@@ -62,6 +64,7 @@ class UserPostCell: UICollectionViewCell {
     }
     
     var userInfoLabelTopAnchor: NSLayoutConstraint?
+    var thumbnailImageViewTopAnchor: NSLayoutConstraint?
     
     let profileImageWidth: CGFloat = 36
     let typeImageWidth: CGFloat = 25
@@ -91,6 +94,7 @@ class UserPostCell: UICollectionViewCell {
     lazy var postLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.backgroundColor = UIColor.clear
         return label
     }()
     
@@ -121,9 +125,9 @@ class UserPostCell: UICollectionViewCell {
         titleLabel.anchor(marginGuide.topAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: 0, leftConstant: 4, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: UILayoutConstraintAxis.vertical)
         
-        thumbnailImageView.anchor(titleLabel.bottomAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        thumbnailImageViewTopAnchor = thumbnailImageView.anchorWithReturnAnchors(titleLabel.bottomAnchor, left: marginGuide.leftAnchor, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)[0]
         
-        profileImageView.anchor(thumbnailImageView.bottomAnchor, left: marginGuide.leftAnchor, bottom: nil, right: nil, topConstant: padding, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: profileImageWidth, heightConstant: profileImageWidth)
+        profileImageView.anchor(postLabel.topAnchor, left: marginGuide.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: padding, bottomConstant: 0, rightConstant: 0, widthConstant: profileImageWidth, heightConstant: profileImageWidth)
         
         typeImageView.anchor(thumbnailImageView.bottomAnchor, left: nil, bottom: nil, right: marginGuide.rightAnchor, topConstant: padding, leftConstant: 0, bottomConstant: 0, rightConstant: padding, widthConstant: typeImageWidth, heightConstant: typeImageWidth + 4)
         

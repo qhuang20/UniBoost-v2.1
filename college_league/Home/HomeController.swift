@@ -45,7 +45,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         configureNavigationBar()
         getStartedButton.addTarget(self, action: #selector(handleAddFriends), for: .touchUpInside)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
+        ///refresh: after pop from FindFriendsController
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: UserProfileHeader.updateUserFollowingNotificationName, object: nil)
         
         view.addSubview(getStartedButton)
         getStartedButton.setTitle("Follow Your Friends", for: .normal)
@@ -57,7 +58,8 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        print("deinit")
+//        NotificationCenter.default.removeObserver(self)
     }
     
     internal func configureNavigationBar() {

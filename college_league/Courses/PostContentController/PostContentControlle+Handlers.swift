@@ -142,29 +142,38 @@ extension PostContentController: GalleryItemsDataSource, GalleryItemsDelegate, G
                 print(responseId)
                 
                 Database.fetchResponseWithRID(rid: responseId, completion: { (response) in
+                    
                     let ref = Database.database().reference().child("user_likedResponse").child(uid).child(responseId)
                     ref.observeSingleEvent(of: .value, with: { (snapshot) in
                         var response = response
                         if let value = snapshot.value as? Int, value == 1 {
                             response.hasLiked = true
                         }
-                        self.responseArr.append(response)
-                        print("inside:   ", response.responseId)
                         
-                        Database.fetchResponseMessagesWithRID(rid: responseId) { (responseMessages) in
-                            self.responseMessagesDic[responseId] = responseMessages
-                            
-                            counter = counter + 1
-                            if allObjects.count == counter {
-                                self.isPaging = false
-                                
-                                self.responseArr.sort(by: { (r1, r2) -> Bool in
-                                    return r1.creationDate.compare(r2.creationDate) == ComparisonResult.orderedAscending
-                                })
-                                
-                                self.tableView.reloadData()
+                        let userFollowingRef = Database.database().reference().child("user_following").child(uid).child(response.user.uid)
+                        userFollowingRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                            if let isFollowing = snapshot.value as? Int, isFollowing == 1 {
+                                response.user.hasFollowed = true
                             }
-                        }
+                            
+                            self.responseArr.append(response)
+                            print("inside:   ", response.responseId)
+                            
+                            Database.fetchResponseMessagesWithRID(rid: responseId) { (responseMessages) in
+                                self.responseMessagesDic[responseId] = responseMessages
+                                
+                                counter = counter + 1
+                                if allObjects.count == counter {
+                                    self.isPaging = false
+                                    
+                                    self.responseArr.sort(by: { (r1, r2) -> Bool in
+                                        return r1.creationDate.compare(r2.creationDate) == ComparisonResult.orderedAscending
+                                    })
+                                    
+                                    self.tableView.reloadData()
+                                }
+                            }
+                        })
                     })
                 })
             })
