@@ -40,15 +40,14 @@ class RequestController: HomeController {
         navigationItem.title = "Can You Help"
         
         let button = UIButton(type: .custom)
-        let image = #imageLiteral(resourceName: "post").withRenderingMode(.alwaysTemplate)
+        let image = #imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
         button.tintColor = UIColor.white
         button.setTitle("Skill", for: .normal)
         button.adjustsImageWhenHighlighted = false
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
-        button.isHidden = true//feels weird to have it
-
+        button.addTarget(self, action: #selector(handleAddSkill), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     

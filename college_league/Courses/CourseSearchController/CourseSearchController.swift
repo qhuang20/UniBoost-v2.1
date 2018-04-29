@@ -212,7 +212,7 @@ class CourseSearchController: CourseController {
         }
     }
     
-    private func showNoMatchesHintLabelIfNeeded() {
+    internal func showNoMatchesHintLabelIfNeeded() {
         if filteredCourses.count == 0 {
             hintLabel.isHidden = false
             hintLabel.text = "Ops, no matches, try it again"///add report an issue button later

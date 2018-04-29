@@ -49,7 +49,7 @@ class SetSkillsControllerCell: CourseControllerCell {
                     print("Failed to edited the course:", err)
                     return
                 }
-                print("Successfully edited the course: ", courseId)
+                print("Successfully added the skill: ", courseId)
             }
         } else {
             ref.child(courseId).removeValue { (err, ref) in
@@ -57,7 +57,7 @@ class SetSkillsControllerCell: CourseControllerCell {
                     print("Failed to removed the course:", err)
                     return
                 }
-                print("Successfully removed the course: ", courseId)
+                print("Successfully removed the skill: ", courseId)
             }
         }
     }

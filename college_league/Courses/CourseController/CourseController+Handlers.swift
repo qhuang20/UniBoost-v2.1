@@ -111,7 +111,7 @@ extension CourseController: UISearchBarDelegate {
     
     
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {//deprecated
         if !isFinishedPaging && !isPaging {
             paginateCourses()
         }
@@ -122,7 +122,7 @@ extension CourseController: UISearchBarDelegate {
         }
     }
     
-    @objc internal func getFilteredCoursesWith(searchText: String) {
+    @objc internal func getFilteredCoursesWith(searchText: String) {//deprecated
         if viewOptionButton?.isSelected == false {
             if searchText.isEmpty {
                 filteredCourses = courses
@@ -190,16 +190,16 @@ extension CourseController: UISearchBarDelegate {
         return false
     }
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {//deprecated
         searchBar.setShowsCancelButton(true, animated: true)
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {//deprecated
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.endEditing(true)
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {//deprecated
         searchBar.setShowsCancelButton(false, animated: true)
     }
     

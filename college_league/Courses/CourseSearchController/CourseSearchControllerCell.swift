@@ -14,10 +14,6 @@ class CourseSearchControllerCell: CourseControllerCell {
     var superCourseController: CourseController?
     
     @objc override func handleTapButton(button: UIButton) {
-        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
-        guard let school = course?.school else { return }
-        guard let courseId = course?.courseId else { return }
-        
         self.course?.hasFollowed = !self.course!.hasFollowed
         guard let indexPath = self.courseController?.collectionView?.indexPath(for: self) else { return }
         self.courseController?.filteredCourses[indexPath.item].hasFollowed = addButton.isSelected
@@ -54,6 +50,14 @@ class CourseSearchControllerCell: CourseControllerCell {
         }
         
         superCourseController?.collectionView?.reloadData()
+        
+        updateCoursesToDatabase()
+    }
+    
+    internal func updateCoursesToDatabase() {
+        guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
+        guard let school = course?.school else { return }
+        guard let courseId = course?.courseId else { return }
         
         let ref = Database.database().reference().child("user_courses").child(currentLoggedInUserId).child(school)
         let values = [courseId: course?.hasFollowed == true ? 1 : 0]

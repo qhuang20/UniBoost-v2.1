@@ -65,6 +65,8 @@
 		7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B93C613204FB16300419B33 /* PostHeaderCell.swift */; };
 		7B9563AD20925767001FB2A7 /* CourseSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563AC20925767001FB2A7 /* CourseSearchController.swift */; };
 		7B9563AF209436EF001FB2A7 /* CourseSearchControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563AE209436EF001FB2A7 /* CourseSearchControllerCell.swift */; };
+		7B9563B120955B9B001FB2A7 /* SearchSkillsControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563B020955B9B001FB2A7 /* SearchSkillsControllerCell.swift */; };
+		7B9563B320955D93001FB2A7 /* SearchSkillsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563B220955D93001FB2A7 /* SearchSkillsController.swift */; };
 		7B9717172058DBB400B6F781 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717162058DBB400B6F781 /* HomeController.swift */; };
 		7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */; };
 		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
@@ -156,6 +158,8 @@
 		7B93C613204FB16300419B33 /* PostHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderCell.swift; sourceTree = "<group>"; };
 		7B9563AC20925767001FB2A7 /* CourseSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchController.swift; sourceTree = "<group>"; };
 		7B9563AE209436EF001FB2A7 /* CourseSearchControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSearchControllerCell.swift; sourceTree = "<group>"; };
+		7B9563B020955B9B001FB2A7 /* SearchSkillsControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSkillsControllerCell.swift; sourceTree = "<group>"; };
+		7B9563B220955D93001FB2A7 /* SearchSkillsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSkillsController.swift; sourceTree = "<group>"; };
 		7B9717162058DBB400B6F781 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
 		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
@@ -498,6 +502,8 @@
 			isa = PBXGroup;
 			children = (
 				7BF7AC0B206EFB7300920057 /* SetSchoolController.swift */,
+				7B9563B020955B9B001FB2A7 /* SearchSkillsControllerCell.swift */,
+				7B9563B220955D93001FB2A7 /* SearchSkillsController.swift */,
 				7BBD9A76207F0A2700281F21 /* SetSkillsControllerCell.swift */,
 				7BBD9A74207ED7D600281F21 /* SetSkillsController.swift */,
 			);
@@ -688,6 +694,7 @@
 				7B48C76220464E0600768E96 /* DiscussionController.swift in Sources */,
 				7B4D4E0F205DC20300E59BD1 /* Comment.swift in Sources */,
 				7B16247820392494004C0537 /* UIViewController+Helper.swift in Sources */,
+				7B9563B320955D93001FB2A7 /* SearchSkillsController.swift in Sources */,
 				7B16246B2038C4B5004C0537 /* SignupController.swift in Sources */,
 				7BF2E4D8205461DE004D4DBE /* PostMessageCell.swift in Sources */,
 				7B93C614204FB16300419B33 /* PostHeaderCell.swift in Sources */,
@@ -728,6 +735,7 @@
 				7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */,
 				7BF7AC04206C6D0800920057 /* SettingsController.swift in Sources */,
 				7B48C7692047CC6E00768E96 /* PostCell.swift in Sources */,
+				7B9563B120955B9B001FB2A7 /* SearchSkillsControllerCell.swift in Sources */,
 				7B0ECA912067792E00D66CB7 /* CustomInputTextView.swift in Sources */,
 				7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,

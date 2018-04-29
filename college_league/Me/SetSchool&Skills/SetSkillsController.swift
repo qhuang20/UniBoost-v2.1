@@ -203,6 +203,16 @@ class SetSkillsController: CourseController {
         }
     }
     
+    override func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        let courseSearchController = SearchSkillsController(collectionViewLayout: UICollectionViewFlowLayout())
+        courseSearchController.superCourseController = self
+        let navCourseSearchController = UINavigationController(rootViewController: courseSearchController)
+        navCourseSearchController.modalPresentationStyle = .overFullScreen
+        navCourseSearchController.modalTransitionStyle = .crossDissolve
+        present(navCourseSearchController, animated: true, completion: nil)
+        return false
+    }
+    
 }
 
 
