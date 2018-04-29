@@ -74,7 +74,7 @@ class UserProfileHeader: UICollectionViewCell {
     let profileImageView: CachedImageView = {
         let iv = CachedImageView()
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = UIColor.lightGray
+        iv.backgroundColor = brightGray
         iv.layer.cornerRadius = 80 / 2
         iv.clipsToBounds = true
         return iv

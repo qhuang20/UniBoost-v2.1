@@ -47,6 +47,8 @@ class PageCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = UIColor(r: 43, g: 66, b: 94)
+        
         addSubview(imageView)
         imageView.fillSuperview()
         

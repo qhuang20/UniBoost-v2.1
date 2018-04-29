@@ -44,7 +44,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         layoutSearchBar()
     }//no super to prevent weird behavior
     
-    override func viewDidAppear(_ animated: Bool) { searchBar?.isHidden = false }
+    override func viewDidAppear(_ animated: Bool) { self.searchBar?.alpha = 1 }
 
     private func layoutSearchBar() {
         searchBar?.showsCancelButton = false
