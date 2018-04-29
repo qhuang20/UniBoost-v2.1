@@ -73,6 +73,16 @@ class LoginController: UIViewController {
         button.setAttributedTitle(attributedTitle, for: .normal)
         
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
+        
+        button.isHidden = true
+        return button
+    }()
+    
+    lazy var popBackButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "popBack").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = UIColor.white
+        button.addTarget(self, action: #selector(handlePopBack), for: .touchUpInside)
         return button
     }()
     
@@ -82,13 +92,16 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
+//        navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
         
         view.addSubview(logoContainerView)
         view.addSubview(dontHaveAccountButton)
+        view.addSubview(popBackButton)
 
         logoContainerView.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 150)
+        
+        popBackButton.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 30)
         
         setupInputFields()
         
@@ -108,6 +121,10 @@ class LoginController: UIViewController {
         
         view.addSubview(stackView)
         stackView.anchor(logoContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 20, leftConstant: 40, bottomConstant: 0, rightConstant: 40, widthConstant: 0, heightConstant: 140)
+    }
+    
+    @objc private func handlePopBack() {
+        navigationController?.popViewController(animated: true)
     }
     
 }

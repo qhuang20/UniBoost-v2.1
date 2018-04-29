@@ -24,6 +24,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let rc = UIRefreshControl()
         rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         rc.tintColor = themeColor
+        rc.layer.zPosition = -1
         return rc
     }()
     

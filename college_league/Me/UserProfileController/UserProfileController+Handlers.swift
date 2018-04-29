@@ -212,8 +212,8 @@ extension UserProfileController {
             do {
                 try Auth.auth().signOut()
                 
-                let loginController = LoginController()
-                let navController = UINavigationController(rootViewController: loginController)
+                let introController = IntroController(collectionViewLayout: UICollectionViewFlowLayout())
+                let navController = UINavigationController(rootViewController: introController)
                 self.present(navController, animated: true, completion: nil)
                 
             } catch let signOutErr {

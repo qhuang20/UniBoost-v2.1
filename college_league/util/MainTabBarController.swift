@@ -18,8 +18,8 @@ class MainTabBarController: UITabBarController {
 
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
-                let loginController = LoginController()
-                let navController = UINavigationController(rootViewController: loginController)
+                let introController = IntroController(collectionViewLayout: UICollectionViewFlowLayout())
+                let navController = UINavigationController(rootViewController: introController)
                 self.present(navController, animated: true, completion: nil)
             }
             return

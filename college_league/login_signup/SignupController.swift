@@ -100,6 +100,16 @@ class SignupController: UIViewController {
         button.setAttributedTitle(attributedTitle, for: .normal)
         
         button.addTarget(self, action: #selector(handleAlreadyHaveAccount), for: .touchUpInside)
+        
+        button.isHidden = true
+        return button
+    }()
+    
+    lazy var popBackButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "popBack").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = themeColor
+        button.addTarget(self, action: #selector(handlePopBack), for: .touchUpInside)
         return button
     }()
 
@@ -110,6 +120,7 @@ class SignupController: UIViewController {
         view.addSubview(profileImageView)
         view.addSubview(inputStackView)
         view.addSubview(alreadyHaveAccountButton)
+        view.addSubview(popBackButton)
         
         profileImageView.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 40, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 140, heightConstant: 140)
         profileImageView.anchorCenterXToSuperview()
@@ -117,6 +128,8 @@ class SignupController: UIViewController {
         inputStackView.anchor(profileImageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 20, leftConstant: 40, bottomConstant: 0, rightConstant: 40, widthConstant: 0, heightConstant: 200)
         
         alreadyHaveAccountButton.anchor(signUpButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        
+        popBackButton.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 30)
         
         
         
@@ -130,6 +143,10 @@ class SignupController: UIViewController {
     deinit {
         print("deinit")
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func handlePopBack() {
+        navigationController?.popViewController(animated: true)
     }
     
 }
