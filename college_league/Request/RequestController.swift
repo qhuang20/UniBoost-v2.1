@@ -14,17 +14,58 @@ class RequestController: HomeController {
     
     var school: String?
     
+    let containerView: UIView = {
+        let v = UIView()
+        v.backgroundColor = UIColor(r: 250, g: 149, b: 122, a: 0.9)
+        v.layer.cornerRadius = 12
+        v.clipsToBounds = true
+        return v
+    }()
+    
+    let addSkillImageView: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "addSkillHintCard"))
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    let hintLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.textAlignment = .center
+        label.text = "Add your skills to recieve \nquestions.\nShare your knowledge\nwith others."
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var sureButton: UIButton = {
+        let button = UIButton(type: UIButtonType.roundedRect)
+        button.backgroundColor = lightThemeColor
+        button.setTitleColor(themeColor, for: .normal)
+        button.setTitle("Sure", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 28)
+        button.addTarget(self, action: #selector(handleAddSkill), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         school = UserDefaults.standard.getSchool()
         configureCollectionVeiw()
         configureNavigationBar()
         
-        view.addSubview(getStartedButton)
-        getStartedButton.setTitle("Add Your Skill", for: .normal)
-        getStartedButton.addTarget(self, action: #selector(handleAddSkill), for: .touchUpInside)
+        view.addSubview(containerView)
+        containerView.addSubview(addSkillImageView)
+        containerView.addSubview(hintLabel)
+        containerView.addSubview(sureButton)
         
-        getStartedButton.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 200, heightConstant: 42)
-        getStartedButton.anchorCenterXToSuperview()
+        containerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 300, heightConstant: 450)
+        containerView.anchorCenterXToSuperview()
+        
+        addSkillImageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 280)
+        
+        hintLabel.anchor(addSkillImageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        sureButton.anchor(nil, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 55)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: SetSkillsController.addSkillNotificationName, object: nil)
         
@@ -72,7 +113,7 @@ class RequestController: HomeController {
     
     
     private func fetchUserSkillsPostIds() {
-        self.getStartedButton.isHidden = true
+        self.containerView.isHidden = true
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let school = school else { return }
         let followingRef = Database.database().reference().child("user_skills").child(uid).child(school)
@@ -84,7 +125,7 @@ class RequestController: HomeController {
             }
             guard let allObject = snapshot.children.allObjects as? [DataSnapshot] else { return }
             if allObject.count == 0 {
-                self.getStartedButton.isHidden = false
+                self.containerView.isHidden = false
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.collectionView?.reloadData()
