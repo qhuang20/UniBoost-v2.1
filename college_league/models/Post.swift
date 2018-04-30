@@ -10,9 +10,9 @@ import UIKit
 
 struct Post {
     
-    ///Just add in postController (to database)
-    var courseId: String?//for search
-    var school: String?//for search
+    //just put them in datebase, no need to use them in UI
+//    var courseId: String?//just for search
+//    var school: String?//just for search
     
     var hasBookmarked: Bool = false
     var hasLiked: Bool = false

@@ -190,7 +190,7 @@ extension PostController: UIImagePickerControllerDelegate, UINavigationControlle
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let course = course else { return }
         
-        var values: [String: Any] = ["uid": uid, "type": self.postType ?? "Other", "title": self.postTitle ?? "", "creationDate": Date().timeIntervalSince1970, "response": 0, "likes": 0] as [String : Any]
+        var values: [String: Any] = ["uid": uid, "type": self.postType ?? "Other", "title": self.postTitle ?? "", "creationDate": Date().timeIntervalSince1970, "response": 0, "likes": 0, "courseId": course.courseId, "school": course.school] as [String : Any]
         postCellThumbnailProperties.forEach({values[$0] = $1})
         
         let postRef = Database.database().reference().child("posts").childByAutoId()
