@@ -27,7 +27,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
     let pleaseAddCourseLabel: UILabel = {
         let label = UILabel()
-        label.text = "Please Add Some Courses"
+        label.text = "Click the box   ⃞  to add your courses"
         label.textColor = UIColor.gray
         label.textAlignment = .center
         return label

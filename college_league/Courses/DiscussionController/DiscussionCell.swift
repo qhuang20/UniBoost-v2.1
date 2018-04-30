@@ -12,7 +12,7 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     
     weak var discussionController: DiscussionController? {
         didSet {
-            discussionController?.searchBar?.delegate = self
+//            discussionController?.searchBar?.delegate = self//deprecated
         }
     }
     

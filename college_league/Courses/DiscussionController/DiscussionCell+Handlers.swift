@@ -15,7 +15,7 @@ extension DiscussionCell: UISearchBarDelegate {
     @objc internal func paginatePosts() {//to allow override for TrendingCell
         print("\nstart paging")
         guard let course = course else { return }
-        let searchBar = discussionController?.searchBar
+        let searchBar = discussionController?.searchBar//deprecated
         isPaging = true
         let ref = Database.database().reference().child("school_course_posts").child(course.school).child(course.courseId)
         var query = ref.queryOrderedByKey()
@@ -66,7 +66,7 @@ extension DiscussionCell: UISearchBarDelegate {
                     counter = counter + 1
                     if allObjects.count == counter {
                         self.isPaging = false
-                        self.getFilteredPostsWith(searchText: searchBar?.text ?? "")
+                        self.getFilteredPostsWith(searchText: searchBar?.text ?? "")//deprecated
                         self.tableView.reloadData()
                         
                         if self.loadingView.alpha == 1 {
@@ -106,7 +106,7 @@ extension DiscussionCell: UISearchBarDelegate {
         }
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {//deprecated
         if !isFinishedPaging && !isPaging {
             paginatePosts()
         }
@@ -129,12 +129,12 @@ extension DiscussionCell: UISearchBarDelegate {
     
     
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {//deprecated
         guard let searchBar = discussionController?.searchBar else { return }
         self.searchBarCancelButtonClicked(searchBar)
     }
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {//deprecated
         searchBar.setShowsCancelButton(true, animated: false)
         
         guard let discussionController = discussionController else { return }
@@ -142,7 +142,7 @@ extension DiscussionCell: UISearchBarDelegate {
         discussionController.searchBarAnchors?[2].constant = -13
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {//deprecated
         searchBar.setShowsCancelButton(false, animated: false)
         searchBar.endEditing(true)
         
@@ -151,7 +151,7 @@ extension DiscussionCell: UISearchBarDelegate {
         discussionController.searchBarAnchors?[2].constant = -85
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {//deprecated
         searchBar.setShowsCancelButton(false, animated: false)
         
         guard let discussionController = discussionController else { return }

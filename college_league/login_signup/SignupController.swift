@@ -112,7 +112,16 @@ class SignupController: UIViewController {
         button.addTarget(self, action: #selector(handlePopBack), for: .touchUpInside)
         return button
     }()
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.isStatusBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.isStatusBarHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

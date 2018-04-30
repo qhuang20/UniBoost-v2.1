@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiscussionController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class DiscussionController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
     var course: Course?
     var searchBar: UISearchBar?
@@ -50,6 +50,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         searchBar?.showsCancelButton = false
         searchBar?.text = ""
         searchBar?.placeholder = "Find Post"
+        searchBar?.delegate = self
         guard let searchBarAnchors = searchBarAnchors else { return }
 
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -118,8 +119,8 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     
     
-    var firstPreviousSearchText: String = ""
-    var secondPreviousSearchText: String = ""
+    var firstPreviousSearchText: String = ""//deprecated
+    var secondPreviousSearchText: String = ""//deprecated
     var previousIndex: CGFloat = 0
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -174,6 +175,16 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         titleTypeController.course = course
         
         present(navTitleTypeController, animated: true, completion: nil)
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        print("show new SearchController")
+//        let courseSearchController = CourseSearchController(collectionViewLayout: UICollectionViewFlowLayout())
+//        let navCourseSearchController = UINavigationController(rootViewController: courseSearchController)
+//        navCourseSearchController.modalPresentationStyle = .overFullScreen
+//        navCourseSearchController.modalTransitionStyle = .crossDissolve
+//        present(navCourseSearchController, animated: true, completion: nil)
+        return false
     }
     
 }

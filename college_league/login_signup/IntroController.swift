@@ -62,6 +62,15 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
         return pc
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.isStatusBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.isStatusBarHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
@@ -106,10 +115,6 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
         pageControl.currentPage = pageNumber
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
     
     

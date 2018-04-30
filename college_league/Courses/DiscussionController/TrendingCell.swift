@@ -18,7 +18,7 @@ class TrendingCell: DiscussionCell {
     override func paginatePosts() {
         print("\ntrending start paging")
         guard let course = course else { return }
-        let searchBar = discussionController?.searchBar
+        let searchBar = discussionController?.searchBar//deprecated
         isPaging = true
         let ref = Database.database().reference().child("school_course_posts").child(course.school).child(course.courseId)
         var query = ref.queryOrderedByValue()
@@ -68,7 +68,7 @@ class TrendingCell: DiscussionCell {
                     counter = counter + 1
                     if allObjects.count == counter {
                         self.isPaging = false
-                        self.getFilteredPostsWith(searchText: searchBar?.text ?? "")
+                        self.getFilteredPostsWith(searchText: searchBar?.text ?? "")//deprecated
                         self.tableView.reloadData()
                         
                         if self.loadingView.alpha == 1 {
