@@ -44,6 +44,7 @@ extension UserProfileController {
     
     internal func paginatePosts() {
         print("\nstart paging")
+        hintLabel.isHidden = true
         isPaging = true
         guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("user_posts").child(uid)
@@ -60,6 +61,10 @@ extension UserProfileController {
             var counter = 0
             
             if allObjects.count == 1 || allObjects.count == 0 {
+                if allObjects.count == 0 {
+                    self.hintLabel.isHidden = false
+                    self.hintLabel.text = HintText.post.rawValue
+                }
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.collectionView?.reloadData()
@@ -94,6 +99,7 @@ extension UserProfileController {
     
     internal func paginateBookmarks() {
         print("\nstart paging bookmarks")
+        hintLabel.isHidden = true
         isPaging = true
         guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("user_bookmarks").child(uid)
@@ -110,6 +116,10 @@ extension UserProfileController {
             var counter = 0
             
             if allObjects.count == 1 || allObjects.count == 0 {
+                if allObjects.count == 0 {
+                    self.hintLabel.isHidden = false
+                    self.hintLabel.text = HintText.bookmarks.rawValue
+                }
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.collectionView?.reloadData()
@@ -144,6 +154,7 @@ extension UserProfileController {
     
     internal func paginateResponse() {
         print("\nstart paging reponse")
+        hintLabel.isHidden = true
         isPaging = true
         guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("user_response").child(uid)
@@ -160,6 +171,10 @@ extension UserProfileController {
             var counter = 0
             
             if allObjects.count == 1 || allObjects.count == 0 {
+                if allObjects.count == 0 {
+                    self.hintLabel.isHidden = false
+                    self.hintLabel.text = HintText.response.rawValue
+                }
                 self.isFinishedPaging = true
                 self.isPaging = false
                 self.collectionView?.reloadData()

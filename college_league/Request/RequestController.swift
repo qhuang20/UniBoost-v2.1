@@ -40,7 +40,7 @@ class RequestController: HomeController {
     
     lazy var sureButton: UIButton = {
         let button = UIButton(type: UIButtonType.roundedRect)
-        button.backgroundColor = lightThemeColor
+        button.backgroundColor = UIColor(r: 243, g: 232, b: 180, a: 1)
         button.setTitleColor(themeColor, for: .normal)
         button.setTitle("Sure", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 28)
@@ -63,9 +63,9 @@ class RequestController: HomeController {
         
         addSkillImageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 280)
         
-        hintLabel.anchor(addSkillImageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        hintLabel.anchor(addSkillImageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        sureButton.anchor(nil, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 55)
+        sureButton.anchor(nil, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: SetSkillsController.addSkillNotificationName, object: nil)
         

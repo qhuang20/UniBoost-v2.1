@@ -32,10 +32,31 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         rc.tintColor = themeColor
         return rc
     }()
-
+    
+    enum HintText: String {
+        case post = "Hum. You don't have a post."
+        case response = "Aw. You don't have a response"
+        case bookmarks = "Try Bookmark a Post"
+    }
+    
+    let hintLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.lightGray
+        label.textAlignment = .center
+        label.text = HintText.post.rawValue
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.numberOfLines = 0
+        label.isHidden = true
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionVeiw()
+        
+        view.addSubview(hintLabel)
+        hintLabel.anchorCenterSuperview()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostFooterView.updateProfileBookmarksNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: ResponseController.updateProfileResponseNotificationName, object: nil)
@@ -79,7 +100,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     private func setupPostButton() {
         let button = UIButton(type: .custom)
-        let image = #imageLiteral(resourceName: "post").withRenderingMode(.alwaysTemplate)
+        let image = #imageLiteral(resourceName: "story").withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
         button.tintColor = UIColor.white
         button.adjustsImageWhenHighlighted = false
@@ -233,6 +254,10 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         let postContentController = PostContentController(style: UITableViewStyle.grouped)
         postContentController.post = posts[indexPath.row]
         navigationController?.pushViewController(postContentController, animated: true)
+    }
+    
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        hintLabel.isHidden = true
     }
     
 }
