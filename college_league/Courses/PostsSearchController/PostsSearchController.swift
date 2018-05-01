@@ -9,28 +9,31 @@
 import UIKit
 import TRON
 
-class PostsSearchController: UITableViewController {
-    
-    weak var discussionController: DiscussionController? {
-        didSet {
-            //            discussionController?.searchBar?.delegate = self//deprecated
-        }
-    }
+class PostsSearchController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let postTypes = ["Question", "Resource", "Book for Sale", "Other"]
     var course: Course?
     
     let tron = TRON(baseURL: "http://35.184.55.147//elasticsearch")
+    
     var posts = [Post]()
+    var postIds = [String]()
+    
+    lazy var postType = postTypes[0]
     
     var isFinishedPaging = false
-    var isPaging = false
-    var queryEndingValue = ""
+    var isPaging = true//fetchPostIds
+    var queryStartingIndex = 0
     
     var previousSearchText = ""
     
     let cellId = "cellId"
     let cellSpacing: CGFloat = 1.5
+    
+    let filterHeight: CGFloat = 36
+    lazy var edgeInsetTopValue: CGFloat = filterHeight
+    
+    let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
     
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
@@ -54,6 +57,64 @@ class PostsSearchController: UITableViewController {
         return sb
     }()
     
+    let filterContainerView: UIView = {
+        let v = UIView()
+        v.backgroundColor = themeColor
+        return v
+    }()
+    
+    var typeViews = [UIView]()
+    let typeUnSelectedColor = UIColor(r: 255, g: 160, b: 110)
+    let typeSelectedColor = UIColor(r: 255, g: 197, b: 37)
+    
+    lazy var typesStackView: UIStackView = {
+        for i in 0...3 {
+            let v = UIView()
+            v.tag = i
+            v.layer.cornerRadius = 12
+            v.clipsToBounds = true
+            v.backgroundColor = typeUnSelectedColor
+            
+            if i == 0 {
+                let allLabel = UILabel()
+                allLabel.textColor = UIColor.white
+                allLabel.text = "All"
+                allLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                allLabel.textAlignment = .center
+                v.backgroundColor = typeSelectedColor
+                
+                v.addSubview(allLabel)
+                allLabel.fillSuperview()
+            } else {
+                let imageView = UIImageView()
+                imageView.image = UIImage(named: postTypes[i - 1])
+                imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+                imageView.tintColor = UIColor.white
+                imageView.contentMode = .scaleAspectFit
+                
+                v.addSubview(imageView)
+                imageView.anchor(v.topAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+            }
+
+            v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectedType)))
+            typeViews.append(v)
+        }
+        let sv = UIStackView(arrangedSubviews: typeViews)
+        sv.distribution = .fillEqually
+        sv.spacing = 8
+        
+        return sv
+    }()
+    
+    let filterImageView: UIImageView = {
+        let iv = UIImageView(image: #imageLiteral(resourceName: "filter").withRenderingMode(.alwaysTemplate))
+        iv.contentMode = .scaleAspectFit
+        iv.tintColor = UIColor.white
+        return iv
+    }()
+    
+    
+    
     override func viewWillDisappear(_ animated: Bool) {
         previousSearchText = searchBar.text ?? ""
     }
@@ -66,10 +127,25 @@ class PostsSearchController: UITableViewController {
         enableCancelButton(searchBar: searchBar)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        searchBar.alpha = 1
+    }
+    
     override func viewDidLoad() {
         configureTableView()
         tableView.register(PostCell.self, forCellReuseIdentifier: cellId)
-        isFinishedPaging = true
+        
+        view.addSubview(tableView)
+        tableView.fillSuperview()
+        
+        view.addSubview(filterContainerView)
+        filterContainerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: filterHeight)
+        
+        filterContainerView.addSubview(typesStackView)
+        typesStackView.anchor(filterContainerView.topAnchor, left: filterContainerView.leftAnchor, bottom: filterContainerView.bottomAnchor, right: filterContainerView.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 8, rightConstant: 72, widthConstant: 0, heightConstant: 0)
+        
+        filterContainerView.addSubview(filterImageView)
+        filterImageView.anchor(filterContainerView.topAnchor, left: typesStackView.rightAnchor, bottom: filterContainerView.bottomAnchor, right: filterContainerView.rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: 8, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
         searchBar.showsCancelButton = true
         searchBar.subviews.forEach { (subview) in
@@ -81,41 +157,39 @@ class PostsSearchController: UITableViewController {
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
          searchBar.anchor(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
-        
-//        view.addSubview(hintLabel)
-//        hintLabel.anchorCenterXToSuperview()
-//        hintLabel.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 32, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        fetchPostIds(withPostType: postTypes[0])
+
+        fetchPostIds()
     }
     
     private func configureTableView() {
-        tableView?.backgroundColor = brightGray
-        tableView?.dataSource = self
-        tableView?.delegate = self
-        tableView?.separatorStyle = .none
-        tableView?.rowHeight = UITableViewAutomaticDimension
-        tableView?.estimatedRowHeight = 100
+        tableView.backgroundColor = brightGray
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 100
+        tableView.contentInset = UIEdgeInsets(top: edgeInsetTopValue, left: 0, bottom: 0, right: 0)
     }
     
     
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.3) {
             self.searchBar.alpha = 0
         }
         searchBar.resignFirstResponder()
+        enableCancelButton(searchBar: searchBar)
         
         let postContentController = PostContentController(style: UITableViewStyle.grouped)
         postContentController.post = posts[indexPath.section]
         navigationController?.pushViewController(postContentController, animated: true)
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return posts.count + 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoadingIndexPath(indexPath) {
             let cell = TableViewLoadingCell(style: .default, reuseIdentifier: "loading")
             cell.isTheEnd = isFinishedPaging
@@ -132,17 +206,17 @@ class PostsSearchController: UITableViewController {
     
     
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
         return headerView
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return cellSpacing
     }
     
@@ -154,16 +228,16 @@ class PostsSearchController: UITableViewController {
     
     var cellHeights: [IndexPath : CGFloat] = [:]
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cellHeights[indexPath] = cell.frame.size.height
         
         guard isLoadingIndexPath(indexPath) else { return }
         if !isFinishedPaging && !isPaging {
-//            paginatePosts()
+            paginatePosts()
         }
     }
     
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let height = cellHeights[indexPath] else { return 100 }
         return height
     }
@@ -179,7 +253,7 @@ class PostsSearchController: UITableViewController {
 //        }
     }
     
-    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
         enableCancelButton(searchBar: searchBar)
     }
