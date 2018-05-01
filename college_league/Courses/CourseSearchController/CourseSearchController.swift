@@ -70,10 +70,7 @@ class CourseSearchController: CourseController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleChangeCourseColor), name: PostController.updateCourseColorNotificationName, object: nil)
     }
     
-    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
-        enableCancelButton(searchBar: searchBar)
-    }
+    
 
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard isLoadingIndexPath(indexPath) else { return }
@@ -135,10 +132,14 @@ class CourseSearchController: CourseController {
         dismiss(animated: true, completion: nil)
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)//Keyboard Done
+    }
+    
     override func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool { return true }
     override func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {}
     override func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {}
-    
+
     
     
     @objc internal override func paginateCourses() {
@@ -221,7 +222,12 @@ class CourseSearchController: CourseController {
         }
     }
     
-    func enableCancelButton (searchBar : UISearchBar) {
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+        enableCancelButton(searchBar: searchBar)
+    }
+    
+    private func enableCancelButton (searchBar : UISearchBar) {
         for view1 in searchBar.subviews {
             for view2 in view1.subviews {
                 if view2.isKind(of: UIButton.self) {

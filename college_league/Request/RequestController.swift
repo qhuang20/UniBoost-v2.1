@@ -32,7 +32,7 @@ class RequestController: HomeController {
         let label = UILabel()
         label.textColor = UIColor.white
         label.textAlignment = .center
-        label.text = "Add your skills to recieve \nquestions.\nShare your knowledge\nwith others."
+        label.text = "Add your skills to receive \nquestions.\nShare your knowledge\nwith others."
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 0
         return label

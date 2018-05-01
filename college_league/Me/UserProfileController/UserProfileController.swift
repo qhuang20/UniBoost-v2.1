@@ -35,8 +35,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
     enum HintText: String {
         case post = "Hum. You don't have a post."
-        case response = "Aw. You don't have a response"
-        case bookmarks = "Try Bookmark a Post"
+        case response = "Try to Responde to someone"
+        case bookmarks = "Try to Bookmark a Post."
     }
     
     let hintLabel: UILabel = {

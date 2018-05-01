@@ -69,6 +69,8 @@
 		7B9563B320955D93001FB2A7 /* SearchSkillsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563B220955D93001FB2A7 /* SearchSkillsController.swift */; };
 		7B9563B52096322F001FB2A7 /* IntroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563B42096322F001FB2A7 /* IntroController.swift */; };
 		7B9563B720963657001FB2A7 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563B620963657001FB2A7 /* PageCell.swift */; };
+		7B9563BB2097ECDF001FB2A7 /* PostsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563BA2097ECDE001FB2A7 /* PostsSearchController.swift */; };
+		7B9563BD209836C5001FB2A7 /* PostsSearchController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9563BC209836C5001FB2A7 /* PostsSearchController+Handlers.swift */; };
 		7B9717172058DBB400B6F781 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717162058DBB400B6F781 /* HomeController.swift */; };
 		7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */; };
 		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
@@ -164,6 +166,8 @@
 		7B9563B220955D93001FB2A7 /* SearchSkillsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSkillsController.swift; sourceTree = "<group>"; };
 		7B9563B42096322F001FB2A7 /* IntroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroController.swift; sourceTree = "<group>"; };
 		7B9563B620963657001FB2A7 /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
+		7B9563BA2097ECDE001FB2A7 /* PostsSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsSearchController.swift; sourceTree = "<group>"; };
+		7B9563BC209836C5001FB2A7 /* PostsSearchController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostsSearchController+Handlers.swift"; sourceTree = "<group>"; };
 		7B9717162058DBB400B6F781 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
 		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				7B4D4E07205DC11A00E59BD1 /* ResponseController */,
 				7B0FD70E204009D500E77422 /* PostController */,
 				7B93C610204F92B700419B33 /* PostContentController */,
+				7B9563B92097ECAC001FB2A7 /* PostsSearchController */,
 				7B48C76320464E2B00768E96 /* DiscussionController */,
 				7B9563AB20925743001FB2A7 /* CourseSearchController */,
 				7B48C75C2045AB1D00768E96 /* CourseController */,
@@ -403,6 +408,15 @@
 				7B9563AC20925767001FB2A7 /* CourseSearchController.swift */,
 			);
 			path = CourseSearchController;
+			sourceTree = "<group>";
+		};
+		7B9563B92097ECAC001FB2A7 /* PostsSearchController */ = {
+			isa = PBXGroup;
+			children = (
+				7B9563BA2097ECDE001FB2A7 /* PostsSearchController.swift */,
+				7B9563BC209836C5001FB2A7 /* PostsSearchController+Handlers.swift */,
+			);
+			path = PostsSearchController;
 			sourceTree = "<group>";
 		};
 		7B9717142058DB4600B6F781 /* TimetableController */ = {
@@ -709,6 +723,7 @@
 				7B9717172058DBB400B6F781 /* HomeController.swift in Sources */,
 				7B97171D205A005700B6F781 /* PostFooterView.swift in Sources */,
 				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
+				7B9563BD209836C5001FB2A7 /* PostsSearchController+Handlers.swift in Sources */,
 				7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */,
 				7B0ECA8B2066275400D66CB7 /* PostContentControlle+Handlers.swift in Sources */,
 				7B9563AF209436EF001FB2A7 /* CourseSearchControllerCell.swift in Sources */,
@@ -744,6 +759,7 @@
 				7B48C7692047CC6E00768E96 /* PostCell.swift in Sources */,
 				7B9563B120955B9B001FB2A7 /* SearchSkillsControllerCell.swift in Sources */,
 				7B9563B720963657001FB2A7 /* PageCell.swift in Sources */,
+				7B9563BB2097ECDF001FB2A7 /* PostsSearchController.swift in Sources */,
 				7B0ECA912067792E00D66CB7 /* CustomInputTextView.swift in Sources */,
 				7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,

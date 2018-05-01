@@ -121,32 +121,32 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     var firstPreviousSearchText: String = ""//deprecated
     var secondPreviousSearchText: String = ""//deprecated
-    var previousIndex: CGFloat = 0
+    var previousIndex: CGFloat = 0//deprecated
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switchBar.sliderLefrAnchor?.constant = scrollView.contentOffset.x / 2
         
-        let index = scrollView.contentOffset.x / view.frame.width
+        let index = scrollView.contentOffset.x / view.frame.width//deprecated
         
         //cellForItemAt won't get called every time if the cell is not reused
         if index == 0 && index != previousIndex {
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
-            cell?.discussionController = self
-            secondPreviousSearchText = searchBar?.text ?? ""
-            searchBar?.text = firstPreviousSearchText
-            searchBar?.resignFirstResponder()
-            previousIndex = index
+            cell?.discussionController = self//deprecated
+            secondPreviousSearchText = searchBar?.text ?? ""//deprecated
+            searchBar?.text = firstPreviousSearchText//deprecated
+            searchBar?.resignFirstResponder()//deprecated
+            previousIndex = index//deprecated
             
         } else if index == 1 && index != previousIndex {
             
             let indexPath = IndexPath(item: Int(index), section: 0)
             let cell = collectionView?.cellForItem(at: indexPath) as? DiscussionCell
-            cell?.discussionController = self
-            firstPreviousSearchText = searchBar?.text ?? ""
-            searchBar?.text = secondPreviousSearchText
-            searchBar?.resignFirstResponder()
-            previousIndex = index
+            cell?.discussionController = self//deprecated
+            firstPreviousSearchText = searchBar?.text ?? ""//deprecated
+            searchBar?.text = secondPreviousSearchText//deprecated
+            searchBar?.resignFirstResponder()//deprecated
+            previousIndex = index//deprecated
         }
     }
     
@@ -179,11 +179,12 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         print("show new SearchController")
-//        let courseSearchController = CourseSearchController(collectionViewLayout: UICollectionViewFlowLayout())
-//        let navCourseSearchController = UINavigationController(rootViewController: courseSearchController)
-//        navCourseSearchController.modalPresentationStyle = .overFullScreen
-//        navCourseSearchController.modalTransitionStyle = .crossDissolve
-//        present(navCourseSearchController, animated: true, completion: nil)
+        let postsSearchController = PostsSearchController()
+        postsSearchController.course = self.course
+        let navPostsSearchController = UINavigationController(rootViewController: postsSearchController)
+        navPostsSearchController.modalPresentationStyle = .overFullScreen
+        navPostsSearchController.modalTransitionStyle = .crossDissolve
+        present(navPostsSearchController, animated: true, completion: nil)
         return false
     }
     
