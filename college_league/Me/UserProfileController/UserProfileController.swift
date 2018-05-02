@@ -95,7 +95,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     private func setupLogOutButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain, target: self, action: #selector(handleLogOut))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(handleLogOut))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.white
     }
     
     private func setupPostButton() {

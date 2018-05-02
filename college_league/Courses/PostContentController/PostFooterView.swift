@@ -203,7 +203,7 @@ class PostFooterView: UIView {
         ref.runTransactionBlock({ (currentData) -> TransactionResult in
             
             let currentValue = currentData.value as? Int ?? 0
-            currentData.value = currentValue + 1
+            currentData.value = currentValue + 1///only can be seen in Trending
             
             return TransactionResult.success(withValue: currentData)
         }) { (err, committed, snapshot) in

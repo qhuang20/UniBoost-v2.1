@@ -19,7 +19,20 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     var posts = [Post]()
     var postIds = [String]()
     
-    lazy var postType = postTypes[0]
+    enum SortOption: String {
+        case creationDate
+        case likes
+        case response
+    }
+    lazy var sortOption: String = SortOption.creationDate.rawValue
+    
+    enum SearchType: String {
+        case all = "*"
+        case question = "Question"
+        case resource = "Resource"
+        case bookForSale = "Book for Sale"
+    }
+    lazy var postType: String = SearchType.all.rawValue
     
     var isFinishedPaging = false
     var isPaging = true//fetchPostIds
@@ -30,8 +43,9 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     let cellId = "cellId"
     let cellSpacing: CGFloat = 1.5
     
-    let filterHeight: CGFloat = 36
-    lazy var edgeInsetTopValue: CGFloat = filterHeight
+    let filterContainerHeight: CGFloat = 36
+    lazy var edgeInsetTopValue: CGFloat = filterContainerHeight
+    let sortContainerHeight: CGFloat = 200
     
     let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
     
@@ -41,7 +55,7 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
         sb.clipsToBounds = true
         sb.showsCancelButton = false
         sb.barTintColor = UIColor.white
-        sb.returnKeyType = .done
+        sb.returnKeyType = .search
         let textFieldInsideSearchBar = sb.value(forKey: "searchField") as? UITextField
         let button = textFieldInsideSearchBar?.rightView as? UIButton
         button?.tintColor = UIColor.black
@@ -78,8 +92,8 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
             if i == 0 {
                 let allLabel = UILabel()
                 allLabel.textColor = UIColor.white
-                allLabel.text = "All"
-                allLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                allLabel.text = "All Types"
+                allLabel.font = UIFont.boldSystemFont(ofSize: 12.5)
                 allLabel.textAlignment = .center
                 v.backgroundColor = typeSelectedColor
                 
@@ -106,11 +120,71 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
         return sv
     }()
     
-    let filterImageView: UIImageView = {
+    lazy var filterImageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "filter").withRenderingMode(.alwaysTemplate))
         iv.contentMode = .scaleAspectFit
         iv.tintColor = UIColor.white
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showSortContainer)))
         return iv
+    }()
+    
+    lazy var dimView: UIView = {
+        let dv = UIView()
+        dv.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        dv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideSortContainer)))
+        dv.isHidden = true
+        return dv
+    }()
+    
+    let navBarDimView: UIView = {
+        let dv = UIView()
+        dv.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        dv.isHidden = true
+        return dv
+    }()
+    
+    var sortContainerViewBottomAnchor: NSLayoutConstraint?
+    
+    let sortContainerView: UIView = {
+        let v = UIView()
+        v.layer.cornerRadius = 6
+        v.clipsToBounds = true
+        v.backgroundColor = UIColor.white
+        
+        let titleLabel = UILabel()
+        titleLabel.text = "SORT POSTS BY: "
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 11.5)
+        titleLabel.textColor = UIColor.gray
+        v.addSubview(titleLabel)
+        titleLabel.anchor(v.topAnchor, left: v.leftAnchor, bottom: nil, right: v.rightAnchor, topConstant: 8, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 30)
+        return v
+    }()
+    
+    var sortOptionViews = [UIView]()
+    let sortOptionsTexts = ["Most Recent", "Most Popular", "Most Response"]
+    let sortSelectedColor = themeColor
+    let sortUnSelectedColor = UIColor.lightGray
+    
+    lazy var sortStackView: UIStackView = {
+        for i in 0...2 {
+            let label = UILabel()
+            label.textColor = sortUnSelectedColor
+            if i == 0 {
+                label.textColor = sortSelectedColor
+            }
+            label.text = sortOptionsTexts[i]
+            label.font = UIFont.boldSystemFont(ofSize: 18)
+            label.isUserInteractionEnabled = true
+            label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectedSortOption)))
+            sortOptionViews.append(label)
+        }
+        let sv = UIStackView(arrangedSubviews: sortOptionViews)
+        sv.distribution = .fillEqually
+        sv.axis = .vertical
+        sv.spacing = 12
+        
+        return sv
     }()
     
     
@@ -133,13 +207,13 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         configureTableView()
-        tableView.register(PostCell.self, forCellReuseIdentifier: cellId)
+        setupSearchBar()
         
         view.addSubview(tableView)
         tableView.fillSuperview()
         
         view.addSubview(filterContainerView)
-        filterContainerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: filterHeight)
+        filterContainerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: filterContainerHeight)
         
         filterContainerView.addSubview(typesStackView)
         typesStackView.anchor(filterContainerView.topAnchor, left: filterContainerView.leftAnchor, bottom: filterContainerView.bottomAnchor, right: filterContainerView.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 8, rightConstant: 72, widthConstant: 0, heightConstant: 0)
@@ -147,17 +221,18 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
         filterContainerView.addSubview(filterImageView)
         filterImageView.anchor(filterContainerView.topAnchor, left: typesStackView.rightAnchor, bottom: filterContainerView.bottomAnchor, right: filterContainerView.rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: 8, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
-        searchBar.showsCancelButton = true
-        searchBar.subviews.forEach { (subview) in
-            if subview.isKind(of: UIButton.self) {
-                subview.isUserInteractionEnabled = true
-            }
-        }
+        view.addSubview(dimView)
+        dimView.fillSuperview()
         
-        let navBar = navigationController?.navigationBar
-        navBar?.addSubview(searchBar)
-         searchBar.anchor(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        self.navigationController?.navigationBar.addSubview(navBarDimView)
+        navBarDimView.fillSuperview()
 
+        view.addSubview(sortContainerView)
+        sortContainerViewBottomAnchor = sortContainerView.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: -sortContainerHeight, rightConstant: 8, widthConstant: 0, heightConstant: sortContainerHeight)[1]
+
+        sortContainerView.addSubview(sortStackView)
+        sortStackView.anchor(nil, left: sortContainerView.leftAnchor, bottom: sortContainerView.bottomAnchor, right: sortContainerView.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 36, rightConstant: 0, widthConstant: 0, heightConstant: 120)
+        
         fetchPostIds()
     }
     
@@ -169,6 +244,20 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
         tableView.contentInset = UIEdgeInsets(top: edgeInsetTopValue, left: 0, bottom: 0, right: 0)
+        tableView.register(PostCell.self, forCellReuseIdentifier: cellId)
+    }
+    
+    private func setupSearchBar() {
+        searchBar.showsCancelButton = true
+        searchBar.subviews.forEach { (subview) in
+            if subview.isKind(of: UIButton.self) {
+                subview.isUserInteractionEnabled = true
+            }
+        }
+        
+        let navBar = navigationController?.navigationBar
+        navBar?.addSubview(searchBar)
+        searchBar.anchor(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
     }
     
     
@@ -244,21 +333,12 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     
     
     
-    internal func showNoMatchesHintLabelIfNeeded() {
-//        if filteredCourses.count == 0 {
-//            hintLabel.isHidden = false
-//            hintLabel.text = "Ops, no matches, try it again"///add report an issue button later
-//        } else {
-//            hintLabel.isHidden = true
-//        }
-    }
-    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
         enableCancelButton(searchBar: searchBar)
     }
     
-    private func enableCancelButton (searchBar : UISearchBar) {
+    internal func enableCancelButton (searchBar : UISearchBar) {
         for view1 in searchBar.subviews {
             for view2 in view1.subviews {
                 if view2.isKind(of: UIButton.self) {
