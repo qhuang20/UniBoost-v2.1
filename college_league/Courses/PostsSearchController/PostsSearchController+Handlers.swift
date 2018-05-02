@@ -77,7 +77,7 @@ extension PostsSearchController: UISearchBarDelegate {
     internal func fetchPostIds() {
         let request: APIRequest<Elasticsearch, JsonError> = tron.swiftyJSON.request("/posts/_search")
         request.authorizationRequirement = .none
-        request.headerBuilder = HeaderBuilder(defaultHeaders: ["Accept": "application/json", "Authorization": "Basic dXNlcjpmQ212dFI0TktOd3o="])
+        request.headerBuilder = HeaderBuilder(defaultHeaders: ["Accept": "application/json", "Authorization": "Basic dXNlcjpmQ212dFI0TktOd3o="])///put it in database and query it....
         
         guard let course = course else { return }
         let school = course.school

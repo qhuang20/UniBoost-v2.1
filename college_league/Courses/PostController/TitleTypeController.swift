@@ -34,29 +34,51 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
     }()
     
     var labels = [UILabel]()
-    let borderColor = UIColor.lightGray.cgColor
-    let selectedBorderColor = UIColor.orange.cgColor
-    let textColor = UIColor.lightGray
+    
+    let selectedBorderColor = lightThemeColor.cgColor
+    let borderColor = themeColor.cgColor
+    
+    let selectedBackgroundColor = themeColor
+    let backgroundColor = UIColor.white
+    
+    let selectedTextColor = UIColor.white
+    let textColor = themeColor
+    
+    let selectedImageColor = UIColor.white
+    let imageColor = lightThemeColor
     
     lazy var typesView: UIStackView = {
-        
         for i in 0...3 {
             let label = UILabel()
-            label.backgroundColor = UIColor.yellow
-            label.layer.cornerRadius = 12
+            label.backgroundColor = backgroundColor
+            label.textColor = textColor
             label.layer.borderColor = borderColor
+            label.layer.cornerRadius = 12
             label.layer.borderWidth = 2
             label.clipsToBounds = true
             label.font = UIFont.boldSystemFont(ofSize: 18)
             label.text = postTypes[i]
-            label.textColor = textColor
             if i == 0 {
-                label.textColor = UIColor.orange
+                label.textColor = selectedTextColor
                 label.layer.borderColor = selectedBorderColor
+                label.backgroundColor = selectedBackgroundColor
             }
             label.textAlignment = .center
             label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectedType)))
             label.isUserInteractionEnabled = true
+            
+            let typeImageView = UIImageView()
+            typeImageView.contentMode = .scaleToFill
+            typeImageView.image = UIImage(named: postTypes[i])
+            typeImageView.image = typeImageView.image?.withRenderingMode(.alwaysTemplate)
+            typeImageView.tintColor = imageColor
+            if i == 0 {
+                typeImageView.tintColor = selectedImageColor
+            }
+            
+            label.addSubview(typeImageView)
+            typeImageView.anchor(label.topAnchor, left: label.leftAnchor, bottom: label.bottomAnchor, right: nil, topConstant: 8, leftConstant: 10, bottomConstant: 8, rightConstant: 0, widthConstant: 24, heightConstant: 0)
+            
             labels.append(label)
         }
         
@@ -142,10 +164,14 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
         for label in labels{
             label.textColor = textColor
             label.layer.borderColor = borderColor
+            label.backgroundColor = backgroundColor
+            label.subviews.first?.tintColor = imageColor
         }
         
-        selectedLabel.textColor = UIColor.orange
+        selectedLabel.textColor = selectedTextColor
         selectedLabel.layer.borderColor = selectedBorderColor
+        selectedLabel.backgroundColor = selectedBackgroundColor
+        selectedLabel.subviews.first?.tintColor = selectedImageColor
         
         let selectedLabelIndex = labels.index(of: selectedLabel)
         selectedType = postTypes[selectedLabelIndex!]
