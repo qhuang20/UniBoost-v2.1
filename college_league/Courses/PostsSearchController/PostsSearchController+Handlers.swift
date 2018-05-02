@@ -82,7 +82,7 @@ extension PostsSearchController: UISearchBarDelegate {
         guard let course = course else { return }
         let school = course.school
         let courseId = course.courseId
-        let userSearchInput = searchBar.text ?? ""//"" == "\n"
+        let userSearchInput = searchBar.text ?? ""
         let type = self.postType
         let sortOption = self.sortOption
         let searchText = "*\(userSearchInput)* type:\(type) school:\(school) courseId:\(courseId)"//the space equals +
