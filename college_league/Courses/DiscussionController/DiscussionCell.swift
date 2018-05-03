@@ -90,6 +90,13 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
         
         addSubview(loadingView)
         loadingView.fillSuperview()
+        
+        
+        
+//        let headerView = UIView()///banner
+//        headerView.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
+//        headerView.backgroundColor = UIColor.blue
+//        tableView.tableHeaderView = headerView
     }
     
     deinit {

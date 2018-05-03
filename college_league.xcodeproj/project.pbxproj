@@ -177,6 +177,7 @@
 		7BBD9A76207F0A2700281F21 /* SetSkillsControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSkillsControllerCell.swift; sourceTree = "<group>"; };
 		7BBD9A79207F10E700281F21 /* RequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestController.swift; sourceTree = "<group>"; };
 		7BBD9A7B2081344400281F21 /* UserPostResponseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostResponseCell.swift; sourceTree = "<group>"; };
+		7BD0E7FA209A227500934C29 /* college_league.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = college_league.entitlements; sourceTree = "<group>"; };
 		7BD659F0205B8F41004ACC7E /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		7BD659F3205B9488004ACC7E /* ResponseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseController.swift; sourceTree = "<group>"; };
 		7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseFoonterView.swift; sourceTree = "<group>"; };
@@ -472,6 +473,7 @@
 		7BF3A2A82019479700689AE1 /* college_league */ = {
 			isa = PBXGroup;
 			children = (
+				7BD0E7FA209A227500934C29 /* college_league.entitlements */,
 				7B0FD708203F562800E77422 /* Me */,
 				7B3339F62085BF5C002EA584 /* Notifications */,
 				7B0FD709203F569500E77422 /* Courses */,
@@ -575,6 +577,11 @@
 					7BF3A2A52019479700689AE1 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -922,6 +929,7 @@
 			baseConfigurationReference = E47EBB366827CAB5E4AB7791 /* Pods-college_league.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = college_league/college_league.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M993KE8Y7Q;
 				INFOPLIST_FILE = college_league/Info.plist;
@@ -939,6 +947,7 @@
 			baseConfigurationReference = EF9E31A5A391B46B69707FB0 /* Pods-college_league.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = college_league/college_league.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M993KE8Y7Q;
 				INFOPLIST_FILE = college_league/Info.plist;
