@@ -95,21 +95,24 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
                 allLabel.text = "All Types"
                 allLabel.font = UIFont.boldSystemFont(ofSize: 12.5)
                 allLabel.textAlignment = .center
+                allLabel.numberOfLines = 1
+                allLabel.adjustsFontSizeToFitWidth = true
                 v.backgroundColor = typeSelectedColor
                 
                 v.addSubview(allLabel)
-                allLabel.fillSuperview()
+                allLabel.anchor(v.topAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 0, leftConstant: 1.5, bottomConstant: 0, rightConstant: 1.5, widthConstant: 0, heightConstant: 0)
             } else {
                 let imageView = UIImageView()
                 imageView.image = UIImage(named: postTypes[i - 1])
                 imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
                 imageView.tintColor = UIColor.white
-                imageView.contentMode = .scaleAspectFit
+                imageView.contentMode = .scaleToFill
                 
                 v.addSubview(imageView)
-                imageView.anchor(v.topAnchor, left: v.leftAnchor, bottom: v.bottomAnchor, right: v.rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+                imageView.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 2, leftConstant: 0, bottomConstant: 2, rightConstant: 0, widthConstant: 20, heightConstant: 22)
+                imageView.anchorCenterSuperview()
             }
-
+            
             v.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectedType)))
             typeViews.append(v)
         }

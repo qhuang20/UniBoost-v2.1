@@ -35,7 +35,7 @@ class CourseSearchController: CourseController {
     override func viewWillAppear(_ animated: Bool) {
         searchBar.showsCancelButton = true
         searchBar.text = previousSearchText
-        searchBar.placeholder = "Enter Course Code. eg: Engl..."
+        searchBar.placeholder = "Enter Course Code"
         searchBar.delegate = self
         enableCancelButton(searchBar: searchBar)
         

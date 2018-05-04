@@ -178,7 +178,7 @@ class EditProfileController: UIViewController {
     }
     
     private func configureNavigationItems() {
-        navigationItem.title = "Edit Profile"
+        navigationItem.title = "Profile"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleSave))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleCanel))
     }

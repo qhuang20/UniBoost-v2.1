@@ -232,7 +232,7 @@ class UserProfileHeader: UICollectionViewCell {
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         guard let userId = user?.uid else { return }
         
-        if editProfileFollowButton.titleLabel?.text == "Edit Profile" {
+        if editProfileFollowButton.titleLabel?.text == "Profile" {
             let editProfileController = EditProfileController()
             editProfileController.user = user
             let navEditProfileController = UINavigationController(rootViewController: editProfileController)
@@ -297,7 +297,7 @@ class UserProfileHeader: UICollectionViewCell {
     }
     
     private func setupEditProfileStyle() {
-        self.editProfileFollowButton.setTitle("Edit Profile", for: .normal)
+        self.editProfileFollowButton.setTitle("Profile", for: .normal)
         self.editProfileFollowButton.setTitleColor(.black, for: .normal)
         self.editProfileFollowButton.backgroundColor = .white
     }

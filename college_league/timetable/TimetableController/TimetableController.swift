@@ -80,7 +80,7 @@ class TimetableController: DatasourceController {
         
         navbar.backgroundColor = themeColor
         navigationItem.title = " Time Table"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "add").withRenderingMode(.alwaysTemplate), style: UIBarButtonItemStyle.plain, target: self, action: #selector(addNewCourse))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "addCourse").withRenderingMode(.alwaysTemplate), style: UIBarButtonItemStyle.plain, target: self, action: #selector(addNewCourse))
         navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "rightArrow").withRenderingMode(.alwaysTemplate), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleDismiss))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white

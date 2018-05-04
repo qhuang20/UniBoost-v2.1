@@ -23,25 +23,26 @@ extension Date {
         let unit: String
         if secondsAgo < minute {
             quotient = secondsAgo
-            unit = "second"
+            unit = "s"
         } else if secondsAgo < hour {
             quotient = secondsAgo / minute
-            unit = "min"
+            unit = "m"
         } else if secondsAgo < day {
             quotient = secondsAgo / hour
-            unit = "hour"
+            unit = "h"
         } else if secondsAgo < week {
             quotient = secondsAgo / day
-            unit = "day"
+            unit = "d"
         } else if secondsAgo < month {
             quotient = secondsAgo / week
-            unit = "week"
+            unit = "w"
         } else {
             quotient = secondsAgo / month
-            unit = "month"
+            unit = "mon"
         }
         
-        return "\(quotient) \(unit)\(quotient == 1 ? "" : "s") ago"
+//        return "\(quotient) \(unit)\(quotient == 1 ? "" : "s")"
+        return "\(quotient)\(unit)" + " ago"///or change follow label postion
     }
     
 }

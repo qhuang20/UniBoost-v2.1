@@ -55,7 +55,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         configureCollectionVeiw()
         
         view.addSubview(hintLabel)
-        hintLabel.anchorCenterSuperview()
+        hintLabel.anchorCenterXToSuperview()
+        hintLabel.anchorCenterYToSuperview(constant: 70)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostController.updateFeedNotificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: PostFooterView.updateProfileBookmarksNotificationName, object: nil)

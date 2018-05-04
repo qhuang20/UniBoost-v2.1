@@ -32,7 +32,7 @@ class RequestController: HomeController {
         let label = UILabel()
         label.textColor = UIColor.white
         label.textAlignment = .center
-        label.text = "Add your skills to receive \nquestions.\nShare your knowledge\nwith others."
+        label.text = "Add your skill to receive \nquestions.\nShare your knowledge\nwith others."
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 0
         return label
@@ -43,7 +43,7 @@ class RequestController: HomeController {
         button.backgroundColor = UIColor(r: 243, g: 232, b: 180, a: 1)
         button.setTitleColor(themeColor, for: .normal)
         button.setTitle("Sure", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 28)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.addTarget(self, action: #selector(handleAddSkill), for: .touchUpInside)
         return button
     }()
@@ -58,14 +58,17 @@ class RequestController: HomeController {
         containerView.addSubview(hintLabel)
         containerView.addSubview(sureButton)
         
-        containerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 300, heightConstant: 450)
-        containerView.anchorCenterXToSuperview()
+        containerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 50, leftConstant: 50, bottomConstant: 50, rightConstant: 50, widthConstant: 0, heightConstant: 0)
         
-        addSkillImageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 280)
+        addSkillImageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        let constraint = NSLayoutConstraint(item: addSkillImageView, attribute: .height, relatedBy: .equal, toItem: addSkillImageView, attribute: .width, multiplier: 1, constant: 0)
+        constraint.isActive = true
+        addSkillImageView.addConstraint(constraint)//add 1 to 1 raito.
         
-        hintLabel.anchor(addSkillImageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        hintLabel.anchor(addSkillImageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 8, leftConstant: 4, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        hintLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         
-        sureButton.anchor(nil, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        sureButton.anchor(hintLabel.bottomAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: SetSkillsController.addSkillNotificationName, object: nil)
         
@@ -86,8 +89,8 @@ class RequestController: HomeController {
         button.tintColor = UIColor.white
         button.setTitle("Skill", for: .normal)
         button.adjustsImageWhenHighlighted = false
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5)
         button.addTarget(self, action: #selector(handleAddSkill), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
