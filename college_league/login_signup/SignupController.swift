@@ -146,7 +146,13 @@ class SignupController: UIViewController {
         addPhotoButton.anchor(nil, left: nil, bottom: profileImageView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 5, rightConstant: 0, widthConstant: 32, heightConstant: 32)
         addPhotoButton.anchorCenterXToSuperview()
         
-        observeKeyboardShowHideNotifications()
+        
+        
+        print(view.frame.height)
+        if view.frame.height < 570 {//iPhone SE
+            observeKeyboardShowHideNotifications()
+            hideKeyboardWhenTappedAround()
+        }
     }
 
     deinit {

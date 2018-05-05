@@ -106,10 +106,19 @@ class LoginController: UIViewController {
         setupInputFields()
         
         dontHaveAccountButton.anchor(loginButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        
+        
+        
+        print(view.frame.height)
+        if view.frame.height < 570 {//iPhone SE
+            observeKeyboardShowHideNotifications()
+            hideKeyboardWhenTappedAround()
+        }
     }
     
     deinit {
         print("deinit")
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func setupInputFields() {

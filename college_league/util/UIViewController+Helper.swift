@@ -10,12 +10,14 @@ import UIKit
 
 extension UIViewController {
     
-    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        if view.isFirstResponder {//useless
-            self.view.endEditing(true)
-            print("UIViewController: endEditing")
-        }
+    internal func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+//        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     
@@ -80,8 +82,8 @@ extension UIViewController {
     @objc func keyboardHide() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
             
-            if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y += 100
+            if self.view.frame.origin.y < 0 {
+                self.view.frame.origin.y += 140
             }
             
         }, completion: nil)
@@ -90,8 +92,8 @@ extension UIViewController {
     @objc func keyboardShow() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
             
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= 100
+            if self.view.frame.origin.y >= 0 {
+                self.view.frame.origin.y -= 140
             }
             
         }, completion: nil)
@@ -99,15 +101,7 @@ extension UIViewController {
     
 }
 
-//    func hideKeyboardWhenTappedAround() {
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-//        tap.cancelsTouchesInView = false
-//        view.addGestureRecognizer(tap)
-//    }
-//
-//    @objc func dismissKeyboard() {
-//        view.endEditing(true)
-//    }
+
 
 
 

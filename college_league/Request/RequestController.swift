@@ -23,7 +23,7 @@ class RequestController: HomeController {
     }()
     
     let addSkillImageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "addSkillHintCard"))
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "page1"))
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -32,7 +32,7 @@ class RequestController: HomeController {
         let label = UILabel()
         label.textColor = UIColor.white
         label.textAlignment = .center
-        label.text = "Add your skill to receive \nquestions.\nShare your knowledge\nwith others."
+        label.text = "Add your skill to receive \nquestions.\n\nShare your knowledge\nwith others."
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 0
         return label
@@ -55,20 +55,24 @@ class RequestController: HomeController {
         
         view.addSubview(containerView)
         containerView.addSubview(addSkillImageView)
-        containerView.addSubview(hintLabel)
+//        containerView.addSubview(hintLabel)
+        addSkillImageView.addSubview(hintLabel)
         containerView.addSubview(sureButton)
         
         containerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 50, leftConstant: 50, bottomConstant: 50, rightConstant: 50, widthConstant: 0, heightConstant: 0)
         
-        addSkillImageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        let constraint = NSLayoutConstraint(item: addSkillImageView, attribute: .height, relatedBy: .equal, toItem: addSkillImageView, attribute: .width, multiplier: 1, constant: 0)
-        constraint.isActive = true
-        addSkillImageView.addConstraint(constraint)//add 1 to 1 raito.
+        addSkillImageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: sureButton.topAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        hintLabel.anchor(addSkillImageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 8, leftConstant: 4, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+//        let constraint = NSLayoutConstraint(item: addSkillImageView, attribute: .height, relatedBy: .equal, toItem: addSkillImageView, attribute: .width, multiplier: 1, constant: 0)
+//        constraint.isActive = true
+//        addSkillImageView.addConstraint(constraint)//add 1 to 1 raito.
+        
+//        hintLabel.anchor(addSkillImageView.bottomAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, topConstant: 8, leftConstant: 4, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        
+        hintLabel.anchor(addSkillImageView.topAnchor, left: addSkillImageView.leftAnchor, bottom: addSkillImageView.bottomAnchor, right: addSkillImageView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         hintLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         
-        sureButton.anchor(hintLabel.bottomAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        sureButton.anchor(nil, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: SetSkillsController.addSkillNotificationName, object: nil)
         

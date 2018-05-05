@@ -30,6 +30,18 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
         return [firstPage, secondPage, thirdPage]
     }()
     
+    lazy var guestButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Login as a Guest", for: .normal)
+        button.backgroundColor = UIColor(r: 148, g: 209, b: 134)
+        
+        button.layer.cornerRadius = 5
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(handleGuest), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
@@ -44,7 +56,7 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
     
     lazy var getStartedButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Get Started", for: .normal)
+        button.setTitle("Sign up", for: .normal)
         button.backgroundColor = themeColor
         
         button.layer.cornerRadius = 5
@@ -79,8 +91,10 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
         view.addSubview(pageControl)
         view.addSubview(getStartedButton)
         view.addSubview(loginButton)
+        view.addSubview(guestButton)
         
-        pageControl.anchor(nil, left: view.leftAnchor, bottom: getStartedButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 5, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        pageControl.anchor(nil, left: view.leftAnchor, bottom: guestButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        guestButton.anchor(nil, left: view.leftAnchor, bottom: getStartedButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 10, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
         getStartedButton.anchor(nil, left: view.leftAnchor, bottom: loginButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 10, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
         loginButton.anchor(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 30, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
     }
@@ -129,6 +143,18 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
         print("Go to Signup")
         let signupController = SignupController()
         navigationController?.pushViewController(signupController, animated: true)
+    }
+    
+    @objc private func handleGuest() {
+        print("Go to Signup")
+        let signupController = SignupController()
+        navigationController?.pushViewController(signupController, animated: true)
+        
+        let randomEmail = NSUUID().uuidString
+        signupController.emailTextField.text = "guest-" + randomEmail + "@guest.com"
+        signupController.usernameTextField.text = "Guest"
+        signupController.passwordTextField.text = "qqqqqq"
+        signupController.handleSignUp()
     }
     
 }

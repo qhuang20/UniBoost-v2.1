@@ -75,6 +75,7 @@
 		7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */; };
 		7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */; };
 		7B97171D205A005700B6F781 /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97171C205A005700B6F781 /* PostFooterView.swift */; };
+		7BADCEDF209E6A45004639C5 /* UIView+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BADCEDE209E6A45004639C5 /* UIView+Helper.swift */; };
 		7BB2ABF2205F2CD70086F3EB /* UserDefaults+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB2ABF1205F2CD70086F3EB /* UserDefaults+Helpers.swift */; };
 		7BBD9A75207ED7D600281F21 /* SetSkillsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A74207ED7D600281F21 /* SetSkillsController.swift */; };
 		7BBD9A77207F0A2700281F21 /* SetSkillsControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A76207F0A2700281F21 /* SetSkillsControllerCell.swift */; };
@@ -172,6 +173,7 @@
 		7B9717182058E4EC00B6F781 /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
 		7B97171A2058E50100B6F781 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
 		7B97171C205A005700B6F781 /* PostFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterView.swift; sourceTree = "<group>"; };
+		7BADCEDE209E6A45004639C5 /* UIView+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Helper.swift"; sourceTree = "<group>"; };
 		7BB2ABF1205F2CD70086F3EB /* UserDefaults+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Helpers.swift"; sourceTree = "<group>"; };
 		7BBD9A74207ED7D600281F21 /* SetSkillsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSkillsController.swift; sourceTree = "<group>"; };
 		7BBD9A76207F0A2700281F21 /* SetSkillsControllerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetSkillsControllerCell.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				7B0ECA902067792E00D66CB7 /* CustomInputTextView.swift */,
 				7B36E5DD2089A839004D2ACE /* LoadingView.swift */,
 				7B167668205651AA003D4E01 /* Date+Helper.swift */,
+				7BADCEDE209E6A45004639C5 /* UIView+Helper.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -784,6 +787,7 @@
 				7BF3A2AA2019479700689AE1 /* AppDelegate.swift in Sources */,
 				7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */,
 				7BF7AC0C206EFB7300920057 /* SetSchoolController.swift in Sources */,
+				7BADCEDF209E6A45004639C5 /* UIView+Helper.swift in Sources */,
 				7B61057D20411A8600C5F6C3 /* PhotoSelectorCell.swift in Sources */,
 				7B3339F82085BF92002EA584 /* NotificationsController.swift in Sources */,
 				7BB2ABF2205F2CD70086F3EB /* UserDefaults+Helpers.swift in Sources */,
@@ -933,7 +937,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M993KE8Y7Q;
 				INFOPLIST_FILE = college_league/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.geek.Dice.college-league";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -951,7 +955,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M993KE8Y7Q;
 				INFOPLIST_FILE = college_league/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.geek.Dice.college-league";
 				PRODUCT_NAME = "$(TARGET_NAME)";
