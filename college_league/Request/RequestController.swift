@@ -16,7 +16,7 @@ class RequestController: HomeController {
     
     let containerView: UIView = {
         let v = UIView()
-        v.backgroundColor = UIColor(r: 250, g: 149, b: 122, a: 0.9)
+        v.backgroundColor = UIColor(r: 43, g: 66, b: 94)
         v.layer.cornerRadius = 12
         v.clipsToBounds = true
         return v
@@ -59,7 +59,7 @@ class RequestController: HomeController {
         addSkillImageView.addSubview(hintLabel)
         containerView.addSubview(sureButton)
         
-        containerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 50, leftConstant: 50, bottomConstant: 50, rightConstant: 50, widthConstant: 0, heightConstant: 0)
+        containerView.anchor(view.safeAreaTopAnchor, left: view.leftAnchor, bottom: view.safeAreaBottomAnchor, right: view.rightAnchor, topConstant: 50, leftConstant: 50, bottomConstant: 50, rightConstant: 50, widthConstant: 0, heightConstant: 0)
         
         addSkillImageView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: sureButton.topAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
@@ -96,6 +96,7 @@ class RequestController: HomeController {
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5)
         button.addTarget(self, action: #selector(handleAddSkill), for: .touchUpInside)
+        button.sizeToFit()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
@@ -231,7 +232,7 @@ class RequestController: HomeController {
     
     @objc func handleAddSkill() {
         let setSkillsController = SetSkillsController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(setSkillsController, animated: true)
     }
     

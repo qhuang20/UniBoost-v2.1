@@ -19,10 +19,23 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     let cellId = "cellId"
     let searchController = UISearchController(searchResultsController: nil)
     
+    override func viewWillAppear(_ animated: Bool) {
+        if #available(iOS 11.0, *) {
+            guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+            statusBar.backgroundColor = themeColor
+        } else {
+            UIApplication.shared.isStatusBarHidden = true
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.isStatusBarHidden = false
+    }
+    
     override func viewDidLoad() {
         navigationItem.title = "School"
-        guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-        statusBar.backgroundColor = themeColor
+
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         

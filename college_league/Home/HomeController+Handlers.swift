@@ -130,7 +130,8 @@ extension HomeController {
     
     @objc func handleTimetable() {
         let timetableController = TimetableController()
-        present(timetableController, animated: true, completion: nil)
+        let navTimetableController = CustomInteractiveAnimationNavigationController(rootViewController: timetableController)
+        present(navTimetableController, animated: true, completion: nil)
     }
     
     @objc func handleAddFriends() {

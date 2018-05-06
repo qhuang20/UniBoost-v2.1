@@ -46,14 +46,21 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         let button = textFieldInsideSearchBar?.rightView as? UIButton
         button?.tintColor = UIColor.black
         
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.white
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 4, vertical: 9), for: UIBarMetrics.default)
+        if #available(iOS 11.0, *) {
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.white
+            UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 4, vertical: 9), for: UIBarMetrics.default)
+            
+            let offset = UIOffset(horizontal: 0, vertical: -3)
+            sb.searchTextPositionAdjustment = offset
+            sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
+            sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
+            sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
+            
+        } else {
+            print("do nothing")
+            //ios10
+        }
         
-        let offset = UIOffset(horizontal: 0, vertical: -3)
-        sb.searchTextPositionAdjustment = offset
-        sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
-        sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
-        sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
         return sb
     }()
     
@@ -73,7 +80,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         configureNavigationBar()
         
         view.addSubview(pleaseAddCourseLabel)
-        pleaseAddCourseLabel.anchor(view?.safeAreaLayoutGuide.topAnchor, left: view?.leftAnchor, bottom: nil, right: view?.rightAnchor, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
+        pleaseAddCourseLabel.anchor(view?.safeAreaTopAnchor, left: view?.leftAnchor, bottom: nil, right: view?.rightAnchor, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
         pleaseAddCourseLabel.isHidden = true
         
         view.addSubview(loadingView)
@@ -127,9 +134,15 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         button.setImage(selectedImage, for: .selected)
         button.tintColor = UIColor.white
         button.adjustsImageWhenHighlighted = false
-        button.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 34, heightConstant: 30)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 2)
         button.addTarget(self, action: #selector(handleViewOption), for: .touchUpInside)
+
+        if #available(iOS 11.0, *) {
+            button.anchor(nil, left: nil, bottom: nil, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 34, heightConstant: 30)
+        } else {
+            button.bounds = CGRect(x: 0, y: 0, width: 34, height: 30)//ios10
+        }
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
@@ -137,7 +150,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
     func didSelectCellAt(indexPath: IndexPath) {
         searchBar.resignFirstResponder()
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         let course = filteredCourses[indexPath.item]
         let discussionController = DiscussionController(collectionViewLayout: UICollectionViewFlowLayout())

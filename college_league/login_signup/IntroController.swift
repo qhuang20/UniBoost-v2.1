@@ -96,7 +96,7 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
         pageControl.anchor(nil, left: view.leftAnchor, bottom: guestButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         guestButton.anchor(nil, left: view.leftAnchor, bottom: getStartedButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 10, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
         getStartedButton.anchor(nil, left: view.leftAnchor, bottom: loginButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 10, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
-        loginButton.anchor(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 30, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
+        loginButton.anchor(nil, left: view.leftAnchor, bottom: view.safeAreaBottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 30, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
     }
     
     private func configureCollectionView() {

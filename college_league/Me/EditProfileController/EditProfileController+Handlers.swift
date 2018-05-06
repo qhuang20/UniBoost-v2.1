@@ -98,7 +98,7 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
 
     @objc func handleSetSkills() {
         let setSkillsController = SetSkillsController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(setSkillsController, animated: true)
     }
     

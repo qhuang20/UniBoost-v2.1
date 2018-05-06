@@ -86,7 +86,7 @@ class AddCourseController: DatasourceController {
        
         dimView.anchor(view?.topAnchor, left: view?.leftAnchor, bottom: view?.bottomAnchor, right: view?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        bottomAnchor = datePicker.anchorWithReturnAnchors(nil, left: view?.leftAnchor, bottom: view?.safeAreaLayoutGuide.bottomAnchor, right: view?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -200, rightConstant: 0, widthConstant: 0, heightConstant: 200)[1]
+        bottomAnchor = datePicker.anchorWithReturnAnchors(nil, left: view?.leftAnchor, bottom: view?.safeAreaBottomAnchor, right: view?.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -200, rightConstant: 0, widthConstant: 0, heightConstant: 200)[1]
         
         dimView.isHidden = true
     }

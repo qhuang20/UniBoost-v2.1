@@ -50,10 +50,10 @@ class CommentsController: UICollectionViewController, UICollectionViewDelegateFl
         containerView.autoresizingMask = UIViewAutoresizing.flexibleHeight
         
         containerView.addSubview(sendButton)
-        sendButton.anchor(containerView.topAnchor, left: nil, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: containerView.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 12, widthConstant: 50, heightConstant: 0)
+        sendButton.anchor(containerView.topAnchor, left: nil, bottom: containerView.safeAreaBottomAnchor, right: containerView.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 12, widthConstant: 50, heightConstant: 0)
         
         containerView.addSubview(self.commentTextView)
-        self.commentTextView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.safeAreaLayoutGuide.bottomAnchor, right: sendButton.leftAnchor, topConstant: 8, leftConstant: 12, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        self.commentTextView.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.safeAreaBottomAnchor, right: sendButton.leftAnchor, topConstant: 8, leftConstant: 12, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         let lineSeparatorView = UIView()
         lineSeparatorView.backgroundColor = UIColor(r: 230, g: 230, b: 230)

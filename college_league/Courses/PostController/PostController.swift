@@ -33,9 +33,15 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
     lazy var postTextView: UITextView = {
         let tv = UITextView()
         tv.font = UIFont.systemFont(ofSize: textFont)
-        tv.textDragInteraction?.isEnabled = false
+//        tv.textDragInteraction?.isEnabled = false
         
-        let bottomInset = view.safeAreaLayoutGuide.layoutFrame.height - estimatedKeyboardHeight - 165
+        var bottomInset = view.frame.height - estimatedKeyboardHeight - 165
+        if #available(iOS 11.0, *) {
+            bottomInset = view.safeAreaLayoutGuide.layoutFrame.height - estimatedKeyboardHeight - 165
+        } else {
+            bottomInset = view.frame.height - estimatedKeyboardHeight - 165
+        }
+        
         let textContainerInset = UIEdgeInsets(top: 85, left: 14, bottom: bottomInset, right: 14)
         tv.textContainerInset = textContainerInset//add scrollView space
         return tv
@@ -98,9 +104,9 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
         view.addSubview(keyboardButton)
         view.addSubview(imagePickerButton)
 
-        postTextView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        postTextView.anchor(view.safeAreaTopAnchor, left: view.leftAnchor, bottom: view.safeAreaBottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        collectionViewBottomAnchor = collectionView.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: estimatedKeyboardHeight)[1]
+        collectionViewBottomAnchor = collectionView.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaBottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -estimatedKeyboardHeight, rightConstant: 0, widthConstant: 0, heightConstant: estimatedKeyboardHeight)[1]
         
         keyboardButton.anchor(nil, left: nil, bottom: collectionView.topAnchor, right: collectionView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 12, widthConstant: 44, heightConstant: 44)
         
@@ -119,7 +125,6 @@ class PostController: UIViewController, UICollectionViewDataSource, UICollection
     }
 
     private func setupNavigationButtons() {
-        navigationController?.navigationBar.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Post", style: .plain, target: self, action: #selector(handlePost))
     }
     

@@ -52,8 +52,10 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         view.addSubview(getStartedButton)
         getStartedButton.setTitle("Follow Your Friends", for: .normal)
         
-        getStartedButton.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 200, heightConstant: 42)
+        getStartedButton.anchor(view.safeAreaTopAnchor, left: nil, bottom: nil, right: nil, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 200, heightConstant: 42)
         getStartedButton.anchorCenterXToSuperview()
+        
+        
         
         fetchFollowingUserPostIds()
     }

@@ -28,10 +28,10 @@ extension UIViewController {
         
         if topConstant == 0 {
             errorView.anchorCenterXToSuperview()
-            errorView.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: (view.safeAreaLayoutGuide.layoutFrame.height / 2) - 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+            errorView.anchor(view.safeAreaTopAnchor, left: nil, bottom: nil, right: nil, topConstant: (view.frame.height / 2) - 80, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         } else {
             errorView.anchorCenterXToSuperview()
-            errorView.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: nil, topConstant: topConstant, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+            errorView.anchor(view.safeAreaTopAnchor, left: nil, bottom: nil, right: nil, topConstant: topConstant, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         }
 
         UIView.animate(withDuration: 1, delay: 1.5, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {

@@ -21,6 +21,21 @@ extension TimetableController: UIViewControllerTransitioningDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+}
+
+
+
+//https://gist.github.com/eoghain/7e9afdd43d1357fb8824126e0cbd491d
+class CustomInteractiveAnimationNavigationController: UINavigationController, UIViewControllerTransitioningDelegate {
+   
+    let customAnimationPresentor = CustomAnimationPresentor()
+    let customAnimationDismisser = CustomAnimationDismisser()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        transitioningDelegate = self
+    }
+    
     
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -32,3 +47,14 @@ extension TimetableController: UIViewControllerTransitioningDelegate {
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+

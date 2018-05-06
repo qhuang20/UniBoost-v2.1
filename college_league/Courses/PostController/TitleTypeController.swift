@@ -23,6 +23,7 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
         tv.isScrollEnabled = false
         tv.backgroundColor = .white
         tv.textColor = UIColor.lightGray
+        tv.returnKeyType = .done
         tv.font = UIFont.boldSystemFont(ofSize: 20)
         return tv
     }()
@@ -99,12 +100,19 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
         view.addSubview(separatorLineView)
         view.addSubview(typesView)
         
-        titleTextView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 22, leftConstant: 25, bottomConstant: 0, rightConstant: 25, widthConstant: 0, heightConstant: 0)
+        titleTextView.anchor(view.safeAreaTopAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 22, leftConstant: 25, bottomConstant: 0, rightConstant: 25, widthConstant: 0, heightConstant: 0)
         
         separatorLineView.anchor(titleTextView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 0.5)
         
         typesView.anchor(titleTextView.bottomAnchor, left: nil, bottom: nil, right: nil, topConstant: 22, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 200, heightConstant: 200)
         typesView.anchorCenterXToSuperview()
+        
+        
+        
+        print(view.frame.height)
+        if view.frame.height < 570 {//iPhone SE
+            hideKeyboardWhenTappedAround()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -115,13 +123,7 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
     private func setupNavigationButtons() {
         navigationItem.title = "Add a Post"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        
-        let button = UIButton(type: .custom)
-        button.setTitle("Next", for: .normal)
-        button.tintColor = UIColor.white
-        button.adjustsImageWhenHighlighted = false//fix the darken
-        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleNext))
     }
     
     private func moveCursorToHead() {
@@ -134,6 +136,14 @@ class TitleTypeController: UIViewController, UITextViewDelegate {
             titleTextView.text = ""
             titleTextView.textColor = UIColor.black
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     

@@ -33,7 +33,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         
         view.addSubview(switchBar)
         switchBar.discussionController = self
-        switchBar.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: switchBarHeight)
+        switchBar.anchor(view.safeAreaTopAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: switchBarHeight)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,6 +81,7 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: -6)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: -10)
         button.addTarget(self, action: #selector(handlePost), for: .touchUpInside)
+        button.sizeToFit()//ios10
         postBarButtonItem = UIBarButtonItem(customView: button)
         navigationItem.rightBarButtonItem = postBarButtonItem
     }
@@ -112,7 +113,13 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.frame.width
-        let height = view.safeAreaLayoutGuide.layoutFrame.height - edgeInsetTopValue
+        var height = view.frame.height - edgeInsetTopValue
+        
+        if #available(iOS 11.0, *) {
+            height = view.safeAreaLayoutGuide.layoutFrame.height - edgeInsetTopValue
+        } else {
+            height = view.frame.height - edgeInsetTopValue
+        }
         
         return CGSize(width: width, height: height)
     }

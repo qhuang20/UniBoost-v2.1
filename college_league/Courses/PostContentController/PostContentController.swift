@@ -77,7 +77,10 @@ class PostContentController: UITableViewController {
     }
     
     private func configureTableView() {
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.1))//ios10
+        
         tableView.backgroundColor = brightGray
+        tableView.contentInset = UIEdgeInsets.zero
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 125

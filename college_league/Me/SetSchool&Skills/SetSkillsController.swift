@@ -18,7 +18,7 @@ class SetSkillsController: CourseController {
         configureNavigationBar()
         
         view.addSubview(pleaseAddCourseLabel)
-        pleaseAddCourseLabel.anchor(view?.safeAreaLayoutGuide.topAnchor, left: view?.leftAnchor, bottom: nil, right: view?.rightAnchor, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
+        pleaseAddCourseLabel.anchor(view?.safeAreaTopAnchor, left: view?.leftAnchor, bottom: nil, right: view?.rightAnchor, topConstant: 50, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 34)
         pleaseAddCourseLabel.isHidden = true
         
         let navBar = navigationController?.navigationBar

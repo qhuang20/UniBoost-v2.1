@@ -221,6 +221,8 @@ extension UserProfileController {
     
     @objc func handleLogOut() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.view.tintColor = UIColor.black
+        alertController.view.isOpaque = true
         
         alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
             

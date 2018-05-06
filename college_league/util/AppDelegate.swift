@@ -48,6 +48,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         UIBarButtonItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         
+        
+        
+        //ios10
+        window?.tintColor = UIColor.white
+        
         return true
     }
 

@@ -164,9 +164,9 @@ class EditProfileController: UIViewController {
         view.addSubview(leftStackView)
         view.addSubview(bioTextView)
         
-        leftStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 0)
+        leftStackView.anchor(view.safeAreaTopAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 0)
         
-        rightStackView.anchor(view.safeAreaLayoutGuide.topAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 50, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        rightStackView.anchor(view.safeAreaTopAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 50, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         bioTextView.anchor(leftStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: -8, leftConstant: 22, bottomConstant: 0, rightConstant: 25, widthConstant: 0, heightConstant: 0)
         

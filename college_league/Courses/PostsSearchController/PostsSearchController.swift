@@ -60,14 +60,21 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
         let button = textFieldInsideSearchBar?.rightView as? UIButton
         button?.tintColor = UIColor.black
         
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.white
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 4, vertical: 9), for: UIBarMetrics.default)
+        if #available(iOS 11.0, *) {
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.white
+            UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 4, vertical: 9), for: UIBarMetrics.default)
+            
+            let offset = UIOffset(horizontal: 0, vertical: -3)
+            sb.searchTextPositionAdjustment = offset
+            sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
+            sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
+            sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
+
+        } else {
+            print("do nothing")
+            //ios10
+        }
         
-        let offset = UIOffset(horizontal: 0, vertical: -3)
-        sb.searchTextPositionAdjustment = offset
-        sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
-        sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
-        sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
         return sb
     }()
     
@@ -216,7 +223,7 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
         tableView.fillSuperview()
         
         view.addSubview(filterContainerView)
-        filterContainerView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: filterContainerHeight)
+        filterContainerView.anchor(view.safeAreaTopAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: filterContainerHeight)
         
         filterContainerView.addSubview(typesStackView)
         typesStackView.anchor(filterContainerView.topAnchor, left: filterContainerView.leftAnchor, bottom: filterContainerView.bottomAnchor, right: filterContainerView.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 8, rightConstant: 72, widthConstant: 0, heightConstant: 0)
@@ -231,7 +238,7 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
         navBarDimView.fillSuperview()
 
         view.addSubview(sortContainerView)
-        sortContainerViewBottomAnchor = sortContainerView.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: -sortContainerHeight, rightConstant: 8, widthConstant: 0, heightConstant: sortContainerHeight)[1]
+        sortContainerViewBottomAnchor = sortContainerView.anchorWithReturnAnchors(nil, left: view.leftAnchor, bottom: view.safeAreaBottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 8, bottomConstant: -sortContainerHeight, rightConstant: 8, widthConstant: 0, heightConstant: sortContainerHeight)[1]
 
         sortContainerView.addSubview(sortStackView)
         sortStackView.anchor(nil, left: sortContainerView.leftAnchor, bottom: sortContainerView.bottomAnchor, right: sortContainerView.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 36, rightConstant: 0, widthConstant: 0, heightConstant: 120)
