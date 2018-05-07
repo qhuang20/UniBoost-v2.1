@@ -23,7 +23,7 @@ class SetSkillsController: CourseController {
         
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
-        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 50, bottomConstant: 2, rightConstant: 60, widthConstant: 0, heightConstant: 0)
+        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 50, bottomConstant: 1, rightConstant: 60, widthConstant: 0, heightConstant: 0)
         
         school = UserDefaults.standard.getSchool()
         if school == nil {

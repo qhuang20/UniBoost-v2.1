@@ -41,7 +41,7 @@ class CourseSearchController: CourseController {
         
         guard let searchBarAnchors = searchBarAnchors else { return }
         searchBarAnchors[0].constant = 20
-        searchBarAnchors[2].constant = -20
+        searchBarAnchors[2].constant = -14
         animateNavigationBarLayout()
     }
     
@@ -60,7 +60,7 @@ class CourseSearchController: CourseController {
         
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
-        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 1, rightConstant: 14, widthConstant: 0, heightConstant: 0)
         searchBar.becomeFirstResponder()
         
         view.addSubview(hintLabel)

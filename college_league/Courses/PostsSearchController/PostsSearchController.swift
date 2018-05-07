@@ -68,7 +68,7 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
             sb.searchTextPositionAdjustment = offset
             sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
             sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
-            sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
+            sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 10)
 
         } else {
             print("do nothing")
@@ -267,7 +267,7 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
         
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
-        searchBar.anchor(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        searchBar.anchor(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 1, rightConstant: 14, widthConstant: 0, heightConstant: 0)
     }
     
     

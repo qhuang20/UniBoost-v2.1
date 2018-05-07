@@ -54,7 +54,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
             sb.searchTextPositionAdjustment = offset
             sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
             sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
-            sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 12)
+            sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 10)
             
         } else {
             print("do nothing")
@@ -88,7 +88,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
-        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 2, rightConstant: 60, widthConstant: 0, heightConstant: 0)
+        searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 1, rightConstant: 60, widthConstant: 0, heightConstant: 0)
         
         school = UserDefaults.standard.getSchool()
         if school == nil {
