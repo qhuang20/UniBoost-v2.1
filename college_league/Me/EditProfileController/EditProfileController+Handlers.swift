@@ -91,9 +91,11 @@ extension EditProfileController: UITextViewDelegate, UIImagePickerControllerDele
     @objc func handleSetSchool() {
         let setSchoolController = SetSchoolController()
         setSchoolController.editProfileController = self
-        setSchoolController.modalPresentationStyle = .overFullScreen
-        setSchoolController.modalTransitionStyle = .crossDissolve
-        present(setSchoolController, animated: true, completion: nil)
+        
+        let navSetSchoolController = UINavigationController(rootViewController: setSchoolController)
+        navSetSchoolController.modalPresentationStyle = .overFullScreen
+        navSetSchoolController.modalTransitionStyle = .crossDissolve
+        present(navSetSchoolController, animated: true, completion: nil)
     }
 
     @objc func handleSetSkills() {

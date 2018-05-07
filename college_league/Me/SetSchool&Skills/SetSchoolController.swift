@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
+class SetSchoolController: UITableViewController, UISearchBarDelegate {
     
     weak var editProfileController: EditProfileController?
     
@@ -19,38 +19,36 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     let cellId = "cellId"
     let searchController = UISearchController(searchResultsController: nil)
     
+    let searchBar: UISearchBar = {
+        let sb = UISearchBar.getSearchBar()
+        return sb
+    }()
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
-        if #available(iOS 11.0, *) {
-            guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
-            statusBar.backgroundColor = themeColor
-        } else {
-            UIApplication.shared.isStatusBarHidden = true
-        }
+        searchBar.showsCancelButton = true
+        searchBar.placeholder = "Enter Course Code"
+        searchBar.delegate = self
+        searchBar.becomeFirstResponder()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.isStatusBarHidden = false
+    override func viewDidAppear(_ animated: Bool) {
+        if UserDefaults.standard.getSchool() == nil {
+            popUpErrorView(text: "Select Your School")
+        }
     }
     
     override func viewDidLoad() {
         navigationItem.title = "School"
+        navigationController?.navigationBar.tintColor = themeColor
 
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         
-        searchController.searchBar.isTranslucent = false
-        searchController.searchBar.backgroundImage = UIImage()
-        searchController.searchResultsUpdater = self
-        searchController.delegate = self
-        searchController.searchBar.delegate = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search School"
-        searchController.searchBar.barTintColor = themeColor
-        tableView.tableHeaderView = searchController.searchBar
-        definesPresentationContext = true
-        searchController.searchBar.showsCancelButton = true
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 0, vertical: 0), for: UIBarMetrics.default)
+        let navBar = navigationController?.navigationBar
+        navBar?.addSubview(searchBar)
+        searchBar.anchor(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 1, rightConstant: 15, widthConstant: 0, heightConstant: 0)
         
         fetchShools()
     }
@@ -59,16 +57,7 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
         print("deinit")
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        searchController.isActive = true
-        searchController.searchBar.becomeFirstResponder()
-        
-        if UserDefaults.standard.getSchool() == nil {
-            popUpErrorView(text: "Select Your School")
-        }
-    }
-    
-    
+
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -95,8 +84,8 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     
     
     
-    func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !searchText.isEmpty {
             filteredSchools = schools.filter { school in
                 return school.lowercased().contains(searchText.lowercased())
             }
@@ -108,18 +97,12 @@ class SetSchoolController: UITableViewController, UISearchResultsUpdating, UISea
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.view.alpha = 0
-        }) { (_) in
-            self.presentingViewController?.dismiss(animated: false, completion: nil)
-            if UserDefaults.standard.getSchool() == nil {
-                self.editProfileController?.handleSave()
-            }
+
+        self.searchBar.endEditing(true)
+        self.dismiss(animated: true, completion: nil)
+        if UserDefaults.standard.getSchool() == nil {
+            self.editProfileController?.handleSave()
         }
-    }
-    
-    func didPresentSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.becomeFirstResponder()
     }
     
     

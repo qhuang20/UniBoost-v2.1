@@ -97,6 +97,7 @@
 		7BF3A2B12019479700689AE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BF3A2B02019479700689AE1 /* Assets.xcassets */; };
 		7BF3A2B42019479700689AE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BF3A2B22019479700689AE1 /* LaunchScreen.storyboard */; };
 		7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */; };
+		7BF5DF5120A0DA3100FFC649 /* UISearchBar+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5DF5020A0DA3100FFC649 /* UISearchBar+Helper.swift */; };
 		7BF7AC00206B405A00920057 /* TrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7ABFF206B405A00920057 /* TrendingCell.swift */; };
 		7BF7AC04206C6D0800920057 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC03206C6D0800920057 /* SettingsController.swift */; };
 		7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC06206C8FF800920057 /* EditProfileController.swift */; };
@@ -198,6 +199,7 @@
 		7BF3A2B32019479700689AE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7BF3A2B52019479700689AE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDatasource.swift; sourceTree = "<group>"; };
+		7BF5DF5020A0DA3100FFC649 /* UISearchBar+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Helper.swift"; sourceTree = "<group>"; };
 		7BF7ABFF206B405A00920057 /* TrendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCell.swift; sourceTree = "<group>"; };
 		7BF7AC03206C6D0800920057 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		7BF7AC06206C8FF800920057 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				7B36E5DD2089A839004D2ACE /* LoadingView.swift */,
 				7B167668205651AA003D4E01 /* Date+Helper.swift */,
 				7BADCEDE209E6A45004639C5 /* UIView+Helper.swift */,
+				7BF5DF5020A0DA3100FFC649 /* UISearchBar+Helper.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				7BF7AC04206C6D0800920057 /* SettingsController.swift in Sources */,
 				7B48C7692047CC6E00768E96 /* PostCell.swift in Sources */,
 				7B9563B120955B9B001FB2A7 /* SearchSkillsControllerCell.swift in Sources */,
+				7BF5DF5120A0DA3100FFC649 /* UISearchBar+Helper.swift in Sources */,
 				7B9563B720963657001FB2A7 /* PageCell.swift in Sources */,
 				7B9563BB2097ECDF001FB2A7 /* PostsSearchController.swift in Sources */,
 				7B0ECA912067792E00D66CB7 /* CustomInputTextView.swift in Sources */,
