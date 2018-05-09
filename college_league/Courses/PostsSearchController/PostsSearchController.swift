@@ -177,12 +177,20 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewWillDisappear(_ animated: Bool) {
         previousSearchText = searchBar.text ?? ""
+        
+        UIView.animate(withDuration: 0.2) {
+            self.searchBar.alpha = 0
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         searchBar.showsCancelButton = true
         searchBar.text = previousSearchText
         enableCancelButton(searchBar: searchBar)
+        
+        UIView.animate(withDuration: 0.1) {
+            self.searchBar.alpha = 1
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -244,9 +252,6 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.3) {
-            self.searchBar.alpha = 0
-        }
         searchBar.resignFirstResponder()
         enableCancelButton(searchBar: searchBar)
         

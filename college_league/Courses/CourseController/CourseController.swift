@@ -41,6 +41,8 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     }()
     
     override func viewWillAppear(_ animated: Bool) {
+        searchBar.alpha = 1
+        
         searchBar.placeholder = "Find Course"
         searchBar.delegate = self
         

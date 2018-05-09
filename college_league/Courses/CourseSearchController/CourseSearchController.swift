@@ -33,6 +33,8 @@ class CourseSearchController: CourseController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        searchBar.alpha = 1
+        
         searchBar.text = previousSearchText
         searchBar.showsCancelButton = true
         searchBar.delegate = self
