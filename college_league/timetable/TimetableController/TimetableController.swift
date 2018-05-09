@@ -91,7 +91,6 @@ class TimetableController: DatasourceController {
         collectionView?.isScrollEnabled = false
         collectionView?.backgroundColor = themeColor
         collectionView?.contentInset = UIEdgeInsets(top: daysBarHeight + navbarHeight, left: hoursBarWidth + 2, bottom: 0, right: 0)//only can do one side (no shrink)
-        ///
     }
     
     private func setupTimeBars() {

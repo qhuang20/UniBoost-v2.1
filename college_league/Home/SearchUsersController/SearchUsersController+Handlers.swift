@@ -55,19 +55,80 @@ extension SearchUsersController: UISearchBarDelegate {
         }
     }
     
+    internal func fetchMatchedUsers() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("users")
+        let searchText = searchBar.text ?? ""
+        let query = ref.queryOrdered(byChild: "username").queryStarting(atValue: searchText).queryEnding(atValue: searchText + "\u{f8ff}")
+        let queryNum: UInt = 20
+        var counter = 0
+        
+        query.queryLimited(toFirst: queryNum).observeSingleEvent(of: .value) { (snapshot) in
+            guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+            
+            if allObjects.count == 0 {
+                self.isFinishedSearching = true
+                self.isSearching = false
+                self.isSearchTextEmpty = false
+                self.isNoResultsFound = true
+                self.collectionView?.reloadData()
+            }
+            
+            allObjects.forEach({ (snapshot) in
+                let uid = snapshot.key
+                guard let userDictionary = snapshot.value as? [String: Any] else { return }
+                var user = User(uid: uid, dictionary: userDictionary)
+                
+                let dummyImageView = CachedImageView()//preload image
+                dummyImageView.loadImage(urlString: user.profileImageUrl)
+                
+                let userFollowingRef = Database.database().reference().child("user_following").child(currentUid).child(user.uid)
+                userFollowingRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let isFollowing = snapshot.value as? Int, isFollowing == 1 {
+                        user.hasFollowed = true
+                    }
+                    
+                    self.filteredUsers.append(user)
+                    print("inside:   ", user.uid)
+                    
+                    counter = counter + 1
+                    if allObjects.count == counter {
+                        self.isFinishedSearching = true
+                        self.isSearching = false
+                        self.isSearchTextEmpty = false
+                        self.isNoResultsFound = false
+                        self.collectionView?.reloadData()
+                    }
+                })
+            })
+        }
+    }
+    
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText.isEmpty {
             filteredUsers = users
+            
+            isFinishedSearching = false
+            isSearching = false
+            isSearchTextEmpty = true
+            isNoResultsFound = false
+            collectionView?.reloadData()
+
         } else {
-            filteredUsers = self.users.filter { (user) -> Bool in
-                return user.username.lowercased().contains(searchText.lowercased())
-            }
+            if isSearching { return }
+            filteredUsers.removeAll()
+            
+            isFinishedSearching = false
+            isSearching = true
+            isSearchTextEmpty = false
+            isNoResultsFound = false
+            collectionView?.reloadData()
+            
+            fetchMatchedUsers()
         }
-        
-        self.collectionView?.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

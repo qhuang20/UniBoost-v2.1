@@ -19,6 +19,7 @@
 		7B0FD70B203F650200E77422 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70A203F650200E77422 /* PostController.swift */; };
 		7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
+		7B15271520A392730059D3E5 /* FirebaseUtils+FollowUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B15271420A392730059D3E5 /* FirebaseUtils+FollowUser.swift */; };
 		7B1624632038B6DF004C0537 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B1624622038B6DF004C0537 /* GoogleService-Info.plist */; };
 		7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624642038C49B004C0537 /* Login+Handlers.swift */; };
 		7B1624672038C4AA004C0537 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624662038C4AA004C0537 /* LoginController.swift */; };
@@ -120,6 +121,7 @@
 		7B0FD70A203F650200E77422 /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
 		7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
+		7B15271420A392730059D3E5 /* FirebaseUtils+FollowUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseUtils+FollowUser.swift"; sourceTree = "<group>"; };
 		7B1624622038B6DF004C0537 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7B1624642038C49B004C0537 /* Login+Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Login+Handlers.swift"; sourceTree = "<group>"; };
 		7B1624662038C4AA004C0537 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				7B3ACAEC204B28C60065CB16 /* FirebaseUtils.swift */,
+				7B15271420A392730059D3E5 /* FirebaseUtils+FollowUser.swift */,
 				7B16246D2038C4EA004C0537 /* MainTabBarController.swift */,
 				7BF3A2A92019479700689AE1 /* AppDelegate.swift */,
 				7B16247720392494004C0537 /* UIViewController+Helper.swift */,
@@ -793,6 +796,7 @@
 				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
 				7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */,
 				7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */,
+				7B15271520A392730059D3E5 /* FirebaseUtils+FollowUser.swift in Sources */,
 				7B3ACAEB204B27FB0065CB16 /* User.swift in Sources */,
 				7BF7AC04206C6D0800920057 /* SettingsController.swift in Sources */,
 				7B48C7692047CC6E00768E96 /* PostCell.swift in Sources */,

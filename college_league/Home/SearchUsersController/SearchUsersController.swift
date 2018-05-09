@@ -10,7 +10,7 @@ import UIKit
 
 class HeaderView: UICollectionViewCell {
     
-    let suggestedLabel: UILabel = {
+    var suggestedLabel: UILabel = {
         let label = UILabel()
         label.text = "Most Likes"
         label.textColor = UIColor.black
@@ -18,10 +18,21 @@ class HeaderView: UICollectionViewCell {
         return label
     }()
     
+    let indicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.activityIndicatorViewStyle = .gray
+        return indicator
+    }()
+    
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(suggestedLabel)
-        suggestedLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        addSubview(indicator)
+        
+        suggestedLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 100, heightConstant: 0)
+        indicator.anchor(topAnchor, left: suggestedLabel.rightAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -32,12 +43,20 @@ class HeaderView: UICollectionViewCell {
 
 class SearchUsersController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    static let refreshHomeNotificationName = NSNotification.Name(rawValue: "refreshHome")
+    
     var filteredUsers = [User]()
     var users = [User]()
     
     let cellId = "cellId"
     let loadingCellId = "loadingCellId"
     let headerViewId = "headerViewId"
+    
+    var isSearching: Bool = false//suggestedLabel, indicator
+    var isSearchTextEmpty: Bool = false//suggestedLabel, indicator
+    
+    var isFinishedSearching: Bool = false//hide header
+    var isNoResultsFound: Bool = false
     
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar.getSearchBar()
@@ -50,6 +69,8 @@ class SearchUsersController: UICollectionViewController, UICollectionViewDelegat
         UIView.animate(withDuration: 0.2) {
             self.searchBar.alpha = 0
         }
+        
+        NotificationCenter.default.post(name: SearchUsersController.refreshHomeNotificationName, object: nil, userInfo: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,12 +118,29 @@ class SearchUsersController: UICollectionViewController, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: 50)
+        var height: CGFloat = 50
+        
+        if isFinishedSearching && !isNoResultsFound {
+            height = 0
+        }
+        
+        return CGSize(width: view.frame.width, height: height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerViewId, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerViewId, for: indexPath) as! HeaderView
+        
+        if isSearchTextEmpty {
+            header.suggestedLabel.text = "Most Likes"
+            header.indicator.stopAnimating()
+        } else if isSearching {
+            header.suggestedLabel.text = "Searching"
+            header.indicator.startAnimating()
+        } else if isFinishedSearching && isNoResultsFound {
+            header.suggestedLabel.text = " No results"
+            header.indicator.stopAnimating()
+        }
         
         return header
     }
