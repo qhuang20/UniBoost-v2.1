@@ -33,11 +33,10 @@ class CourseSearchController: CourseController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        searchBar.showsCancelButton = true
         searchBar.text = previousSearchText
-        searchBar.placeholder = "Enter Course Code"
+        searchBar.showsCancelButton = true
         searchBar.delegate = self
-        enableCancelButton(searchBar: searchBar)
+        searchBar.placeholder = "Enter Course Code"
         
         guard let searchBarAnchors = searchBarAnchors else { return }
         searchBarAnchors[0].constant = 20
@@ -47,27 +46,26 @@ class CourseSearchController: CourseController {
     
     override func viewDidLoad() {
         configureCollectionVeiw()
+        setupSearchBar()
+        
         collectionView?.register(CourseSearchControllerCell.self, forCellWithReuseIdentifier: courseSearchCellId)
         school = UserDefaults.standard.getSchool()
         isFinishedPaging = true
         
-        searchBar.showsCancelButton = true
-        searchBar.subviews.forEach { (subview) in
-            if subview.isKind(of: UIButton.self) {
-                subview.isUserInteractionEnabled = true
-            }
-        }
-        
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
         searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 1, rightConstant: 14, widthConstant: 0, heightConstant: 0)
-        searchBar.becomeFirstResponder()
         
         view.addSubview(hintLabel)
         hintLabel.anchorCenterXToSuperview()
         hintLabel.anchor(view.safeAreaTopAnchor, left: nil, bottom: nil, right: nil, topConstant: 32, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleChangeCourseColor), name: PostController.updateCourseColorNotificationName, object: nil)
+    }
+    
+    private func setupSearchBar() {
+        searchBar.returnKeyType = .done//before becomeFirstResponder
+        searchBar.becomeFirstResponder()
     }
     
     
@@ -225,18 +223,6 @@ class CourseSearchController: CourseController {
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
         enableCancelButton(searchBar: searchBar)
-    }
-    
-    private func enableCancelButton (searchBar : UISearchBar) {
-        for view1 in searchBar.subviews {
-            for view2 in view1.subviews {
-                if view2.isKind(of: UIButton.self) {
-                    let button = view2 as! UIButton
-                    button.isEnabled = true
-                    button.isUserInteractionEnabled = true
-                }
-            }
-        }
     }
     
 }

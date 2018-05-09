@@ -35,9 +35,14 @@ extension UISearchBar {
             print("do nothing")
             //ios10
         }
-
+        
         return sb
     }
     
 }
+
+
+
+
+
 

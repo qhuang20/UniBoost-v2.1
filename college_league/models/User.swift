@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct User {
+struct User: Equatable {
 
     var hasFollowed: Bool = false
     
@@ -16,7 +16,7 @@ struct User {
     let username: String
     let profileImageUrl: String
     var bio: String?
-    var school: String?
+    var school: String?//in DB and UserDefault (sync)
     
     var likes = 0
     var followers = 0
@@ -35,6 +35,10 @@ struct User {
         if let school = dictionary["school"] as? String {
             self.school = school
         }
+    }
+    
+    static func ==(lhs: User, rhs: User) -> Bool {//SearchUserCell
+        return lhs.uid == rhs.uid
     }
     
 }

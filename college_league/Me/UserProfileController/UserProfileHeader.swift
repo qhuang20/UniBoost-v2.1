@@ -35,6 +35,7 @@ class UserProfileHeader: UICollectionViewCell {
             if let bio = user.bio {
                 userInfoLabel.text = user.username + ": " + bio
             }
+            
             if let school = user.school {
                 schoolLabel.text = school
             }

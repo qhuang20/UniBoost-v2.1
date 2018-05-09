@@ -135,7 +135,9 @@ extension HomeController {
     }
     
     @objc func handleAddFriends() {
-        popUpErrorView(text: "Coming Soom")
+        let friendsController = SearchUsersController(collectionViewLayout: UICollectionViewFlowLayout())
+        let navFriendsController = UINavigationController(rootViewController: friendsController)
+        present(navFriendsController, animated: true, completion: nil)
     }
     
 }

@@ -50,31 +50,7 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     let tableView = UITableView(frame: .zero, style: UITableViewStyle.plain)
     
     lazy var searchBar: UISearchBar = {
-        let sb = UISearchBar()
-        sb.layer.cornerRadius = 10
-        sb.clipsToBounds = true
-        sb.showsCancelButton = false
-        sb.barTintColor = UIColor.white
-        sb.returnKeyType = .search
-        let textFieldInsideSearchBar = sb.value(forKey: "searchField") as? UITextField
-        let button = textFieldInsideSearchBar?.rightView as? UIButton
-        button?.tintColor = UIColor.black
-        
-        if #available(iOS 11.0, *) {
-            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.white
-            UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 4, vertical: 9), for: UIBarMetrics.default)
-            
-            let offset = UIOffset(horizontal: 0, vertical: -3)
-            sb.searchTextPositionAdjustment = offset
-            sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
-            sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
-            sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 10)
-
-        } else {
-            print("do nothing")
-            //ios10
-        }
-        
+        let sb = UISearchBar.getSearchBar()
         return sb
     }()
     
@@ -206,8 +182,6 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         searchBar.showsCancelButton = true
         searchBar.text = previousSearchText
-        searchBar.placeholder = "Enter the keywords"
-        searchBar.delegate = self
         enableCancelButton(searchBar: searchBar)
     }
     
@@ -259,12 +233,9 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     
     private func setupSearchBar() {
         searchBar.showsCancelButton = true
-        searchBar.subviews.forEach { (subview) in
-            if subview.isKind(of: UIButton.self) {
-                subview.isUserInteractionEnabled = true
-            }
-        }
-        
+        searchBar.placeholder = "Enter the keywords"
+        searchBar.delegate = self
+
         let navBar = navigationController?.navigationBar
         navBar?.addSubview(searchBar)
         searchBar.anchor(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 1, rightConstant: 14, widthConstant: 0, heightConstant: 0)
@@ -346,18 +317,6 @@ class PostsSearchController: UIViewController, UITableViewDataSource, UITableVie
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
         enableCancelButton(searchBar: searchBar)
-    }
-    
-    internal func enableCancelButton (searchBar : UISearchBar) {
-        for view1 in searchBar.subviews {
-            for view2 in view1.subviews {
-                if view2.isKind(of: UIButton.self) {
-                    let button = view2 as! UIButton
-                    button.isEnabled = true
-                    button.isUserInteractionEnabled = true
-                }
-            }
-        }
     }
     
 }

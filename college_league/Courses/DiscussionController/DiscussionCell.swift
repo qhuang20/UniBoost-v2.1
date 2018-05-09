@@ -106,9 +106,6 @@ class DiscussionCell: UICollectionViewCell, UITableViewDataSource, UITableViewDe
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.3) {
-            self.discussionController?.searchBar?.alpha = 0
-        }
         discussionController?.searchBar?.resignFirstResponder()
         
         let navigationController = discussionController?.navigationController

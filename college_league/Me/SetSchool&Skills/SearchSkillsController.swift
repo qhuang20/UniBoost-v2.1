@@ -16,9 +16,11 @@ class SearchSkillsController: CourseSearchController {
         collectionView?.register(SearchSkillsControllerCell.self, forCellWithReuseIdentifier: courseSearchCellId)
     }
     
-    override func didSelectCellAt(indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         popUpErrorView(text: "Can't enter the course here")
     }
+    
+    
     
     @objc internal override func paginateCourses() {
         print("\nstart paging")

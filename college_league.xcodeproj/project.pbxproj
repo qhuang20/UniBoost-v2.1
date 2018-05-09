@@ -81,6 +81,9 @@
 		7BBD9A7A207F10E700281F21 /* RequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A79207F10E700281F21 /* RequestController.swift */; };
 		7BBD9A7C2081344400281F21 /* UserPostResponseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBD9A7B2081344400281F21 /* UserPostResponseCell.swift */; };
 		7BCD0C0C20A2246900CA6E5F /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD0C0B20A2246900CA6E5F /* HomePostCell.swift */; };
+		7BCD0C1A20A2EE7300CA6E5F /* SearchUsersController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD0C1720A2EE6200CA6E5F /* SearchUsersController+Handlers.swift */; };
+		7BCD0C1C20A2EE7300CA6E5F /* SearchUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD0C1920A2EE7300CA6E5F /* SearchUserCell.swift */; };
+		7BCD0C2020A2EF8300CA6E5F /* SearchUsersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD0C1F20A2EF8300CA6E5F /* SearchUsersController.swift */; };
 		7BD659F1205B8F41004ACC7E /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F0205B8F41004ACC7E /* Response.swift */; };
 		7BD659F4205B9488004ACC7E /* ResponseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F3205B9488004ACC7E /* ResponseController.swift */; };
 		7BD659F6205C4D90004ACC7E /* ResponseFoonterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD659F5205C4D90004ACC7E /* ResponseFoonterView.swift */; };
@@ -98,7 +101,6 @@
 		7BF3A2B42019479700689AE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BF3A2B22019479700689AE1 /* LaunchScreen.storyboard */; };
 		7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */; };
 		7BF5DF5120A0DA3100FFC649 /* UISearchBar+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5DF5020A0DA3100FFC649 /* UISearchBar+Helper.swift */; };
-		7BF5DF5520A221BE00FFC649 /* FriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5DF5420A221BE00FFC649 /* FriendsController.swift */; };
 		7BF7AC00206B405A00920057 /* TrendingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7ABFF206B405A00920057 /* TrendingCell.swift */; };
 		7BF7AC04206C6D0800920057 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC03206C6D0800920057 /* SettingsController.swift */; };
 		7BF7AC07206C8FF800920057 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF7AC06206C8FF800920057 /* EditProfileController.swift */; };
@@ -181,6 +183,9 @@
 		7BBD9A79207F10E700281F21 /* RequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestController.swift; sourceTree = "<group>"; };
 		7BBD9A7B2081344400281F21 /* UserPostResponseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostResponseCell.swift; sourceTree = "<group>"; };
 		7BCD0C0B20A2246900CA6E5F /* HomePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
+		7BCD0C1720A2EE6200CA6E5F /* SearchUsersController+Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SearchUsersController+Handlers.swift"; sourceTree = "<group>"; };
+		7BCD0C1920A2EE7300CA6E5F /* SearchUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserCell.swift; sourceTree = "<group>"; };
+		7BCD0C1F20A2EF8300CA6E5F /* SearchUsersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUsersController.swift; sourceTree = "<group>"; };
 		7BD0E7FA209A227500934C29 /* college_league.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = college_league.entitlements; sourceTree = "<group>"; };
 		7BD659F0205B8F41004ACC7E /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		7BD659F3205B9488004ACC7E /* ResponseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseController.swift; sourceTree = "<group>"; };
@@ -201,7 +206,6 @@
 		7BF3A2B52019479700689AE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF3A329201C120F00689AE1 /* TimetableDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableDatasource.swift; sourceTree = "<group>"; };
 		7BF5DF5020A0DA3100FFC649 /* UISearchBar+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Helper.swift"; sourceTree = "<group>"; };
-		7BF5DF5420A221BE00FFC649 /* FriendsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsController.swift; sourceTree = "<group>"; };
 		7BF7ABFF206B405A00920057 /* TrendingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCell.swift; sourceTree = "<group>"; };
 		7BF7AC03206C6D0800920057 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		7BF7AC06206C8FF800920057 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
@@ -446,7 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				7BF5DF5320A2216D00FFC649 /* HomeController */,
-				7BF5DF5220A2214200FFC649 /* FriendsController */,
+				7BF5DF5220A2214200FFC649 /* SearchUsersController */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -510,12 +514,14 @@
 			path = timetable;
 			sourceTree = "<group>";
 		};
-		7BF5DF5220A2214200FFC649 /* FriendsController */ = {
+		7BF5DF5220A2214200FFC649 /* SearchUsersController */ = {
 			isa = PBXGroup;
 			children = (
-				7BF5DF5420A221BE00FFC649 /* FriendsController.swift */,
+				7BCD0C1920A2EE7300CA6E5F /* SearchUserCell.swift */,
+				7BCD0C1F20A2EF8300CA6E5F /* SearchUsersController.swift */,
+				7BCD0C1720A2EE6200CA6E5F /* SearchUsersController+Handlers.swift */,
 			);
-			path = FriendsController;
+			path = SearchUsersController;
 			sourceTree = "<group>";
 		};
 		7BF5DF5320A2216D00FFC649 /* HomeController */ = {
@@ -740,10 +746,10 @@
 				7B0ECA8D20669BF900D66CB7 /* CommentsController+Handlers.swift in Sources */,
 				7B48C7672047570C00768E96 /* DiscussionCell.swift in Sources */,
 				7B36E5DE2089A839004D2ACE /* LoadingView.swift in Sources */,
+				7BCD0C1A20A2EE7300CA6E5F /* SearchUsersController+Handlers.swift in Sources */,
 				7B64394F201D2CC400FB0E18 /* AddCourseController.swift in Sources */,
 				7BF3A32A201C120F00689AE1 /* TimetableDatasource.swift in Sources */,
 				7BF2E4D220538542004D4DBE /* UITextView+Helper.swift in Sources */,
-				7BF5DF5520A221BE00FFC649 /* FriendsController.swift in Sources */,
 				7B0ECA8F2067624F00D66CB7 /* CustomInputAccessoryView.swift in Sources */,
 				7B48C76220464E0600768E96 /* DiscussionController.swift in Sources */,
 				7B4D4E0F205DC20300E59BD1 /* Comment.swift in Sources */,
@@ -783,6 +789,7 @@
 				7B167669205651AA003D4E01 /* Date+Helper.swift in Sources */,
 				7B4D4E0B205DC1A100E59BD1 /* CommentsController.swift in Sources */,
 				7B4D4E0D205DC1BD00E59BD1 /* CommentCell.swift in Sources */,
+				7BCD0C1C20A2EE7300CA6E5F /* SearchUserCell.swift in Sources */,
 				7B16246E2038C4EA004C0537 /* MainTabBarController.swift in Sources */,
 				7B9717192058E4EC00B6F781 /* CustomAnimationPresentor.swift in Sources */,
 				7B97171B2058E50100B6F781 /* CustomAnimationDismisser.swift in Sources */,
@@ -794,6 +801,7 @@
 				7BF5DF5120A0DA3100FFC649 /* UISearchBar+Helper.swift in Sources */,
 				7B9563B720963657001FB2A7 /* PageCell.swift in Sources */,
 				7B9563BB2097ECDF001FB2A7 /* PostsSearchController.swift in Sources */,
+				7BCD0C2020A2EF8300CA6E5F /* SearchUsersController.swift in Sources */,
 				7B0ECA912067792E00D66CB7 /* CustomInputTextView.swift in Sources */,
 				7B3ACAED204B28C60065CB16 /* FirebaseUtils.swift in Sources */,
 				7BF3A2AC2019479700689AE1 /* TimetableController.swift in Sources */,

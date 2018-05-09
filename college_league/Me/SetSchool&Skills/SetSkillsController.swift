@@ -82,7 +82,7 @@ class SetSkillsController: CourseController {
     
     
     
-    override func didSelectCellAt(indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         popUpErrorView(text: "Can't enter the course here")
     }
     

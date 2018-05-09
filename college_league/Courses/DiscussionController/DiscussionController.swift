@@ -38,14 +38,18 @@ class DiscussionController: UICollectionViewController, UICollectionViewDelegate
     
     override func viewWillDisappear(_ animated: Bool) {
         searchBar?.resignFirstResponder()
+        UIView.animate(withDuration: 0.2) {
+            self.searchBar?.alpha = 0
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         layoutSearchBar()
+        UIView.animate(withDuration: 0.1) {
+            self.searchBar?.alpha = 1
+        }
     }//no super to prevent weird behavior
     
-    override func viewDidAppear(_ animated: Bool) { self.searchBar?.alpha = 1 }
-
     private func layoutSearchBar() {
         searchBar?.showsCancelButton = false
         searchBar?.text = ""

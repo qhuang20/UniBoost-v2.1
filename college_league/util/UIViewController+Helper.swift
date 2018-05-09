@@ -99,6 +99,20 @@ extension UIViewController {
         }, completion: nil)
     }
     
+    
+    
+    internal func enableCancelButton (searchBar : UISearchBar) {
+        for view1 in searchBar.subviews {
+            for view2 in view1.subviews {
+                if view2.isKind(of: UIButton.self) {
+                    let button = view2 as! UIButton
+                    button.isEnabled = true
+                    button.isUserInteractionEnabled = true
+                }
+            }
+        }
+    }
+    
 }
 
 

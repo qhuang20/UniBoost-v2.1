@@ -84,7 +84,6 @@ class CourseControllerCell: UICollectionViewCell {
         self.layer.cornerRadius = 12
         self.clipsToBounds = true
         backgroundColor = UIColor.white
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapCell)))
         
         addSubview(addButton)
         addSubview(courseNameLabel)
@@ -157,13 +156,6 @@ class CourseControllerCell: UICollectionViewCell {
     private func setupEmptyStyle() {
         addButton.isSelected = false
         addButton.backgroundColor = UIColor.white
-    }
-    
-    
-    
-    @objc func handleTapCell() {
-        guard let indexPath = courseController?.collectionView?.indexPath(for: self) else { return }
-        courseController?.didSelectCellAt(indexPath: indexPath)
     }
     
 }

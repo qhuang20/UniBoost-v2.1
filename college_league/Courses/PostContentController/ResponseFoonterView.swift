@@ -99,6 +99,7 @@ class ResponseFoonterView: UIView {
         }
         changeResponseLikesCount()
         changeLikesCountForUser()
+        changeLikesCountForSearchUser()
         
         ref.updateChildValues(values) { (err, ref) in
             if let err = err {
@@ -162,6 +163,27 @@ class ResponseFoonterView: UIView {
                 return
             }
             print("Successfully increased user likes count")
+        }
+    }
+    
+    private func changeLikesCountForSearchUser() {
+        guard let uid = response?.user.uid else { return }
+        guard let school = UserDefaults.standard.getSchool() else { return }
+        let isSelected = self.likeButton.isSelected
+        let ref = Database.database().reference().child("school_users").child(school).child(uid)
+        
+        ref.runTransactionBlock({ (currentData) -> TransactionResult in
+            
+            let currentValue = currentData.value as? Int ?? 0
+            currentData.value = isSelected ? currentValue + 1 : currentValue - 1
+            
+            return TransactionResult.success(withValue: currentData)
+        }) { (err, committed, snapshot) in
+            if let error = err {
+                print("Failed to increase user likes count", error)
+                return
+            }
+            print("Successfully increased school user likes count")
         }
     }
     

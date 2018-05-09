@@ -36,31 +36,7 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     let loadingView = LoadingView()
     
     lazy var searchBar: UISearchBar = {
-        let sb = UISearchBar()
-        sb.layer.cornerRadius = 10
-        sb.clipsToBounds = true
-        sb.showsCancelButton = false
-        sb.barTintColor = UIColor.white
-        sb.returnKeyType = .done
-        let textFieldInsideSearchBar = sb.value(forKey: "searchField") as? UITextField
-        let button = textFieldInsideSearchBar?.rightView as? UIButton
-        button?.tintColor = UIColor.black
-        
-        if #available(iOS 11.0, *) {
-            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.white
-            UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitlePositionAdjustment(UIOffset(horizontal: 4, vertical: 9), for: UIBarMetrics.default)
-            
-            let offset = UIOffset(horizontal: 0, vertical: -3)
-            sb.searchTextPositionAdjustment = offset
-            sb.setPositionAdjustment(offset, for: UISearchBarIcon.search)
-            sb.setPositionAdjustment(offset, for: UISearchBarIcon.clear)
-            sb.searchFieldBackgroundPositionAdjustment = UIOffset(horizontal: 0, vertical: 10)
-            
-        } else {
-            print("do nothing")
-            //ios10
-        }
-        
+        let sb = UISearchBar.getSearchBar()
         return sb
     }()
     
@@ -90,6 +66,8 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
         navBar?.addSubview(searchBar)
         searchBarAnchors = searchBar.anchorWithReturnAnchors(nil, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 1, rightConstant: 60, widthConstant: 0, heightConstant: 0)
         
+        
+        
         school = UserDefaults.standard.getSchool()
         if school == nil {
             isFinishedPaging = true
@@ -102,6 +80,8 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
             }
             return
         }
+        
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleChangeCourseColor), name: PostController.updateCourseColorNotificationName, object: nil)
         
@@ -148,16 +128,16 @@ class CourseController: UICollectionViewController, UICollectionViewDelegateFlow
     
     
     
-    func didSelectCellAt(indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         searchBar.resignFirstResponder()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-
+        
         let course = filteredCourses[indexPath.item]
         let discussionController = DiscussionController(collectionViewLayout: UICollectionViewFlowLayout())
         discussionController.course = course
         discussionController.searchBar = searchBar
         discussionController.searchBarAnchors = searchBarAnchors
-
+        
         navigationController?.pushViewController(discussionController, animated: true)
     }
     

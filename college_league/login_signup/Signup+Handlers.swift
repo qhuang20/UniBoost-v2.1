@@ -76,7 +76,13 @@ extension SignupController: UINavigationControllerDelegate, UIImagePickerControl
                     print("Successfully uploaded profile image:", profileImageUrl)
                     
                     guard let uid = user?.uid else { return }
-                    let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "likes": 0, "followers": 0, "following": 0] as [String : Any]
+                    var dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl, "likes": 0, "followers": 0, "following": 0] as [String : Any]
+                    
+                    let school = UserDefaults.standard.getSchool()
+                    if school != nil {//if user logout the school is saved in UserDefault (sync)
+                        dictionaryValues["school"] = school
+                    }
+                    
                     let values = [uid: dictionaryValues]
                     
                     self.updateUsersValuesToDatabase(values: values)
