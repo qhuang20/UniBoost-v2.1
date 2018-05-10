@@ -60,9 +60,18 @@ class PostFooterView: UIView {
         return button
     }()
     
+    let dotsButton: UIButton = {
+        let button = UIButton(type: UIButtonType.custom)
+        button.setImage(#imageLiteral(resourceName: "dots").withRenderingMode(.alwaysTemplate), for: UIControlState.normal)
+        button.tintColor = lightThemeColor
+        button.addTarget(self, action: #selector(handleDots), for: .touchUpInside)
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.white
+        addSubview(dotsButton)
         addSubview(respondButton)
         addSubview(bookmarkButton)
         addSubview(likeButton)
@@ -70,18 +79,61 @@ class PostFooterView: UIView {
         respondButton.anchorCenterSuperview()
         respondButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 116, heightConstant: 0)
         
-        bookmarkButton.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 22, widthConstant: buttonHeight, heightConstant: buttonHeight)
+        bookmarkButton.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 20, widthConstant: buttonHeight, heightConstant: buttonHeight)
         bookmarkButton.anchorCenterYToSuperview()
         
         likeButton.anchor(nil, left: nil, bottom: nil, right: bookmarkButton.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 12, widthConstant: buttonHeight, heightConstant: buttonHeight)
         likeButton.anchorCenterYToSuperview()
+        
+        dotsButton.anchor(nil, left: leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 22, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        dotsButton.anchorCenterYToSuperview()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
+    @objc func handleDots() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.view.tintColor = UIColor.black
+        alertController.view.isOpaque = true
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let reportAction = UIAlertAction(title: "Report", style: .destructive){ (alertAction) in
+            self.showReportAlert()
+        }
 
+        alertController.addAction(reportAction)
+        alertController.addAction(cancelAction)
+        
+        postContentController?.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showReportAlert() {
+        let alertController = UIAlertController(title: "Report", message: "Thank you for sending us the message", preferredStyle: .alert)
+        alertController.view.tintColor = UIColor.black
+        
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Tell us the reason"
+        }
+        
+        let saveAction = UIAlertAction(title: "Send", style: .default, handler: { alert -> Void in
+//            let firstTextField = alertController.textFields![0] as UITextField
+            ///report to DB later with uid postId.....
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action : UIAlertAction!) -> Void in })
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.postContentController?.present(alertController, animated: true, completion: nil)
+    }
+    
+    
     
     @objc func handleRespond() {
         let responseController = ResponseController()

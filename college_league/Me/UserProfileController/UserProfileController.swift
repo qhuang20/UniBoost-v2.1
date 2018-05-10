@@ -34,7 +34,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }()
     
     enum HintText: String {
-        case post = "Hum. You don't have a post."
+        case post = "Hum. No posts found."
         case response = "Try to Responde to someone"
         case bookmarks = "Try to Bookmark a Post."
     }
@@ -65,6 +65,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         if userId == nil {
             setupLogOutButton()
             setupPostButton()
+        } else {
+            setupDotsButton()
         }
 
         fetchUserAndUserPosts()
@@ -93,6 +95,11 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.register(UserPostResponseCell.self, forCellWithReuseIdentifier: "responseId")
         collectionView?.register(UserPostCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(CollectionViewLoadingCell.self, forCellWithReuseIdentifier: loadingCellId)
+    }
+    
+    private func setupDotsButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "dots").withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(handleDots))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.white
     }
     
     private func setupLogOutButton() {

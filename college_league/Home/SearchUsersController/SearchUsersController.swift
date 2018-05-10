@@ -148,6 +148,9 @@ class SearchUsersController: UICollectionViewController, UICollectionViewDelegat
     
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        searchBar.resignFirstResponder()
+        enableCancelButton(searchBar: searchBar)
+        
         let user = filteredUsers[indexPath.item]
         
         let userProfileController = UserProfileController(collectionViewLayout: UICollectionViewFlowLayout())

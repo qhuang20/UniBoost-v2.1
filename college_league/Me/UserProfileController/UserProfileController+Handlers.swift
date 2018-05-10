@@ -12,6 +12,36 @@ import LBTAComponents
 
 extension UserProfileController {
     
+    internal func didChangeToolBarChoice(choice: TooBarChoice) {
+        print("new choice:   ", choice.rawValue)
+        self.choice = choice
+        posts.removeAll()
+        responseArr.removeAll()
+        self.isFinishedPaging = false
+        collectionView?.reloadData()
+        
+        if self.choice == TooBarChoice.posts {
+            self.paginatePosts()
+        } else if self.choice == TooBarChoice.bookmarks {
+            self.paginateBookmarks()
+        } else {
+            self.paginateResponse()
+        }
+    }
+    
+    internal func showEditProfileController() {//when school == nil
+        let editProfileController = EditProfileController()
+        let uid = Auth.auth().currentUser?.uid ?? ""
+        
+        Database.fetchUserWithUID(uid: uid) { (user) in
+            editProfileController.user = user
+            let navEditProfileController = UINavigationController(rootViewController: editProfileController)
+            self.present(navEditProfileController, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
     internal func fetchUserAndUserPosts() {
         guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
         let uid = userId ?? (Auth.auth().currentUser?.uid ?? "")
@@ -243,34 +273,58 @@ extension UserProfileController {
         present(alertController, animated: true, completion: nil)
     }
     
-    
-    
-    internal func didChangeToolBarChoice(choice: TooBarChoice) {
-        print("new choice:   ", choice.rawValue)
-        self.choice = choice
-        posts.removeAll()
-        responseArr.removeAll()
-        self.isFinishedPaging = false
-        collectionView?.reloadData()
-
-        if self.choice == TooBarChoice.posts {
-            self.paginatePosts()
-        } else if self.choice == TooBarChoice.bookmarks {
-            self.paginateBookmarks()
-        } else {
-            self.paginateResponse()
+    @objc func handleDots() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.view.tintColor = UIColor.black
+        alertController.view.isOpaque = true
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let reportAction = UIAlertAction(title: "Report", style: .destructive){ (alertAction) in
+            self.showReportAlert()
         }
+        
+        let blockAction = UIAlertAction(title: "Block", style: .destructive){ (alertAction) in
+            self.showBlockAlert()
+        }
+        
+        alertController.addAction(blockAction)
+        alertController.addAction(reportAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
-    internal func showEditProfileController() {//when school == nil
-        let editProfileController = EditProfileController()
-        let uid = Auth.auth().currentUser?.uid ?? ""
+    private func showReportAlert() {
+        let alertController = UIAlertController(title: "Report", message: "Thank you for sending us the message", preferredStyle: .alert)
+        alertController.view.tintColor = UIColor.black
         
-        Database.fetchUserWithUID(uid: uid) { (user) in
-            editProfileController.user = user
-            let navEditProfileController = UINavigationController(rootViewController: editProfileController)
-            self.present(navEditProfileController, animated: true, completion: nil)
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Tell us the reason"
         }
+        
+        let saveAction = UIAlertAction(title: "Send", style: .default, handler: { alert -> Void in
+            //            let firstTextField = alertController.textFields![0] as UITextField
+            ///report to DB later with uid postId.....
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action : UIAlertAction!) -> Void in })
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showBlockAlert() {
+        let alertController = UIAlertController(title: "Block User", message: "You won't receive any message from this user again", preferredStyle: .alert)
+        alertController.view.tintColor = UIColor.black
+        
+        let cancelAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
 }
