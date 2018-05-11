@@ -20,6 +20,9 @@
 		7B0FD70D2040094F00E77422 /* PostController+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */; };
 		7B0FF8882025482D00C83BFA /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF8872025482D00C83BFA /* CourseView.swift */; };
 		7B15271520A392730059D3E5 /* FirebaseUtils+FollowUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B15271420A392730059D3E5 /* FirebaseUtils+FollowUser.swift */; };
+		7B15271720A5402F0059D3E5 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B15271620A5402F0059D3E5 /* WebViewController.swift */; };
+		7B15271C20A55ACF0059D3E5 /* terms.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7B15271B20A55ACF0059D3E5 /* terms.rtf */; };
+		7B15271E20A5635A0059D3E5 /* privacy.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7B15271D20A5635A0059D3E5 /* privacy.rtf */; };
 		7B1624632038B6DF004C0537 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B1624622038B6DF004C0537 /* GoogleService-Info.plist */; };
 		7B1624652038C49B004C0537 /* Login+Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624642038C49B004C0537 /* Login+Handlers.swift */; };
 		7B1624672038C4AA004C0537 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1624662038C4AA004C0537 /* LoginController.swift */; };
@@ -122,6 +125,9 @@
 		7B0FD70C2040094F00E77422 /* PostController+Handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostController+Handlers.swift"; sourceTree = "<group>"; };
 		7B0FF8872025482D00C83BFA /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
 		7B15271420A392730059D3E5 /* FirebaseUtils+FollowUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseUtils+FollowUser.swift"; sourceTree = "<group>"; };
+		7B15271620A5402F0059D3E5 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		7B15271B20A55ACF0059D3E5 /* terms.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = terms.rtf; sourceTree = "<group>"; };
+		7B15271D20A5635A0059D3E5 /* privacy.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = privacy.rtf; sourceTree = "<group>"; };
 		7B1624622038B6DF004C0537 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7B1624642038C49B004C0537 /* Login+Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Login+Handlers.swift"; sourceTree = "<group>"; };
 		7B1624662038C4AA004C0537 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -311,6 +317,7 @@
 				7B167668205651AA003D4E01 /* Date+Helper.swift */,
 				7BADCEDE209E6A45004639C5 /* UIView+Helper.swift */,
 				7BF5DF5020A0DA3100FFC649 /* UISearchBar+Helper.swift */,
+				7B15271620A5402F0059D3E5 /* WebViewController.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -498,6 +505,8 @@
 				7B3ACAE7204A3E970065CB16 /* models */,
 				7B16246F2038C51B004C0537 /* util */,
 				7BF3A2B02019479700689AE1 /* Assets.xcassets */,
+				7B15271B20A55ACF0059D3E5 /* terms.rtf */,
+				7B15271D20A5635A0059D3E5 /* privacy.rtf */,
 				7B093A5B208BB19F00FC8998 /* loading_rocket2.gif */,
 				7B093A59208BAEB100FC8998 /* loading_rocket.gif */,
 				7BF3A2B52019479700689AE1 /* Info.plist */,
@@ -644,6 +653,8 @@
 			files = (
 				7B093A5A208BAEB100FC8998 /* loading_rocket.gif in Resources */,
 				7BF3A2B42019479700689AE1 /* LaunchScreen.storyboard in Resources */,
+				7B15271C20A55ACF0059D3E5 /* terms.rtf in Resources */,
+				7B15271E20A5635A0059D3E5 /* privacy.rtf in Resources */,
 				7B093A5C208BB19F00FC8998 /* loading_rocket2.gif in Resources */,
 				7B1624632038B6DF004C0537 /* GoogleService-Info.plist in Resources */,
 				7BF3A2B12019479700689AE1 /* Assets.xcassets in Resources */,
@@ -764,6 +775,7 @@
 				7B643951201D3D0700FB0E18 /* AddCourseDatasource.swift in Sources */,
 				7B9717172058DBB400B6F781 /* HomeController.swift in Sources */,
 				7B97171D205A005700B6F781 /* PostFooterView.swift in Sources */,
+				7B15271720A5402F0059D3E5 /* WebViewController.swift in Sources */,
 				7B1624672038C4AA004C0537 /* LoginController.swift in Sources */,
 				7B9563BD209836C5001FB2A7 /* PostsSearchController+Handlers.swift in Sources */,
 				7BF2E4DA205470E9004D4DBE /* UITableViewController+Helper.swift in Sources */,

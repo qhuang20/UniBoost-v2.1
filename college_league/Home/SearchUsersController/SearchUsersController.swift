@@ -65,12 +65,14 @@ class SearchUsersController: UICollectionViewController, UICollectionViewDelegat
     
     
     
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.post(name: SearchUsersController.refreshHomeNotificationName, object: nil, userInfo: nil)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         UIView.animate(withDuration: 0.2) {
             self.searchBar.alpha = 0
         }
-        
-        NotificationCenter.default.post(name: SearchUsersController.refreshHomeNotificationName, object: nil, userInfo: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -36,6 +36,8 @@ class PostFooterView: UIView {
         button.tintColor = themeColor
         button.backgroundColor = respondButtonColor
         button.layer.cornerRadius = 8
+        button.layer.borderColor = themeColor.cgColor
+        button.layer.borderWidth = 1.5
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(handleRespond), for: .touchUpInside)
         return button

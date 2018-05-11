@@ -74,6 +74,44 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
         return pc
     }()
     
+    let agreementLabel: UILabel = {
+        let label = UILabel()
+        label.text = "By signing up or logging in as a guest, you agree to our "
+        label.textColor = UIColor.lightGray
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    lazy var privacyButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Privacy Policy", for: .normal)
+        button.setTitleColor(brightGray, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.addTarget(self, action: #selector(handlePrivacy), for: .touchUpInside)
+        return button
+    }()
+    
+    let andLabel: UILabel = {
+        let label = UILabel()
+        label.text = "and"
+        label.textColor = UIColor.lightGray
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    lazy var termsButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Terms of Services", for: .normal)
+        button.setTitleColor(brightGray, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        button.addTarget(self, action: #selector(handleTerms), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.isStatusBarHidden = true
     }
@@ -93,10 +131,26 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
         view.addSubview(loginButton)
         view.addSubview(guestButton)
         
+        view.addSubview(agreementLabel)
+        view.addSubview(privacyButton)
+        view.addSubview(andLabel)
+        view.addSubview(termsButton)
+        
         pageControl.anchor(nil, left: view.leftAnchor, bottom: guestButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         guestButton.anchor(nil, left: view.leftAnchor, bottom: getStartedButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 10, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
         getStartedButton.anchor(nil, left: view.leftAnchor, bottom: loginButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 10, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
-        loginButton.anchor(nil, left: view.leftAnchor, bottom: view.safeAreaBottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 30, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
+        loginButton.anchor(nil, left: view.leftAnchor, bottom: agreementLabel.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: sideConstantForButton, bottomConstant: 8, rightConstant: sideConstantForButton, widthConstant: 0, heightConstant: 40)
+        
+        
+        
+        agreementLabel.anchor(nil, left: view.leftAnchor, bottom: privacyButton.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 20)
+        
+        privacyButton.anchor(nil, left: nil, bottom: view.safeAreaBottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 20)
+        privacyButton.anchorCenterXToSuperview(constant: -60)
+        
+        andLabel.anchor(nil, left: privacyButton.rightAnchor, bottom: view.safeAreaBottomAnchor, right: nil, topConstant: 0, leftConstant: 6, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 20)
+        
+        termsButton.anchor(nil, left: andLabel.rightAnchor, bottom: view.safeAreaBottomAnchor, right: nil, topConstant: 0, leftConstant: 6, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 20)
     }
     
     private func configureCollectionView() {
@@ -155,6 +209,26 @@ class IntroController: UICollectionViewController, UICollectionViewDelegateFlowL
         signupController.usernameTextField.text = "Guest"
         signupController.passwordTextField.text = "qqqqqq"
         signupController.handleSignUp()
+    }
+    
+    
+    
+    @objc private func handlePrivacy() {
+        print("Go to Privacy Policy")
+        let webViewController = WebViewController()
+        webViewController.resourceName = "privacy"
+        webViewController.resourceType = "rtf"
+        let navWebViewController = UINavigationController(rootViewController: webViewController)
+        present(navWebViewController, animated: true, completion: nil)
+    }
+    
+    @objc private func handleTerms() {
+        print("Go to Terms of Services")
+        let webViewController = WebViewController()
+        webViewController.resourceName = "terms"
+        webViewController.resourceType = "rtf"
+        let navWebViewController = UINavigationController(rootViewController: webViewController)
+        present(navWebViewController, animated: true, completion: nil)
     }
     
 }

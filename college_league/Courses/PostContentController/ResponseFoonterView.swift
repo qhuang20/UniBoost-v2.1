@@ -68,7 +68,7 @@ class ResponseFoonterView: UIView {
         addSubview(likesLabel)
         addSubview(dotsButton)
         
-        commentButton.anchor(nil, left: leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: buttonHeight - 2, heightConstant: buttonHeight + 4)
+        commentButton.anchor(nil, left: nil, bottom: nil, right: likeButton.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 12, widthConstant: buttonHeight - 2, heightConstant: buttonHeight + 4)
         commentButton.anchorCenterYToSuperview()
         
         likeButton.anchor(nil, left: nil, bottom: nil, right: likesLabel.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 2.5, widthConstant: buttonHeight, heightConstant: buttonHeight)
@@ -77,7 +77,7 @@ class ResponseFoonterView: UIView {
         likesLabel.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 65, heightConstant: buttonHeight)
         likesLabel.anchorCenterYToSuperview()
         
-        dotsButton.anchor(nil, left: commentButton.rightAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        dotsButton.anchor(nil, left: leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 22, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
         dotsButton.anchorCenterYToSuperview()
     }
     
