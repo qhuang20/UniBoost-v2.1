@@ -4,19 +4,12 @@ Note: This software is no longer updated in App Store
 iOS Educational Software
 
 # Developer's Description:
-
 UniBoost wants to help every student have a happy life at school.
-
 Questions, Books, Grades? Don't worry.
-
 You can find your classmate, your friend, and tutors here.
-
 You can get your textbooks, notes, study guide from other students.
-
 Most importantly, once you have a question in a course, feel free to ask someone who has taken this course before.
-
 So, please share your knowledge with others.
-
 Remeber, Sharing is Gaining :)
 
 
