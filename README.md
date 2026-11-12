@@ -51,29 +51,29 @@ The rocket motif carried through the app icon, onboarding, and prompts to contri
 
 ### A welcome built around sharing
 
-The original onboarding paired these backgrounds with three short messages:
+The original onboarding introduced three ideas, shown here with a matching set of space illustrations:
 
 <table>
   <tr>
     <td align="center" width="33%">
-      <img src="college_league/Assets.xcassets/Intro/page1.imageset/page1.png" height="250" alt="First onboarding background: a rocket launching through a colorful solar system"><br>
+      <img src="college_league/Assets.xcassets/Intro/page1.imageset/page1.png" width="140" height="250" alt="Share: a rocket launching through a colorful illustrated solar system"><br>
       <strong>01 · Share</strong><br>
       <sub>Sharing your knowledge<br>with the world.</sub>
     </td>
     <td align="center" width="33%">
-      <img src="college_league/Assets.xcassets/Intro/page4.imageset/page4.jpg" height="250" alt="Second onboarding background: a streak of light across a twilight sky"><br>
+      <img src="docs/images/onboarding-grow.png" width="140" height="250" alt="Grow: a turquoise shooting star and colorful planets above an illustrated twilight horizon"><br>
       <strong>02 · Grow</strong><br>
       <sub>Sharing will enrich everyone<br>with more knowledge.</sub>
     </td>
     <td align="center" width="33%">
-      <img src="college_league/Assets.xcassets/Intro/page3.imageset/page3.jpg" height="250" alt="Third onboarding background: a star-filled night sky above trees"><br>
+      <img src="docs/images/onboarding-learn.png" width="140" height="250" alt="Learn: a turquoise galaxy and colorful planets above an illustrated forest"><br>
       <strong>03 · Learn</strong><br>
       <sub>In teaching others<br>we teach ourselves.</sub>
     </td>
   </tr>
 </table>
 
-<sub>Original artwork and onboarding copy, presented here as a gallery; these are not full-screen App Store screenshots.</sub>
+<sub>Original onboarding copy and Share artwork, with new Grow and Learn illustrations inspired by the same style. Presented as an artwork gallery.</sub>
 
 ## Behind the app
 
@@ -91,8 +91,7 @@ A native **Swift + UIKit** app with **Firebase** integration. The source include
 
 The implementation in this repository dates back to **2018**. UniBoost later appeared on the App Store; the previous README recorded release information for **version 1.3**.
 
-<details>
-<summary>Original release details</summary>
+### Original release details
 
 These values are retained from the previous README as historical metadata:
 
@@ -105,8 +104,6 @@ These values are retained from the previous README as historical metadata:
 | Devices | iPhone, iPad, and iPod touch |
 
 The repository name, `UniBoost-v2.1`, is preserved separately from the historical App Store version number.
-
-</details>
 
 <sub>November 4, 2026 — README refreshed to document this earlier project and showcase its original assets. Application code and assets are unchanged.</sub>
 
