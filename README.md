@@ -55,17 +55,17 @@ The original onboarding introduced three ideas, shown here with a matching set o
 
 <table>
   <tr>
-    <td align="center" width="33%">
+    <td align="center" valign="top" width="33%">
       <img src="college_league/Assets.xcassets/Intro/page1.imageset/page1.png" width="140" height="250" alt="Share: a rocket launching through a colorful illustrated solar system"><br>
       <strong>01 · Share</strong><br>
       <sub>Sharing your knowledge<br>with the world.</sub>
     </td>
-    <td align="center" width="33%">
+    <td align="center" valign="top" width="33%">
       <img src="docs/images/onboarding-grow.png" width="140" height="250" alt="Grow: a turquoise shooting star and colorful planets above an illustrated twilight horizon"><br>
       <strong>02 · Grow</strong><br>
-      <sub>Sharing will enrich everyone<br>with more knowledge.</sub>
+      <sub>Sharing&nbsp;will&nbsp;enrich&nbsp;everyone<br>with more knowledge.</sub>
     </td>
-    <td align="center" width="33%">
+    <td align="center" valign="top" width="33%">
       <img src="docs/images/onboarding-learn.png" width="140" height="250" alt="Learn: a turquoise galaxy and colorful planets above an illustrated forest"><br>
       <strong>03 · Learn</strong><br>
       <sub>In teaching others<br>we teach ourselves.</sub>
